@@ -1,0 +1,23 @@
+{
+  "Serilog": {
+    "Using": [ "Serilog.Sinks.Console" ],
+    "Enrich": [ "FromLogContext", "WithMachineName" ],
+    "MinimumLevel": {
+      "Default": "Information",
+      "Override": {
+        "System": "Error",
+        "Microsoft": "Error",
+        "Microsoft.EntityFrameworkCore": "Error",
+        "Microsoft.EntityFrameworkCore.Database.Command": "Error"
+      }
+    },
+    "WriteTo": [
+      {
+        "Name": "Console",
+        "Args": {
+          "outputTemplate": "==> {Timestamp:HH:mm:ss} [{Level:u3}] {Message:j} {NewLine} {Properties:j} {NewLine}{Exception}"
+        }
+      }
+    ]
+  }
+}
