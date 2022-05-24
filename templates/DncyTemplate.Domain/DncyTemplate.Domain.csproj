@@ -6,10 +6,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Dncy.Microsoft.DependencyInjection.Generator" Version="0.0.1" />
-	</ItemGroup>
-
-	<ItemGroup>
+		<PackageReference Include="Dncy.Microsoft.DependencyInjection.Generator" Version="1.0.1" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
 	</ItemGroup>
 

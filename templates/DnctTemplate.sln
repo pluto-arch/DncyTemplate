@@ -11,9 +11,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "buildingblocks", "buildingb
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{EAA16260-AC90-49C3-84FD-1C15F45D8618}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DncyTemplate.Api", "DncyTemplate.Entry\DncyTemplate.Api\DncyTemplate.Api.csproj", "{E5BBD71F-F7C4-4018-B2C4-2AB2447ECECF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DncyTemplate.Api", "DncyTemplate.Entry\DncyTemplate.Api\DncyTemplate.Api.csproj", "{E5BBD71F-F7C4-4018-B2C4-2AB2447ECECF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DncyTemplate.Mvc", "DncyTemplate.Entry\DncyTemplate.Mvc\DncyTemplate.Mvc.csproj", "{4029C1F2-2A8E-4F85-9F0B-CC85B1CA7BDF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DncyTemplate.Mvc", "DncyTemplate.Entry\DncyTemplate.Mvc\DncyTemplate.Mvc.csproj", "{4029C1F2-2A8E-4F85-9F0B-CC85B1CA7BDF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DncyTemplate.Domain", "DncyTemplate.Domain\DncyTemplate.Domain.csproj", "{AD779142-16AE-4DE6-AD7E-197EFD8C42A9}"
 EndProject
@@ -21,13 +21,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DncyTemplate.Application", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DncyTemplate.Infra", "DncyTemplate.Infra\DncyTemplate.Infra.csproj", "{853D56B7-37C4-48B9-A186-9DB2FBB9908E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Permission", "BuildingBlocks\DncyTemplate.Permission\Permission.csproj", "{3B1704FC-99A9-409F-96AB-F950C5C0ADAF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dncy.Permission", "BuildingBlocks\DncyTemplate.Permission\Dncy.Permission.csproj", "{3B1704FC-99A9-409F-96AB-F950C5C0ADAF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tenant", "BuildingBlocks\DncyTemplate.Tenant\Tenant.csproj", "{BF5640DB-F2E0-45F5-8CAE-F452E780FF9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dncy.Tenant", "BuildingBlocks\DncyTemplate.Tenant\Dncy.Tenant.csproj", "{BF5640DB-F2E0-45F5-8CAE-F452E780FF9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFrameworkCore.Specifications", "BuildingBlocks\EntityFrameworkCore.Specifications\EntityFrameworkCore.Specifications.csproj", "{61A4A9BB-3B59-4C00-90FD-B513E1CD24FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dncy.Specifications", "BuildingBlocks\EntityFrameworkCore.Specifications\Dncy.Specifications.csproj", "{61A4A9BB-3B59-4C00-90FD-B513E1CD24FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Permission.AspNetCore", "BuildingBlocks\Permission.AspNetCore\Permission.AspNetCore.csproj", "{D78B6D93-3AD5-4E17-82AC-22535B987F7D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dncy.Permission.AspNetCore", "BuildingBlocks\Permission.AspNetCore\Dncy.Permission.AspNetCore.csproj", "{D78B6D93-3AD5-4E17-82AC-22535B987F7D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFrameworkCore.Specifications.Test", "Tests\EntityFrameworkCore.Specifications.Test\EntityFrameworkCore.Specifications.Test.csproj", "{7DFB0E20-AD0C-4C3B-8908-EEB691E46F20}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +73,10 @@ Global
 		{D78B6D93-3AD5-4E17-82AC-22535B987F7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D78B6D93-3AD5-4E17-82AC-22535B987F7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D78B6D93-3AD5-4E17-82AC-22535B987F7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DFB0E20-AD0C-4C3B-8908-EEB691E46F20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DFB0E20-AD0C-4C3B-8908-EEB691E46F20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DFB0E20-AD0C-4C3B-8908-EEB691E46F20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DFB0E20-AD0C-4C3B-8908-EEB691E46F20}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -85,6 +91,7 @@ Global
 		{BF5640DB-F2E0-45F5-8CAE-F452E780FF9D} = {34F69236-CB60-4ED5-AB18-0549133A5ED6}
 		{61A4A9BB-3B59-4C00-90FD-B513E1CD24FE} = {34F69236-CB60-4ED5-AB18-0549133A5ED6}
 		{D78B6D93-3AD5-4E17-82AC-22535B987F7D} = {34F69236-CB60-4ED5-AB18-0549133A5ED6}
+		{7DFB0E20-AD0C-4C3B-8908-EEB691E46F20} = {EAA16260-AC90-49C3-84FD-1C15F45D8618}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28479403-763B-4355-8116-230D3A14D1BB}
