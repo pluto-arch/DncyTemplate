@@ -1,4 +1,8 @@
-﻿using DncyTemplate.Api.Infra;
+﻿using Dncy.MultiTenancy;
+using Dncy.MultiTenancy.AspNetCore;
+using Dncy.MultiTenancy.ConnectionStrings;
+using Dncy.MultiTenancy.Store;
+
 
 namespace DncyTemplate.Api;
 
@@ -43,12 +47,37 @@ public class Startup
 
 
         #region http请求相关配置
+
+        services.AddHttpContextAccessor();
         services.ConfigHttpForwardedHeadersOptions();
+        // 路由小写
+        services.AddRouting(options => options.LowercaseUrls = true);
         #endregion
 
 
-        // 路由小写
-        services.AddRouting(options => options.LowercaseUrls = true);
+
+        #region Multi-Tenancy
+
+        services.Configure<TenantConfigurationOptions>(Configuration);
+        services.AddSingleton<ICurrentTenantAccessor, CurrentTenantAccessor>();
+        services.AddTransient<ICurrentTenant, CurrentTenant>();
+        services.AddTransient<IConnectionStringResolver, DefaultConnectionStringResolver>();
+        services.AddTransient<ITenantStore, DefaultTenantStore>();
+
+        services.AddTransient<ITenantResolver, TenantResolver>();
+        services.AddTransient<ITenantConstruct, HeaderTenantConstruct>(x=>new HeaderTenantConstruct(headerDic =>
+        {
+            if (headerDic.ContainsKey(AppConstant.TENANT_KEY))
+            {
+                return headerDic[AppConstant.TENANT_KEY];
+            }
+
+            return null;
+        }));
+
+        services.AddTransient<MultiTenancyMiddleware>();
+
+        #endregion
 
 
     }
@@ -77,8 +106,11 @@ public class Startup
 
 
         app.UseCors(DefaultCorsName);
-        app.UseRouting();
 
+        app.UseMiddleware<MultiTenancyMiddleware>();
+
+        app.UseRouting();
+        
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapSystemHealthChecks();

@@ -29,3 +29,5 @@ global using Microsoft.IdentityModel.Logging;
 global using Microsoft.IdentityModel.Tokens;
 global using Newtonsoft.Json;
 global using Newtonsoft.Json.Serialization;
+global using DncyTemplate.Api.Constants;
+global using DncyTemplate.Api.Infra;

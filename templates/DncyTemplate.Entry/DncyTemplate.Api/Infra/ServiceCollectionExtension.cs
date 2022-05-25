@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-
+using DncyTemplate.Api.Infra.ApiDoc;
 using DncyTemplate.Api.Infra.HealthChecks;
 
 using Microsoft.AspNetCore.Mvc.Controllers;
@@ -53,6 +53,8 @@ public static class ServiceCollectionExtension
             c.SupportNonNullableReferenceTypes();
 
             c.UseAllOfToExtendReferenceSchemas();
+
+            c.OperationFilter<AddRequiredHeaderParameter>();
 
             c.AddSecurityDefinition("Bearer", //Name the security scheme
                 new OpenApiSecurityScheme
