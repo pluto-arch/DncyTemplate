@@ -7,7 +7,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Dncy.Microsoft.DependencyInjection.Generator" Version="1.0.1" />
-		<PackageReference Include="Dncy.MultiTenancy" Version="1.0.0" />
+		<PackageReference Include="Dncy.MultiTenancy" Version="1.0.1" />
 		<PackageReference Include="Dncy.Specifications" Version="1.0.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
 	</ItemGroup>
