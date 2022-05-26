@@ -1,30 +1,33 @@
 ﻿using Dncy.MultiTenancy;
 using Dncy.MultiTenancy.Model;
-using Microsoft.AspNetCore.Mvc;
+using DncyTemplate.Domain.Aggregates.Product;
+using DncyTemplate.Domain.Repository;
+using DncyTemplate.Domain.UnitOfWork;
 
-namespace DncyTemplate.Api.Controllers
+namespace DncyTemplate.Api.Controllers;
+
+[Route("api/[controller]")]
+[AutoResolveDependency]
+[ApiController]
+public partial class ValueController : ControllerBase
 {
 
-    [Route("api/[controller]")]
-    [AutoResolveDependency]
-    [ApiController]
-    public partial class ValueController : ControllerBase
+    [AutoInject]
+    private readonly ICurrentTenant _currentTenant;
+
+    [AutoInject]
+    private readonly IRepository<Product> _productsRepository;
+
+
+    [HttpGet]
+    public async Task<IEnumerable<Product>> Get()
     {
+        return await _productsRepository.GetListAsync();
+    }
 
-        [AutoInject]
-        private readonly ICurrentTenant _currentTenant;
-
-
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return Enumerable.Repeat<string>("111", 200);
-        }
-
-        [HttpGet("tenant")]
-        public TenantInfo GeTenantInfo()
-        {
-            return new TenantInfo(_currentTenant.Id, _currentTenant.Name);
-        }
+    [HttpGet("tenant")]
+    public TenantInfo GeTenantInfo()
+    {
+        return new TenantInfo(_currentTenant.Id, _currentTenant.Name);
     }
 }

@@ -1,27 +1,95 @@
-var builder = WebApplication.CreateBuilder(args);
+using ILogger = Serilog.ILogger;
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
+namespace DncyTemplate.Mvc;
 
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+public class Program
 {
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    public static readonly string AppName = typeof(Program).Namespace;
+
+    public static void Main(string[] args)
+    {
+        var logConfig = SerilogConfig();
+        Log.Logger = CreateSerilogLogger(logConfig, AppName);
+        try
+        {
+            Log.Information("准备启动{ApplicationContext}...", AppName);
+            var host = BuildWebHost(args);
+            Log.Information("{ApplicationContext} 已启动", AppName);
+            host.Run();
+        }
+        catch (Exception ex)
+        {
+            Log.Fatal(ex, "{ApplicationContext} 出现错误:{Messsage} !", AppName, ex.Message);
+            throw;
+        }
+        finally
+        {
+            Log.CloseAndFlush();
+        }
+    }
+
+    private static IHost BuildWebHost(string[] args)
+    {
+        IHost host = Host.CreateDefaultBuilder(args)
+            .UseContentRoot(Directory.GetCurrentDirectory())
+            .ConfigureWebHostDefaults(webhost =>
+            {
+                webhost.UseStartup<Startup>()
+                        .UseIISIntegration()
+                        .CaptureStartupErrors(false);
+            })
+            .ConfigureAppConfiguration((context, builder) =>
+            {
+                IHostEnvironment env = context.HostingEnvironment;
+                IConfiguration baseConfig = GetConfiguration(env);
+                builder.AddConfiguration(baseConfig);
+            })
+            .UseSerilog(dispose: true)
+            .Build();
+        return host;
+    }
+
+
+    /// <summary>
+    /// 加载应用配置
+    /// </summary>
+    /// <param name="env"></param>
+    /// <returns></returns>
+    private static IConfiguration GetConfiguration(IHostEnvironment env)
+    {
+        IConfigurationBuilder builder = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", false, true)
+            .AddJsonFile($"appsettings.{env.EnvironmentName}.json", false, true)
+            .AddEnvironmentVariables();
+        return builder.Build();
+    }
+
+
+    #region serilog
+    /// <summary>
+    /// 日志配置
+    /// </summary>
+    /// <returns></returns>
+    private static IConfiguration SerilogConfig()
+    {
+        var builder = new ConfigurationBuilder()
+            .AddJsonFile("serilogsetting.json", false, true);
+        return builder.Build();
+    }
+    /// <summary>
+    /// 从配置创建serilog
+    /// </summary>
+    /// <param name="configuration"></param>
+    /// <param name="applicationName"></param>
+    /// <returns></returns>
+    private static ILogger CreateSerilogLogger(IConfiguration configuration, string applicationName)
+    {
+        return new LoggerConfiguration()
+            .ReadFrom.Configuration(configuration)
+            .Enrich.WithProperty("AppName", applicationName)
+            .CreateLogger();
+    }
+    #endregion
+
 }
-
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-
-app.UseRouting();
-
-app.UseAuthorization();
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
-app.Run();

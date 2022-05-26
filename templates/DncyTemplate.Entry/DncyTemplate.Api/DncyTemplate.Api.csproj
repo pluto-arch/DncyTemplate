@@ -24,8 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\DncyTemplate.Application\DncyTemplate.Application.csproj" />
     <ProjectReference Include="..\..\DncyTemplate.Infra\DncyTemplate.Infra.csproj" />
-    <ProjectReference Include="..\DncyTemplate.Mvc\DncyTemplate.Mvc.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,6 +34,7 @@
     <Folder Include="Infra\Firewall\" />
     <Folder Include="Constants\" />
     <Folder Include="Infra\ApiDoc\" />
+    <Folder Include="Infra\UnitofWork\" />
   </ItemGroup>
 
 

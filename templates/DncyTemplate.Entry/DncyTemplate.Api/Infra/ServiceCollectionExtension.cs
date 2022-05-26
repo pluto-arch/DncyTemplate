@@ -95,7 +95,7 @@ public static class ServiceCollectionExtension
     {
         services.Configure<MemoryCheckOptions>(options =>
         {
-            options.Threshold = configuration.GetValue<long>("Options:MemoryChkOpt:Threshold");
+            options.Threshold = configuration.GetValue<long>("HealthCheck:Memory:Threshold");
         });
         services.AddHealthChecks()
             .AddCheck<MemoryHealthCheck>("memory_check", failureStatus: HealthStatus.Degraded);

@@ -39,7 +39,7 @@ public class MemoryHealthCheck : IHealthCheck
 
         if (status == HealthStatus.Unhealthy)
         {
-            // todo send notification to DevOps
+            // TODO trigger notification
         }
 
         var rate = Math.Round((double)allocated / (double)options.Threshold, 2, MidpointRounding.ToEven);
