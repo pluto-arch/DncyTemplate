@@ -26,7 +26,7 @@ public static class QueryablePageListExtensions
         List<T> items = await source.Skip((pageIndex - 1) * pageSize)
             .Take(pageSize).ToListAsync(cancellationToken);
 
-        PagedList<T> pagedList = new PagedList<T>
+        PagedList<T> pagedList = new()
         {
             PageIndex = pageIndex,
             PageSize = pageSize,

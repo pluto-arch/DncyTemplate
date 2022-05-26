@@ -67,7 +67,7 @@ public class DataChangeSaveChangesInterceptor: SaveChangesInterceptor
             domainEntities.ToList().ForEach(entity => entity.ClearDomainEvents());
             foreach (INotification domainEvent in domainEvents)
             {
-                await _dispatcher.Dispatch(domainEvent);
+                await _dispatcher.Dispatch(domainEvent,cancellationToken);
             }
         }
 

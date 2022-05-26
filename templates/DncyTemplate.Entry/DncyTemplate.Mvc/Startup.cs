@@ -73,7 +73,7 @@ public class Startup
         services.AddTransient<IConnectionStringResolver, DefaultConnectionStringResolver>();
         services.AddTransient<ITenantStore, DefaultTenantStore>();
         services.AddTransient<ITenantResolver, TenantResolver>();
-        services.AddTransient<ITenantConstruct, HeaderTenantConstruct>(x => new HeaderTenantConstruct(headerDic =>
+        services.AddTransient<ITenantConstruct, HeaderTenantConstruct>(_ => new HeaderTenantConstruct(headerDic =>
           {
               if (headerDic.ContainsKey(AppConstant.TENANT_KEY))
               {
@@ -93,7 +93,7 @@ public class Startup
 
     public void Configure(IApplicationBuilder app, IHostEnvironment env)
     {
-        ForwardedHeadersOptions options = new ForwardedHeadersOptions
+        ForwardedHeadersOptions options = new ()
         {
             ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
         };
