@@ -2,7 +2,7 @@
 
 namespace DncyTemplate.Domain.Aggregates.Product;
 
-public class Device: BaseEntity<int>, IMultiTenant
+public class Device : BaseEntity<int>, IMultiTenant
 {
     /// <summary>
     ///     设备名称

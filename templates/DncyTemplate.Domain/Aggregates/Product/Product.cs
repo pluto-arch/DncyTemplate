@@ -2,7 +2,7 @@
 
 namespace DncyTemplate.Domain.Aggregates.Product;
 
-public class Product: BaseAggregateRoot<string>, IMultiTenant, ISoftDelete
+public class Product : BaseAggregateRoot<string>, IMultiTenant, ISoftDelete
 {
     public Product()
     {

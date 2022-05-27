@@ -3,7 +3,7 @@ using DncyTemplate.Domain.Repository;
 
 namespace DncyTemplate.Domain.UnitOfWork;
 
-public interface IUnitOfWork: IAsyncDisposable, IDisposable
+public interface IUnitOfWork : IAsyncDisposable, IDisposable
 {
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 

@@ -2,7 +2,7 @@
 
 namespace DncyTemplate.Domain.Aggregates.Product;
 
-public class DeviceAddress: ValueObject
+public class DeviceAddress : ValueObject
 {
     public DeviceAddress() { }
 

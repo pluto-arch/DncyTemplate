@@ -2,7 +2,7 @@
 
 namespace DncyTemplate.Domain.Infra;
 
-public abstract class AggregateRoot: BaseEntity, IAggregateRoot, IDomainEvents
+public abstract class AggregateRoot : BaseEntity, IAggregateRoot, IDomainEvents
 {
     private readonly List<INotification> _domainEvents = new();
 

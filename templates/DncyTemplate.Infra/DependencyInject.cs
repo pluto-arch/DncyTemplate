@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using Dncy.Specifications.EntityFrameworkCore;
+﻿using Dncy.Specifications.EntityFrameworkCore;
 using DncyTemplate.Domain.Aggregates.Product;
 using DncyTemplate.Domain.Infra;
 using DncyTemplate.Domain.Repository;
@@ -16,7 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Serilog;
-using Serilog.Core;
+using System.Reflection;
 
 namespace DncyTemplate.Infra
 {
@@ -28,6 +27,7 @@ namespace DncyTemplate.Infra
 
             service.AddEntityFrameworkSqlServer();
             service.AddSingleton<IConnectionStringResolve, DefaultConnectionStringResolve>();
+
             service.AddDbContextPool<DeviceCenterDbContext>((serviceProvider, optionsBuilder) =>
             {
                 optionsBuilder.UseSqlServer(configuration.GetConnectionString(DbConstants.DEFAULT_CONNECTIONSTRING_NAME),

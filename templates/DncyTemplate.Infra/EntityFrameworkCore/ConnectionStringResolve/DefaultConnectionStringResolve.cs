@@ -6,7 +6,7 @@ using Microsoft.Extensions.Options;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.ConnectionStringResolve;
 
-public class DefaultConnectionStringResolve: IConnectionStringResolve
+public class DefaultConnectionStringResolve : IConnectionStringResolve
 {
     protected readonly IConfiguration _configuration;
     private readonly ICurrentTenant _currentTenant;
@@ -30,14 +30,14 @@ public class DefaultConnectionStringResolve: IConnectionStringResolve
         if (tenan == null)
             return Task.FromResult(defaultConnectionString);
 
-        if (_tenantConfigurationOptions==null||_tenantConfigurationOptions.Tenants==null)
+        if (_tenantConfigurationOptions == null || _tenantConfigurationOptions.Tenants == null)
             return Task.FromResult(defaultConnectionString);
 
-        var t = _tenantConfigurationOptions.Tenants.FirstOrDefault(x=>x.TenantId==tenan.Id);
-        if (t==null)
+        var t = _tenantConfigurationOptions.Tenants.FirstOrDefault(x => x.TenantId == tenan.Id);
+        if (t == null)
             return Task.FromResult(defaultConnectionString);
 
-        var connStr = t.ConnectionStrings?.FirstOrDefault(x=>x.Key==connectionStringName).Value;
-        return Task.FromResult(connStr??defaultConnectionString);
+        var connStr = t.ConnectionStrings?.FirstOrDefault(x => x.Key == connectionStringName).Value;
+        return Task.FromResult(connStr ?? defaultConnectionString);
     }
 }

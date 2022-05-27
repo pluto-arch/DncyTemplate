@@ -3,7 +3,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace DncyTemplate.Api.Infra.ApiDoc;
 
-public class AddRequiredHeaderParameter:IOperationFilter
+public class AddRequiredHeaderParameter : IOperationFilter
 {
     /// <inheritdoc />
     public void Apply(OpenApiOperation operation, OperationFilterContext context)

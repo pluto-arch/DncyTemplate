@@ -1,10 +1,10 @@
-﻿using System.Data.Common;
-using DncyTemplate.Infra.EntityFrameworkCore.ConnectionStringResolve;
+﻿using DncyTemplate.Infra.EntityFrameworkCore.ConnectionStringResolve;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using System.Data.Common;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.Interceptor;
 
-public class TenantDbConnectionInterceptor: DbConnectionInterceptor
+public class TenantDbConnectionInterceptor : DbConnectionInterceptor
 {
     private readonly string _connectionStringName;
     private readonly IConnectionStringResolve _connectionStringProvider;

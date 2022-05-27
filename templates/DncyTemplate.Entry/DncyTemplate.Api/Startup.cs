@@ -75,14 +75,13 @@ public class Startup
         #endregion
 
         services.AddApplicationModule(Configuration);
-        services.AddDomainModule();
         services.AddInfraModule(Configuration);
+        services.AddDomainModule();
     }
-
 
     public void Configure(IApplicationBuilder app, IHostEnvironment env)
     {
-        ForwardedHeadersOptions options = new ()
+        ForwardedHeadersOptions options = new()
         {
             ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
         };

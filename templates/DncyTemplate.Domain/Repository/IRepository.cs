@@ -1,9 +1,9 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Linq.Expressions;
-using Dncy.Specifications;
+﻿using Dncy.Specifications;
 using DncyTemplate.Domain.Collections;
 using DncyTemplate.Domain.Infra;
 using DncyTemplate.Domain.UnitOfWork;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq.Expressions;
 
 namespace DncyTemplate.Domain.Repository;
 

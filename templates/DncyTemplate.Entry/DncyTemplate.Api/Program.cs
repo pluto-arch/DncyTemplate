@@ -32,11 +32,11 @@ public class Program
         IHost host = Host.CreateDefaultBuilder(args)
             .UseContentRoot(Directory.GetCurrentDirectory())
             .ConfigureWebHostDefaults(webhost =>
-{
-webhost.UseStartup<Startup>()
-        .UseIISIntegration()
-        .CaptureStartupErrors(false);
-})
+            {
+                webhost.UseStartup<Startup>()
+                        .UseIISIntegration()
+                        .CaptureStartupErrors(false);
+            })
             .ConfigureAppConfiguration((context, builder) =>
             {
                 IHostEnvironment env = context.HostingEnvironment;

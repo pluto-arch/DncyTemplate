@@ -1,6 +1,6 @@
 ﻿namespace DncyTemplate.Domain.Exceptions;
 
-public class EntityNotFoundException:Exception
+public class EntityNotFoundException : Exception
 {
     public EntityNotFoundException(Type entityType)
     {

@@ -1,5 +1,4 @@
 ﻿namespace DncyTemplate.Api.Constants;
-
 public class AppConstant
 {
     /// <summary>

@@ -1,5 +1,5 @@
-﻿using System.Linq.Expressions;
-using DncyTemplate.Domain.Infra;
+﻿using DncyTemplate.Domain.Infra;
+using System.Linq.Expressions;
 
 namespace DncyTemplate.Domain.Repository;
 

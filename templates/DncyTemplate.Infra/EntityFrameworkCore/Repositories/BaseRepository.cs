@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Linq.Expressions;
-using Dncy.Specifications;
+﻿using Dncy.Specifications;
 using Dncy.Specifications.EntityFrameworkCore;
 using Dncy.Specifications.EntityFrameworkCore.Evaluatiors;
 using Dncy.Specifications.Evaluators;
@@ -14,6 +12,8 @@ using DncyTemplate.Infra.EntityFrameworkCore.Extension;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Options;
+using System.Collections;
+using System.Linq.Expressions;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.Repositories;
 

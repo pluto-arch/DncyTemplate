@@ -1,10 +1,9 @@
-﻿using System.Reflection;
-using DncyTemplate.Api.Infra.ApiDoc;
+﻿using DncyTemplate.Api.Infra.ApiDoc;
 using DncyTemplate.Api.Infra.HealthChecks;
-
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 namespace DncyTemplate.Api.Infra;
 

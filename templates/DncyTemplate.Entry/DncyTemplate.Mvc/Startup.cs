@@ -1,5 +1,4 @@
-﻿using System.IO.Compression;
-using Dncy.MultiTenancy;
+﻿using Dncy.MultiTenancy;
 using Dncy.MultiTenancy.AspNetCore;
 using Dncy.MultiTenancy.ConnectionStrings;
 using Dncy.MultiTenancy.Store;
@@ -8,6 +7,7 @@ using DncyTemplate.Domain;
 using DncyTemplate.Infra;
 using DncyTemplate.Mvc.Constants;
 using Microsoft.AspNetCore.ResponseCompression;
+using System.IO.Compression;
 
 namespace DncyTemplate.Mvc;
 
@@ -93,7 +93,7 @@ public class Startup
 
     public void Configure(IApplicationBuilder app, IHostEnvironment env)
     {
-        ForwardedHeadersOptions options = new ()
+        ForwardedHeadersOptions options = new()
         {
             ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
         };

@@ -18,10 +18,9 @@ public class MediatrDomainEventDispatcher : IDomainEventDispatcher
 
     public async Task Dispatch(INotification domainEvent, CancellationToken cancellationToken = default)
     {
-        using IServiceScope scope = _serviceProvider.CreateScope();
-        IMediator mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-        _log.LogDebug("Dispatching Domain Event as MediatR notification.  EventType: {eventType}",
-            domainEvent.GetType());
+        using var scope = _serviceProvider.CreateScope();
+        var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+        _log.LogDebug("Dispatching Domain Event as MediatR notification.  EventType: {eventType}", domainEvent.GetType());
         await mediator.Publish(domainEvent, cancellationToken);
     }
 }

@@ -16,16 +16,16 @@ public class UnitOfWorkMiddleware
     {
         await _next(context);
         var uowOptions = context.RequestServices.GetService<IOptions<UnitOfWorkCollectionOptions>>()?.Value;
-        if (uowOptions is not null && uowOptions?.DbContexts is { Count: > 0 })
+        if (uowOptions?.DbContexts is { Count: > 0 })
         {
-            foreach (KeyValuePair<string, Type> item in uowOptions?.DbContexts)
+            foreach (KeyValuePair<string, Type> item in uowOptions.DbContexts)
             {
                 if (context.RequestServices.GetService(item.Value) is not IUnitOfWork uow)
                 {
                     continue;
                 }
 
-                await uow?.SaveChangesAsync(context.RequestAborted);
+                await uow.SaveChangesAsync(context.RequestAborted);
             }
         }
     }

@@ -15,7 +15,7 @@ public class DeviceEntityTypeConfiguration : IEntityTypeConfiguration<Device>
         builder.HasKey(e => e.Id);
         builder.Property(e => e.Name).IsRequired().HasMaxLength(20);
         builder.Property(e => e.SerialNo).IsRequired().HasMaxLength(36);
-        ValueConverter<GeoCoordinate, string> converter = new (v => v, v => (GeoCoordinate)v);
+        ValueConverter<GeoCoordinate, string> converter = new(v => v, v => (GeoCoordinate)v);
         builder.Property(e => e.Coordinate).HasConversion(converter);
         builder.OwnsOne(e => e.Address, da => da.ToTable("DeviceAddresses"));
     }

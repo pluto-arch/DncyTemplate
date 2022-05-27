@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 
-public class DeviceCenterDbContext: BaseDbContext<DeviceCenterDbContext>, IUowDbContext
+public class DeviceCenterDbContext : BaseDbContext<DeviceCenterDbContext>, IUowDbContext
 {
     public DeviceCenterDbContext(DbContextOptions<DeviceCenterDbContext> options)
         : base(options)

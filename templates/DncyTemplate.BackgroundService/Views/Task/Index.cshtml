@@ -1,0 +1,207 @@
+﻿@using System
+@section Styles
+{
+    <style type="text/css">
+        .backgroundTask { padding: 20px 0; }
+    </style>
+}
+
+<div class="backgroundTask">
+    <p>
+        <h1>后台作业</h1>
+    </p>
+    <table id="taskTable" lay-filter="test"></table>
+</div>
+
+
+@section Scripts
+{
+    <script type="text/javascript">
+        let jobLog = [];
+        layui.use(['table', 'laytpl'],
+            function() {
+                var table = layui.table;
+                var laytpl = layui.laytpl;
+                //第一个实例
+                table.render({
+                    elem: '#taskTable',
+                    id: 'taskTable',
+                    url: '/task/tasks',
+                    page: false,
+                    cols: [
+                        [
+                            { field: 'id', title: 'ID', type: 'checkbox' },
+                            { field: 'groupName', title: '组别', width: 150 },
+                            { field: 'displayName', title: '作业名称', width: 150 },
+                            { field: 'describe', title: '描述', width: 400 },
+                            { field: 'interval', title: 'corn表达式', width: 100 },
+                            { field: 'status', title: '状态', templet: '#state', width: 80 },
+                            { field: 'triggerName', title: '触发器名称', width: 200 },
+                            { field: 'lastRunTime', title: '上次触发时间', width: 200 },
+                            { field: 'id', title: '操作', toolbar: '#opt' }
+                        ]
+                    ]
+                });
+
+                //setInterval(() => {
+                //    table.reload('taskTable');
+                //}, 5000);
+
+
+                //监听行工具事件
+                table.on('tool(test)',
+                    function(obj) {
+                        var data = obj.data;
+                        if (obj.event === 'pause') {
+                            layer.confirm('确定要暂停 ？',
+                                function(index) {
+                                    $.ajax({
+                                        url: '/task/PauseTask',
+                                        type: 'POST',
+                                        data: {
+                                            id: data.id
+                                        },
+                                        success: function(res) {
+                                            showMsg("暂停成功");
+                                            layer.close(index);
+                                            table.reload('taskTable');
+                                        },
+                                        error: function(error) {
+                                            showMsg("暂停失败");
+                                            layer.close(index);
+                                            table.reload('taskTable');
+                                        }
+                                    });
+
+                                });
+                        } else if (obj.event === 'delete') {
+                            showMsg("delete");
+                        } else if (obj.event === 'refire') {
+                            showMsg("delete");
+                            $.ajax({
+                                url: '/task/Refire',
+                                type: 'POST',
+                                data: {
+                                    id: data.id
+                                },
+                                success: function(res) {
+                                    showMsg("重启成功");
+                                    table.reload('taskTable');
+                                },
+                                error: function(error) {
+                                    showMsg("重启失败");
+                                    table.reload('taskTable');
+                                }
+                            });
+                        } else if (obj.event === 'showLogs') {
+                            $.ajax({
+                                url: '/task/JobLogs',
+                                type: 'GET',
+                                data: {
+                                    id: data.id
+                                },
+                                success: function(res) {
+                                    jobLog = res.data;
+                                    let logHtml = '';
+                                    const getTpl = jobLogs.innerHTML;
+                                    laytpl(getTpl).render(jobLog,
+                                        function(html) {
+                                            logHtml = html;
+                                        });
+                                    layer.open({
+                                        type: 1,
+                                        title: `${data.taskName} 执行日志`,
+                                        shadeClose: true,
+                                        shade: 0.8,
+                                        area: ['380px', '90%'],
+                                        content: logHtml
+                                    });
+                                },
+                                error: function(error) {
+                                    showMsg("查询日志失败");
+                                    table.reload('taskTable');
+                                }
+                            });
+                        } else if (obj.event === 'executeNow') {
+                            $.ajax({
+                                url: '/task/Execute',
+                                type: 'GET',
+                                data: {
+                                    id: data.id
+                                },
+                                success: function(res) {
+                                    showMsg("发送指令成功");
+                                },
+                                error: function(error) {
+                                    showMsg("发送指令失败");
+                                }
+                            });
+                        }
+                    });
+            });
+    </script>
+
+    <script type="text/html" id="jobLogs">
+        <ul class="layui-timeline" style="padding: 20px 20px">
+            {{# layui.each(d, function(index, item){ }}
+            <li class="layui-timeline-item">
+                {{# if(item.state!=1){ }}
+                <i class="layui-icon layui-timeline-axis layui-bg-red">&#xe63f;</i>
+                {{# } else{ }}
+                <i class="layui-icon layui-timeline-axis layui-bg-blue">&#xe63f;</i>
+                {{# } }}
+                <div class="layui-timeline-content layui-text">
+                    <h3 class="layui-timeline-title" style="margin-bottom: 0">{{ item.time }}</h3>
+                    <p style="margin: 0">执行时间：{{item.runSeconds}}s </p>
+                    <p style="margin: 0">信息：{{item.message??''}}</p>
+                </div>
+            </li>
+            {{# }) }}
+        </ul>
+    </script>
+
+    <script type="text/html" id="state">
+        {{# if(d.status===0) { }}
+        <span class="layui-font-gray">未知</span>
+        {{# } else if(d.status===1) { }}
+        <span class="layui-font-green">正常</span>
+        {{# } else if(d.status===2) { }}
+        <span class="layui-font-blue">暂停</span>
+        {{# } else if(d.status===3) { }}
+        <span class="layui-font-red">完成</span>
+        {{# } else if(d.status===4) { }}
+        <span class="layui-font-orange">异常</span>
+        {{# } else if(d.status===5) { }}
+        <span class="layui-font-gray">阻塞</span>
+        {{# } else if(d.status===6) { }}
+        <span class="layui-font-orange">停止</span>
+        {{# } }}
+    </script>
+
+    <script type="text/html" id="triggerState">
+        {{# if(d.triggerStatus===0) { }}
+        <span class="layui-font-green">正常</span>
+        {{# } else if(d.triggerStatus===1) { }}
+        <span class="layui-font-black">暂停</span>
+        {{# } else if(d.triggerStatus===2) { }}
+        <span class="layui-font-blue">完成</span>
+        {{# } else if(d.triggerStatus===3) { }}
+        <span class="layui-font-red">错误</span>
+        {{# } else if(d.triggerStatus===4) { }}
+        <span class="layui-font-orange">阻塞</span>
+        {{# } else if(d.triggerStatus===5) { }}
+        <span class="layui-font-gray">无</span>
+        {{# } }}
+    </script>
+
+    <script type="text/html" id="opt">
+        {{# if(d.status===0) { }}
+        {{# } else if(d.status===1) { }}
+        <a class="layui-btn layui-btn-primary layui-btn-xs layui-border-orange" lay-event="pause">暂停</a>
+        {{# } else if(d.status===2||d.status===4) { }}
+        <a class="layui-btn layui-btn-primary layui-btn-xs layui-border-blue" lay-event="refire">重启</a>
+        {{# } }}
+        <a class="layui-btn layui-btn-primary layui-btn-xs layui-border-red" lay-event="executeNow">立即执行</a>
+        <a class="layui-btn layui-btn-primary layui-btn-xs layui-border-green" lay-event="showLogs">查看日志</a>
+    </script>
+}

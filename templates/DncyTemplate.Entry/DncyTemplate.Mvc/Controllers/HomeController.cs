@@ -1,8 +1,5 @@
-﻿using System.Diagnostics;
-
-using DncyTemplate.Mvc.Models;
-
-using Microsoft.AspNetCore.Mvc;
+﻿using DncyTemplate.Mvc.Models;
+using System.Diagnostics;
 
 namespace DncyTemplate.Mvc.Controllers
 {

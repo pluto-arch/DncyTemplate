@@ -1,8 +1,8 @@
-﻿using System.Text.RegularExpressions;
+﻿using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Caching.Memory;
+using System.Text.RegularExpressions;
 using System.Web;
 
-using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.Caching.Memory;
 
 namespace DncyTemplate.Api.Infra;
 

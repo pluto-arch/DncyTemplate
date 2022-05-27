@@ -1,5 +1,4 @@
-﻿using DncyTemplate.Domain.UnitOfWork;
-using DncyTemplate.Infra.EntityFrameworkCore.EntityTypeConfig;
+﻿using DncyTemplate.Infra.EntityFrameworkCore.EntityTypeConfig;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
@@ -10,7 +9,7 @@ public class DbContextDesignTimeFactory : IDesignTimeDbContextFactory<DeviceCent
 {
     public DeviceCenterMigrationDbContext CreateDbContext(string[] args)
     {
-        DbContextOptionsBuilder<DeviceCenterMigrationDbContext> optionsBuilder = new ();
+        DbContextOptionsBuilder<DeviceCenterMigrationDbContext> optionsBuilder = new();
         optionsBuilder.UseSqlServer(@"Server=127.0.0.1,1433;Database=Pnct_Default;User Id=sa;Password=970307lBX;Trusted_Connection = False;");
         return new DeviceCenterMigrationDbContext(optionsBuilder.Options);
     }
