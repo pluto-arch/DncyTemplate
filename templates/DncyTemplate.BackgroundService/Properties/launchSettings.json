@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "DncyTemplate.BackgroundService": {
+    "DncyTemplate.Job": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

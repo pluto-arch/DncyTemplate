@@ -3,6 +3,11 @@
 {
     <style type="text/css">
         .backgroundTask { padding: 20px 0; }
+
+        .create-form {
+            min-height: 300px;
+            min-width: 400px;
+        }
     </style>
 }
 
@@ -14,40 +19,125 @@
 </div>
 
 
+<div id="addjobEl" style="display: none;padding: 10px">
+    <form class="layui-form" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label"><i class="tip-required">*</i> 任务名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" required lay-verify="required" placeholder="请输入任务名称" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">显示名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="displayName" placeholder="请输入任务名称" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><i class="tip-required">*</i> 组名</label>
+            <div class="layui-input-block">
+                <input type="text" name="groupName" placeholder="请输入组名" autocomplete="off" class="layui-input" value="Default">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><i class="tip-required">*</i> 周期(Corn)</label>
+            <div class="layui-input-block">
+                <input type="text" name="interval" required lay-verify="required" placeholder="周期" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"> 说明描述 </label>
+            <div class="layui-input-block">
+                <textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><i class="tip-required">*</i> CallUrl</label>
+            <div class="layui-input-block">
+                <input type="text" name="callUrl" required lay-verify="required" placeholder="远程调用url" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">远程调用header(key)</label>
+            <div class="layui-input-block">
+                <input type="text" name="headerKey" placeholder="远程调用header(key)" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">远程调用header(value)</label>
+            <div class="layui-input-block">
+                <input type="text" name="headerValue"  placeholder="远程调用header(value)" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="tr">
+            <button type="reset" id="cancelAuth" class="layui-btn layui-btn-primary">取消</button>
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo">保存</button>
+        </div>
+    </form>
+</div>
+
+
 @section Scripts
 {
     <script type="text/javascript">
         let jobLog = [];
-        layui.use(['table', 'laytpl'],
+        layui.use(['table', 'laytpl', 'form'],
             function() {
                 var table = layui.table;
                 var laytpl = layui.laytpl;
+                var form = layui.form;
+
+                let formLayer;
                 //第一个实例
                 table.render({
                     elem: '#taskTable',
                     id: 'taskTable',
                     url: '/task/tasks',
                     page: false,
+                    toolbar: '#toolbarDemo',
+                    defaultToolbar: [
+                        {
+                            title: '提示',
+                            layEvent: 'LAYTABLE_TIPS',
+                            icon: 'layui-icon-refresh'
+                        }
+                    ],
                     cols: [
                         [
                             { field: 'id', title: 'ID', type: 'checkbox' },
                             { field: 'groupName', title: '组别', width: 150 },
                             { field: 'displayName', title: '作业名称', width: 150 },
-                            { field: 'describe', title: '描述', width: 400 },
+                            { field: 'describe', title: '描述' },
                             { field: 'interval', title: 'corn表达式', width: 100 },
                             { field: 'status', title: '状态', templet: '#state', width: 80 },
                             { field: 'triggerName', title: '触发器名称', width: 200 },
                             { field: 'lastRunTime', title: '上次触发时间', width: 200 },
-                            { field: 'id', title: '操作', toolbar: '#opt' }
+                            { fixed: 'right', field: 'id', title: '操作', toolbar: '#opt', width: 300 }
                         ]
                     ]
                 });
+                //头工具栏事件
+                table.on('toolbar(test)',
+                    function(obj) {
+                        var checkStatus = table.checkStatus(obj.config.id);
+                        switch (obj.event) {
+                        case 'addJob':
+                            formLayer = layer.open({
+                                type: 1,
+                                title: false,
+                                closeBtn: 0,
+                                shadeClose: true,
+                                skin: 'create-form',
+                                content: $('#addjobEl')
+                            });
+                            break;
 
-                //setInterval(() => {
-                //    table.reload('taskTable');
-                //}, 5000);
-
-
+                        //自定义头工具栏右侧图标 - 提示
+                        case 'LAYTABLE_TIPS':
+                            table.reload('taskTable');
+                            break;
+                        };
+                    });
                 //监听行工具事件
                 table.on('tool(test)',
                     function(obj) {
@@ -138,6 +228,45 @@
                             });
                         }
                     });
+
+
+                form.render({
+                    elem: '#addjobEl'
+                });
+                $('#cancelAuth').click(function() {
+                    layer.close(formLayer);
+                });
+                //自定义验证规则
+                form.verify({
+                    name: function(value) {
+                        if (value.trim().length === 0) {
+                            return '请输入真实姓名！';
+                        }
+                    },
+                    interval: function(value) {
+                        if (value.trim().length === 0) {
+                            return '周期不能为空！';
+                        }
+                    }
+                });
+                form.on('submit(formDemo)',
+                    function(data) {
+                        // 这里处理 表单提交数据逻辑处理；
+                        console.log(data);
+                        console.log(data.field);
+
+                        $.post("/task/add", data.field)
+                            .done(function(result, status, xhr) {
+                                layer.msg('创建成功');
+                            })
+                            .fail(function(xhr, status, error) {
+                                layer.msg(`创建失败: ${xhr.statusText}`);
+                            });
+
+                        //防止layui form提交刷新页面；
+                        return false;
+                    });
+
             });
     </script>
 
@@ -204,4 +333,14 @@
         <a class="layui-btn layui-btn-primary layui-btn-xs layui-border-red" lay-event="executeNow">立即执行</a>
         <a class="layui-btn layui-btn-primary layui-btn-xs layui-border-green" lay-event="showLogs">查看日志</a>
     </script>
+
+
+    <script type="text/html" id="toolbarDemo">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-normal" lay-event="addJob">新建</button>
+        </div>
+    </script>
+
 }
+
+

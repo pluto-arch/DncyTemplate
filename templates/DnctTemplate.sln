@@ -26,7 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backgroundservice", "backgroundservice", "{F7772447-488D-4B58-84A0-C18B27811656}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backgroundjob", "backgroundjob", "{F7772447-488D-4B58-84A0-C18B27811656}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DncyTemplate.Job", "DncyTemplate.BackgroundService\DncyTemplate.Job.csproj", "{513DE0C0-AB3D-4892-8DC7-01A57ED0B36C}"
 EndProject

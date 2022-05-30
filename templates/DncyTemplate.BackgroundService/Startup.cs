@@ -1,4 +1,9 @@
-﻿using DncyTemplate.Application;
+﻿using Dncy.MultiTenancy.AspNetCore;
+using Dncy.MultiTenancy.ConnectionStrings;
+using Dncy.MultiTenancy.Store;
+using Dncy.MultiTenancy;
+
+using DncyTemplate.Application;
 using DncyTemplate.Domain;
 using DncyTemplate.Infra;
 using DncyTemplate.Job.HostedService;
@@ -48,7 +53,7 @@ public class Startup
                     return result;
                 };
             });
-
+        services.AddHttpClient();
         #endregion
 
         #region 健康检查
@@ -69,6 +74,18 @@ public class Startup
         });
         services.AddRouting(options => options.LowercaseUrls = true);
         #endregion
+
+
+        #region Multi Tenancy
+        services.Configure<TenantConfigurationOptions>(Configuration);
+        services.AddSingleton<ICurrentTenantAccessor, CurrentTenantAccessor>();
+        services.AddTransient<ICurrentTenant, CurrentTenant>();
+        services.AddTransient<IConnectionStringResolver, DefaultConnectionStringResolver>();
+        services.AddTransient<ITenantStore, DefaultTenantStore>();
+        services.AddTransient<ITenantResolver, TenantResolver>();
+        services.AddTransient<MultiTenancyMiddleware>();
+        #endregion
+
 
         services.AddApplicationModule(Configuration);
         services.AddInfraModule(Configuration);
@@ -102,6 +119,22 @@ public class Startup
         }
 
         var store = app.ApplicationServices.GetService<IJobInfoStore>();
+        InitJobsFromConfiguration(store);
+
+        app.UseStaticFiles();
+        app.UseRouting();
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapDefaultControllerRoute();
+        });
+    }
+
+    /// <summary>
+    /// 从配置文件中初始化job
+    /// </summary>
+    /// <param name="store"></param>
+    private void InitJobsFromConfiguration(IJobInfoStore store)
+    {
         var jobs = Configuration.GetSection("JobSettings").Get<List<JobSetting>>();
         if (jobs != null)
         {
@@ -111,6 +144,7 @@ public class Startup
                 {
                     continue;
                 }
+
                 store?.AddAsync(new JobInfoModel
                 {
                     Id = Guid.NewGuid().ToString("N"),
@@ -124,17 +158,13 @@ public class Startup
                 });
             }
         }
-
-        app.UseStaticFiles();
-        app.UseRouting();
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.MapDefaultControllerRoute();
-        });
     }
 
 
-
+    /// <summary>
+    /// 添加job对象
+    /// </summary>
+    /// <param name="services"></param>
     private static void AddJobs(IServiceCollection services)
     {
         Dictionary<string, Type> jobDefined = new();

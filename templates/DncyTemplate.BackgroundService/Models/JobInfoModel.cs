@@ -1,4 +1,5 @@
-﻿using Quartz;
+﻿using System.Net;
+using Quartz;
 
 namespace DncyTemplate.Job.Models;
 

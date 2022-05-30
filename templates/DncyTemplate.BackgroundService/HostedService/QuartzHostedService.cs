@@ -88,19 +88,16 @@ public class QuartzHostedService : IHostedService
 
 public class SingletonJobFactory : IJobFactory
 {
-    private readonly IServiceScopeFactory _serviceScopeFactory;
+    private readonly IServiceProvider _serviceProvider;
 
-    public SingletonJobFactory(IServiceScopeFactory serviceProvider)
+    public SingletonJobFactory(IServiceProvider serviceProvider)
     {
-        _serviceScopeFactory = serviceProvider;
+        _serviceProvider = serviceProvider;
     }
 
     public IJob NewJob(TriggerFiredBundle bundle, IScheduler scheduler)
     {
-        using (var scope = _serviceScopeFactory.CreateScope())
-        {
-            return scope.ServiceProvider.GetRequiredService<QuartzJobRunner>();
-        }
+        return _serviceProvider.GetRequiredService<QuartzJobRunner>();
     }
 
     public void ReturnJob(IJob job)

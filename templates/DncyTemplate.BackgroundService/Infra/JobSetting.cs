@@ -21,4 +21,5 @@ public class JobSetting
     public string Description { get; set; }
 
     public string Cron { get; set; }
+
 }

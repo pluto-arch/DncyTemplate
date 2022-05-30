@@ -1,10 +1,18 @@
 ﻿using DncyTemplate.Job.Infra.Stores;
 using DncyTemplate.Job.Models;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.ProjectModel;
+
 using Quartz;
+using Quartz.Impl.Triggers;
+
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DncyTemplate.Job.Jobs;
+using Microsoft.IdentityModel.Tokens;
+using Quartz.Spi;
+using static Quartz.Logging.OperationName;
 
 namespace DncyTemplate.Job.Controllers;
 
@@ -20,7 +28,10 @@ public partial class TaskController : Controller
     private readonly IJobLogStore _jobLogStore;
     [AutoInject]
     private readonly ISchedulerFactory _jobSchedularFactory;
-
+    [AutoInject]
+    private readonly ILogger<TaskController> _logger;
+    [AutoInject]
+    private readonly IJobFactory _jobFactory;
 
 
     public IActionResult Index()
@@ -162,4 +173,91 @@ public partial class TaskController : Controller
         List<JobLogModel> logs = await _jobLogStore.GetListAsync(jk);
         return Json(new { code = 0, msg = "操作成功", data = logs });
     }
+
+
+    /// <summary>
+    ///     作业日志
+    /// </summary>
+    /// <returns></returns>
+    [HttpPost]
+    public async Task<IActionResult> AddAsync(CreateJobModel request)
+    {
+        var job = new JobInfoModel
+        {
+            Id = Guid.NewGuid().ToString("N"),
+            TaskType = EnumTaskType.DynamicExecute,
+            TaskName = request.Name,
+            DisplayName = request.DisplayName,
+            GroupName = request.GroupName,
+            Interval = request.Interval,
+            Describe = request.Desc,
+            Status = EnumJobStates.Stopped,
+            ApiUrl = request.CallUrl
+        };
+        await _jobInfoStore.AddAsync(job);
+        var res = await AddNewJob(request);
+        if (!res)
+        {
+            return Json(new { code = -1, msg = "创建失败" });
+        }
+
+        job.Status = EnumJobStates.Normal;
+        await _jobInfoStore.UpdateAsync(job);
+        return Json(new { code = 0, msg = "操作成功", data = job.Id });
+    }
+
+
+    #region private
+
+    private async Task<bool> AddNewJob(CreateJobModel model)
+    {
+        try
+        {
+            var (success,corn) = IsValidExpression(model.Interval);
+            if (!success)
+            {
+                return false;
+            }
+            IJobDetail job = JobBuilder.Create<HttpResultfulJob>()
+                .WithIdentity(model.Name, model.GroupName)
+                .Build();
+            ITrigger trigger = TriggerBuilder.Create()
+                .WithIdentity(model.Name, model.GroupName)
+                .StartNow()
+                .WithDescription(model.Desc)
+                .WithCronSchedule(model.Interval)
+                .Build();
+            IScheduler scheduler = await _jobSchedularFactory.GetScheduler();
+
+            scheduler.JobFactory = _jobFactory;
+
+            await scheduler.ScheduleJob(job, trigger);
+            await scheduler.Start();
+            return true;
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, e.Message);
+            return false;
+        }
+    }
+
+
+    public static (bool, string) IsValidExpression(string cronExpression)
+    {
+        try
+        {
+            CronTriggerImpl trigger = new CronTriggerImpl();
+            trigger.CronExpressionString = cronExpression;
+            DateTimeOffset? date = trigger.ComputeFirstFireTimeUtc(null);
+            return (date != null, date == null ? $"请确认表达式{cronExpression}是否正确!" : "");
+        }
+        catch (Exception e)
+        {
+            return (false, $"请确认表达式{cronExpression}是否正确!{e.Message}");
+        }
+    }
+
+    #endregion
+
 }
