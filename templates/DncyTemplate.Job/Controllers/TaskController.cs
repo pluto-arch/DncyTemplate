@@ -59,7 +59,6 @@ public partial class TaskController : Controller
                 {
                     continue;
                 }
-
                 job.TriggerName = trigger.Key.Name;
                 job.LastRunTime = $"{dateTimeOffset.Value.LocalDateTime:yyyy-MM-dd HH:mm:ss}";
                 job.TriggerStatus = await scheduler.GetTriggerState(trigger.Key);
@@ -110,12 +109,9 @@ public partial class TaskController : Controller
         {
             return Json(new { code = -1, msg = "job不存在" });
         }
-
+       
         IScheduler scheduler = await _jobSchedularFactory.GetScheduler();
         JobKey jk = JobKey.Create(job.TaskName, job.GroupName);
-        await scheduler.ResumeJob(jk);
-        job.Status = EnumJobStates.Normal;
-        await _jobInfoStore.UpdateAsync(job);
         await _jobLogStore.RecordAsync(jk,
             new JobLogModel
             {
@@ -124,6 +120,9 @@ public partial class TaskController : Controller
                 State = EnumJobStates.Normal,
                 Message = "重启指令发送成功"
             });
+        await scheduler.ResumeJob(jk);
+        job.Status = EnumJobStates.Normal;
+        await _jobInfoStore.UpdateAsync(job);
         return Json(new { code = 0, msg = "操作成功" });
     }
 

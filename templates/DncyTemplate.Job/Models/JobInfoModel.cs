@@ -62,6 +62,11 @@ public class JobInfoModel
     public string RequestType { get; set; }
 
     /// <summary>
+    /// 远程调用超时时长
+    /// </summary>
+    public int RemoteCallTimeOut { get; set; } = 60;
+
+    /// <summary>
     ///     最后运行时间
     /// </summary>
     public string LastRunTime { get; set; }

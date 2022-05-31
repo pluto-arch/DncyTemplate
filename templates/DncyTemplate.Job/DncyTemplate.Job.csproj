@@ -23,6 +23,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="BackgroundJob\" />
 	  <Folder Include="Jobs\" />
 	  <Folder Include="HostedService\" />
 	  <Folder Include="Infra\Listenings\" />

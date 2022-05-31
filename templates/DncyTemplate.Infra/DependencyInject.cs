@@ -16,6 +16,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Serilog;
 using System.Reflection;
+using Microsoft.EntityFrameworkCore.Diagnostics.Internal;
+using Serilog.Extensions.Logging;
 
 namespace DncyTemplate.Infra
 {
@@ -27,7 +29,6 @@ namespace DncyTemplate.Infra
 
             service.AddEntityFrameworkSqlServer();
             service.AddSingleton<IConnectionStringResolve, DefaultConnectionStringResolve>();
-
             service.AddDbContextPool<DeviceCenterDbContext>((serviceProvider, optionsBuilder) =>
             {
                 optionsBuilder.UseSqlServer(configuration.GetConnectionString(DbConstants.DEFAULT_CONNECTIONSTRING_NAME),
@@ -36,23 +37,21 @@ namespace DncyTemplate.Infra
                         sqlOptions.MigrationsAssembly(Assembly.GetExecutingAssembly().GetName().Name);
                         sqlOptions.EnableRetryOnFailure(3, TimeSpan.FromSeconds(10), null);
                     });
+
                 var mediator = serviceProvider.GetService<IDomainEventDispatcher>() ?? NullDomainEventDispatcher.Instance;
                 optionsBuilder.AddInterceptors(new DataChangeSaveChangesInterceptor(mediator));
                 //多租户模式下解析租户连接字符串使用
                 var connectionStringResolve = serviceProvider.GetRequiredService<IConnectionStringResolve>();
                 optionsBuilder.AddInterceptors(new TenantDbConnectionInterceptor(connectionStringResolve, DbConstants.DEFAULT_CONNECTIONSTRING_NAME));
+                
                 optionsBuilder.UseInternalServiceProvider(serviceProvider);
-
 #if DEBUG
                 optionsBuilder.EnableSensitiveDataLogging();
 #endif
-                ////分表使用 - 替换ef的缓存，造成性能会下降
-                //optionsBuilder.ReplaceService<IModelCacheKeyFactory, DynamicModelCacheKeyFactory>();
-
             });
 
-
-
+            //分表使用 - 替换ef的缓存，造成性能会下降 并且不能使用 AddDbContextPool.
+            //service.Replace(ServiceDescriptor.Singleton<IModelCacheKeyFactory, DeviceCenterDbContext.DynamicModelCacheKeyFactory>());
 
             ApplyEntityDefaultNavicationProperty(service);
             AddUnitofWork(service);

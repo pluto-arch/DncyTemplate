@@ -11,6 +11,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using DncyTemplate.Job.Infra.Stores;
+using DncyTemplate.Job.Jobs;
+using DncyTemplate.Job.Models;
 
 namespace DncyTemplate.Job.HostedService;
 
@@ -18,19 +21,19 @@ public class QuartzHostedService : IHostedService
 {
     private readonly JobDefined _jobDefined;
     private readonly IJobFactory _jobFactory;
-    private readonly IEnumerable<JobSetting> _jobs;
+    private readonly IJobInfoStore _jobStore;
 
     private readonly ISchedulerFactory _schedulerFactory;
     private readonly IServiceProvider _serviceProvider;
 
-    public QuartzHostedService(ISchedulerFactory schedulerFactory, IConfiguration configuration,
+    public QuartzHostedService(ISchedulerFactory schedulerFactory, IJobInfoStore jobStore,
         IJobFactory jobFactory, JobDefined jobDefined, IServiceProvider serviceProvider)
     {
         _schedulerFactory = schedulerFactory;
         _jobFactory = jobFactory;
         _jobDefined = jobDefined;
         _serviceProvider = serviceProvider;
-        _jobs = configuration.GetSection("JobSettings").Get<List<JobSetting>>();
+        _jobStore = jobStore;
     }
 
     public IScheduler Scheduler { get; set; }
@@ -46,31 +49,51 @@ public class QuartzHostedService : IHostedService
             GroupMatcher<JobKey>.AnyGroup());
         //Scheduler.ListenerManager.AddTriggerListener(triggerListener ?? new NullTriggerListener(), GroupMatcher<TriggerKey>.AnyGroup());
         Dictionary<string, Type> jobDic = _jobDefined.JobDictionary;
-        foreach (JobSetting jobInfo in _jobs)
+
+
+        var jobs = await _jobStore.GetListAsync();
+        if (jobs==null||!jobs.Any())
         {
-            Type type = jobDic.FirstOrDefault(x => x.Key == jobInfo.Name).Value;
-            if (type == null)
-            {
-                continue;
-            }
-
-            if (!jobInfo.IsOpen)
-            {
-                continue;
-            }
-
-            IJobDetail job = JobBuilder.Create(type)
-                .WithIdentity(jobInfo.Name, jobInfo.GroupName)
-                .WithDescription(jobInfo.Description)
-                .Build();
-            ITrigger trigger = TriggerBuilder.Create()
-                .WithIdentity($"{jobInfo.Name}.trigger")
-                .WithCronSchedule(jobInfo.Cron)
-                .StartNow()
-                .Build();
-            await Scheduler.ScheduleJob(job, trigger, cancellationToken);
+            return;
         }
 
+        foreach (var jobInfo in jobs)
+        {
+            if (jobInfo.TaskType==EnumTaskType.StaticExecute)
+            {
+                var type = jobDic.FirstOrDefault(x => x.Key == jobInfo.TaskName).Value;
+                if (type == null)
+                    continue;
+                IJobDetail job = JobBuilder.Create(type)
+                    .WithIdentity(jobInfo.TaskName, jobInfo.GroupName)
+                    .WithDescription(jobInfo.Describe)
+                    .Build();
+                var triggerBuilder = TriggerBuilder.Create()
+                    .WithIdentity(jobInfo.TaskName, jobInfo.GroupName)
+                    .WithCronSchedule(jobInfo.Interval);
+                if (jobInfo.Status==EnumJobStates.Normal)
+                {
+                    triggerBuilder.StartNow();
+                }
+                await Scheduler.ScheduleJob(job, triggerBuilder.Build(), cancellationToken);
+            }
+            else
+            {
+                IJobDetail job = JobBuilder.Create<HttpResultfulJob>()
+                    .WithIdentity(jobInfo.TaskName, jobInfo.GroupName)
+                    .Build();
+                var triggerBuilder = TriggerBuilder.Create()
+                    .WithIdentity(jobInfo.TaskName, jobInfo.GroupName)
+                    .WithDescription(jobInfo.Describe)
+                    .WithCronSchedule(jobInfo.Interval);
+                if (jobInfo.Status==EnumJobStates.Normal)
+                {
+                    triggerBuilder.StartNow();
+                }
+                await Scheduler.ScheduleJob(job, triggerBuilder.Build(), cancellationToken);
+            }
+
+        }
         await Scheduler.Start(cancellationToken);
     }
 

@@ -1,7 +1,10 @@
-﻿using DncyTemplate.Domain.Aggregates.Product;
+﻿using Dncy.MultiTenancy;
+using DncyTemplate.Domain.Aggregates.Product;
+using DncyTemplate.Domain.Infra;
 using DncyTemplate.Domain.UnitOfWork;
 using DncyTemplate.Infra.EntityFrameworkCore.EntityTypeConfig;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 
@@ -11,7 +14,6 @@ public class DeviceCenterDbContext : BaseDbContext<DeviceCenterDbContext>, IUowD
         : base(options)
     {
     }
-
 
     public DbSet<Product> Products { get; set; }
 
@@ -29,19 +31,43 @@ public class DeviceCenterDbContext : BaseDbContext<DeviceCenterDbContext>, IUowD
     }
 
 
-    ///// <summary>
-    ///// 动态获取efcore的IModel  会造成性能下降
-    ///// 这里返回租户提供程序，从而每次都走 OnModelCreating  表名就可以按租户进行分表了
-    ///// TabRoute 是dbcontext公开的分表路由，这个可以自定义
-    ///// </summary>
-    //public class DynamicModelCacheKeyFactory : IModelCacheKeyFactory
-    //{
-    //    public object Create(DbContext context)
-    //    {
-    //        return context is DeviceCenterDbContext shardingContext
-    //            ? (context.GetType(), TabRoute: shardingContext.TabRoute)
-    //            : (object)context.GetType();
-    //    }
-    //}
+    /*
+    /// <summary>
+    /// 动态执行 Create ，如果返回和上一次不一样，则会重新走 dbcontext的 OnModelCreating 从而可以实现分表，但是会影响性能
+    /// </summary>
+    public class DynamicModelCacheKeyFactory : IModelCacheKeyFactory
+    {
+        private readonly ICurrentTenant _currentTenant;
+
+        public DynamicModelCacheKeyFactory(ICurrentTenant currentTenant)
+        {
+            _currentTenant = currentTenant;
+        }
+
+        public object Create(DbContext context)
+        {
+            if (context is DeviceCenterDbContext dynamicContext)
+            {
+                dynamicContext.TabRoute = _currentTenant.Id;
+                return (context.GetType(), _currentTenant.Id);
+            }
+            return (object)context.GetType();
+        }
+
+#if NET6_0
+        public object Create(DbContext context, bool designTime)
+        {
+            if (context is DeviceCenterDbContext dynamicContext)
+            {
+                dynamicContext.TabRoute = _currentTenant.Id;
+                return (context.GetType(), _currentTenant.Id);
+            }
+            return (object)context.GetType();
+        }
+#endif
+
+    }
+    */
+
 
 }

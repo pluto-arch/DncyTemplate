@@ -107,8 +107,9 @@
                             { field: 'id', title: 'ID', type: 'checkbox' },
                             { field: 'groupName', title: '组别', width: 150 },
                             { field: 'displayName', title: '作业名称', width: 150 },
+                            { field: 'taskType', title: '类型', width: 120,templet: '#type' },
                             { field: 'describe', title: '描述' },
-                            { field: 'interval', title: 'corn表达式', width: 100 },
+                            { field: 'interval', title: 'corn表达式', width: 120 },
                             { field: 'status', title: '状态', templet: '#state', width: 80 },
                             { field: 'triggerName', title: '触发器名称', width: 200 },
                             { field: 'lastRunTime', title: '上次触发时间', width: 200 },
@@ -304,6 +305,16 @@
         <span class="layui-font-gray">阻塞</span>
         {{# } else if(d.status===6) { }}
         <span class="layui-font-orange">停止</span>
+        {{# } }}
+    </script>
+    
+    <script type="text/html" id="type">
+        {{# if(d.taskType===1) { }}
+        <span class="layui-font-gray">静态DLL</span>
+        {{# } else if(d.taskType===2) { }}
+        <span class="layui-font-green">动态调用</span>
+        {{# } else { }}
+        <span class="layui-font-blue">未知</span>
         {{# } }}
     </script>
 

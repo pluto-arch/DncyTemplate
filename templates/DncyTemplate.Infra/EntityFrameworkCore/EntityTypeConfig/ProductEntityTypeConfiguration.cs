@@ -1,4 +1,5 @@
-﻿using DncyTemplate.Domain.Aggregates.Product;
+﻿using System.Linq.Expressions;
+using DncyTemplate.Domain.Aggregates.Product;
 using DncyTemplate.Infra.Providers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -37,7 +38,7 @@ public class ProductEntityTypeConfiguration : IEntityTypeConfiguration<Product>
 {
     public void Configure(EntityTypeBuilder<Product> builder)
     {
-        builder.ToTable("Products");
+        builder.ToTable($"Products");
         builder.HasKey(e => e.Id);
         builder.Property(x => x.Id)
             .ValueGeneratedOnAdd()

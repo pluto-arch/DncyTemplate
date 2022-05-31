@@ -92,11 +92,10 @@ public class Startup
         services.AddDomainModule();
 
 
-
         #region QZ
         services.AddSingleton<IJobListener, CustomJobListener>();
         services.AddSingleton<ITriggerListener, CustomTriggerListener>();
-        services.AddTransient<IJobInfoStore, InMemoryJobStore>();
+        services.AddTransient<IJobInfoStore, JsonFileJobStore>();
         services.AddTransient<IJobLogStore, InMemoryJobLog>();
         services.AddTransient<QuartzJobRunner>();
         services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
@@ -130,7 +129,7 @@ public class Startup
     }
 
     /// <summary>
-    /// 从配置文件中初始化job
+    /// 从配置文件中初始化静态job
     /// </summary>
     /// <param name="store"></param>
     private void InitJobsFromConfiguration(IJobInfoStore store)
@@ -162,7 +161,7 @@ public class Startup
 
 
     /// <summary>
-    /// 添加job对象
+    /// 注入静态的job对象
     /// </summary>
     /// <param name="services"></param>
     private static void AddJobs(IServiceCollection services)

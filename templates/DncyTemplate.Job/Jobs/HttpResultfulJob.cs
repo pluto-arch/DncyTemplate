@@ -32,7 +32,7 @@ namespace DncyTemplate.Job.Jobs
             var client = _httpClientFactory.CreateClient(jobInfo.TaskName);
             var request = new HttpRequestMessage(HttpMethod.Get, jobInfo.ApiUrl);
             var response = await client.SendAsync(request);
-            var resstring = response.Content.ReadAsStringAsync();
+            var resstring = await response.Content.ReadAsStringAsync();
             _logger.LogInformation("call apiurl [{apiUrl}] result : {result}", jobInfo.ApiUrl, resstring);
         }
     }

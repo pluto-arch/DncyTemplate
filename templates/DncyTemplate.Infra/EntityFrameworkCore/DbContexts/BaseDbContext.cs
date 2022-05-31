@@ -15,7 +15,6 @@ public class BaseDbContext<TContext> : DbContext where TContext : DbContext, IUo
     {
     }
 
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         foreach (IMutableEntityType item in modelBuilder.Model.GetEntityTypes())
