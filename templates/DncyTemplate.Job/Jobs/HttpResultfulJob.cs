@@ -1,6 +1,7 @@
 ﻿using System.Net.Http;
 using DncyTemplate.Job.Infra;
 using DncyTemplate.Job.Infra.Stores;
+using NuGet.Protocol;
 using Quartz;
 
 using static Quartz.Logging.OperationName;
@@ -34,6 +35,7 @@ namespace DncyTemplate.Job.Jobs
             var response = await client.SendAsync(request);
             var resstring = await response.Content.ReadAsStringAsync();
             _logger.LogInformation("call apiurl [{apiUrl}] result : {result}", jobInfo.ApiUrl, resstring);
+            context.Result=JsonConvert.SerializeObject(new {code="successed",data=$"{DateTime.Now:yyyyMMddHHmmssfff}"});
         }
     }
 }

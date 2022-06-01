@@ -1,6 +1,4 @@
-﻿using System.Collections.Immutable;
-using System.Runtime.InteropServices;
-using DncyTemplate.Job.Models;
+﻿using DncyTemplate.Job.Models;
 using Quartz;
 
 namespace DncyTemplate.Job.Infra.Stores;
@@ -10,8 +8,6 @@ public class JsonFileJobStore: IJobInfoStore
 
     private readonly string _defaultDir;
     private readonly string _defaultJobFile;
-    private readonly object _lock = new object();
-
     public JsonFileJobStore(IHostEnvironment env)
     {
         _defaultDir = Path.Combine(env.ContentRootPath, "BackgroundJob");

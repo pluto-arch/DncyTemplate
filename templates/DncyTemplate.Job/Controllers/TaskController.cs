@@ -1,19 +1,9 @@
 ﻿using DncyTemplate.Job.Infra.Stores;
 using DncyTemplate.Job.Models;
-using Microsoft.AspNetCore.Mvc;
-using NuGet.ProjectModel;
-
 using Quartz;
 using Quartz.Impl.Triggers;
-
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using DncyTemplate.Job.Jobs;
-using Microsoft.IdentityModel.Tokens;
 using Quartz.Spi;
-using static Quartz.Logging.OperationName;
-
 namespace DncyTemplate.Job.Controllers;
 
 /// <summary>
@@ -46,9 +36,10 @@ public partial class TaskController : Controller
     /// <returns></returns>
     public async Task<IActionResult> TasksAsync()
     {
-        List<JobInfoModel> jobs = await _jobInfoStore.GetListAsync();
+        var jobs = await _jobInfoStore.GetListAsync();
+        jobs = jobs?.OrderBy(x => x.Id)?.ToList();
         IScheduler scheduler = await _jobSchedularFactory.GetScheduler();
-        foreach (JobInfoModel job in jobs)
+        foreach (JobInfoModel job in jobs??new List<JobInfoModel>())
         {
             IReadOnlyCollection<ITrigger> triggers =
                 await scheduler.GetTriggersOfJob(JobKey.Create(job.TaskName, job.GroupName));
@@ -65,7 +56,7 @@ public partial class TaskController : Controller
             }
         }
 
-        return Json(new { code = 0, data = jobs, msg = "加载成功", count = jobs.Count });
+        return Json(new { code = 0, data = jobs, msg = "加载成功", count = jobs?.Count??0 });
     }
 
     /// <summary>
@@ -212,7 +203,7 @@ public partial class TaskController : Controller
     {
         try
         {
-            var (success,corn) = IsValidExpression(model.Interval);
+            var (success,_) = IsValidExpression(model.Interval);
             if (!success)
             {
                 return false;
@@ -236,7 +227,7 @@ public partial class TaskController : Controller
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            _logger.LogError(e, "message: {msg}",e.Message);
             return false;
         }
     }
@@ -246,8 +237,10 @@ public partial class TaskController : Controller
     {
         try
         {
-            CronTriggerImpl trigger = new CronTriggerImpl();
-            trigger.CronExpressionString = cronExpression;
+            CronTriggerImpl trigger = new ()
+            {
+                CronExpressionString = cronExpression
+            };
             DateTimeOffset? date = trigger.ComputeFirstFireTimeUtc(null);
             return (date != null, date == null ? $"请确认表达式{cronExpression}是否正确!" : "");
         }

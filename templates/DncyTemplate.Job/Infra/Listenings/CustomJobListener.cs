@@ -56,8 +56,7 @@ public class CustomJobListener : IJobListener
     }
 
     /// <inheritdoc />
-    public Task JobWasExecuted(IJobExecutionContext context, JobExecutionException jobException,
-        CancellationToken cancellationToken = new())
+    public Task JobWasExecuted(IJobExecutionContext context, JobExecutionException jobException, CancellationToken cancellationToken = new())
     {
         JobKey job = context.JobDetail.Key;
         bool hasException = jobException != null;
@@ -67,7 +66,7 @@ public class CustomJobListener : IJobListener
                 Time = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss}",
                 RunSeconds = context.JobRunTime.Seconds,
                 State = hasException ? EnumJobStates.Exception : EnumJobStates.Normal,
-                Message = jobException?.Message
+                Message = jobException?.Message??context.Result?.ToString()??""
             });
         return Task.CompletedTask;
     }

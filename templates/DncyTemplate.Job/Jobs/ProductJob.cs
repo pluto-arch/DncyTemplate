@@ -28,5 +28,6 @@ public class ProductJob : IJob, IBackgroundJob
         await Task.Delay(1000);
         _logger.LogInformation("设备总数：{count}", count);
         // TODO operator database
+        context.Result = JsonConvert.SerializeObject(new {deviceCount = count});
     }
 }
