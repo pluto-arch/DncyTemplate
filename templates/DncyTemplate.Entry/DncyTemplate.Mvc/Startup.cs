@@ -50,7 +50,6 @@ public class Startup
         //services.AddCustomHealthCheck(Configuration);
         #endregion
 
-
         #region 缓存
         services.AddMemoryCache(options =>
         {

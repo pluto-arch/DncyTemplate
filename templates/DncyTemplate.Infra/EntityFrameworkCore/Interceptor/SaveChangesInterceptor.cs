@@ -61,14 +61,14 @@ public class DataChangeSaveChangesInterceptor : SaveChangesInterceptor
 
     private async Task DispatchDomainEventsAsync(DbContext dbContext, CancellationToken cancellationToken = default)
     {
-        IEnumerable<IDomainEvents> domainEntities =
-            dbContext.ChangeTracker.Entries<IDomainEvents>().Select(e => e.Entity);
-        List<INotification> domainEvents = domainEntities.SelectMany(x => x.DomainEvents).ToList();
+        var domainEntities = dbContext.ChangeTracker.Entries<IDomainEvents>().Select(e => e.Entity);
+        var domainEvents = domainEntities.SelectMany(x => x.DomainEvents).ToList();
         domainEntities.ToList().ForEach(entity => entity.ClearDomainEvents());
-        foreach (INotification domainEvent in domainEvents)
+        foreach (var domainEvent in domainEvents)
         {
             await _dispatcher.Dispatch(domainEvent, cancellationToken);
         }
+
     }
 
 }

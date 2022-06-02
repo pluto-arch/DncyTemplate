@@ -20,6 +20,11 @@
 	<ItemGroup>
 		<None Remove="DncyTemplate.Application.xml" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Permission\" />
+	  <Folder Include="Constants\" />
+	</ItemGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<DocumentationFile>DncyTemplate.Application.xml</DocumentationFile>
 		<WarningsAsErrors>NU1605</WarningsAsErrors>

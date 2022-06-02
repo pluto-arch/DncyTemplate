@@ -2,14 +2,9 @@
 using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 using DncyTemplate.Job.Infra.Stores;
 using DncyTemplate.Job.Models;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Polly;
 using Quartz;
 using Serilog.Context;
-using System;
-using System.Threading.Tasks;
 
 namespace DncyTemplate.Job.Infra;
 
@@ -29,8 +24,7 @@ public class QuartzJobRunner : IJob
 
     private readonly IServiceProvider _serviceProvider;
 
-    public QuartzJobRunner(IServiceProvider serviceProvider, IConfiguration configuration,
-        ILogger<QuartzJobRunner> logger)
+    public QuartzJobRunner(IServiceProvider serviceProvider, IConfiguration configuration, ILogger<QuartzJobRunner> logger)
     {
         _serviceProvider = serviceProvider;
         _retryCount = configuration.GetValue<int>("JobRetry:RetryCount");
@@ -52,7 +46,7 @@ public class QuartzJobRunner : IJob
             try
             {
                 var policy = Policy.Handle<Exception>()
-                    .WaitAndRetryAsync(_retryCount, retryAttempt => TimeSpan.FromSeconds(_retryAttempt),
+                    .WaitAndRetryAsync(_retryCount, _ => TimeSpan.FromSeconds(_retryAttempt),
                         async (ex, time) =>
                         {
                             _logger.LogWarning("{jobType} has an error : {ex}. retry after {time}s ", jobType.Name,
@@ -69,7 +63,7 @@ public class QuartzJobRunner : IJob
                     );
                 await policy.ExecuteAsync(async () =>
                 {
-                    if (scope.ServiceProvider.GetRequiredService(jobType) is not IJob job)
+                    if (scope.ServiceProvider.GetRequiredService(jobType) is not IJob jobToExecute)
                     {
                         _logger.LogWarning("no {jobType} found !", jobType.Name);
                     }
@@ -78,7 +72,7 @@ public class QuartzJobRunner : IJob
                         IUnitOfWork<DeviceCenterDbContext> uow = scope.ServiceProvider
                             .GetRequiredService<IUnitOfWork<DeviceCenterDbContext>>();
                         _logger.LogInformation("{jobType} executing...", jobType.Name);
-                        await job.Execute(context);
+                        await jobToExecute.Execute(context);
                         await uow.SaveChangesAsync();
                         _logger.LogInformation("{jobType} has been executed, and all changes has been saved",
                             jobType.Name);
@@ -93,7 +87,7 @@ public class QuartzJobRunner : IJob
                     Time = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss}",
                     RunSeconds = context.JobRunTime.Seconds,
                     State = EnumJobStates.Exception,
-                    Message = e?.Message
+                    Message = e.Message
                 });
                 var jobModel = await jobInfoStore.GetAsync(job);
                 jobModel.Status = EnumJobStates.Exception;

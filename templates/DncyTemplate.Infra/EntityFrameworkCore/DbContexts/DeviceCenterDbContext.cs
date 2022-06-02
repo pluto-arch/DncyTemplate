@@ -1,5 +1,6 @@
 ﻿using Dncy.MultiTenancy;
 using DncyTemplate.Domain.Aggregates.Product;
+using DncyTemplate.Domain.Aggregates.System;
 using DncyTemplate.Domain.Infra;
 using DncyTemplate.Domain.UnitOfWork;
 using DncyTemplate.Infra.EntityFrameworkCore.EntityTypeConfig;
@@ -21,13 +22,15 @@ public class DeviceCenterDbContext : BaseDbContext<DeviceCenterDbContext>, IUowD
 
     public DbSet<DeviceTag> DeviceTag { get; set; }
 
+    public DbSet<PermissionGrant> PermissionGrants { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder); // 不能去除，对租户，软删除过滤器
         modelBuilder.ApplyConfiguration(new DeviceEntityTypeConfiguration())
             .ApplyConfiguration(new DeviceTagEntityTypeConfiguration())
-            .ApplyConfiguration(new ProductEntityTypeConfiguration());
+            .ApplyConfiguration(new ProductEntityTypeConfiguration())
+            .ApplyConfiguration(new PermissionEntityTypeConfiguration());
     }
 
 

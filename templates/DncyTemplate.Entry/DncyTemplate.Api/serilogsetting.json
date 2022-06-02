@@ -3,12 +3,12 @@
     "Using": [ "Serilog.Sinks.Console" ],
     "Enrich": [ "FromLogContext", "WithMachineName" ],
     "MinimumLevel": {
-      "Default": "Information",
+      "Default": "Debug",
       "Override": {
-        "System": "Error",
-        "Microsoft": "Error",
+        "System": "Debug",
+        "Microsoft": "Debug",
         "Microsoft.EntityFrameworkCore": "Error",
-        "Microsoft.EntityFrameworkCore.Database.Command": "Information"
+        "Microsoft.EntityFrameworkCore.Database.Command": "Error"
       }
     },
     "WriteTo": [

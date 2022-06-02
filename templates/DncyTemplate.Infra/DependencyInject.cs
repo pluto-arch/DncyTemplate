@@ -44,7 +44,7 @@ namespace DncyTemplate.Infra
                 var connectionStringResolve = serviceProvider.GetRequiredService<IConnectionStringResolve>();
                 optionsBuilder.AddInterceptors(new TenantDbConnectionInterceptor(connectionStringResolve, DbConstants.DEFAULT_CONNECTIONSTRING_NAME));
                 
-                optionsBuilder.UseInternalServiceProvider(serviceProvider);
+                //optionsBuilder.UseInternalServiceProvider(serviceProvider);
 #if DEBUG
                 optionsBuilder.EnableSensitiveDataLogging();
 #endif

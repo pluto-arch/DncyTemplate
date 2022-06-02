@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using DncyTemplate.Domain.Aggregates.Product;
+using DncyTemplate.Domain.Aggregates.System;
 using DncyTemplate.Infra.Providers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -46,5 +47,20 @@ public class ProductEntityTypeConfiguration : IEntityTypeConfiguration<Product>
         builder.Ignore(e => e.DomainEvents);
         builder.Property(e => e.Name).HasMaxLength(20);
         builder.Property(e => e.Remark).HasMaxLength(100);
+    }
+}
+
+
+public class PermissionEntityTypeConfiguration : IEntityTypeConfiguration<PermissionGrant>
+{
+    /// <inheritdoc />
+    public void Configure(EntityTypeBuilder<PermissionGrant> builder)
+    {
+        builder.ToTable("PermissionGrant");
+        builder.HasKey(x => x.Id);
+        builder.Property(x => x.Id).ValueGeneratedOnAdd();
+        builder.Property(x => x.Name).HasMaxLength(300).IsRequired();
+        builder.Property(x => x.ProviderName).HasMaxLength(300).IsRequired();
+        builder.Property(x => x.ProviderKey).HasMaxLength(300).IsRequired();
     }
 }

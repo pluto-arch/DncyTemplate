@@ -7,8 +7,9 @@
 
 	<ItemGroup>
 		<PackageReference Include="Dncy.Microsoft.DependencyInjection.Generator" Version="1.0.3" />
-		<PackageReference Include="Dncy.MultiTenancy" Version="1.0.2" />
-		<PackageReference Include="Dncy.Specifications" Version="1.0.0" />
+		<PackageReference Include="Dncy.MultiTenancy" Version="1.0.3" />
+		<PackageReference Include="Dncy.Permission" Version="1.0.10" />
+		<PackageReference Include="Dncy.Specifications" Version="1.0.1" />
 		<PackageReference Include="Dncy.Tools.Core" Version="1.0.5" />
 		<PackageReference Include="MediatR" Version="10.0.1" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
@@ -17,6 +18,7 @@
 	<ItemGroup>
 	  <Folder Include="Aggregates\Product\" />
 	  <Folder Include="Aggregates\Tenancy\" />
+	  <Folder Include="Aggregates\System\" />
 	  <Folder Include="Exceptions\" />
 	  <Folder Include="Collections\" />
 	</ItemGroup>

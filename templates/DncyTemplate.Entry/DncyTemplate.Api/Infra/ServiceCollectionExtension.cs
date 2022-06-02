@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using DncyTemplate.Api.Infra.Authorization;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DncyTemplate.Api.Infra;
 
@@ -53,7 +55,7 @@ public static class ServiceCollectionExtension
 
             c.UseAllOfToExtendReferenceSchemas();
 
-            c.OperationFilter<AddRequiredHeaderParameter>();
+            //c.OperationFilter<AddRequiredHeaderParameter>();
 
             c.AddSecurityDefinition("Bearer", //Name the security scheme
                 new OpenApiSecurityScheme
@@ -100,6 +102,18 @@ public static class ServiceCollectionExtension
             .AddCheck<MemoryHealthCheck>("memory_check", failureStatus: HealthStatus.Degraded);
         //.AddCheck<DatabaseHealthCheck>("database_check", failureStatus: HealthStatus.Unhealthy,
         //    tags: new string[] { "database", "sqlServer" });
+        return services;
+    }
+
+    /// <summary>
+    /// 添加动态授权策略
+    /// </summary>
+    /// <param name="services"></param>
+    /// <returns></returns>
+    public static IServiceCollection AddDynamicPolicyAuthorize(this IServiceCollection services)
+    {
+        services.AddSingleton<IAuthorizationPolicyProvider, DynamicAuthorizationPolicyProvider>();
+        services.AddScoped<IAuthorizationHandler, PermissionRequirementHandler>();
         return services;
     }
 
