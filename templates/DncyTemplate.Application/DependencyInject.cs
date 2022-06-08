@@ -21,7 +21,6 @@ namespace DncyTemplate.Application
 
 
             services.AddTransient<IPermissionGrantStore, EfCorePermissionGrantStore>();
-            // default  InMemoryPermissionManager use ConcurrentDictionary to cache some info
             services.AddTransient<IPermissionManager, CachedPermissionManager>(); 
             services.AddTransient<IPermissionValueProvider, RolePermissionValueProvider>();
             services.AddTransient<IPermissionValueProvider, UserPermissionValueProvider>();

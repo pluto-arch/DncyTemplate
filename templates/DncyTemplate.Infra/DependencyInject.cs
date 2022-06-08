@@ -16,8 +16,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Serilog;
 using System.Reflection;
-using Microsoft.EntityFrameworkCore.Diagnostics.Internal;
-using Serilog.Extensions.Logging;
 
 namespace DncyTemplate.Infra
 {

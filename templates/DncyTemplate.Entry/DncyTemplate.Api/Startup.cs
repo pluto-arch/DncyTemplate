@@ -33,7 +33,7 @@ public class Startup
             .AddXmlDataContractSerializerFormatters()
             .AddDataAnnotationsLocalization()
             .ConfigCustomApiBehaviorOptions();
-
+        services.AddCustomCompression();
         #endregion
 
         #region 健康检查
@@ -86,6 +86,7 @@ public class Startup
                     ClockSkew = TimeSpan.FromMinutes(30),
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("715B59F3CDB1CF8BC3E7C8F13794CEA9"))
                 };
+                options.RequireHttpsMetadata = false;
             }); // 认证
         services.AddAuthorization() // 授权
             .AddDynamicPolicyAuthorize();
@@ -99,13 +100,10 @@ public class Startup
 
     public void Configure(IApplicationBuilder app, IHostEnvironment env)
     {
-        ForwardedHeadersOptions options = new()
-        {
-            ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-        };
-        options.KnownNetworks.Clear();
-        options.KnownProxies.Clear();
-        app.UseForwardedHeaders(options).UseCertificateForwarding();
+
+        app.UseResponseCompression();
+        app.UseForwardedHeaders()
+            .UseCertificateForwarding();
 
         app.UseHttpRequestLogging();
 
@@ -119,8 +117,8 @@ public class Startup
             app.UseExceptionHandle();
 
             // not necessary if using reverse proxy with ssl, like nginx with ssl proxy
-            app.UseHttpsRedirection();
             app.UseHsts();
+            app.UseHttpsRedirection();
         }
 
 

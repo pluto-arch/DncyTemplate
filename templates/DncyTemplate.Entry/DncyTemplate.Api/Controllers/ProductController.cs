@@ -2,6 +2,7 @@
 using DncyTemplate.Domain.Aggregates.Product;
 using DncyTemplate.Domain.Repository;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 namespace DncyTemplate.Api.Controllers

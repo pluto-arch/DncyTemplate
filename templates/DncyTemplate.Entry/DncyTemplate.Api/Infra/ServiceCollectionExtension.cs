@@ -1,4 +1,5 @@
-﻿using DncyTemplate.Api.Infra.ApiDoc;
+﻿using System.IO.Compression;
+using DncyTemplate.Api.Infra.ApiDoc;
 using DncyTemplate.Api.Infra.HealthChecks;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -6,6 +7,7 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 using DncyTemplate.Api.Infra.Authorization;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.ResponseCompression;
 
 namespace DncyTemplate.Api.Infra;
 
@@ -114,6 +116,36 @@ public static class ServiceCollectionExtension
     {
         services.AddSingleton<IAuthorizationPolicyProvider, DynamicAuthorizationPolicyProvider>();
         services.AddScoped<IAuthorizationHandler, PermissionRequirementHandler>();
+        return services;
+    }
+
+
+
+    /// <summary>
+    /// 添加自定义响应压缩
+    /// </summary>
+    /// <param name="services"></param>
+    /// <returns></returns>
+    public static IServiceCollection AddCustomCompression(this IServiceCollection services)
+    {
+        services.AddResponseCompression(options =>
+        {
+            options.EnableForHttps = true;
+            options.Providers.Add<BrotliCompressionProvider>();
+            options.Providers.Add<GzipCompressionProvider>();
+            options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[]
+            {
+                "text/html; charset=utf-8", "application/xhtml+xml", "application/atom+xml", "image/svg+xml",
+                "text/css", "text/html", "text/json","application/json"
+            });
+        });
+        services.Configure<BrotliCompressionProviderOptions>(options =>
+        {
+            options.Level = CompressionLevel.Fastest;
+        }).Configure<GzipCompressionProviderOptions>(options =>
+        {
+            options.Level = CompressionLevel.SmallestSize;
+        });
         return services;
     }
 
