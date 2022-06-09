@@ -1,7 +1,5 @@
 ﻿using DncyTemplate.Job.Models;
 using Quartz;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace DncyTemplate.Job.Infra.Stores;
 

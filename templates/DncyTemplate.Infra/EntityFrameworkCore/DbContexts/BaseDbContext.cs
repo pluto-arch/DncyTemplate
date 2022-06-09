@@ -2,12 +2,9 @@
 using DncyTemplate.Domain.Infra;
 using DncyTemplate.Domain.UnitOfWork;
 using DncyTemplate.Infra.EntityFrameworkCore.Extension;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 
@@ -18,7 +15,6 @@ public class BaseDbContext<TContext> : DbContext where TContext : DbContext, IUo
     {
     }
 
-   
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

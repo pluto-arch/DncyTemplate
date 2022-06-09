@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace DncyTemplate.Job.Infra;
+﻿namespace DncyTemplate.Job.Infra;
 
 public class JobDefined
 {

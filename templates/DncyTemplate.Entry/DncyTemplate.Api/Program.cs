@@ -37,31 +37,9 @@ public class Program
                         .UseIISIntegration()
                         .CaptureStartupErrors(false);
             })
-            .ConfigureAppConfiguration((context, builder) =>
-            {
-                IHostEnvironment env = context.HostingEnvironment;
-                IConfiguration baseConfig = GetConfiguration(env);
-                builder.AddConfiguration(baseConfig);
-            })
             .UseSerilog(dispose: true)
             .Build();
         return host;
-    }
-
-
-    /// <summary>
-    /// 加载应用配置
-    /// </summary>
-    /// <param name="env"></param>
-    /// <returns></returns>
-    private static IConfiguration GetConfiguration(IHostEnvironment env)
-    {
-        IConfigurationBuilder builder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", false, true)
-            .AddJsonFile($"appsettings.{env.EnvironmentName}.json", false, true)
-            .AddEnvironmentVariables();
-        return builder.Build();
     }
 
 

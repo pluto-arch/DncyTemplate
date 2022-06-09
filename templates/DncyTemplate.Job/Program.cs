@@ -5,7 +5,6 @@ namespace DncyTemplate.Job
     using Microsoft.Extensions.Hosting;
     using Serilog;
     using System;
-    using System.IO;
 
     public class Program
     {
@@ -42,12 +41,6 @@ namespace DncyTemplate.Job
                         .UseIISIntegration()
                         .CaptureStartupErrors(false);
                 })
-                .ConfigureAppConfiguration((context, builder) =>
-                {
-                    IHostEnvironment env = context.HostingEnvironment;
-                    IConfiguration baseConfig = GetConfiguration(env);
-                    builder.AddConfiguration(baseConfig);
-                })
                 .UseSerilog(dispose: true);
         }
 
@@ -58,23 +51,8 @@ namespace DncyTemplate.Job
         /// <returns></returns>
         private static IConfiguration GetLogConfig()
         {
-            IConfigurationBuilder builder = new ConfigurationBuilder()
+            var builder = new ConfigurationBuilder()
                 .AddJsonFile("serilogsetting.json", false, true);
-            return builder.Build();
-        }
-
-        /// <summary>
-        ///     º”‘ÿ≈‰÷√
-        /// </summary>
-        /// <param name="env"></param>
-        /// <returns></returns>
-        private static IConfiguration GetConfiguration(IHostEnvironment env)
-        {
-            IConfigurationBuilder builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", false, true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", false, true)
-                .AddEnvironmentVariables();
             return builder.Build();
         }
     }

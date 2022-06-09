@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization.Infrastructure;
 
 namespace DncyTemplate.Api.Infra.Authorization;
 
-public class PermissionRequirementHandler: AuthorizationHandler<OperationAuthorizationRequirement>
+public class PermissionRequirementHandler : AuthorizationHandler<OperationAuthorizationRequirement>
 {
     private readonly IPermissionChecker _permissionChecker;
 

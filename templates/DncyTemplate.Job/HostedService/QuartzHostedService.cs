@@ -1,19 +1,11 @@
 ﻿using DncyTemplate.Job.Infra;
 using DncyTemplate.Job.Infra.Listenings;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Quartz;
-using Quartz.Impl.Matchers;
-using Quartz.Spi;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using DncyTemplate.Job.Infra.Stores;
 using DncyTemplate.Job.Jobs;
 using DncyTemplate.Job.Models;
+using Quartz;
+using Quartz.Impl.Matchers;
+using Quartz.Spi;
 
 namespace DncyTemplate.Job.HostedService;
 
@@ -52,14 +44,14 @@ public class QuartzHostedService : IHostedService
 
 
         var jobs = await _jobStore.GetListAsync();
-        if (jobs==null||!jobs.Any())
+        if (jobs == null || !jobs.Any())
         {
             return;
         }
 
         foreach (var jobInfo in jobs)
         {
-            if (jobInfo.TaskType==EnumTaskType.StaticExecute)
+            if (jobInfo.TaskType == EnumTaskType.StaticExecute)
             {
                 var type = jobDic.FirstOrDefault(x => x.Key == jobInfo.TaskName).Value;
                 if (type == null)
@@ -71,7 +63,7 @@ public class QuartzHostedService : IHostedService
                 var triggerBuilder = TriggerBuilder.Create()
                     .WithIdentity(jobInfo.TaskName, jobInfo.GroupName)
                     .WithCronSchedule(jobInfo.Interval);
-                if (jobInfo.Status==EnumJobStates.Normal)
+                if (jobInfo.Status == EnumJobStates.Normal)
                 {
                     triggerBuilder.StartNow();
                 }
@@ -86,7 +78,7 @@ public class QuartzHostedService : IHostedService
                     .WithIdentity(jobInfo.TaskName, jobInfo.GroupName)
                     .WithDescription(jobInfo.Describe)
                     .WithCronSchedule(jobInfo.Interval);
-                if (jobInfo.Status==EnumJobStates.Normal)
+                if (jobInfo.Status == EnumJobStates.Normal)
                 {
                     triggerBuilder.StartNow();
                 }

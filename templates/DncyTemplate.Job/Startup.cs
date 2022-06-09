@@ -1,8 +1,7 @@
-﻿using Dncy.MultiTenancy.AspNetCore;
+﻿using Dncy.MultiTenancy;
+using Dncy.MultiTenancy.AspNetCore;
 using Dncy.MultiTenancy.ConnectionStrings;
 using Dncy.MultiTenancy.Store;
-using Dncy.MultiTenancy;
-
 using DncyTemplate.Application;
 using DncyTemplate.Domain;
 using DncyTemplate.Infra;

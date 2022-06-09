@@ -1,8 +1,6 @@
-﻿using DncyTemplate.Application.Permission;
-using DncyTemplate.Domain.Aggregates.Product;
+﻿using DncyTemplate.Domain.Aggregates.Product;
+using DncyTemplate.Domain.DomainEvents.Product;
 using DncyTemplate.Domain.Repository;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 namespace DncyTemplate.Api.Controllers
@@ -20,7 +18,6 @@ namespace DncyTemplate.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Authorize(ProductPermission.Product.Default)]
         public async Task<IEnumerable<Product>> GetAsync()
         {
             return await _productsRepository.AsNoTracking().ToListAsync();
@@ -32,15 +29,23 @@ namespace DncyTemplate.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public async Task<Product> PostAsync([FromForm]string name)
+        public async Task<Product> PostAsync([FromForm] string name)
         {
-            var product=new Product
+            var product = new Product
             {
                 Id = $"P{DateTime.Now.Ticks}",
                 Name = name,
                 Remark = $"{name} remarks",
                 CreationTime = DateTimeOffset.Now,
             };
+            product.AddDevice(new Device
+            {
+                Name = "admin",
+                SerialNo = "sssssss",
+                Coordinate = (GeoCoordinate)"123.22,31.333",
+                Online = true,
+            });
+            product.AddDomainEvent(new NewProductCreateDomainEvent(product));
             product = await _productsRepository.InsertAsync(product);
             return product;
         }

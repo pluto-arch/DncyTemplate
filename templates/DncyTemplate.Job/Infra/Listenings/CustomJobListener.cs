@@ -1,9 +1,6 @@
 ﻿using DncyTemplate.Job.Infra.Stores;
 using DncyTemplate.Job.Models;
 using Quartz;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace DncyTemplate.Job.Infra.Listenings;
 
@@ -66,7 +63,7 @@ public class CustomJobListener : IJobListener
                 Time = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss}",
                 RunSeconds = context.JobRunTime.Seconds,
                 State = hasException ? EnumJobStates.Exception : EnumJobStates.Normal,
-                Message = jobException?.Message??context.Result?.ToString()??""
+                Message = jobException?.Message ?? context.Result?.ToString() ?? ""
             });
         return Task.CompletedTask;
     }

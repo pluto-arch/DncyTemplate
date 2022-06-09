@@ -8,7 +8,7 @@ namespace DncyTemplate.Application.Permission;
 /// 权限定义Provider
 /// can read permissions from db or other store device
 /// </summary>
-public class PermissionDefinitionProvider:IPermissionDefinitionProvider
+public class PermissionDefinitionProvider : IPermissionDefinitionProvider
 {
     /// <inheritdoc />
     public void Define(PermissionDefinitionContext context)

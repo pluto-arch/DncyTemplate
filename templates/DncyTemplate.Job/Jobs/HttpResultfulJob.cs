@@ -1,10 +1,7 @@
-﻿using System.Net.Http;
-using DncyTemplate.Job.Infra;
+﻿using DncyTemplate.Job.Infra;
 using DncyTemplate.Job.Infra.Stores;
-using NuGet.Protocol;
 using Quartz;
-
-using static Quartz.Logging.OperationName;
+using System.Net.Http;
 
 namespace DncyTemplate.Job.Jobs
 {
@@ -14,9 +11,9 @@ namespace DncyTemplate.Job.Jobs
         [AutoInject]
         private readonly IHttpClientFactory _httpClientFactory;
 
-        [AutoInject] 
+        [AutoInject]
         private readonly IJobInfoStore _jobInfoStore;
-        
+
         [AutoInject]
         private readonly ILogger<HttpResultfulJob> _logger;
 
@@ -25,7 +22,7 @@ namespace DncyTemplate.Job.Jobs
         public async Task Execute(IJobExecutionContext context)
         {
             var jobInfo = await _jobInfoStore.GetAsync(context.JobDetail.Key);
-            if (jobInfo==null)
+            if (jobInfo == null)
             {
                 _logger.LogError("{jobKey} : not found in store", context.JobDetail.Key);
                 return;
@@ -35,7 +32,7 @@ namespace DncyTemplate.Job.Jobs
             var response = await client.SendAsync(request);
             var resstring = await response.Content.ReadAsStringAsync();
             _logger.LogInformation("call apiurl [{apiUrl}] result : {result}", jobInfo.ApiUrl, resstring);
-            context.Result=JsonConvert.SerializeObject(new {code="successed",data=$"{DateTime.Now:yyyyMMddHHmmssfff}"});
+            context.Result = JsonConvert.SerializeObject(new { code = "successed", data = $"{DateTime.Now:yyyyMMddHHmmssfff}" });
         }
     }
 }

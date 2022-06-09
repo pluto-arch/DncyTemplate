@@ -1,10 +1,10 @@
-﻿using System.Collections.Concurrent;
-using System.Text.RegularExpressions;
-using Dncy.MultiTenancy;
+﻿using Dncy.MultiTenancy;
 using Dncy.Permission;
 using Dncy.Permission.Models;
 using DncyTemplate.Application.Constants;
 using Microsoft.Extensions.Logging;
+using System.Collections.Concurrent;
+using System.Text.RegularExpressions;
 
 namespace DncyTemplate.Application.Permission;
 
@@ -23,9 +23,9 @@ public class CachedPermissionManager : IPermissionManager
     private static readonly ConcurrentDictionary<string, string> permissionCached = new ConcurrentDictionary<string, string>();
 
     public CachedPermissionManager(
-        ILogger<InMemoryPermissionManager> logger, 
-        IPermissionDefinitionManager permissionDefinitionManager, 
-        IPermissionGrantStore permissionGrantStore, 
+        ILogger<InMemoryPermissionManager> logger,
+        IPermissionDefinitionManager permissionDefinitionManager,
+        IPermissionGrantStore permissionGrantStore,
         ICurrentTenant currentTenant)
     {
         _logger = logger;
@@ -78,7 +78,7 @@ public class CachedPermissionManager : IPermissionManager
 
     protected virtual async Task<(string Key, bool IsGranted)> GetCacheItemAsync(string name, string providerName, string providerKey)
     {
-        string cacheKey = string.Format(CacheKeyFormatConstants.Permission_Grant_CacheKey_Format, _currentTenant.Id,providerName, providerKey, name);
+        string cacheKey = string.Format(CacheKeyFormatConstants.Permission_Grant_CacheKey_Format, _currentTenant.Id, providerName, providerKey, name);
         _logger.LogDebug($"PermissionStore.GetCacheItemAsync: {cacheKey}");
         permissionCached.TryGetValue(cacheKey, out string value);
 
@@ -104,7 +104,7 @@ public class CachedPermissionManager : IPermissionManager
         foreach (var permission in permissions)
         {
             bool isGranted = grantedPermissionsHashSet.Contains(permission.Name);
-            permissionCached.TryAdd(string.Format(CacheKeyFormatConstants.Permission_Grant_CacheKey_Format, _currentTenant.Id,providerName, providerKey, permission.Name), isGranted.ToString());
+            permissionCached.TryAdd(string.Format(CacheKeyFormatConstants.Permission_Grant_CacheKey_Format, _currentTenant.Id, providerName, providerKey, permission.Name), isGranted.ToString());
             if (permission.Name == currentName)
             {
                 currentResult = isGranted;
@@ -112,7 +112,7 @@ public class CachedPermissionManager : IPermissionManager
         }
 
         _logger.LogDebug($"Finished setting the cache items. Count: {permissions.Count}");
-        return (string.Format(CacheKeyFormatConstants.Permission_Grant_CacheKey_Format, _currentTenant.Id,providerName, providerKey, currentName), currentResult);
+        return (string.Format(CacheKeyFormatConstants.Permission_Grant_CacheKey_Format, _currentTenant.Id, providerName, providerKey, currentName), currentResult);
     }
 
 
@@ -120,7 +120,7 @@ public class CachedPermissionManager : IPermissionManager
     protected virtual async Task<List<(string Key, bool IsGranted)>> GetCacheItemsAsync(string[] names,
         string providerName, string providerKey)
     {
-        var cacheKeys = names.Select(x => string.Format(CacheKeyFormatConstants.Permission_Grant_CacheKey_Format, _currentTenant.Id,x, providerName, providerKey)).ToList();
+        var cacheKeys = names.Select(x => string.Format(CacheKeyFormatConstants.Permission_Grant_CacheKey_Format, _currentTenant.Id, x, providerName, providerKey)).ToList();
 
         _logger.LogDebug($"PermissionStore.GetCacheItemAsync: {string.Join(",", cacheKeys)}");
 
@@ -179,7 +179,7 @@ public class CachedPermissionManager : IPermissionManager
 
 
 
-    protected virtual (string tenantId,string ProviderName, string ProviderKey, string Name) GetPermissionInfoFormCacheKey(string key)
+    protected virtual (string tenantId, string ProviderName, string ProviderKey, string Name) GetPermissionInfoFormCacheKey(string key)
     {
         string pattern = @"^t:(?<tenantId>.+),pn:(?<providerName>.+),pk:(?<providerKey>.+),n:(?<name>.+)$";
         Match match = Regex.Match(key, pattern, RegexOptions.IgnoreCase);
@@ -188,7 +188,7 @@ public class CachedPermissionManager : IPermissionManager
         string name = match.Groups["name"].Value;
         string tenantId = match.Groups["tenantId"].Value;
 
-        return (tenantId,providerName, providerKey, name);
+        return (tenantId, providerName, providerKey, name);
     }
 
     #endregion

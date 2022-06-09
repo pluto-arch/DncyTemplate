@@ -1,13 +1,12 @@
-﻿using System.IO.Compression;
-using DncyTemplate.Api.Infra.ApiDoc;
+﻿using DncyTemplate.Api.Infra.Authorization;
 using DncyTemplate.Api.Infra.HealthChecks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
+using System.IO.Compression;
 using System.Reflection;
-using DncyTemplate.Api.Infra.Authorization;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.ResponseCompression;
 
 namespace DncyTemplate.Api.Infra;
 

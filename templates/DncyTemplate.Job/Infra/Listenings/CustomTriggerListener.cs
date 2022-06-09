@@ -1,6 +1,4 @@
 ﻿using Quartz;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace DncyTemplate.Job.Infra.Listenings;
 

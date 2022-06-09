@@ -1,5 +1,4 @@
-﻿using System.Linq.Expressions;
-using DncyTemplate.Domain.Aggregates.Product;
+﻿using DncyTemplate.Domain.Aggregates.Product;
 using DncyTemplate.Domain.Aggregates.System;
 using DncyTemplate.Infra.Providers;
 using Microsoft.EntityFrameworkCore;

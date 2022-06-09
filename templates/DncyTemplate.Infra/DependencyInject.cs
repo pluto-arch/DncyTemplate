@@ -41,8 +41,8 @@ namespace DncyTemplate.Infra
                 //多租户模式下解析租户连接字符串使用
                 var connectionStringResolve = serviceProvider.GetRequiredService<IConnectionStringResolve>();
                 optionsBuilder.AddInterceptors(new TenantDbConnectionInterceptor(connectionStringResolve, DbConstants.DEFAULT_CONNECTIONSTRING_NAME));
-                
-                //optionsBuilder.UseInternalServiceProvider(serviceProvider);
+
+                optionsBuilder.UseInternalServiceProvider(serviceProvider);
 #if DEBUG
                 optionsBuilder.EnableSensitiveDataLogging();
 #endif
@@ -63,7 +63,7 @@ namespace DncyTemplate.Infra
             // 设置实体默认显示加载的导航属性
             service.Configure<IncludeRelatedPropertiesOptions>(options =>
             {
-                options.ConfigIncludes<Product>(e => e.Include(e => e.Devices).ThenInclude(e => e.Address));
+                options.ConfigIncludes<Product>(e => e.Include(d => d.Devices).ThenInclude(f => f.Address));
             });
         }
 
@@ -71,14 +71,14 @@ namespace DncyTemplate.Infra
         private static void AddUnitofWork(IServiceCollection service)
         {
             service.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            List<Type> context = assembly.GetTypes()
+            var assembly = Assembly.GetExecutingAssembly();
+            var context = assembly.GetTypes()
                 .Where(x => x.GetInterface(nameof(IUowDbContext)) != null && !x.Name.Contains("Migration")).ToList();
             service.Configure<UnitOfWorkCollectionOptions>(s =>
             {
-                foreach (Type item in context)
+                foreach (var item in context)
                 {
-                    Type uowType = typeof(IUnitOfWork<>).MakeGenericType(item);
+                    var uowType = typeof(IUnitOfWork<>).MakeGenericType(item);
                     s.DbContexts.Add(item.Name, uowType);
                 }
             });

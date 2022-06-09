@@ -1,8 +1,7 @@
 ﻿using Dncy.MultiTenancy;
+using DncyTemplate.Domain.DomainEvents;
 using DncyTemplate.Domain.Infra;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
@@ -38,7 +37,7 @@ public class DataChangeSaveChangesInterceptor : SaveChangesInterceptor
 
     private static void SoftDeleteTracking(DbContext dbContext)
     {
-        IEnumerable<EntityEntry> deletedEntries = dbContext.ChangeTracker.Entries()
+        var deletedEntries = dbContext.ChangeTracker.Entries()
             .Where(entry => entry.State == EntityState.Deleted && entry.Entity is ISoftDelete);
         deletedEntries?.ToList().ForEach(entityEntry =>
         {
@@ -50,9 +49,9 @@ public class DataChangeSaveChangesInterceptor : SaveChangesInterceptor
 
     private static void MultiTenancyTracking(DbContext dbContext)
     {
-        IEnumerable<EntityEntry<IMultiTenant>> tenantedEntries = dbContext.ChangeTracker.Entries<IMultiTenant>()
+        var tenantedEntries = dbContext.ChangeTracker.Entries<IMultiTenant>()
             .Where(entry => entry.State == EntityState.Added);
-        ICurrentTenant currentTenant = dbContext.GetService<ICurrentTenant>();
+        var currentTenant = dbContext.GetService<ICurrentTenant>();
         tenantedEntries?.ToList().ForEach(entityEntry =>
         {
             entityEntry.Entity.TenantId ??= currentTenant.Id;
@@ -66,6 +65,7 @@ public class DataChangeSaveChangesInterceptor : SaveChangesInterceptor
         domainEntities.ToList().ForEach(entity => entity.ClearDomainEvents());
         foreach (var domainEvent in domainEvents)
         {
+            // TODO 直接使用领域事件触发器以同一个dbcontext内执行领域事件 阻塞式。
             await _dispatcher.Dispatch(domainEvent, cancellationToken);
         }
 

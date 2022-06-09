@@ -1,6 +1,5 @@
 ﻿using DncyTemplate.Job.Infra.Stores;
 using DncyTemplate.Job.Models;
-using Quartz;
 
 namespace DncyTemplate.Job.Controllers;
 
@@ -15,8 +14,8 @@ public partial class HomeController : Controller
     {
         var jobs = await _jobInfoStore.GetListAsync();
         ViewData["JobCount"] = await _jobInfoStore.CountAsync();
-        ViewData["RunningJobCount"] = jobs?.Count(x=>x.Status==EnumJobStates.Normal)??0;
-        ViewData["PauseJobCount"] = jobs?.Count(x => x.Status == EnumJobStates.Pause)??0;
+        ViewData["RunningJobCount"] = jobs?.Count(x => x.Status == EnumJobStates.Normal) ?? 0;
+        ViewData["PauseJobCount"] = jobs?.Count(x => x.Status == EnumJobStates.Pause) ?? 0;
         return View();
     }
 }

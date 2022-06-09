@@ -1,8 +1,8 @@
 ﻿using DncyTemplate.Job.Infra.Stores;
+using DncyTemplate.Job.Jobs;
 using DncyTemplate.Job.Models;
 using Quartz;
 using Quartz.Impl.Triggers;
-using DncyTemplate.Job.Jobs;
 using Quartz.Spi;
 namespace DncyTemplate.Job.Controllers;
 
@@ -39,7 +39,7 @@ public partial class TaskController : Controller
         var jobs = await _jobInfoStore.GetListAsync();
         jobs = jobs?.OrderBy(x => x.Id)?.ToList();
         IScheduler scheduler = await _jobSchedularFactory.GetScheduler();
-        foreach (JobInfoModel job in jobs??new List<JobInfoModel>())
+        foreach (JobInfoModel job in jobs ?? new List<JobInfoModel>())
         {
             IReadOnlyCollection<ITrigger> triggers =
                 await scheduler.GetTriggersOfJob(JobKey.Create(job.TaskName, job.GroupName));
@@ -56,7 +56,7 @@ public partial class TaskController : Controller
             }
         }
 
-        return Json(new { code = 0, data = jobs, msg = "加载成功", count = jobs?.Count??0 });
+        return Json(new { code = 0, data = jobs, msg = "加载成功", count = jobs?.Count ?? 0 });
     }
 
     /// <summary>
@@ -100,7 +100,7 @@ public partial class TaskController : Controller
         {
             return Json(new { code = -1, msg = "job不存在" });
         }
-       
+
         IScheduler scheduler = await _jobSchedularFactory.GetScheduler();
         JobKey jk = JobKey.Create(job.TaskName, job.GroupName);
         await _jobLogStore.RecordAsync(jk,
@@ -203,7 +203,7 @@ public partial class TaskController : Controller
     {
         try
         {
-            var (success,_) = IsValidExpression(model.Interval);
+            var (success, _) = IsValidExpression(model.Interval);
             if (!success)
             {
                 return false;
@@ -227,7 +227,7 @@ public partial class TaskController : Controller
         }
         catch (Exception e)
         {
-            _logger.LogError(e, "message: {msg}",e.Message);
+            _logger.LogError(e, "message: {msg}", e.Message);
             return false;
         }
     }
@@ -237,7 +237,7 @@ public partial class TaskController : Controller
     {
         try
         {
-            CronTriggerImpl trigger = new ()
+            CronTriggerImpl trigger = new()
             {
                 CronExpressionString = cronExpression
             };

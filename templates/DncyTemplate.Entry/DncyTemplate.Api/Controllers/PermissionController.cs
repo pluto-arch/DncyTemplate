@@ -1,8 +1,4 @@
 ﻿using Dncy.Permission;
-using Dncy.Permission.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 
 namespace DncyTemplate.Api.Controllers
 {
@@ -29,22 +25,22 @@ namespace DncyTemplate.Api.Controllers
         {
             await Task.Yield();
             var res = new List<dynamic>();
-            
+
             var groups = _permissionDefinitionManager.GetGroups();
             foreach (var item in groups)
             {
                 var group = new
                 {
-                    groupName=item.Name,
+                    groupName = item.Name,
                     displayName = item.DisplayName,
-                    permissions=new List<dynamic>()
+                    permissions = new List<dynamic>()
                 };
                 foreach (var permission in item.GetPermissionsWithChildren())
                 {
                     if (permission.IsEnabled && (!permission.AllowedProviders.Any() ||
                                                  permission.AllowedProviders.Contains(providerName)))
                     {
-                        
+
                         if (permission.AllowedProviders.Any() && !permission.AllowedProviders.Contains(providerName))
                         {
                             throw new ApplicationException(
@@ -63,7 +59,7 @@ namespace DncyTemplate.Api.Controllers
                             DisplayName = permission.DisplayName,
                             ParentName = permission.Parent?.Name!,
                             AllowedProviders = permission.AllowedProviders,
-                            IsGranted=permissionGrant != null,
+                            IsGranted = permissionGrant != null,
                         };
                         group.permissions.Add(permissionGrantModel);
 

@@ -2,7 +2,6 @@
 using Dncy.MultiTenancy.AspNetCore;
 using Dncy.MultiTenancy.ConnectionStrings;
 using Dncy.MultiTenancy.Store;
-using DncyTemplate.Api.Infra.Authorization;
 using DncyTemplate.Api.Infra.Tenancy;
 using DncyTemplate.Api.Infra.UnitofWork;
 using DncyTemplate.Application;
@@ -33,6 +32,7 @@ public class Startup
             .AddXmlDataContractSerializerFormatters()
             .AddDataAnnotationsLocalization()
             .ConfigCustomApiBehaviorOptions();
+
         services.AddCustomCompression();
         #endregion
 
@@ -107,25 +107,24 @@ public class Startup
 
         app.UseHttpRequestLogging();
 
-        if (env.IsDevelopment())
+        if (env.IsEnvironment(AppConstant.EnvironmentName.DEV))
         {
             app.UseDeveloperExceptionPage();
             app.UseCustomSwagger();
         }
-        if (env.IsProduction())
+        else
         {
             app.UseExceptionHandle();
 
-            // not necessary if using reverse proxy with ssl, like nginx with ssl proxy
+            // TODO Notice: UseHsts, UseHttpsRedirection are not necessary if using reverse proxy with ssl, like nginx with ssl proxy
             app.UseHsts();
-            app.UseHttpsRedirection();
         }
 
-
+        app.UseHttpsRedirection();
         app.UseCors(DEFAULT_CORS_NAME);
-        app.UseMiddleware<UnitOfWorkMiddleware>();
         app.UseAuthentication();
         app.UseMiddleware<MultiTenancyMiddleware>();
+        app.UseMiddleware<UnitOfWorkMiddleware>();
         app.UseRouting();
         app.UseAuthorization();
         app.UseEndpoints(endpoints =>
