@@ -26,7 +26,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\..\..\DncyComponent\Dncy.MultiTenancy.AspNetCore\Dncy.MultiTenancy.AspNetCore.csproj" />
 		<ProjectReference Include="..\..\DncyTemplate.Application\DncyTemplate.Application.csproj" />
 		<ProjectReference Include="..\..\DncyTemplate.Infra\DncyTemplate.Infra.csproj" />
 	</ItemGroup>
