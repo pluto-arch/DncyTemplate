@@ -1,4 +1,5 @@
-﻿using DncyTemplate.Domain.Aggregates.Product;
+﻿using DncyTemplate.Application.Models;
+using DncyTemplate.Domain.Aggregates.Product;
 using DncyTemplate.Domain.DomainEvents.Product;
 using DncyTemplate.Domain.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -18,9 +19,11 @@ namespace DncyTemplate.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IEnumerable<Product>> GetAsync()
+        [Produces(typeof(List<Product>))]
+        public async Task<ApiResult> GetAsync()
         {
-            return await _productsRepository.AsNoTracking().ToListAsync();
+            var res = await _productsRepository.AsNoTracking().ToListAsync();
+            return this.Success(res);
         }
 
 
@@ -29,7 +32,8 @@ namespace DncyTemplate.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public async Task<Product> PostAsync([FromForm] string name)
+        [Produces(typeof(Product))]
+        public async Task<ApiResult> PostAsync([FromForm] string name)
         {
             var product = new Product
             {
@@ -47,7 +51,7 @@ namespace DncyTemplate.Api.Controllers
             });
             product.AddDomainEvent(new NewProductCreateDomainEvent(product));
             product = await _productsRepository.InsertAsync(product);
-            return product;
+            return this.Success(product);
         }
     }
 }

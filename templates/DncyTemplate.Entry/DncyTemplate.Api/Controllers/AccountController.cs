@@ -3,6 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using DncyTemplate.Application.Models;
 
 namespace DncyTemplate.Api.Controllers;
 
@@ -47,12 +48,12 @@ public class AccountController : ControllerBase
     /// <returns></returns>
     [HttpPost]
     [AllowAnonymous]
-    public IActionResult Token([Required, FromForm(Name = "userName")] string user, [Required, FromForm(Name = "password")] string pwd)
+    public ApiResult Token([Required, FromForm(Name = "userName")] string user, [Required, FromForm(Name = "password")] string pwd)
     {
         var u = Users.FirstOrDefault(x => x.UserName == user && x.Password == pwd);
         if (u == null)
         {
-            return BadRequest("用户不存在");
+            return this.RequestError("用户不存在");
         }
         var claims = new[]
         {
@@ -70,7 +71,7 @@ public class AccountController : ControllerBase
             claims: claims,
             signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
         );
-        return Ok(new JwtSecurityTokenHandler().WriteToken(token));
+        return this.Success(new JwtSecurityTokenHandler().WriteToken(token));
     }
 
 

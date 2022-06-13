@@ -8,6 +8,11 @@ public class AppConstant
 
 
     /// <summary>
+    /// 默认跨域名称
+    /// </summary>
+    public const string DEFAULT_CORS_NAME = "default";
+
+    /// <summary>
     /// 环境名称
     /// </summary>
     public class EnvironmentName

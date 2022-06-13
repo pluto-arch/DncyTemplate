@@ -27,6 +27,7 @@
 	  <Folder Include="DomainEventHandlers\Product\" />
 	  <Folder Include="Permission\" />
 	  <Folder Include="Constants\" />
+	  <Folder Include="Models\" />
 	</ItemGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<DocumentationFile>DncyTemplate.Application.xml</DocumentationFile>

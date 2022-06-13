@@ -1,15 +1,10 @@
-﻿using Dncy.MultiTenancy;
-using Dncy.MultiTenancy.AspNetCore;
-using Dncy.MultiTenancy.ConnectionStrings;
-using Dncy.MultiTenancy.Store;
+﻿using Dncy.MultiTenancy.AspNetCore;
 using DncyTemplate.Application;
 using DncyTemplate.Domain;
 using DncyTemplate.Infra;
 using DncyTemplate.Mvc.Constants;
 using DncyTemplate.Mvc.Infra;
-using DncyTemplate.Mvc.Infra.Tenancy;
 using DncyTemplate.Mvc.Infra.UnitofWork;
-using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace DncyTemplate.Mvc;
 
@@ -24,54 +19,11 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        #region 基础服务
-        services.AddCustomCompression();
-        services.AddControllersWithViews()
-            .AddControllersAsServices()
-            .AddDataAnnotationsLocalization()
-            .AddRazorRuntimeCompilation();
-
-        #endregion
-
-        #region 健康检查
-        services.AddCustomHealthCheck(Configuration);
-        #endregion
-
         #region 缓存
         services.AddMemoryCache(options =>
         {
             options.SizeLimit = 10240;
         });
-        #endregion
-
-        #region http请求相关配置
-
-        services.AddHttpContextAccessor();
-        //services.ConfigHttpForwardedHeadersOptions();
-        // 路由小写
-        services.AddRouting(options => options.LowercaseUrls = true);
-        #endregion
-
-        #region Multi Tenancy
-        services.Configure<TenantConfigurationOptions>(Configuration);
-        services.AddSingleton<ICurrentTenantAccessor, CurrentTenantAccessor>();
-        services.AddTransient<ICurrentTenant, CurrentTenant>();
-        services.AddTransient<IConnectionStringResolver, DefaultConnectionStringResolver>();
-        services.AddTransient<ITenantStore, DefaultTenantStore>();
-        services.AddTransient<ITenantResolver, TenantResolver>();
-        services.AddTransient<ITenantIdentityParse, UserTenantIdentityParse>();
-        services.AddTransient<MultiTenancyMiddleware>();
-        #endregion
-
-
-
-        #region 认证授权
-
-        services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            .AddCookie();
-        services.AddAuthorization() // 授权
-            .AddDynamicPolicyAuthorize();
-
         #endregion
 
 

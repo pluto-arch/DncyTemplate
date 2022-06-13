@@ -3,11 +3,14 @@ using System.Diagnostics;
 
 namespace DncyTemplate.Mvc.Controllers
 {
-    [AutoResolveDependency]
-    public partial class HomeController : Controller
+    public class HomeController : Controller
     {
-        [AutoInject]
         private readonly ILogger<HomeController> _logger;
+
+        public HomeController(ILogger<HomeController> logger)
+        {
+            _logger = logger;
+        }
 
 
         public IActionResult Index()

@@ -1,4 +1,5 @@
 ﻿using Dncy.Permission;
+using DncyTemplate.Application.Models;
 
 namespace DncyTemplate.Api.Controllers
 {
@@ -21,7 +22,7 @@ namespace DncyTemplate.Api.Controllers
         /// <param name="providerKey">提供者值 eg. admin</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetAsync(string providerName, string providerKey)
+        public async Task<ApiResult> GetAsync(string providerName, string providerKey)
         {
             await Task.Yield();
             var res = new List<dynamic>();
@@ -55,10 +56,10 @@ namespace DncyTemplate.Api.Controllers
                         var permissionGrant = await _permissionGrantStore.GetAsync(permission.Name, providerName, providerKey);
                         var permissionGrantModel = new
                         {
-                            Name = permission.Name,
-                            DisplayName = permission.DisplayName,
+                            permission.Name,
+                            permission.DisplayName,
                             ParentName = permission.Parent?.Name!,
-                            AllowedProviders = permission.AllowedProviders,
+                            permission.AllowedProviders,
                             IsGranted = permissionGrant != null,
                         };
                         group.permissions.Add(permissionGrantModel);
@@ -68,7 +69,7 @@ namespace DncyTemplate.Api.Controllers
                 res.Add(group);
             }
 
-            return Ok(res);
+            return this.Success(res);
 
         }
 
@@ -78,10 +79,10 @@ namespace DncyTemplate.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("getList")]
-        public async Task<IActionResult> GetListAsync()
+        public async Task<ApiResult> GetListAsync()
         {
             await Task.Yield();
-            return Ok(_permissionDefinitionManager.GetGroups());
+            return this.Success(_permissionDefinitionManager.GetGroups());
         }
 
 

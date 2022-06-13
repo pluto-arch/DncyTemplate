@@ -30,7 +30,7 @@ public class DynamicAuthorizationPolicyProvider : DefaultAuthorizationPolicyProv
 
         if (permission != null)
         {
-            AuthorizationPolicyBuilder policyBuilder = new AuthorizationPolicyBuilder(Array.Empty<string>());
+            var policyBuilder = new AuthorizationPolicyBuilder(Array.Empty<string>());
             policyBuilder.Requirements.Add(new OperationAuthorizationRequirement { Name = policyName });
             return policyBuilder.Build();
         }
