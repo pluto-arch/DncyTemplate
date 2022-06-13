@@ -27,6 +27,7 @@ public class Startup
     {
         #region 基础服务
         services.AddControllers()
+            .AddControllersAsServices()
             .AddCustomJsonSerializer()
             .AddXmlSerializerFormatters()
             .AddXmlDataContractSerializerFormatters()

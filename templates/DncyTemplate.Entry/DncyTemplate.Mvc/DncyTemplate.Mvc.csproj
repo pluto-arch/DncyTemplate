@@ -10,17 +10,17 @@
 
 	<ItemGroup>
 		<PackageReference Include="Dncy.MultiTenancy.AspNetCore" Version="1.0.2" />
+		<PackageReference Include="Dncy.MultiTenancy.AspNetCore" Version="1.0.3" />
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.3" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.3" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
-		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.2" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.5" />
 		<PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
 		<PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0" />
 		<PackageReference Include="Serilog.Enrichers.Process" Version="2.0.2" />
 		<PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
 		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
-		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -30,6 +30,9 @@
 
 	<ItemGroup>
 	  <Folder Include="Constants\" />
+	  <Folder Include="Infra\UnitofWork\" />
+	  <Folder Include="Infra\HealthChecks\" />
+	  <Folder Include="Infra\Authorization\" />
 	</ItemGroup>
 
 </Project>

@@ -6,8 +6,10 @@ using DncyTemplate.Application;
 using DncyTemplate.Domain;
 using DncyTemplate.Infra;
 using DncyTemplate.Mvc.Constants;
-using Microsoft.AspNetCore.ResponseCompression;
-using System.IO.Compression;
+using DncyTemplate.Mvc.Infra;
+using DncyTemplate.Mvc.Infra.Tenancy;
+using DncyTemplate.Mvc.Infra.UnitofWork;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace DncyTemplate.Mvc;
 
@@ -23,31 +25,16 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         #region 基础服务
-        services.Configure<BrotliCompressionProviderOptions>(options =>
-        {
-            options.Level = CompressionLevel.Optimal;
-        }).Configure<GzipCompressionProviderOptions>(options =>
-        {
-            options.Level = CompressionLevel.Optimal;
-        }).AddResponseCompression(options =>
-        {
-            options.EnableForHttps = true;
-            options.Providers.Add<BrotliCompressionProvider>();
-            options.Providers.Add<GzipCompressionProvider>();
-            options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[]
-            {
-                "text/html; charset=utf-8", "application/xhtml+xml", "application/atom+xml", "image/svg+xml",
-                "text/css", "text/html", "text/json"
-            });
-        });
+        services.AddCustomCompression();
         services.AddControllersWithViews()
+            .AddControllersAsServices()
             .AddDataAnnotationsLocalization()
             .AddRazorRuntimeCompilation();
 
         #endregion
 
         #region 健康检查
-        //services.AddCustomHealthCheck(Configuration);
+        services.AddCustomHealthCheck(Configuration);
         #endregion
 
         #region 缓存
@@ -72,17 +59,21 @@ public class Startup
         services.AddTransient<IConnectionStringResolver, DefaultConnectionStringResolver>();
         services.AddTransient<ITenantStore, DefaultTenantStore>();
         services.AddTransient<ITenantResolver, TenantResolver>();
-        services.AddTransient<ITenantConstruct, HeaderTenantConstruct>(_ => new HeaderTenantConstruct(headerDic =>
-          {
-              if (headerDic.ContainsKey(AppConstant.TENANT_KEY))
-              {
-                  return headerDic[AppConstant.TENANT_KEY];
-              }
-
-              return null;
-          }));
+        services.AddTransient<ITenantIdentityParse, UserTenantIdentityParse>();
         services.AddTransient<MultiTenancyMiddleware>();
         #endregion
+
+
+
+        #region 认证授权
+
+        services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie();
+        services.AddAuthorization() // 授权
+            .AddDynamicPolicyAuthorize();
+
+        #endregion
+
 
         services.AddApplicationModule(Configuration);
         services.AddDomainModule();
@@ -92,36 +83,32 @@ public class Startup
 
     public void Configure(IApplicationBuilder app, IHostEnvironment env)
     {
-        ForwardedHeadersOptions options = new()
-        {
-            ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-        };
-        options.KnownNetworks.Clear();
-        options.KnownProxies.Clear();
-        app.UseForwardedHeaders(options).UseCertificateForwarding();
+        app.UseForwardedHeaders()
+            .UseCertificateForwarding();
 
         app.UseResponseCompression()
             .UseResponseCaching();
 
-        //app.UseHttpRequestLogging();
+        app.UseHttpRequestLogging();
 
-        if (env.IsDevelopment())
+        if (env.IsEnvironment(AppConstant.EnvironmentName.DEV))
         {
             app.UseDeveloperExceptionPage();
         }
-        if (env.IsProduction())
+        else
         {
-            //app.UseExceptionHandle();
+            app.UseExceptionHandle();
 
-            // not necessary if using reverse proxy with ssl, like nginx with ssl proxy
-            app.UseHttpsRedirection();
+            // TODO Notice: UseHsts, UseHttpsRedirection are not necessary if using reverse proxy with ssl, like nginx with ssl proxy
             app.UseHsts();
         }
-
+        app.UseHttpsRedirection();
         app.UseStaticFiles();
-        //app.UseMiddleware<UnitOfWorkMiddleware>();
-        //app.UseMiddleware<MultiTenancyMiddleware>();
+        app.UseAuthentication();
+        app.UseMiddleware<MultiTenancyMiddleware>();
+        app.UseMiddleware<UnitOfWorkMiddleware>();
         app.UseRouting();
+        app.UseAuthorization();
         app.UseEndpoints(endpoints =>
         {
             //endpoints.MapSystemHealthChecks();

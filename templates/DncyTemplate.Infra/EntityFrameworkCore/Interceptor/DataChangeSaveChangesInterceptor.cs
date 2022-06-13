@@ -1,5 +1,4 @@
 ﻿using Dncy.MultiTenancy;
-using DncyTemplate.Domain.DomainEvents;
 using DncyTemplate.Domain.Infra;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
