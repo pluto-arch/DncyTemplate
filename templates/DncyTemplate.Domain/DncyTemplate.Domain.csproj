@@ -23,9 +23,4 @@
 	  <Folder Include="Exceptions\" />
 	  <Folder Include="Collections\" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\..\..\DncyComponent\Dncy.MultiTenancy\Dncy.MultiTenancy.csproj" />
-	</ItemGroup>
-
 </Project>
