@@ -3,29 +3,22 @@
   "author": "zhangyulong",
   "classifications": [
     "WEB",
-    "AspNetCore",
-    "GRPC"
+    "AspNetCore"
   ],
-  "identity": "PlutoNetCoreTemplate",
-  "name": "Pluto AspNetCore Template",
-  "shortName": "pluto",
+  "identity": "DncyTemplate",
+  "name": "AspNetCore DDD Template",
+  "shortName": "dncy",
   "preferNameDirectory": true,
-  "sourceName": "PlutoNetCoreTemplate",
+  "sourceName": "DncyTemplate",
   "tags": {
     "language": "C#",
     "type": "project"
   },
   "symbols": {
-    "Grpc": {
-      "type": "parameter",
-      "dataType": "bool",
-      "description": "是否启用grpc",
-      "defaultValue": "false"
-    },
-    "WebType": {
+    "ProjectType": {
       "type": "parameter",
       "dataType": "choice",
-      "description": "Web类型",
+      "description": "项目类型(API/MVC)",
       "isRequired": false,
       "defaultValue": "API",
       "choices": [
@@ -38,31 +31,36 @@
           "description": "MVC"
         }
       ]
+    },
+    "Job": {
+      "type": "parameter",
+      "dataType": "bool",
+      "description": "是否包括后台服务",
+      "isRequired": false,
+      "defaultValue": "false"
     }
   },
   "sources": [
     {
       "modifiers": [
         {
-          "condition": "(!Grpc)",
+          "condition": "(ProjectType==\"MVC\")",
           "exclude": [
-            "src/PlutoNetCoreTemplate.Grpc.Protocol/**/*",
-            "src/PlutoNetCoreTemplate.Application/Grpc/**/*"
+            "DncyTemplate.Entry/DncyTemplate.Api/**/*"
           ]
         },
         {
-          "condition": "(WebType==\"MVC\")",
+          "condition": "(ProjectType==\"API\")",
           "exclude": [
-            "src/PlutoNetCoreTemplate.Api/**/*",
-            "web/**/*"
+            "DncyTemplate.Entry/DncyTemplate.Mvc/**/*"
           ]
         },
         {
-          "condition": "(WebType==\"API\")",
+          "condition": "(!Job)",
           "exclude": [
-            "src/PlutoNetCoreTemplate.Mvc/**/*"
+            "DncyTemplate.Job/**/*"
           ]
-        }
+        },
       ]
     }
   ]
