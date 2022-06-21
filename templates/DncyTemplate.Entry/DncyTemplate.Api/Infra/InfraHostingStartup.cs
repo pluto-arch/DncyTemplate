@@ -1,5 +1,10 @@
-﻿using Microsoft.AspNetCore.ResponseCompression;
+﻿using System.Globalization;
+using DncyTemplate.Api.Infra.ExceptionHandlers;
+using Microsoft.AspNetCore.ResponseCompression;
 using System.IO.Compression;
+using DncyTemplate.Api.Infra.LocalizerSetup;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Localization;
 
 [assembly: HostingStartup(typeof(InfraHostingStartup))]
 namespace DncyTemplate.Api.Infra;
@@ -11,26 +16,42 @@ public class InfraHostingStartup : IHostingStartup
     {
         builder.ConfigureServices((_, services) =>
         {
+
+            #region 本地化
+            services.AddLocalization(options => { options.ResourcesPath = "Resources"; });
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]{new CultureInfo("en-US"), new CultureInfo("zh-CN")};
+                options.DefaultRequestCulture = new RequestCulture("zh-CN", "zh-CN");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
+            #endregion
+
             #region mvc builder
-            services.AddControllers()
+
+            services.AddControllers(options =>
+                {
+                    options.Filters.Add<ActionExecptionFilter>();
+                    // 本地化 默认的模型验证信息
+                    var F = services.BuildServiceProvider().GetService<IStringLocalizerFactory>();
+                    options.SetUpDefaultDataAnnotation(F);
+                })
+                .AddDataAnnotationsLocalization(options =>
+                {
+                    options.SetUpDataAnnotationLocalizerProvider();
+                })
+                .ConfigureApiBehaviorOptions(options =>
+                {
+                    options.InvalidModelStateResponseFactory = ModelBindExceptionHandler.Handler;
+                })
                 .AddControllersAsServices()
-                .AddDataAnnotationsLocalization()
                 .AddNewtonsoftJson(options =>
                 {
                     options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
                     options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                })
-                .ConfigureApiBehaviorOptions(options =>
-                {
-                    options.InvalidModelStateResponseFactory = actionContext =>
-                    {
-                        var result = new BadRequestObjectResult(actionContext.ModelState);
-                        result.ContentTypes.Add(MediaTypeNames.Application.Json);
-                        result.ContentTypes.Add(MediaTypeNames.Application.Xml);
-                        return result;
-                    };
                 });
             #endregion
 

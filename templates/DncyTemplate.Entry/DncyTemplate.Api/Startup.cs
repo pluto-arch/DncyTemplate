@@ -1,6 +1,4 @@
-﻿using Dncy.MultiTenancy.AspNetCore;
-using DncyTemplate.Api.Infra.UnitofWork;
-using DncyTemplate.Application;
+﻿using DncyTemplate.Application;
 using DncyTemplate.Domain;
 using DncyTemplate.Infra;
 
@@ -41,7 +39,8 @@ public class Startup
 
         if (env.IsEnvironment(AppConstant.EnvironmentName.DEV))
         {
-            app.UseDeveloperExceptionPage();
+            //app.UseDeveloperExceptionPage();
+            app.UseExceptionHandle();
             app.UseCustomSwagger();
         }
         else
@@ -51,12 +50,12 @@ public class Startup
             // TODO Notice: UseHsts, UseHttpsRedirection are not necessary if using reverse proxy with ssl, like nginx with ssl proxy
             app.UseHsts();
         }
-
+        app.UseRequestLocalization();
         app.UseHttpsRedirection();
         app.UseCors(AppConstant.DEFAULT_CORS_NAME);
         app.UseAuthentication();
-        app.UseMiddleware<MultiTenancyMiddleware>();
-        app.UseMiddleware<UnitOfWorkMiddleware>();
+        app.UseMultiTenancy()
+            .UseUnitofWork();
         app.UseRouting();
         app.UseAuthorization();
         app.UseEndpoints(endpoints =>

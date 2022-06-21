@@ -1,7 +1,10 @@
-﻿using DncyTemplate.Application.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using DncyTemplate.Application.Models;
 using DncyTemplate.Domain.Aggregates.Product;
+using DncyTemplate.Domain.Collections;
 using DncyTemplate.Domain.DomainEvents.Product;
 using DncyTemplate.Domain.Repository;
+using DncyTemplate.Infra.EntityFrameworkCore.Extension;
 using Microsoft.EntityFrameworkCore;
 
 namespace DncyTemplate.Api.Controllers
@@ -9,7 +12,7 @@ namespace DncyTemplate.Api.Controllers
     [Route("api/[controller]")]
     [AutoResolveDependency]
     [ApiController]
-    public partial class ProductController : ControllerBase
+    public partial class ProductController : ControllerBase, IWrapperResult
     {
         [AutoInject]
         private readonly IRepository<Product> _productsRepository;
@@ -19,10 +22,14 @@ namespace DncyTemplate.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Produces(typeof(List<Product>))]
-        public async Task<ApiResult> GetAsync()
+        [Produces(typeof(IPagedList<Product>))]
+        public async Task<ApiResult> GetAsync(int pageNo = 1, [Range(minimum:1,maximum:255,ErrorMessage = "PageSizeMessage")]byte pageSize = 20)
         {
-            var res = await _productsRepository.AsNoTracking().ToListAsync();
+            if (pageSize <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(pageSize));
+            }
+            var res = await _productsRepository.AsNoTracking().ToPagedListAsync(pageNo, pageSize);
             return this.Success(res);
         }
 

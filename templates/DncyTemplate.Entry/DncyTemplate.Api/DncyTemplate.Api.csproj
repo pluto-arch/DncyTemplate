@@ -37,11 +37,50 @@
 		<Folder Include="Infra\ApiDoc\" />
 		<Folder Include="Infra\UnitofWork\" />
 		<Folder Include="Infra\Authorization\" />
+		<Folder Include="Infra\LocalizerSetup\" />
 	</ItemGroup>
 
 
 	<ItemGroup>
 		<None Remove="DncyTemplate.Api.xml" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+	  <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+	  <Compile Update="Resources\ResourceNameGenerator.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>ResourceNameGenerator.tt</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Resources\DataAnnotation.en-US.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\DataAnnotation.zh-CN.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\DefaultDataAnnotation.en-US.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\DefaultDataAnnotation.zh-CN.resx">
+	    <Generator></Generator>
+	  </EmbeddedResource>
+	</ItemGroup>
+
+
+	<ItemGroup>
+	  <None Update="Resources\ResourceNameGenerator.tt">
+	    <Generator>TextTemplatingFileGenerator</Generator>
+	    <LastGenOutput>ResourceNameGenerator.cs</LastGenOutput>
+	  </None>
 	</ItemGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<DocumentationFile>DncyTemplate.Api.xml</DocumentationFile>

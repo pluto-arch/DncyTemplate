@@ -1,5 +1,10 @@
-﻿using Microsoft.AspNetCore.ResponseCompression;
+﻿using System.Globalization;
+using Microsoft.AspNetCore.ResponseCompression;
 using System.IO.Compression;
+using DncyTemplate.Mvc.Infra.LocalizerSetup;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.Extensions.Localization;
 
 [assembly: HostingStartup(typeof(DncyTemplate.Mvc.Infra.InfraHostingStartup))]
 namespace DncyTemplate.Mvc.Infra;
@@ -12,8 +17,29 @@ public class InfraHostingStartup : IHostingStartup
         builder.ConfigureServices((_, services) =>
         {
 
+           
+            #region 本地化
+            services.AddLocalization(options => { options.ResourcesPath = "Resources"; });
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]{new CultureInfo("en-US"), new CultureInfo("zh-CN")};
+                options.DefaultRequestCulture = new RequestCulture("zh-CN", "zh-CN");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
+            #endregion
+
             #region mvc基础
-            services.AddControllersWithViews()
+            services.AddMvc(options =>
+                {
+                    var F = services.BuildServiceProvider().GetService<IStringLocalizerFactory>();
+                    options.SetUpDefaultDataAnnotation(F);
+                })
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+                .AddDataAnnotationsLocalization(options =>
+                {
+                    options.SetUpDataAnnotationLocalizerProvider();
+                })
                 .AddControllersAsServices()
                 .AddDataAnnotationsLocalization()
                 .AddRazorRuntimeCompilation();

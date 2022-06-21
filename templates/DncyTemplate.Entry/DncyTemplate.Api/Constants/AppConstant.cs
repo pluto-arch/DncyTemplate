@@ -13,6 +13,12 @@ public class AppConstant
     public const string DEFAULT_CORS_NAME = "default";
 
     /// <summary>
+    /// 默认的http： context type 格式
+    /// </summary>
+
+    public const string DEFAULT_CONTENT_TYPE = MediaTypeNames.Application.Json;
+
+    /// <summary>
     /// 环境名称
     /// </summary>
     public class EnvironmentName

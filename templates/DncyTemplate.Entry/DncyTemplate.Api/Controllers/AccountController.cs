@@ -1,15 +1,15 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using DncyTemplate.Application.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using DncyTemplate.Application.Models;
 
 namespace DncyTemplate.Api.Controllers;
 
 [Route("api/[Controller]")]
 [ApiController]
-public class AccountController : ControllerBase
+public class AccountController : ControllerBase, IWrapperResult
 {
     private static readonly List<dynamic> Users = new()
     {

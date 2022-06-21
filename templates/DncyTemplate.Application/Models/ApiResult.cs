@@ -32,11 +32,16 @@ public class ApiResult
     /// </summary>
     /// <param name="message"></param>
     /// <returns></returns>
-    public static ApiResult RequestError(string message="无效的请求")
+    public static ApiResult RequestError(string message = "无效的请求")
     {
         return new() { Code = 400, Message = message };
     }
 
+
+    public static ApiResult InternalServerError(string message = "内部服务器异常")
+    {
+        return new() { Code = 500, Message = message ?? "内部服务器异常" };
+    }
 }
 
 
@@ -80,7 +85,7 @@ public class ApiResult<T> : ApiResult
     ///     数据验证错误
     /// </summary>
     /// <returns></returns>
-    public static ApiResult<T> RequestError(string message="无效的请求", T data = default)
+    public static ApiResult<T> RequestError(string message = "无效的请求", T data = default)
     {
         return new() { Code = 400, Message = message, Data = data };
     }

@@ -1,3 +1,6 @@
+using System.Text.RegularExpressions;
+using Serilog.Core;
+using Serilog.Events;
 using ILogger = Serilog.ILogger;
 
 namespace DncyTemplate.Mvc;
@@ -67,6 +70,16 @@ public class Program
             .ReadFrom.Configuration(configuration)
             .Enrich.WithProperty("AppName", applicationName)
             .CreateLogger();
+    }
+
+
+    private class StaticFileLogEventFilter:ILogEventFilter
+    {
+        /// <inheritdoc />
+        public bool IsEnabled(LogEvent logEvent)
+        {
+            return false;
+        }
     }
     #endregion
 

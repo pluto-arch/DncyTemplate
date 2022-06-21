@@ -35,6 +35,7 @@ public class Startup
 
     public void Configure(IApplicationBuilder app, IHostEnvironment env)
     {
+
         app.UseForwardedHeaders()
             .UseCertificateForwarding();
 
@@ -50,10 +51,11 @@ public class Startup
         else
         {
             app.UseExceptionHandle();
-
             // TODO Notice: UseHsts, UseHttpsRedirection are not necessary if using reverse proxy with ssl, like nginx with ssl proxy
             app.UseHsts();
         }
+
+        app.UseRequestLocalization();
         app.UseHttpsRedirection();
         app.UseStaticFiles();
         app.UseAuthentication();

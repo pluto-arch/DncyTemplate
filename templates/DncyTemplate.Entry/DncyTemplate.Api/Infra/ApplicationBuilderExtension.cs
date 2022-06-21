@@ -1,4 +1,8 @@
-﻿namespace DncyTemplate.Api.Infra;
+﻿using Dncy.MultiTenancy.AspNetCore;
+using DncyTemplate.Api.Infra.ExceptionHandlers;
+using DncyTemplate.Api.Infra.UnitofWork;
+
+namespace DncyTemplate.Api.Infra;
 
 public static class ApplicationBuilderExtension
 {
@@ -31,6 +35,7 @@ public static class ApplicationBuilderExtension
                 context.Set("request_path", httpContext.Request.Path);
                 context.Set("request_method", httpContext.Request.Method);
             };
+            config.IncludeQueryInRequestPath = true;
         });
         return app;
     }
@@ -42,8 +47,33 @@ public static class ApplicationBuilderExtension
     /// <returns></returns>
     public static IApplicationBuilder UseExceptionHandle(this IApplicationBuilder app)
     {
+        app.UseExceptionHandler(exceptionHandlerApp =>
+        {
+            exceptionHandlerApp.Run(HttpPipelineExceptionHandler.Handler);
+        });
         return app;
     }
 
 
+    /// <summary>
+    /// 异常处理中间件
+    /// </summary>
+    /// <param name="app"></param>
+    /// <returns></returns>
+    public static IApplicationBuilder UseUnitofWork(this IApplicationBuilder app)
+    {
+        app.UseMiddleware<UnitOfWorkMiddleware>();
+        return app;
+    }
+
+    /// <summary>
+    /// 异常处理中间件
+    /// </summary>
+    /// <param name="app"></param>
+    /// <returns></returns>
+    public static IApplicationBuilder UseMultiTenancy(this IApplicationBuilder app)
+    {
+        app.UseMiddleware<MultiTenancyMiddleware>();
+        return app;
+    }
 }

@@ -41,6 +41,38 @@
 	  <Folder Include="Infra\UnitofWork\" />
 	  <Folder Include="Infra\HealthChecks\" />
 	  <Folder Include="Infra\Authorization\" />
+	  <Folder Include="Infra\LocalizerSetup\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Resources\DataAnnotation.en-US.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\DataAnnotation.zh-CN.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\DefaultDataAnnotation.en-US.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="Resources\ResourceNameGenerator.tt">
+	    <LastGenOutput>ResourceNameGenerator.cs</LastGenOutput>
+	    <Generator>TextTemplatingFileGenerator</Generator>
+	  </None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Resources\ResourceNameGenerator.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>ResourceNameGenerator.tt</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 </Project>
