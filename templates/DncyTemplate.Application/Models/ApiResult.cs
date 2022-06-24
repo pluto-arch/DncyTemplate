@@ -1,6 +1,6 @@
 ﻿namespace DncyTemplate.Application.Models;
 
-public class ApiResult
+public record ApiResult
 {
     public int Code { get; set; }
 
@@ -45,7 +45,7 @@ public class ApiResult
 }
 
 
-public class ApiResult<T> : ApiResult
+public record ApiResult<T> : ApiResult
 {
     public T Data { get; set; }
 

@@ -1,8 +1,11 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> _localizer
+@{
     ViewData["Title"] = "Home Page";
+    ViewData["CurrentMenu"] = "home_index";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    <h1 class="display-4">@_localizer[SharedResource.Welcome]</h1>
     <a>@ViewBag.Demo</a>
 </div>

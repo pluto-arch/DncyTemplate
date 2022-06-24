@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using Microsoft.AspNetCore.ResponseCompression;
 using System.IO.Compression;
+using DncyTemplate.Mvc.Infra.Authorization;
 using DncyTemplate.Mvc.Infra.LocalizerSetup;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -45,6 +46,15 @@ public class InfraHostingStartup : IHostingStartup
                 .AddRazorRuntimeCompilation();
             #endregion
 
+
+            #region auth
+            services.AddAuthentication(options =>
+            {
+                options.AddScheme<TempAuthenticationHandler>(TempAuthenticationHandler.SchemeName, nameof(TempAuthenticationHandler));
+                options.DefaultAuthenticateScheme = TempAuthenticationHandler.SchemeName;
+                options.DefaultChallengeScheme = TempAuthenticationHandler.SchemeName;
+            });
+            #endregion
 
 
             #region response Compression

@@ -120,7 +120,19 @@
   <data name="Hello" xml:space="preserve">
     <value>Hello</value>
   </data>
+  <data name="Menu.Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="Menu.Product" xml:space="preserve">
+    <value>Product</value>
+  </data>
   <data name="User.Name" xml:space="preserve">
     <value>UserName</value>
+  </data>
+  <data name="WebSite.Name" xml:space="preserve">
+    <value>WebSiteName</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Welcome</value>
   </data>
 </root>

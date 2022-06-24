@@ -71,16 +71,6 @@ public class Program
             .Enrich.WithProperty("AppName", applicationName)
             .CreateLogger();
     }
-
-
-    private class StaticFileLogEventFilter:ILogEventFilter
-    {
-        /// <inheritdoc />
-        public bool IsEnabled(LogEvent logEvent)
-        {
-            return false;
-        }
-    }
     #endregion
 
 }
