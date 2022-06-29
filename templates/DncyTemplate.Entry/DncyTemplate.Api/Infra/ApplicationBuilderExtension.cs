@@ -1,24 +1,12 @@
 ﻿using Dncy.MultiTenancy.AspNetCore;
 using DncyTemplate.Api.Infra.ExceptionHandlers;
 using DncyTemplate.Api.Infra.UnitofWork;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 namespace DncyTemplate.Api.Infra;
 
 public static class ApplicationBuilderExtension
 {
-    /// <summary>
-    /// Swagger
-    /// </summary>
-    /// <param name="app"></param>
-    /// <returns></returns>
-    public static IApplicationBuilder UseCustomSwagger(this IApplicationBuilder app)
-    {
-        app.UseSwagger();
-        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PlutoNetCoreTemplate.API v1"));
-        return app;
-    }
-
-
     /// <summary>
     /// 请求日志
     /// </summary>
@@ -53,27 +41,5 @@ public static class ApplicationBuilderExtension
         });
         return app;
     }
-
-
-    /// <summary>
-    /// 异常处理中间件
-    /// </summary>
-    /// <param name="app"></param>
-    /// <returns></returns>
-    public static IApplicationBuilder UseUnitofWork(this IApplicationBuilder app)
-    {
-        app.UseMiddleware<UnitOfWorkMiddleware>();
-        return app;
-    }
-
-    /// <summary>
-    /// 异常处理中间件
-    /// </summary>
-    /// <param name="app"></param>
-    /// <returns></returns>
-    public static IApplicationBuilder UseMultiTenancy(this IApplicationBuilder app)
-    {
-        app.UseMiddleware<MultiTenancyMiddleware>();
-        return app;
-    }
+    
 }

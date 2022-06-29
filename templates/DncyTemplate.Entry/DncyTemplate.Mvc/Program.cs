@@ -1,6 +1,3 @@
-using System.Text.RegularExpressions;
-using Serilog.Core;
-using Serilog.Events;
 using ILogger = Serilog.ILogger;
 
 namespace DncyTemplate.Mvc;

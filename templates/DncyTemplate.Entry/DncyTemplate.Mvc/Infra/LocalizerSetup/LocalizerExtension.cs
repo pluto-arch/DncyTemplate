@@ -5,7 +5,7 @@ namespace DncyTemplate.Mvc.Infra.LocalizerSetup;
 
 public static class LocalizerExtension
 {
-    public static MvcOptions SetUpDefaultDataAnnotation(this MvcOptions options,IStringLocalizerFactory localizerFactory)
+    public static MvcOptions SetUpDefaultDataAnnotation(this MvcOptions options, IStringLocalizerFactory localizerFactory)
     {
         var L = localizerFactory?.Create("DefaultDataAnnotation", "DncyTemplate.Mvc");
         if (L != null)
@@ -28,7 +28,7 @@ public static class LocalizerExtension
 
     public static MvcDataAnnotationsLocalizationOptions SetUpDataAnnotationLocalizerProvider(this MvcDataAnnotationsLocalizationOptions options)
     {
-        options.DataAnnotationLocalizerProvider= (_, factory) => factory.Create("DataAnnotation", "DncyTemplate.Mvc");
+        options.DataAnnotationLocalizerProvider = (_, factory) => factory.Create("DataAnnotation", "DncyTemplate.Mvc");
         return options;
     }
 }

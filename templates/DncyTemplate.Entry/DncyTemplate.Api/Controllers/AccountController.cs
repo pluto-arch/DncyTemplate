@@ -9,7 +9,7 @@ namespace DncyTemplate.Api.Controllers;
 
 [Route("api/[Controller]")]
 [ApiController]
-public class AccountController : ControllerBase, IWrapperResult
+public class AccountController : ControllerBase, IApiResultWapper
 {
     private static readonly List<dynamic> Users = new()
     {
@@ -53,7 +53,7 @@ public class AccountController : ControllerBase, IWrapperResult
         var u = Users.FirstOrDefault(x => x.UserName == user && x.Password == pwd);
         if (u == null)
         {
-            return this.RequestError("用户不存在");
+            return this.ErrorRequest("用户不存在");
         }
         var claims = new[]
         {

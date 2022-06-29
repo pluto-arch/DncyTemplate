@@ -43,6 +43,7 @@
 	  <Folder Include="Infra\Authorization\" />
 	  <Folder Include="Infra\LocalizerSetup\" />
 	  <Folder Include="wwwroot\htmls\" />
+	  <Folder Include="wwwroot\新文件夹\" />
 	</ItemGroup>
 
 	<ItemGroup>

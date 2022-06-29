@@ -11,6 +11,8 @@
 
 	<ItemGroup>
 		<PackageReference Include="Dncy.Specifications.EntityFrameworkCore" Version="1.0.2" />
+		<PackageReference Include="Dncy.Tools.Core" Version="1.0.5" />
+		<PackageReference Include="Dncy.Tools.RichText" Version="1.0.6" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.3" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.3" />
@@ -29,6 +31,7 @@
 	  <Folder Include="EntityFrameworkCore\Extension\" />
 	  <Folder Include="Constants\" />
 	  <Folder Include="Extensions\" />
+	  <Folder Include="Utils\" />
 	</ItemGroup>
 
 </Project>

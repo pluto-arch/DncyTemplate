@@ -1,4 +1,7 @@
-﻿using DncyTemplate.Application;
+﻿using DncyTemplate.Api.Infra.ApiDoc;
+using DncyTemplate.Api.Infra.Tenancy;
+using DncyTemplate.Api.Infra.UnitofWork;
+using DncyTemplate.Application;
 using DncyTemplate.Domain;
 using DncyTemplate.Infra;
 
@@ -50,6 +53,7 @@ public class Startup
             // TODO Notice: UseHsts, UseHttpsRedirection are not necessary if using reverse proxy with ssl, like nginx with ssl proxy
             app.UseHsts();
         }
+
         app.UseRequestLocalization();
         app.UseHttpsRedirection();
         app.UseCors(AppConstant.DEFAULT_CORS_NAME);

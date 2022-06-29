@@ -8,8 +8,7 @@ public class AddRequiredHeaderParameter : IOperationFilter
     /// <inheritdoc />
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {
-        if (operation.Parameters == null)
-            operation.Parameters = new List<OpenApiParameter>();
+        operation.Parameters ??= new List<OpenApiParameter>();
 
         // swagger 请求头上添加tenant 用来解析租户
         operation.Parameters.Add(new OpenApiParameter

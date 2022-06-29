@@ -1,10 +1,9 @@
-﻿using System.Globalization;
-using DncyTemplate.Api.Infra.ExceptionHandlers;
-using Microsoft.AspNetCore.ResponseCompression;
-using System.IO.Compression;
+﻿using DncyTemplate.Api.Infra.ExceptionHandlers;
 using DncyTemplate.Api.Infra.LocalizerSetup;
-using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Localization;
+using System.IO.Compression;
+using Microsoft.AspNetCore.Mvc.Versioning;
 
 [assembly: HostingStartup(typeof(InfraHostingStartup))]
 namespace DncyTemplate.Api.Infra;
@@ -18,14 +17,7 @@ public class InfraHostingStartup : IHostingStartup
         {
 
             #region 本地化
-            services.AddLocalization(options => { options.ResourcesPath = "Resources"; });
-            services.Configure<RequestLocalizationOptions>(options =>
-            {
-                var supportedCultures = new[]{new CultureInfo("en-US"), new CultureInfo("zh-CN")};
-                options.DefaultRequestCulture = new RequestCulture("zh-CN", "zh-CN");
-                options.SupportedCultures = supportedCultures;
-                options.SupportedUICultures = supportedCultures;
-            });
+            services.AddAppAddLocalization();
             #endregion
 
             #region mvc builder
@@ -35,10 +27,12 @@ public class InfraHostingStartup : IHostingStartup
                     options.Filters.Add<ActionExecptionFilter>();
                     // 本地化 默认的模型验证信息
                     var F = services.BuildServiceProvider().GetService<IStringLocalizerFactory>();
+                    // 默认的数据验证本地化
                     options.SetUpDefaultDataAnnotation(F);
                 })
                 .AddDataAnnotationsLocalization(options =>
                 {
+                    // 数据验证的本地化
                     options.SetUpDataAnnotationLocalizerProvider();
                 })
                 .ConfigureApiBehaviorOptions(options =>
@@ -54,7 +48,6 @@ public class InfraHostingStartup : IHostingStartup
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 });
             #endregion
-
 
 
             #region response Compression
@@ -78,7 +71,6 @@ public class InfraHostingStartup : IHostingStartup
             });
             #endregion
 
-
             #region http
             services.AddHttpContextAccessor();
             services.AddRouting(options => options.LowercaseUrls = true);
@@ -91,6 +83,22 @@ public class InfraHostingStartup : IHostingStartup
             });
             #endregion
 
+            #region api version
+
+            services.AddApiVersioning(options =>
+            {
+                options.AssumeDefaultVersionWhenUnspecified= true;
+                options.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+                options.ReportApiVersions = true;
+                options.ApiVersionReader = ApiVersionReader.Combine(new UrlSegmentApiVersionReader());
+            });
+            services.AddVersionedApiExplorer(setup =>
+            {
+                setup.GroupNameFormat = "'v'VVV";
+                setup.SubstituteApiVersionInUrl = true;
+            });
+
+            #endregion
 
         });
     }

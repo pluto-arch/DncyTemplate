@@ -1,5 +1,6 @@
 ﻿global using DncyTemplate.Api.Constants;
 global using DncyTemplate.Api.Infra;
+global using DncyTemplate.Domain.Collections;
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.AspNetCore.Hosting;
 global using Microsoft.AspNetCore.Http;
@@ -21,4 +22,3 @@ global using System.Net.Mime;
 global using System.Text;
 global using System.Threading;
 global using System.Threading.Tasks;
-global using DncyTemplate.Domain.Collections;

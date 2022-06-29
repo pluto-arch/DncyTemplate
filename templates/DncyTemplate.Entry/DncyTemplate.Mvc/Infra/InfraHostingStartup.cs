@@ -1,11 +1,11 @@
-﻿using System.Globalization;
-using Microsoft.AspNetCore.ResponseCompression;
-using System.IO.Compression;
-using DncyTemplate.Mvc.Infra.Authorization;
+﻿using DncyTemplate.Mvc.Infra.Authorization;
 using DncyTemplate.Mvc.Infra.LocalizerSetup;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Localization;
+using System.Globalization;
+using System.IO.Compression;
 
 [assembly: HostingStartup(typeof(DncyTemplate.Mvc.Infra.InfraHostingStartup))]
 namespace DncyTemplate.Mvc.Infra;
@@ -18,15 +18,16 @@ public class InfraHostingStartup : IHostingStartup
         builder.ConfigureServices((_, services) =>
         {
 
-           
+
             #region 本地化
             services.AddLocalization(options => { options.ResourcesPath = "Resources"; });
             services.Configure<RequestLocalizationOptions>(options =>
             {
-                var supportedCultures = new[]{new CultureInfo("en-US"), new CultureInfo("zh-CN")};
+                var supportedCultures = new[] { new CultureInfo("en-US"), new CultureInfo("zh-CN") };
                 options.DefaultRequestCulture = new RequestCulture("zh-CN", "zh-CN");
                 options.SupportedCultures = supportedCultures;
                 options.SupportedUICultures = supportedCultures;
+                options.ApplyCurrentCultureToResponseHeaders = true;
             });
             #endregion
 

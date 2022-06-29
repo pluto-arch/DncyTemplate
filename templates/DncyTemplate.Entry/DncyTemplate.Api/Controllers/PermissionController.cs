@@ -6,7 +6,7 @@ namespace DncyTemplate.Api.Controllers
     [Route("api/[controller]")]
     [AutoResolveDependency]
     [ApiController]
-    public partial class PermissionController : ControllerBase, IWrapperResult
+    public partial class PermissionController : ControllerBase, IApiResultWapper
     {
         [AutoInject]
         private readonly IPermissionGrantStore _permissionGrantStore;

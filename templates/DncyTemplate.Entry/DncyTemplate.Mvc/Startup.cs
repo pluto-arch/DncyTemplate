@@ -50,7 +50,8 @@ public class Startup
         }
         else
         {
-            app.UseExceptionHandle();
+            app.UseInternalServerErrorHandle(); // 处理500错误
+            app.UseStatusCodePagesWithRedirects("/error/{0}");
             // TODO Notice: UseHsts, UseHttpsRedirection are not necessary if using reverse proxy with ssl, like nginx with ssl proxy
             app.UseHsts();
         }

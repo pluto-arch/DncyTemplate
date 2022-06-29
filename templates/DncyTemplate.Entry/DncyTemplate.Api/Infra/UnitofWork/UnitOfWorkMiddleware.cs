@@ -30,3 +30,18 @@ public class UnitOfWorkMiddleware
         }
     }
 }
+
+
+public static class UnitOfWorkApplicationBuilderExtension
+{
+    /// <summary>
+    /// 异常处理中间件
+    /// </summary>
+    /// <param name="app"></param>
+    /// <returns></returns>
+    public static IApplicationBuilder UseUnitofWork(this IApplicationBuilder app)
+    {
+        app.UseMiddleware<UnitOfWorkMiddleware>();
+        return app;
+    }
+}

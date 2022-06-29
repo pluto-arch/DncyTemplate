@@ -1,4 +1,6 @@
-﻿namespace DncyTemplate.Mvc.Infra;
+﻿using DncyTemplate.Mvc.Infra.ExceptionHandlers;
+
+namespace DncyTemplate.Mvc.Infra;
 
 public static class ApplicationBuilderExtension
 {
@@ -22,15 +24,18 @@ public static class ApplicationBuilderExtension
         return app;
     }
 
+
     /// <summary>
     /// 异常处理中间件
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
-    public static IApplicationBuilder UseExceptionHandle(this IApplicationBuilder app)
+    public static IApplicationBuilder UseInternalServerErrorHandle(this IApplicationBuilder app)
     {
+        app.UseExceptionHandler(exceptionHandlerApp =>
+        {
+            exceptionHandlerApp.Run(InternalServerErrorHandler.Handler);
+        });
         return app;
     }
-
-
 }

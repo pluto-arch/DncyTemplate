@@ -23,5 +23,14 @@ namespace DncyTemplate.Api
         public const string MissingRequestBodyRequiredValueAccessor = nameof(MissingRequestBodyRequiredValueAccessor);
         public const string ValueMustBeANumberAccessor = nameof(ValueMustBeANumberAccessor);
     }
+		    public class SharedResource 
+    {
+        public const string Menu_Home = "Menu.Home";
+        public const string User_Name = "User.Name";
+        public const string Menu_Product = "Menu.Product";
+        public const string Welcome = nameof(Welcome);
+        public const string WebSite_Name = "WebSite.Name";
+        public const string Hello = nameof(Hello);
+    }
 		    
 }

@@ -1,6 +1,10 @@
 ﻿namespace DncyTemplate.Api.Constants;
 public class AppConstant
 {
+
+    public const string SERVICE_NAME = "DncyTemplate.Api";
+
+
     /// <summary>
     /// 租户解析的key
     /// </summary>

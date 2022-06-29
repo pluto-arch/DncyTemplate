@@ -1,13 +1,32 @@
-﻿using Microsoft.AspNetCore.Mvc.DataAnnotations;
+﻿using System.Globalization;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.DataAnnotations;
 using Microsoft.Extensions.Localization;
 
 namespace DncyTemplate.Api.Infra.LocalizerSetup;
 
 public static class LocalizerExtension
 {
-    public static MvcOptions SetUpDefaultDataAnnotation(this MvcOptions options,IStringLocalizerFactory localizerFactory)
+
+    public static IServiceCollection AddAppAddLocalization(this IServiceCollection services)
     {
-        var L = localizerFactory?.Create("DefaultDataAnnotation", "DncyTemplate.Api");
+        services.AddLocalization(options => { options.ResourcesPath = "Resources"; });
+        services.Configure<RequestLocalizationOptions>(options =>
+        {
+            var supportedCultures = new[] { new CultureInfo("en-US"), new CultureInfo("zh-CN") };
+            options.DefaultRequestCulture = new RequestCulture("zh-CN", "zh-CN");
+            options.SupportedCultures = supportedCultures;
+            options.SupportedUICultures = supportedCultures;
+            options.ApplyCurrentCultureToResponseHeaders = true;
+        });
+        return services;
+    }
+
+
+
+    public static MvcOptions SetUpDefaultDataAnnotation(this MvcOptions options, IStringLocalizerFactory localizerFactory)
+    {
+        var L = localizerFactory?.Create("DefaultDataAnnotation", AppConstant.SERVICE_NAME);
         if (L != null)
         {
             options.ModelBindingMessageProvider.SetValueIsInvalidAccessor(x => L[DefaultDataAnnotation.ValueIsInvalidAccessor, x]);
@@ -28,7 +47,7 @@ public static class LocalizerExtension
 
     public static MvcDataAnnotationsLocalizationOptions SetUpDataAnnotationLocalizerProvider(this MvcDataAnnotationsLocalizationOptions options)
     {
-        options.DataAnnotationLocalizerProvider= (_, factory) => factory.Create("DataAnnotation", "DncyTemplate.Api");
+        options.DataAnnotationLocalizerProvider = (_, factory) => factory.Create("DataAnnotation", AppConstant.SERVICE_NAME);
         return options;
     }
 }

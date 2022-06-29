@@ -1,7 +1,4 @@
-﻿using DncyTemplate.Mvc.Models;
-using System.Diagnostics;
-using System.Text;
-using DncyTemplate.Application.Models.Product;
+﻿using DncyTemplate.Application.Models.Product;
 using DncyTemplate.Domain.Aggregates.Product;
 using DncyTemplate.Domain.Repository;
 using DncyTemplate.Infra.EntityFrameworkCore.Extension;
@@ -12,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+
 
 namespace DncyTemplate.Mvc.Controllers
 {
@@ -31,49 +29,53 @@ namespace DncyTemplate.Mvc.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.Demo = _stringLocalizer[SharedResource.Hello];
             return View();
         }
 
         public async Task<IActionResult> Product()
         {
-            var models = await _repository.AsNoTracking().Select(x=>new ProductItemModel(x.Id,x.Name,x.CreationTime.DateTime)).ToPagedListAsync(1, 20);
+            var models = await _repository.AsNoTracking().Select(x => new ProductItemModel(x.Id, x.Name, x.CreationTime.DateTime)).ToPagedListAsync(1, 20);
             return View(models);
         }
 
 
-        public async Task<IActionResult> Generate([FromServices]IHostEnvironment env)
+        public async Task<IActionResult> Generate([FromServices] IHostEnvironment env)
         {
-            var models = await _repository.AsNoTracking().Select(x=>new ProductItemModel(x.Id,x.Name,x.CreationTime.DateTime)).ToPagedListAsync(1, 20);
-            ViewData["data"]=models;
-            ViewData["Host"] = Request.IsHttps?$"https://{Request.Host}":$"http://{Request.Host}";
+            var models = await _repository.AsNoTracking().Select(x => new ProductItemModel(x.Id, x.Name, x.CreationTime.DateTime)).ToPagedListAsync(1, 20);
+            ViewData["data"] = models;
+            ViewData["Host"] = Request.IsHttps ? $"https://{Request.Host}" : $"http://{Request.Host}";
             IViewEngine viewEngine = HttpContext.RequestServices.GetService(typeof(ICompositeViewEngine)) as ICompositeViewEngine;
-            ViewEngineResult viewResult = viewEngine?.FindView(ControllerContext, "Templates/ProductListTemplate",true);
+            ViewEngineResult viewResult = viewEngine?.FindView(ControllerContext, "Templates/ProductListTemplate", true);
             if (viewResult?.Success == false)
             {
                 return Ok("error");
             }
+
             await using var writer = new StringWriter();
-            var viewContext = new ViewContext(
-                ControllerContext,
-                viewResult.View,
-                ViewData,
-                TempData,
-                writer,
-                new HtmlHelperOptions()
-            );
-            await viewResult.View.RenderAsync(viewContext);
+            if (viewResult != null)
+            {
+                var viewContext = new ViewContext(
+                    ControllerContext,
+                    viewResult.View,
+                    ViewData,
+                    TempData,
+                    writer,
+                    new HtmlHelperOptions()
+                );
+                await viewResult.View.RenderAsync(viewContext);
+            }
+
             var html = writer.GetStringBuilder().ToString();
-            var culture=Request.HttpContext.Features.Get<IRequestCultureFeature>()?.RequestCulture.Culture;
-            var path = Path.Combine(env.ContentRootPath, "wwwroot", "htmls",$"product_{culture?.Name}.html");
-            await System.IO.File.WriteAllTextAsync(path,html);
+            var culture = Request.HttpContext.Features.Get<IRequestCultureFeature>()?.RequestCulture.Culture;
+            var path = Path.Combine(env.ContentRootPath, "wwwroot", "htmls", $"product_{culture?.Name}.html");
+            await System.IO.File.WriteAllTextAsync(path, html);
             return RedirectToAction(nameof(Product));
         }
 
 
 
         [HttpPost]
-        public IActionResult SwitchLanguage([FromForm]string culture, string returnUrl)
+        public IActionResult SwitchLanguage([FromForm] string culture, string returnUrl)
         {
             Response.Cookies.Append(
                 CookieRequestCultureProvider.DefaultCookieName,
@@ -85,18 +87,10 @@ namespace DncyTemplate.Mvc.Controllers
         }
 
         [HttpPost]
-        public IActionResult SwitchTenant([FromForm]string tenantId,string returnUrl)
+        public IActionResult SwitchTenant([FromForm] string tenantId, string returnUrl)
         {
-            Response.Cookies.Append(AppConstant.TENANT_KEY, tenantId,new CookieOptions{Expires = DateTimeOffset.UtcNow.AddHours(1)});
+            Response.Cookies.Append(AppConstant.TENANT_KEY, tenantId, new CookieOptions { Expires = DateTimeOffset.UtcNow.AddHours(1) });
             return LocalRedirect(returnUrl);
-        }
-
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            _logger.LogWarning("has an error");
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
