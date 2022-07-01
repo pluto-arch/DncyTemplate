@@ -9,6 +9,7 @@
 		<SatelliteResourceLanguages>zh-CN</SatelliteResourceLanguages>
 	</PropertyGroup>
 
+
 	<ItemGroup>
 		<PackageReference Include="Dncy.MultiTenancy.AspNetCore" Version="1.0.2" />
 		<PackageReference Include="Dncy.MultiTenancy.AspNetCore" Version="1.0.3" />
@@ -17,14 +18,14 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.5" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.6" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.6">
-		  <PrivateAssets>all</PrivateAssets>
-		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.3" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.3" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
-		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.6" ExcludeAssets="All"/>
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.6" ExcludeAssets="All" />
 		<PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
 		<PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0" />
 		<PackageReference Include="Serilog.Enrichers.Process" Version="2.0.2" />
@@ -38,44 +39,43 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Constants\" />
-	  <Folder Include="Infra\UnitofWork\" />
-	  <Folder Include="Infra\HealthChecks\" />
-	  <Folder Include="Infra\Authorization\" />
-	  <Folder Include="Infra\LocalizerSetup\" />
-	  <Folder Include="wwwroot\htmls\" />
-	  <Folder Include="wwwroot\新文件夹\" />
+		<EmbeddedResource Update="Resources\DataAnnotation.en-US.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\DataAnnotation.zh-CN.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\DefaultDataAnnotation.en-US.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Update="Resources\DataAnnotation.en-US.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\DataAnnotation.zh-CN.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\DefaultDataAnnotation.en-US.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
-	  </EmbeddedResource>
+		<None Update="Resources\ResourceNameGenerator.tt">
+			<LastGenOutput>ResourceNameGenerator.cs</LastGenOutput>
+			<Generator>TextTemplatingFileGenerator</Generator>
+		</None>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Update="Resources\ResourceNameGenerator.tt">
-	    <LastGenOutput>ResourceNameGenerator.cs</LastGenOutput>
-	    <Generator>TextTemplatingFileGenerator</Generator>
-	  </None>
+		<Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+		<Compile Update="Resources\ResourceNameGenerator.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>ResourceNameGenerator.tt</DependentUpon>
+		</Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Resources\ResourceNameGenerator.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>ResourceNameGenerator.tt</DependentUpon>
-	  </Compile>
+		<Content Update="wwwroot\*\**">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="wwwroot\favicon.ico">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 
 </Project>
