@@ -12,14 +12,12 @@ namespace DncyTemplate.Api.Controllers.v2
     [ApiController]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiVersion("2.0")]
-    public class ProductController : ControllerBase, IApiResultWapper
+    [AutoResolveDependency]
+    public partial class ProductController : ControllerBase, IApiResultWapper
     {
+        [AutoInject]
         private readonly IRepository<Product> _productsRepository;
 
-        public ProductController(IRepository<Product> productsRepository)
-        {
-            _productsRepository = productsRepository;
-        }
 
         /// <summary>
         /// 获取产品列表

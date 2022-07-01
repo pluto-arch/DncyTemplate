@@ -6,7 +6,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Dncy.Microsoft.DependencyInjection.Generator" Version="1.0.3" />
+		<PackageReference Include="Dncy.DependencyInjection.Generator" Version="1.0.0" />
 		<PackageReference Include="Dncy.MultiTenancy" Version="1.0.5" />
 		<PackageReference Include="Dncy.Permission" Version="1.0.10" />
 		<PackageReference Include="Dncy.Specifications" Version="1.0.1" />
