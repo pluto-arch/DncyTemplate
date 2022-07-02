@@ -35,7 +35,7 @@ public class MemoryHealthCheck : IHealthCheck
             { "Gen2Collections", GC.CollectionCount(2) },
         };
 
-        var status = (allocated < options.Threshold) ?
+        var status = ( allocated < options.Threshold ) ?
             HealthStatus.Healthy : HealthStatus.Unhealthy;
 
         if (status == HealthStatus.Unhealthy)

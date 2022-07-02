@@ -15,8 +15,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Dncy.MultiTenancy.AspNetCore" Version="1.0.2" />
-		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.2" ExcludeAssets="All"/>
+		<PackageReference Include="Dncy.MultiTenancy.AspNetCore" Version="1.0.3" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.6" ExcludeAssets="All" />
 		<PackageReference Include="Quartz.AspNetCore" Version="3.4.0" />
 		<PackageReference Include="Quartz.Extensions.DependencyInjection" Version="3.4.0" />
 		<PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />

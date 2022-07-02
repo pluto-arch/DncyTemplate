@@ -1,4 +1,7 @@
-﻿using Dncy.Specifications.EntityFrameworkCore;
+﻿using System.Reflection;
+
+using Dncy.Specifications.EntityFrameworkCore;
+
 using DncyTemplate.Domain.Aggregates.Product;
 using DncyTemplate.Domain.Infra;
 using DncyTemplate.Domain.Repository;
@@ -10,12 +13,13 @@ using DncyTemplate.Infra.EntityFrameworkCore.Interceptor;
 using DncyTemplate.Infra.EntityFrameworkCore.Repositories;
 using DncyTemplate.Infra.EntityFrameworkCore.UnitOfWork;
 using DncyTemplate.Infra.Providers;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+
 using Serilog;
-using System.Reflection;
 
 namespace DncyTemplate.Infra
 {

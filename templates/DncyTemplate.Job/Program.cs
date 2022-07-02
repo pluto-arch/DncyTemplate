@@ -1,10 +1,12 @@
 namespace DncyTemplate.Job
 {
+    using System;
+
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Hosting;
+
     using Serilog;
-    using System;
 
     public class Program
     {

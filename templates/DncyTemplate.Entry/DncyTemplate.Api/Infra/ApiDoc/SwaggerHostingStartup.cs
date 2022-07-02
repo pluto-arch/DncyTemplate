@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc.Controllers;
+﻿using System.Reflection;
+
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.OpenApi.Models;
-using System.Reflection;
 
 [assembly: HostingStartup(typeof(DncyTemplate.Api.Infra.ApiDoc.SwaggerHostingStartup))]
 namespace DncyTemplate.Api.Infra.ApiDoc;
@@ -13,39 +14,39 @@ public class SwaggerHostingStartup : IHostingStartup
         builder.ConfigureServices((context, services) =>
         {
 
-            if (context.HostingEnvironment.IsEnvironment(Constants.AppConstant.EnvironmentName.DEV))
+            if (!context.HostingEnvironment.IsEnvironment(Constants.AppConstant.EnvironmentName.DEV))
             {
                 return;
             }
-            
+
             services.AddSwaggerGen(c =>
             {
-               c.SwaggerDoc("v1", new OpenApiInfo { Title = AppConstant.SERVICE_NAME, Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = AppConstant.SERVICE_NAME, Version = "v1" });
 
-               c.AddServer(new OpenApiServer()
-               {
-                   Url = "",
-                   Description = AppConstant.SERVICE_NAME
-               });
-               c.CustomOperationIds(apiDesc =>
-               {
-                   var controllerAction = apiDesc.ActionDescriptor as ControllerActionDescriptor;
-                   return controllerAction?.ControllerName + "-" + controllerAction?.ActionName;
-               });
+                c.AddServer(new OpenApiServer()
+                {
+                    Url = "",
+                    Description = AppConstant.SERVICE_NAME
+                });
+                c.CustomOperationIds(apiDesc =>
+                {
+                    var controllerAction = apiDesc.ActionDescriptor as ControllerActionDescriptor;
+                    return controllerAction?.ControllerName + "-" + controllerAction?.ActionName;
+                });
 
-               c.SupportNonNullableReferenceTypes();
+                c.SupportNonNullableReferenceTypes();
 
-               c.UseAllOfToExtendReferenceSchemas();
+                c.UseAllOfToExtendReferenceSchemas();
 
-               c.AddSecurityDefinition("Bearer", //Name the security scheme
-                   new OpenApiSecurityScheme
-                   {
-                       Description = "JWT Authorization header using the Bearer scheme.",
-                       Type = SecuritySchemeType.Http, //We set the scheme type to http since we're using bearer authentication
-                       Scheme = "Bearer" //The name of the HTTP Authorization scheme to be used in the Authorization header. In this case "bearer".
-                   });
+                c.AddSecurityDefinition("Bearer", //Name the security scheme
+                    new OpenApiSecurityScheme
+                    {
+                        Description = "JWT Authorization header using the Bearer scheme.",
+                        Type = SecuritySchemeType.Http, //We set the scheme type to http since we're using bearer authentication
+                        Scheme = "Bearer" //The name of the HTTP Authorization scheme to be used in the Authorization header. In this case "bearer".
+                    });
 
-               c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
                {
                         {
                             new OpenApiSecurityScheme
@@ -60,9 +61,9 @@ public class SwaggerHostingStartup : IHostingStartup
                         }
                });
 
-               var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-               var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-               c.IncludeXmlComments(xmlPath);
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
 
             services.ConfigureOptions<ConfigureSwaggerOptions>();

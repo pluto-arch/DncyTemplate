@@ -3,6 +3,7 @@ using DncyTemplate.Job.Infra.Listenings;
 using DncyTemplate.Job.Infra.Stores;
 using DncyTemplate.Job.Jobs;
 using DncyTemplate.Job.Models;
+
 using Quartz;
 using Quartz.Impl.Matchers;
 using Quartz.Spi;
@@ -117,6 +118,6 @@ public class SingletonJobFactory : IJobFactory
 
     public void ReturnJob(IJob job)
     {
-        (job as IDisposable)?.Dispose();
+        ( job as IDisposable )?.Dispose();
     }
 }

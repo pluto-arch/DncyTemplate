@@ -1,5 +1,6 @@
 ﻿using DncyTemplate.Job.Infra.Stores;
 using DncyTemplate.Job.Models;
+
 using Quartz;
 
 namespace DncyTemplate.Job.Infra.Listenings;

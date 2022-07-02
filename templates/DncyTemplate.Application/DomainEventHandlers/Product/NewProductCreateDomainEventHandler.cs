@@ -1,5 +1,7 @@
 ﻿using DncyTemplate.Domain.DomainEvents.Product;
+
 using MediatR;
+
 using Microsoft.Extensions.Logging;
 
 namespace DncyTemplate.Application.DomainEventHandlers.Product;

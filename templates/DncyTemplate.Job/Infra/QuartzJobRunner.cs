@@ -2,8 +2,11 @@
 using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 using DncyTemplate.Job.Infra.Stores;
 using DncyTemplate.Job.Models;
+
 using Polly;
+
 using Quartz;
+
 using Serilog.Context;
 
 namespace DncyTemplate.Job.Infra;

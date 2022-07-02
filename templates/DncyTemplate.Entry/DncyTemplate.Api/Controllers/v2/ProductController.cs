@@ -1,14 +1,15 @@
-﻿using DncyTemplate.Application.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
 using DncyTemplate.Domain.Aggregates.Product;
 using DncyTemplate.Domain.DomainEvents.Product;
 using DncyTemplate.Domain.Repository;
 using DncyTemplate.Infra.EntityFrameworkCore.Extension;
+
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
 
 namespace DncyTemplate.Api.Controllers.v2
 {
-    
+
     [ApiController]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiVersion("2.0")]

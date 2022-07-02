@@ -1,11 +1,13 @@
-﻿using DncyTemplate.Mvc.Infra.Authorization;
+﻿using System.Globalization;
+using System.IO.Compression;
+
+using DncyTemplate.Mvc.Infra.Authorization;
 using DncyTemplate.Mvc.Infra.LocalizerSetup;
+
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Localization;
-using System.Globalization;
-using System.IO.Compression;
 
 [assembly: HostingStartup(typeof(DncyTemplate.Mvc.Infra.InfraHostingStartup))]
 namespace DncyTemplate.Mvc.Infra;

@@ -18,7 +18,7 @@ public abstract class Enumeration : IComparable
 
     public int CompareTo(object obj)
     {
-        return Id.CompareTo(((Enumeration)obj).Id);
+        return Id.CompareTo(( (Enumeration)obj ).Id);
     }
 
     public override string ToString()

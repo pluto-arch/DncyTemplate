@@ -1,19 +1,22 @@
-﻿using Dncy.Specifications;
+﻿using System.Collections;
+using System.Linq.Expressions;
+
+using Dncy.Specifications;
 using Dncy.Specifications.EntityFrameworkCore;
 using Dncy.Specifications.EntityFrameworkCore.Evaluatiors;
 using Dncy.Specifications.Evaluators;
 using Dncy.Specifications.Exceptions;
+
 using DncyTemplate.Domain.Collections;
 using DncyTemplate.Domain.Exceptions;
 using DncyTemplate.Domain.Infra;
 using DncyTemplate.Domain.Repository;
 using DncyTemplate.Domain.UnitOfWork;
 using DncyTemplate.Infra.EntityFrameworkCore.Extension;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Options;
-using System.Collections;
-using System.Linq.Expressions;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.Repositories;
 
@@ -163,7 +166,7 @@ public class BaseRepository<TDbContext, TEntity> : IRepository<TEntity>
         bool includeDetails = false, CancellationToken cancellationToken = default)
     {
         return includeDetails
-            ? await (await IncludeRelatedAsync()).Where(predicate).SingleOrDefaultAsync(cancellationToken)
+            ? await ( await IncludeRelatedAsync() ).Where(predicate).SingleOrDefaultAsync(cancellationToken)
             : await Query.Where(predicate).SingleOrDefaultAsync(cancellationToken);
     }
 
@@ -224,13 +227,13 @@ public class BaseRepository<TDbContext, TEntity> : IRepository<TEntity>
     public virtual async Task<TEntity> GetAsync(ISpecification<TEntity> specification,
         CancellationToken cancellationToken = default)
     {
-        return (await GetListAsync(specification, cancellationToken)).FirstOrDefault()!;
+        return ( await GetListAsync(specification, cancellationToken) ).FirstOrDefault()!;
     }
 
     public virtual async Task<TResult> GetAsync<TResult>(ISpecification<TEntity, TResult> specification,
         CancellationToken cancellationToken = default)
     {
-        return (await GetListAsync(specification, cancellationToken)).FirstOrDefault()!;
+        return ( await GetListAsync(specification, cancellationToken) ).FirstOrDefault()!;
     }
 
     public virtual async Task<IQueryable<TEntity>> IncludeRelatedAsync(

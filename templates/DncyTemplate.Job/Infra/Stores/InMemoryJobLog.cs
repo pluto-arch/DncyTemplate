@@ -1,4 +1,5 @@
 ﻿using DncyTemplate.Job.Models;
+
 using Quartz;
 
 namespace DncyTemplate.Job.Infra.Stores;
@@ -29,7 +30,7 @@ public class InMemoryJobLog : IJobLogStore
         }
 
         object[] logs = JobLog[key].ToArray();
-        List<JobLogModel> res = logs.OrderByDescending(x => ((JobLogModel)x)?.Time).Take(count)
+        List<JobLogModel> res = logs.OrderByDescending(x => ( (JobLogModel)x )?.Time).Take(count)
             .Select(x => (JobLogModel)x).ToList();
         return Task.FromResult(res);
     }

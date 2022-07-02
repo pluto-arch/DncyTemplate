@@ -1,9 +1,11 @@
-﻿using DncyTemplate.Api.Infra.ExceptionHandlers;
+﻿using System.IO.Compression;
+
+using DncyTemplate.Api.Infra.ExceptionHandlers;
 using DncyTemplate.Api.Infra.LocalizerSetup;
+
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Localization;
-using System.IO.Compression;
-using Microsoft.AspNetCore.Mvc.Versioning;
 
 [assembly: HostingStartup(typeof(InfraHostingStartup))]
 namespace DncyTemplate.Api.Infra;
@@ -87,7 +89,7 @@ public class InfraHostingStartup : IHostingStartup
 
             services.AddApiVersioning(options =>
             {
-                options.AssumeDefaultVersionWhenUnspecified= true;
+                options.AssumeDefaultVersionWhenUnspecified = true;
                 options.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
                 options.ReportApiVersions = true;
                 options.ApiVersionReader = ApiVersionReader.Combine(new UrlSegmentApiVersionReader());

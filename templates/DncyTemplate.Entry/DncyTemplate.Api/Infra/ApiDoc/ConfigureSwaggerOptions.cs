@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.OpenApi.Models;
+
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace DncyTemplate.Api.Infra.ApiDoc;
@@ -24,7 +25,7 @@ public class ConfigureSwaggerOptions : IConfigureNamedOptions<SwaggerGenOptions>
             {
                 options.SwaggerDoc(description.GroupName, CreateVersionInfo(description));
             }
-           
+
         }
     }
 

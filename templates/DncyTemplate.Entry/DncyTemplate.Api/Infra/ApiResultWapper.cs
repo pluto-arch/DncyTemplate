@@ -1,14 +1,10 @@
-﻿
-using System.Xml.Serialization;
-using Microsoft.Extensions.Localization;
-
-namespace DncyTemplate.Api.Controllers;
+﻿namespace DncyTemplate.Api.Controllers;
 
 
 /// <summary>
 /// api 结果包装空接口
 /// </summary>
-public interface IApiResultWapper{}
+public interface IApiResultWapper { }
 
 
 /// <summary>
@@ -141,11 +137,11 @@ public static class ApiResultWapper
     {
         return ApiResult.ErrorRequest(message);
     }
-    public static ApiResult Error(this IApiResultWapper _,string message = "处理请求出现错误")
+    public static ApiResult Error(this IApiResultWapper _, string message = "处理请求出现错误")
     {
         return ApiResult.Error(message);
     }
-    public static ApiResult Fail(this IApiResultWapper _,string message = "服务异常")
+    public static ApiResult Fail(this IApiResultWapper _, string message = "服务异常")
     {
         return ApiResult.Fatal(message);
     }

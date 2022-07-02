@@ -1,7 +1,9 @@
 ﻿using DncyTemplate.Domain.Aggregates.Product;
 using DncyTemplate.Domain.Repository;
 using DncyTemplate.Job.Infra;
+
 using Microsoft.EntityFrameworkCore;
+
 using Quartz;
 
 namespace DncyTemplate.Job.Jobs;

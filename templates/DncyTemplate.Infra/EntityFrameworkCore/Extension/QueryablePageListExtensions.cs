@@ -1,4 +1,5 @@
 ﻿using DncyTemplate.Domain.Collections;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.Extension;
@@ -23,7 +24,7 @@ public static class QueryablePageListExtensions
         }
 
         int count = await source.CountAsync(cancellationToken);
-        List<T> items = await source.Skip((pageIndex - 1) * pageSize)
+        List<T> items = await source.Skip(( pageIndex - 1 ) * pageSize)
             .Take(pageSize).ToListAsync(cancellationToken);
 
         PagedList<T> pagedList = new()

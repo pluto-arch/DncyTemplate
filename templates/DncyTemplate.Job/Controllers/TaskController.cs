@@ -1,6 +1,7 @@
 ﻿using DncyTemplate.Job.Infra.Stores;
 using DncyTemplate.Job.Jobs;
 using DncyTemplate.Job.Models;
+
 using Quartz;
 using Quartz.Impl.Triggers;
 using Quartz.Spi;

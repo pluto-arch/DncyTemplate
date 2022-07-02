@@ -1,6 +1,7 @@
 ﻿using DncyTemplate.Domain.Infra;
 using DncyTemplate.Domain.Repository;
 using DncyTemplate.Domain.UnitOfWork;
+
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.UnitOfWork;

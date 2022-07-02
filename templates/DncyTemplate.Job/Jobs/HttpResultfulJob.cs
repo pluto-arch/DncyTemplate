@@ -1,7 +1,9 @@
-﻿using DncyTemplate.Job.Infra;
+﻿using System.Net.Http;
+
+using DncyTemplate.Job.Infra;
 using DncyTemplate.Job.Infra.Stores;
+
 using Quartz;
-using System.Net.Http;
 
 namespace DncyTemplate.Job.Jobs
 {

@@ -1,5 +1,4 @@
 ﻿using Dncy.Permission;
-using DncyTemplate.Application.Models;
 
 namespace DncyTemplate.Api.Controllers
 {
@@ -38,8 +37,8 @@ namespace DncyTemplate.Api.Controllers
                 };
                 foreach (var permission in item.GetPermissionsWithChildren())
                 {
-                    if (permission.IsEnabled && (!permission.AllowedProviders.Any() ||
-                                                 permission.AllowedProviders.Contains(providerName)))
+                    if (permission.IsEnabled && ( !permission.AllowedProviders.Any() ||
+                                                 permission.AllowedProviders.Contains(providerName) ))
                     {
 
                         if (permission.AllowedProviders.Any() && !permission.AllowedProviders.Contains(providerName))

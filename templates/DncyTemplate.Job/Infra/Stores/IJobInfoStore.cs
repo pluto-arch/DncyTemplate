@@ -1,4 +1,5 @@
 ﻿using DncyTemplate.Job.Models;
+
 using Quartz;
 
 namespace DncyTemplate.Job.Infra.Stores;

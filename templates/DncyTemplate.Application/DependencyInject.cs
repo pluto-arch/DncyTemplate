@@ -1,10 +1,14 @@
-﻿using Dncy.Permission;
+﻿using System.Reflection;
+
+using Dncy.Permission;
+
 using DncyTemplate.Application.Permission;
 using DncyTemplate.Infra.EntityFrameworkCore.Repositories;
+
 using MediatR;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 
 namespace DncyTemplate.Application
 {
@@ -13,7 +17,7 @@ namespace DncyTemplate.Application
         public static IServiceCollection AddApplicationModule(this IServiceCollection services, IConfiguration _)
         {
             var assemblies = AppDomain.CurrentDomain.GetAssemblies()
-                .Where(x => !string.IsNullOrEmpty(x.FullName) && (!x.FullName.Contains("Microsoft", StringComparison.OrdinalIgnoreCase) || !x.FullName.Contains("System", StringComparison.OrdinalIgnoreCase)));
+                .Where(x => !string.IsNullOrEmpty(x.FullName) && ( !x.FullName.Contains("Microsoft", StringComparison.OrdinalIgnoreCase) || !x.FullName.Contains("System", StringComparison.OrdinalIgnoreCase) ));
             services.AddAutoMapper(assemblies.ToArray());
             services.AddMediatR(assemblies.ToArray());
 
@@ -43,9 +47,9 @@ namespace DncyTemplate.Application
         public static IServiceCollection AddAppServices(this IServiceCollection services)
         {
             var assembly = Assembly.GetExecutingAssembly();
-            var list = (from c in assembly?.GetTypes()
-                        where !c.IsInterface && c.Name.EndsWith("AppService")
-                        select c).ToList();
+            var list = ( from c in assembly?.GetTypes()
+                         where !c.IsInterface && c.Name.EndsWith("AppService")
+                         select c ).ToList();
             if (!list.Any())
             {
                 return services;

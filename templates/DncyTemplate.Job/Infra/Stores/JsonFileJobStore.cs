@@ -1,4 +1,5 @@
 ﻿using DncyTemplate.Job.Models;
+
 using Quartz;
 
 namespace DncyTemplate.Job.Infra.Stores;
@@ -50,7 +51,7 @@ public class JsonFileJobStore : IJobInfoStore
     /// <inheritdoc />
     public async Task<int> CountAsync()
     {
-        return (await ReadFromFileAsync())?.Count ?? 0;
+        return ( await ReadFromFileAsync() )?.Count ?? 0;
     }
 
     /// <inheritdoc />

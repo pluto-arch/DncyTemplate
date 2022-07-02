@@ -1,4 +1,5 @@
 ﻿using DncyTemplate.Api.Controllers;
+
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.Extensions.Logging.Abstractions;
 
@@ -17,7 +18,7 @@ public class HttpPipelineExceptionHandler
         if (exceptionHandlerPathFeature?.Error is not null)
         {
             log.LogError(exceptionHandlerPathFeature.Error, "应用服务出现异常：{msg}", exceptionHandlerPathFeature.Error.Message);
-            await context.Response.WriteAsync(JsonConvert.SerializeObject(res,options.Value.SerializerSettings));
+            await context.Response.WriteAsync(JsonConvert.SerializeObject(res, options.Value.SerializerSettings));
         }
     };
 }

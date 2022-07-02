@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Localization;
+﻿using Microsoft.Extensions.Localization;
 
 namespace DncyTemplate.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class HomeController : ControllerBase,IApiResultWapper
+    public class HomeController : ControllerBase, IApiResultWapper
     {
         private readonly IStringLocalizer<SharedResource> _stringLocalizer;
 

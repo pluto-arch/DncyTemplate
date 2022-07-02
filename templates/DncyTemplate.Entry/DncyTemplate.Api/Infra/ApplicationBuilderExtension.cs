@@ -1,7 +1,4 @@
-﻿using Dncy.MultiTenancy.AspNetCore;
-using DncyTemplate.Api.Infra.ExceptionHandlers;
-using DncyTemplate.Api.Infra.UnitofWork;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
+﻿using DncyTemplate.Api.Infra.ExceptionHandlers;
 
 namespace DncyTemplate.Api.Infra;
 
@@ -41,5 +38,5 @@ public static class ApplicationBuilderExtension
         });
         return app;
     }
-    
+
 }

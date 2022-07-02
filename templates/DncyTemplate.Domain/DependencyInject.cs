@@ -1,4 +1,5 @@
 ﻿using DncyTemplate.Domain.UnitOfWork;
+
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DncyTemplate.Domain

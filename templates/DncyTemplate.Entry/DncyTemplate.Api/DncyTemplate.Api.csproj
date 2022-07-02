@@ -20,7 +20,7 @@
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.3" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.3" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
-		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.2" ExcludeAssets="All" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.6" ExcludeAssets="All" />
 		<PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
 		<PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0" />
 		<PackageReference Include="Serilog.Enrichers.Process" Version="2.0.2" />
@@ -51,32 +51,11 @@
 
 
 	<ItemGroup>
-	  <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
-	</ItemGroup>
-
-
-	<ItemGroup>
 	  <Compile Update="Resources\ResourceNameGenerator.cs">
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
 	    <DependentUpon>ResourceNameGenerator.tt</DependentUpon>
 	  </Compile>
-	</ItemGroup>
-
-
-	<ItemGroup>
-	  <EmbeddedResource Update="Resources\DataAnnotation.en-US.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\DataAnnotation.zh-Hans.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\DefaultDataAnnotation.en-US.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\DefaultDataAnnotation.zh-Hans.resx">
-	    <Generator></Generator>
-	  </EmbeddedResource>
 	</ItemGroup>
 
 

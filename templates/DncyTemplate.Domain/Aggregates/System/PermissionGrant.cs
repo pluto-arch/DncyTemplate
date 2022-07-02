@@ -1,4 +1,5 @@
 ﻿using Dncy.Permission;
+
 using DncyTemplate.Domain.Infra;
 
 namespace DncyTemplate.Domain.Aggregates.System;

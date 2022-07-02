@@ -1,6 +1,7 @@
-﻿using DncyTemplate.Domain.Infra;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
+
+using DncyTemplate.Domain.Infra;
 
 namespace DncyTemplate.Domain.Repository;
 

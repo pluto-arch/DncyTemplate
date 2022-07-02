@@ -1,5 +1,7 @@
 ﻿using Dncy.MultiTenancy;
+
 using DncyTemplate.Domain.Infra;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -42,7 +44,7 @@ public class DataChangeSaveChangesInterceptor : SaveChangesInterceptor
         {
             entityEntry.Reload();
             entityEntry.State = EntityState.Modified;
-            ((ISoftDelete)entityEntry.Entity).Deleted = true;
+            ( (ISoftDelete)entityEntry.Entity ).Deleted = true;
         });
     }
 

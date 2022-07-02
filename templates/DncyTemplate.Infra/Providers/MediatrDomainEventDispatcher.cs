@@ -1,5 +1,7 @@
 ﻿using DncyTemplate.Domain.Infra;
+
 using MediatR;
+
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 

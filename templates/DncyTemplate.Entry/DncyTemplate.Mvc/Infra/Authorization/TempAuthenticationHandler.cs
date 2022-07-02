@@ -1,7 +1,9 @@
-﻿using DncyTemplate.Mvc.Constants;
-using Microsoft.AspNetCore.Authentication;
-using System.Net;
+﻿using System.Net;
 using System.Security.Claims;
+
+using DncyTemplate.Mvc.Constants;
+
+using Microsoft.AspNetCore.Authentication;
 
 namespace DncyTemplate.Mvc.Infra.Authorization;
 
