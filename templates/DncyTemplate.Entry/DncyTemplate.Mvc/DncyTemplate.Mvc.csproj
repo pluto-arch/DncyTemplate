@@ -4,18 +4,16 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<UserSecretsId>3c883659-e7a3-4875-a0cb-c7cbc1528352</UserSecretsId>
-		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 		<DockerfileContext>..\..</DockerfileContext>
-		<SatelliteResourceLanguages>zh-CN</SatelliteResourceLanguages>
+		<DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
+		<SatelliteResourceLanguages>zh-Hans;en-US</SatelliteResourceLanguages>
+		<RuntimeIdentifiers>linux-x64</RuntimeIdentifiers>
 	</PropertyGroup>
 
 
 	<ItemGroup>
-		<PackageReference Include="Dncy.MultiTenancy.AspNetCore" Version="1.0.2" />
 		<PackageReference Include="Dncy.MultiTenancy.AspNetCore" Version="1.0.3" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.5" />
-		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.5" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.5" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.6" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.6">
 			<PrivateAssets>all</PrivateAssets>
@@ -42,7 +40,7 @@
 		<EmbeddedResource Update="Resources\DataAnnotation.en-US.resx">
 			<Generator>ResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
-		<EmbeddedResource Update="Resources\DataAnnotation.zh-CN.resx">
+		<EmbeddedResource Update="Resources\DataAnnotation.zh-Hans.resx">
 			<Generator>ResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Resources\DefaultDataAnnotation.en-US.resx">

@@ -49,7 +49,6 @@ public class Startup
         else
         {
             app.UseExceptionHandle();
-
             // TODO Notice: UseHsts, UseHttpsRedirection are not necessary if using reverse proxy with ssl, like nginx with ssl proxy
             app.UseHsts();
         }

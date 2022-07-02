@@ -1,31 +1,32 @@
 #See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
-WORKDIR /app
-EXPOSE 80
-EXPOSE 443
-
-
-ENV LANG C.UTF-8
-ENV TZ=Asia/Shanghai
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo '$TZ' > /etc/timezone
-
+# build & publish
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-WORKDIR /src
+WORKDIR /source
 COPY ["nuget.config", "."]
 COPY ["DncyTemplate.Entry/DncyTemplate.Api/DncyTemplate.Api.csproj", "DncyTemplate.Entry/DncyTemplate.Api/"]
 COPY ["DncyTemplate.Infra/DncyTemplate.Infra.csproj", "DncyTemplate.Infra/"]
 COPY ["DncyTemplate.Domain/DncyTemplate.Domain.csproj", "DncyTemplate.Domain/"]
 COPY ["DncyTemplate.Application/DncyTemplate.Application.csproj", "DncyTemplate.Application/"]
-RUN dotnet restore "DncyTemplate.Entry/DncyTemplate.Api/DncyTemplate.Api.csproj"
+RUN dotnet restore -r linux-x64 /p:PublishReadyToRun=true "DncyTemplate.Entry/DncyTemplate.Api/DncyTemplate.Api.csproj"
 COPY . .
-WORKDIR "/src/DncyTemplate.Entry/DncyTemplate.Api"
-RUN dotnet build "DncyTemplate.Api.csproj" -c Release -o /app/build
+WORKDIR "/source/DncyTemplate.Entry/DncyTemplate.Api"
+RUN dotnet build "DncyTemplate.Api.csproj" -c Release -o /source/build
 
 FROM build AS publish
-RUN dotnet publish "DncyTemplate.Api.csproj" -c Release -o /app/publish
+RUN dotnet publish "DncyTemplate.Api.csproj" -c Release -o /source/publish -r linux-x64 --self-contained true --no-restore /p:PublishTrimmed=true /p:PublishReadyToRun=true /p:PublishSingleFile=true
 
-FROM base AS final
+
+# runtiming  -jammy-amd64 is Ubuntu X64 environment
+FROM mcr.microsoft.com/dotnet/runtime-deps:6.0-jammy-amd64
 WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "DncyTemplate.Api.dll"]
+EXPOSE 80
+EXPOSE 443
+
+# setup timezone
+ENV LANG C.UTF-8
+ENV TZ=Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo '$TZ' > /etc/timezone
+
+COPY --from=publish /source/publish ./
+ENTRYPOINT ["./DncyTemplate.Api"]

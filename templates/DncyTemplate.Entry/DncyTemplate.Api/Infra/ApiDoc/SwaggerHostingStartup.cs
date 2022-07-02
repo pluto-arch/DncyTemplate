@@ -10,8 +10,14 @@ public class SwaggerHostingStartup : IHostingStartup
     /// <inheritdoc />
     public void Configure(IWebHostBuilder builder)
     {
-        builder.ConfigureServices((_, services) =>
+        builder.ConfigureServices((context, services) =>
         {
+
+            if (context.HostingEnvironment.IsEnvironment(Constants.AppConstant.EnvironmentName.DEV))
+            {
+                return;
+            }
+            
             services.AddSwaggerGen(c =>
             {
                c.SwaggerDoc("v1", new OpenApiInfo { Title = AppConstant.SERVICE_NAME, Version = "v1" });
