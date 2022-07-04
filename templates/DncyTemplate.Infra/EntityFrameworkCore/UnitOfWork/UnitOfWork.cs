@@ -28,6 +28,14 @@ public class UnitOfWork<TContext> : IUnitOfWork<TContext> where TContext : IUowD
 
     public TContext Context => GetDbContext();
 
+    
+    private async Task UowScopeManager_OnScopeChanged(IServiceProvider provider)
+    {
+        _serviceProvider = provider ?? throw new ArgumentNullException(nameof(provider));
+        _currenDbContext = _serviceProvider.GetRequiredService<TContext>();
+        await Task.CompletedTask;
+    }
+
 
     public TContext GetDbContext()
     {
@@ -81,20 +89,6 @@ public class UnitOfWork<TContext> : IUnitOfWork<TContext> where TContext : IUowD
         GC.SuppressFinalize(this);
     }
 
-    private async Task UowScopeManager_OnScopeChanged(IServiceProvider provider)
-    {
-        if (provider == null)
-        {
-            _currenDbContext = _rootContext;
-            _serviceProvider = _rootServiceProvider;
-            await Task.CompletedTask;
-            return;
-        }
-
-        _serviceProvider = provider;
-        _currenDbContext = _serviceProvider.GetRequiredService<TContext>();
-        await Task.CompletedTask;
-    }
 
     protected virtual void Dispose(bool disposing)
     {

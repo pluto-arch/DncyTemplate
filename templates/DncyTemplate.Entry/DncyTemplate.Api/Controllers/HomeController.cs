@@ -1,17 +1,15 @@
-﻿using Microsoft.Extensions.Localization;
+﻿using Dncy.MultiTenancy;
+using Microsoft.Extensions.Localization;
 
 namespace DncyTemplate.Api.Controllers
 {
     [Route("api/[controller]")]
+    [AutoResolveDependency]
     [ApiController]
-    public class HomeController : ControllerBase, IApiResultWapper
+    public partial class HomeController : ControllerBase, IApiResultWapper
     {
+        [AutoInject]
         private readonly IStringLocalizer<SharedResource> _stringLocalizer;
-
-        public HomeController(IStringLocalizer<SharedResource> stringLocalizer)
-        {
-            _stringLocalizer = stringLocalizer;
-        }
 
         [HttpGet]
         public ApiResult TestLocalize()

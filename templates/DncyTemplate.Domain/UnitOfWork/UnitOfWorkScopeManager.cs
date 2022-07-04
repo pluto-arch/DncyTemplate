@@ -20,35 +20,38 @@ public class UnitOfWorkScopeManager
         _currentScope.Value = serviceProvider;
     }
 
+    /// <summary>
+    /// Notify the scope of unit of work  has changed
+    /// </summary>
     public event Func<IServiceProvider, Task> OnScopeChanged;
 
 
     public IDisposable Begin()
     {
-        IServiceProvider parentScope = _currentScope.Value;
-        IServiceScope newScope = _serviceProvider.CreateScope();
+        var parentScope = _currentScope.Value;
+        var newScope = _serviceProvider.CreateScope();
         _currentScope.Value = newScope.ServiceProvider;
         OnScopeChanged?.Invoke(newScope.ServiceProvider);
         return new DisposeAction(() =>
         {
             _currentScope.Value = parentScope;
             OnScopeChanged?.Invoke(parentScope);
-            newScope?.Dispose();
+            newScope.Dispose();
         });
     }
 
     public async Task CompleteAsync()
     {
         var uowOptions = _currentScope.Value?.GetService<IOptions<UnitOfWorkCollectionOptions>>()?.Value;
-        if (uowOptions is not null && uowOptions?.DbContexts is { Count: > 0 })
+        if (uowOptions?.DbContexts is { Count: > 0 })
         {
-            foreach (KeyValuePair<string, Type> item in uowOptions?.DbContexts)
+            foreach (var item in uowOptions.DbContexts)
             {
                 if (_currentScope.Value?.GetService(item.Value) is not IUnitOfWork uow)
                 {
                     continue;
                 }
-                await uow?.SaveChangesAsync();
+                await uow.SaveChangesAsync();
             }
         }
     }
