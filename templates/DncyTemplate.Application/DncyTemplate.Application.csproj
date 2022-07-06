@@ -24,6 +24,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="AppServices\Product\" />
 	  <Folder Include="DomainEventHandlers\Product\" />
 	  <Folder Include="Models\Product\" />
 	  <Folder Include="Permission\" />

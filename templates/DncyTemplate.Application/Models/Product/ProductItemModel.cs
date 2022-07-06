@@ -2,6 +2,11 @@
 
 public class ProductItemModel
 {
+    public ProductItemModel()
+    {
+        CreateTime=DateTime.Now;
+    }
+
     public ProductItemModel(string id, string name, DateTime createTime)
     {
         Id = id;

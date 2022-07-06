@@ -1,12 +1,8 @@
 ﻿using System.Reflection;
-
 using Dncy.Permission;
-
 using DncyTemplate.Application.Permission;
 using DncyTemplate.Infra.EntityFrameworkCore.Repositories;
-
 using MediatR;
-
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -22,8 +18,6 @@ namespace DncyTemplate.Application
             services.AddMediatR(assemblies.ToArray());
 
 
-
-
             #region permission
             services.AddScoped<IPermissionChecker, DefaultPermissionChecker>();
             // permission definition 
@@ -37,13 +31,17 @@ namespace DncyTemplate.Application
             #endregion
 
 
-            services.AddAppServices();
+            services.AutoInjectDncyTemplate_Application();
 
             return services;
         }
 
 
-
+        /// <summary>
+        /// use reflection inject all appservice
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
         public static IServiceCollection AddAppServices(this IServiceCollection services)
         {
             var assembly = Assembly.GetExecutingAssembly();
