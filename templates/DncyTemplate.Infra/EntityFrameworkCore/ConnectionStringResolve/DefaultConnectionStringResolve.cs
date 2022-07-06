@@ -3,9 +3,6 @@ using Dncy.MultiTenancy.ConnectionStrings;
 
 using DncyTemplate.Infra.Constants;
 
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
-
 namespace DncyTemplate.Infra.EntityFrameworkCore.ConnectionStringResolve;
 
 public class DefaultConnectionStringResolve : IConnectionStringResolve

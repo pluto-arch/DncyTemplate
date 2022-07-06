@@ -1,5 +1,4 @@
-﻿using MediatR;
-
+﻿
 namespace DncyTemplate.Domain.Infra;
 
 public abstract class AggregateRoot : BaseEntity, IAggregateRoot, IDomainEvents

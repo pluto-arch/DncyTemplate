@@ -25,7 +25,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="EntityFrameworkCore\UnitOfWork\" />
 	  <Folder Include="EntityFrameworkCore\DbContexts\" />
 	  <Folder Include="EntityFrameworkCore\Extension\" />
 	  <Folder Include="Constants\" />

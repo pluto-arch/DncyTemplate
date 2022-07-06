@@ -1,7 +1,5 @@
 ﻿using DncyTemplate.Domain.Infra;
 
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 
 namespace DncyTemplate.Domain.UnitOfWork;
 

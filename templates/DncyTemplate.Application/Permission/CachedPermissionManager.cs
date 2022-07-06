@@ -1,41 +1,29 @@
-﻿using System.Collections.Concurrent;
-using System.Text.RegularExpressions;
-
-using Dncy.MultiTenancy;
+﻿using Dncy.MultiTenancy;
 using Dncy.Permission;
 using Dncy.Permission.Models;
-
 using DncyTemplate.Application.Constants;
 
-using Microsoft.Extensions.Logging;
 
 namespace DncyTemplate.Application.Permission;
 
-public class CachedPermissionManager : IPermissionManager
+[AutoResolveDependency]
+public partial class CachedPermissionManager : IPermissionManager
 {
 
+    [AutoInject]
     private readonly ILogger<InMemoryPermissionManager> _logger;
 
+    [AutoInject]
     private readonly IPermissionDefinitionManager _permissionDefinitionManager;
 
+    [AutoInject]
     private readonly IPermissionGrantStore _permissionGrantStore;
 
+    [AutoInject]
     private readonly ICurrentTenant _currentTenant;
 
     // TODO ConcurrentDictionary just as an example
     private static readonly ConcurrentDictionary<string, string> permissionCached = new();
-
-    public CachedPermissionManager(
-        ILogger<InMemoryPermissionManager> logger,
-        IPermissionDefinitionManager permissionDefinitionManager,
-        IPermissionGrantStore permissionGrantStore,
-        ICurrentTenant currentTenant)
-    {
-        _logger = logger;
-        _permissionDefinitionManager = permissionDefinitionManager;
-        _permissionGrantStore = permissionGrantStore;
-        _currentTenant = currentTenant;
-    }
 
     /// <inheritdoc />
     public async Task<bool> IsGrantedAsync(string name, string providerName, string providerKey)

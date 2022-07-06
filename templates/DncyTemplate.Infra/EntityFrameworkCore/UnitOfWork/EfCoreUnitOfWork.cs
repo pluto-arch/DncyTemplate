@@ -6,20 +6,15 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.UnitOfWork;
 
-public class UnitOfWork<TContext> : IUnitOfWork<TContext> where TContext : IUowDbContext
+public class EfCoreUnitOfWork<TContext> : IUnitOfWork<TContext> where TContext : IUowDbContext
 {
-    private readonly TContext _rootContext;
-    private readonly IServiceProvider _rootServiceProvider;
     private TContext _currenDbContext;
     private IServiceProvider _serviceProvider;
     private bool disposedValue;
 
-    public UnitOfWork(TContext ctx, IServiceProvider serviceProvider, UnitOfWorkScopeManager uowScopeManager)
+    public EfCoreUnitOfWork(TContext rootContext, UnitOfWorkScopeManager uowScopeManager)
     {
-        _currenDbContext = ctx ?? throw new ArgumentNullException(nameof(ctx));
-        _rootContext = ctx;
-        _rootServiceProvider = serviceProvider;
-
+        _currenDbContext = rootContext ?? throw new ArgumentNullException(nameof(rootContext));
         if (uowScopeManager != null)
         {
             uowScopeManager.OnScopeChanged += UowScopeManager_OnScopeChanged;
@@ -37,37 +32,32 @@ public class UnitOfWork<TContext> : IUnitOfWork<TContext> where TContext : IUowD
     }
 
 
-    public TContext GetDbContext()
-    {
-        return _currenDbContext;
-    }
+    public TContext GetDbContext() => _currenDbContext;
 
-    public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-    {
-        return _currenDbContext.SaveChangesAsync(cancellationToken);
-    }
 
-    public int SaveChanges()
-    {
-        return _currenDbContext.SaveChanges();
-    }
+    public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)=>_currenDbContext.SaveChangesAsync(cancellationToken);
+
+    public int SaveChanges()=>_currenDbContext.SaveChanges();
+   
 
     public IRepository<TEntity> GetRepository<TEntity>() where TEntity : BaseEntity
     {
-        return _serviceProvider.GetService<IRepository<TEntity>>();
+        return _serviceProvider.GetRequiredService<IRepository<TEntity>>();
     }
 
     public IRepository<TEntity, TKey> GetRepository<TEntity, TKey>() where TEntity : BaseEntity<TKey>
     {
-        return _serviceProvider.GetService<IRepository<TEntity, TKey>>();
+        return _serviceProvider.GetRequiredService<IRepository<TEntity, TKey>>();
     }
 
 
     public TRep GetCustomRepository<TRep>() where TRep : IRepository
     {
-        return _serviceProvider.GetService<TRep>();
+        return _serviceProvider.GetRequiredService<TRep>();
     }
 
+
+    #region dispose
 
     public async ValueTask DisposeAsync()
     {
@@ -105,4 +95,6 @@ public class UnitOfWork<TContext> : IUnitOfWork<TContext> where TContext : IUowD
             disposedValue = true;
         }
     }
+    #endregion
+
 }

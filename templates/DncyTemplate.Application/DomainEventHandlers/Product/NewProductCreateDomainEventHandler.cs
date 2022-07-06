@@ -1,19 +1,13 @@
 ﻿using DncyTemplate.Domain.DomainEvents.Product;
 
-using MediatR;
-
-using Microsoft.Extensions.Logging;
 
 namespace DncyTemplate.Application.DomainEventHandlers.Product;
 
-public class NewProductCreateDomainEventHandler : INotificationHandler<NewProductCreateDomainEvent>
+[AutoResolveDependency]
+public partial class NewProductCreateDomainEventHandler : INotificationHandler<NewProductCreateDomainEvent>
 {
+    [AutoInject]
     private readonly ILogger<NewProductCreateDomainEventHandler> _logger;
-
-    public NewProductCreateDomainEventHandler(ILogger<NewProductCreateDomainEventHandler> logger)
-    {
-        _logger = logger;
-    }
 
     /// <inheritdoc />
     public async Task Handle(NewProductCreateDomainEvent notification, CancellationToken cancellationToken)

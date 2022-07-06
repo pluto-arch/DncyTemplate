@@ -1,12 +1,8 @@
 ﻿using Dncy.MultiTenancy;
-
 using DncyTemplate.Domain.Infra;
 using DncyTemplate.Domain.UnitOfWork;
 using DncyTemplate.Infra.EntityFrameworkCore.Extension;
 
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 

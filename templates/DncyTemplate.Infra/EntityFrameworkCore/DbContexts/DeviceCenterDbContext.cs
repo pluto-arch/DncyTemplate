@@ -3,7 +3,6 @@ using DncyTemplate.Domain.Aggregates.System;
 using DncyTemplate.Domain.UnitOfWork;
 using DncyTemplate.Infra.EntityFrameworkCore.EntityTypeConfig;
 
-using Microsoft.EntityFrameworkCore;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 

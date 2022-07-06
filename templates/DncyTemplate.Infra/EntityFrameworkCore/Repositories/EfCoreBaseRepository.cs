@@ -20,7 +20,7 @@ using Microsoft.Extensions.Options;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.Repositories;
 
-public class BaseRepository<TDbContext, TEntity> : IRepository<TEntity>
+public class EfCoreBaseRepository<TDbContext, TEntity> : IRepository<TEntity>
     where TDbContext : DbContext, IUowDbContext
     where TEntity : BaseEntity
 {
@@ -28,7 +28,7 @@ public class BaseRepository<TDbContext, TEntity> : IRepository<TEntity>
     private readonly IUnitOfWork<TDbContext> _unitOfWork;
 
 
-    public BaseRepository(IUnitOfWork<TDbContext> unitOfWork)
+    public EfCoreBaseRepository(IUnitOfWork<TDbContext> unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }
@@ -297,12 +297,12 @@ public class BaseRepository<TDbContext, TEntity> : IRepository<TEntity>
 }
 
 
-public class BaseRepository<TDbContext, TEntity, TKey> : BaseRepository<TDbContext, TEntity>,
+public class EfCoreBaseRepository<TDbContext, TEntity, TKey> : EfCoreBaseRepository<TDbContext, TEntity>,
     IRepository<TEntity, TKey>
     where TDbContext : DbContext, IUowDbContext
     where TEntity : BaseEntity<TKey>
 {
-    public BaseRepository(IUnitOfWork<TDbContext> unitOfWork) : base(unitOfWork) { }
+    public EfCoreBaseRepository(IUnitOfWork<TDbContext> unitOfWork) : base(unitOfWork) { }
 
     public async Task DeleteAsync(TKey id, bool autoSave = false, CancellationToken cancellationToken = default)
     {
