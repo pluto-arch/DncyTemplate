@@ -5,17 +5,17 @@ services:
     image: ${DOCKER_REGISTRY-}dncytemplateapi
     build:
       context: .
-      dockerfile: ./DncyTemplate.Entry/DncyTemplate.Api/Dockerfile
+      dockerfile: ./entry/DncyTemplate.Api/Dockerfile
 
   dncytemplate.mvc:
     image: ${DOCKER_REGISTRY-}dncytemplatemvc
     build:
       context: .
-      dockerfile: ./DncyTemplate.Entry/DncyTemplate.Mvc/Dockerfile
+      dockerfile: ./entry/DncyTemplate.Mvc/Dockerfile
 
   dncytemplate.job:
     image: ${DOCKER_REGISTRY-}dncytemplatejob
     build:
       context: .
-      dockerfile: ./DncyTemplate.Job/Dockerfile
+      dockerfile: ./entry/DncyTemplate.Job/Dockerfile
 

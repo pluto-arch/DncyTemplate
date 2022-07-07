@@ -4,13 +4,13 @@
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /source
 COPY ["nuget.config", "."]
-COPY ["DncyTemplate.Entry/DncyTemplate.Mvc/DncyTemplate.Mvc.csproj", "DncyTemplate.Entry/DncyTemplate.Mvc/"]
-COPY ["DncyTemplate.Infra/DncyTemplate.Infra.csproj", "DncyTemplate.Infra/"]
-COPY ["DncyTemplate.Domain/DncyTemplate.Domain.csproj", "DncyTemplate.Domain/"]
-COPY ["DncyTemplate.Application/DncyTemplate.Application.csproj", "DncyTemplate.Application/"]
-RUN dotnet restore -r linux-x64 /p:PublishReadyToRun=true "DncyTemplate.Entry/DncyTemplate.Mvc/DncyTemplate.Mvc.csproj"
+COPY ["entry/DncyTemplate.Mvc/DncyTemplate.Mvc.csproj", "entry/DncyTemplate.Mvc/"]
+COPY ["src/DncyTemplate.Infra/DncyTemplate.Infra.csproj", "src/DncyTemplate.Infra/"]
+COPY ["src/DncyTemplate.Domain/DncyTemplate.Domain.csproj", "src/DncyTemplate.Domain/"]
+COPY ["src/DncyTemplate.Application/DncyTemplate.Application.csproj", "src/DncyTemplate.Application/"]
+RUN dotnet restore -r linux-x64 /p:PublishReadyToRun=true "entry/DncyTemplate.Mvc/DncyTemplate.Mvc.csproj"
 COPY . .
-WORKDIR "/source/DncyTemplate.Entry/DncyTemplate.Mvc"
+WORKDIR "/source/entry/DncyTemplate.Mvc"
 RUN dotnet build "DncyTemplate.Mvc.csproj" -c Release -o /source/build
 
 FROM build AS publish

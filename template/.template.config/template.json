@@ -3,6 +3,7 @@
   "author": "zhangyulong",
   "classifications": [
     "WEB",
+    "net6",
     "AspNetCore"
   ],
   "identity": "DncyTemplate",
@@ -46,22 +47,53 @@
         {
           "condition": "(ProjectType==\"MVC\")",
           "exclude": [
-            "DncyTemplate.Entry/DncyTemplate.Api/**/*"
+            "entry/DncyTemplate.Api/**/*"
           ]
         },
         {
           "condition": "(ProjectType==\"API\")",
           "exclude": [
-            "DncyTemplate.Entry/DncyTemplate.Mvc/**/*"
+            "entry/DncyTemplate.Mvc/**/*"
           ]
         },
         {
           "condition": "(!Job)",
           "exclude": [
-            "DncyTemplate.Job/**/*"
+            "entry/DncyTemplate.Job/**/*"
           ]
         },
+        {
+          "exclude": [
+            "template.sln"
+          ]
+        }
       ]
+    }
+  ],
+  "primaryOutputs": [
+    {
+      "path": "entry/DncyTemplate.Api/DncyTemplate.Api.csproj",
+      "condition": "(ProjectType==\"API\")"
+    },
+    {
+      "path": "entry/DncyTemplate.Mvc/DncyTemplate.Mvc.csproj",
+      "condition": "(ProjectType==\"MVC\")"
+    },
+    {
+      "path": "entry/DncyTemplate.Job/DncyTemplate.Job.csproj",
+      "condition": "(Job)"
+    }
+  ],
+  "postActions": [
+    {
+      "description": "添加选定的项目至解决方案",
+      "manualInstructions": [
+        {
+          "text": "请手动添加需要的项目到解决方案"
+        }
+      ],
+      "actionId": "D396686C-DE0E-4DE6-906D-291CD29FC5DE",
+      "continueOnError": true
     }
   ]
 }

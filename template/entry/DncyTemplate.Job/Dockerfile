@@ -4,13 +4,13 @@
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /source
 COPY ["nuget.config", "."]
-COPY ["DncyTemplate.Job/DncyTemplate.Job.csproj", "DncyTemplate.Job/"]
-COPY ["DncyTemplate.Infra/DncyTemplate.Infra.csproj", "DncyTemplate.Infra/"]
-COPY ["DncyTemplate.Domain/DncyTemplate.Domain.csproj", "DncyTemplate.Domain/"]
-COPY ["DncyTemplate.Application/DncyTemplate.Application.csproj", "DncyTemplate.Application/"]
-RUN dotnet restore -r linux-x64 /p:PublishReadyToRun=true "DncyTemplate.Job/DncyTemplate.Job.csproj"
+COPY ["entry/DncyTemplate.Job/DncyTemplate.Job.csproj", "entry/DncyTemplate.Job/"]
+COPY ["src/DncyTemplate.Infra/DncyTemplate.Infra.csproj", "src/DncyTemplate.Infra/"]
+COPY ["src/DncyTemplate.Domain/DncyTemplate.Domain.csproj", "src/DncyTemplate.Domain/"]
+COPY ["src/DncyTemplate.Application/DncyTemplate.Application.csproj", "src/DncyTemplate.Application/"]
+RUN dotnet restore -r linux-x64 /p:PublishReadyToRun=true "entry/DncyTemplate.Job/DncyTemplate.Job.csproj"
 COPY . .
-WORKDIR "/source/DncyTemplate.Job"
+WORKDIR "/source/entry/DncyTemplate.Job"
 RUN dotnet build "DncyTemplate.Job.csproj" -c Release -o /source/build
 
 FROM build AS publish

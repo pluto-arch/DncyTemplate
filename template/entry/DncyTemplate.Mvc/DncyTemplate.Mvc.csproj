@@ -26,9 +26,10 @@
 		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
 	</ItemGroup>
 
+
 	<ItemGroup>
-		<ProjectReference Include="..\..\DncyTemplate.Application\DncyTemplate.Application.csproj" />
-		<ProjectReference Include="..\..\DncyTemplate.Infra\DncyTemplate.Infra.csproj" />
+	  <ProjectReference Include="..\..\src\DncyTemplate.Application\DncyTemplate.Application.csproj" />
+	  <ProjectReference Include="..\..\src\DncyTemplate.Infra\DncyTemplate.Infra.csproj" />
 	</ItemGroup>
 
 

@@ -30,11 +30,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\DncyTemplate.Application\DncyTemplate.Application.csproj" />
-		<ProjectReference Include="..\..\DncyTemplate.Infra\DncyTemplate.Infra.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<Folder Include="Infra\HealthChecks\" />
 		<Folder Include="Infra\Firewall\" />
 		<Folder Include="Constants\" />
@@ -47,6 +42,12 @@
 
 	<ItemGroup>
 		<None Remove="DncyTemplate.Api.xml" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\src\DncyTemplate.Application\DncyTemplate.Application.csproj" />
+	  <ProjectReference Include="..\..\src\DncyTemplate.Infra\DncyTemplate.Infra.csproj" />
 	</ItemGroup>
 
 

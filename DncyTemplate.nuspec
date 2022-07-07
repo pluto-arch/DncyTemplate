@@ -12,6 +12,6 @@
     </packageTypes>
   </metadata>
   <files>
-    <file src="templates\**" target="content" exclude="**.vs\**;**.vscode\**;**.idea\**;**\**\**\bin\**;**\**\**\obj\**;**\**\**\*.xml;**\**\**\Logs\**;**\**\**\*.csproj.user;**\**\node_modules\**" />
+    <file src="template\**" target="content" exclude="**.vs\**;**.vscode\**;**.idea\**;**\**\**\bin\**;**\**\**\obj\**;**\**\**\*.xml;**\**\**\Logs\**;**\**\**\*.csproj.user;**\**\node_modules\**" />
   </files>
 </package>
