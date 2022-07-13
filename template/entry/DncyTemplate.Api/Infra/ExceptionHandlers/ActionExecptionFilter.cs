@@ -23,7 +23,7 @@ public class ActionExecptionFilter : IAsyncExceptionFilter
             var log = context.HttpContext.RequestServices.GetService<ILogger<ActionExecptionFilter>>() ?? NullLogger<ActionExecptionFilter>.Instance;
             var msg = context.Exception.Message;
             log.LogError(context.Exception, "处理{method} {path}. 出现错误: {msg}", context.HttpContext.Request.Method, context.HttpContext.Request.GetEncodedPathAndQuery(), msg);
-            context.Result = new ObjectResult(ApiResult.Error(msg))
+            context.Result = new ObjectResult(ApiResult.Error("处理请求失败"))
             {
                 ContentTypes = mediaType,
                 StatusCode = StatusCodes.Status200OK

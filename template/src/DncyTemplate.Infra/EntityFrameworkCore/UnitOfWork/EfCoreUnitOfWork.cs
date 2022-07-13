@@ -2,8 +2,6 @@
 using DncyTemplate.Domain.Repository;
 using DncyTemplate.Domain.UnitOfWork;
 
-using Microsoft.Extensions.DependencyInjection;
-
 namespace DncyTemplate.Infra.EntityFrameworkCore.UnitOfWork;
 
 public class EfCoreUnitOfWork<TContext> : IUnitOfWork<TContext> where TContext : IUowDbContext

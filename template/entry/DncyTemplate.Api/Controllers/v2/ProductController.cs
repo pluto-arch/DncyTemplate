@@ -1,23 +1,18 @@
-﻿using System.ComponentModel.DataAnnotations;
-
+﻿using DncyTemplate.Application.AppServices.Product;
+using DncyTemplate.Application.Models.Product;
 using DncyTemplate.Domain.Aggregates.Product;
-using DncyTemplate.Domain.DomainEvents.Product;
-using DncyTemplate.Domain.Repository;
-using DncyTemplate.Infra.EntityFrameworkCore.Extension;
-
-using Microsoft.EntityFrameworkCore;
 
 namespace DncyTemplate.Api.Controllers.v2
 {
 
     [ApiController]
-    [Route("api/v{version:apiVersion}/[controller]")]
+    [Route("api/v{version:apiVersion}/products")]
     [ApiVersion("2.0")]
     [AutoResolveDependency]
     public partial class ProductController : ControllerBase, IApiResultWapper
     {
         [AutoInject]
-        private readonly IRepository<Product> _productsRepository;
+        private readonly IProductAppService _productAppService;
 
 
         /// <summary>
@@ -25,14 +20,23 @@ namespace DncyTemplate.Api.Controllers.v2
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Produces(typeof(IPagedList<Product>))]
-        public async Task<ApiResult> GetAsync(int pageNo = 1, [Range(minimum: 1, maximum: 255, ErrorMessage = "PageSizeMessage")] byte pageSize = 20)
+        [Produces(typeof(IPagedList<ProductListItemDto>))]
+        public async Task<ApiResult> ListAsync(ProductPagedRequest request)
         {
-            if (pageSize <= 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(pageSize));
-            }
-            var res = await _productsRepository.IgnoreQueryFilters().AsNoTracking().ToPagedListAsync(pageNo, pageSize);
+            var res = await _productAppService.GetListAsync(request);
+            return this.Success(res);
+        }
+
+
+        /// <summary>
+        /// 获取产品信息
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{id:required}")]
+        [Produces(typeof(ProductDto))]
+        public async Task<ApiResult> GetByIdAsync(string id)
+        {
+            var res = await _productAppService.GetAsync(id);
             return this.Success(res);
         }
 
@@ -42,26 +46,37 @@ namespace DncyTemplate.Api.Controllers.v2
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        [Produces(typeof(Product))]
-        public async Task<ApiResult> PostAsync([FromForm] string name)
+        [Produces(typeof(ProductDto))]
+        public async Task<ApiResult> CreateAsync([FromForm] ProductCreateRequest request)
         {
-            var product = new Product
-            {
-                Id = $"P{DateTime.Now.Ticks}",
-                Name = name,
-                Remark = $"{name} remarks",
-                CreationTime = DateTimeOffset.Now,
-            };
-            product.AddDevice(new Device
-            {
-                Name = "admin",
-                SerialNo = "sssssss",
-                Coordinate = (GeoCoordinate)"123.22,31.333",
-                Online = true,
-            });
-            product.AddDomainEvent(new NewProductCreateDomainEvent(product));
-            product = await _productsRepository.InsertAsync(product);
-            return this.Success(product);
+            var productDto = await _productAppService.CreateAsync(request);
+            return this.Success(productDto);
+        }
+
+
+        /// <summary>
+        /// 修改产品
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("{id:required}")]
+        [Produces(typeof(ProductDto))]
+        public async Task<ApiResult> UpdateAsync([Required] string id, [FromForm] ProductUpdateRequest request)
+        {
+            var productDto = await _productAppService.UpdateAsync(id, request);
+            return this.Success(productDto);
+        }
+
+
+        /// <summary>
+        /// 删除产品
+        /// </summary>
+        /// <returns></returns>
+        [HttpDelete("{id:required}")]
+        [Produces(typeof(ProductDto))]
+        public async Task<ApiResult> DeleteAsync([Required] string id)
+        {
+            await _productAppService.DeleteAsync(id);
+            return this.Success();
         }
     }
 }

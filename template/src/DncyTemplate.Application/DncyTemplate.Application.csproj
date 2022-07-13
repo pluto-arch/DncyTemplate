@@ -25,10 +25,12 @@
 
 	<ItemGroup>
 	  <Folder Include="AppServices\Product\" />
+	  <Folder Include="AppServices\Generics\" />
 	  <Folder Include="DomainEventHandlers\Product\" />
-	  <Folder Include="Models\Product\" />
+	  <Folder Include="Models\Generics\" />
 	  <Folder Include="Permission\" />
 	  <Folder Include="Constants\" />
+	  <Folder Include="AutoMapperProfiles\" />
 	</ItemGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<DocumentationFile>DncyTemplate.Application.xml</DocumentationFile>

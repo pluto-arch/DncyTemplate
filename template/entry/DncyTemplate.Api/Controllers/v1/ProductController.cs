@@ -1,10 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-using DncyTemplate.Domain.Aggregates.Product;
+﻿using DncyTemplate.Domain.Aggregates.Product;
 using DncyTemplate.Domain.DomainEvents.Product;
 using DncyTemplate.Domain.Repository;
 using DncyTemplate.Infra.EntityFrameworkCore.Extension;
-
 using Microsoft.EntityFrameworkCore;
 
 namespace DncyTemplate.Api.Controllers.v1
