@@ -1,6 +1,7 @@
 version: '3.4'
 
 services:
+#if (ProjectType == "API")
   dncytemplate.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -8,6 +9,8 @@ services:
     ports:
       - "80"
       - "443"
+#endif
+#if (ProjectType == "MVC")
   dncytemplate.mvc:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -15,7 +18,8 @@ services:
     ports:
       - "80"
       - "443"
-
+#endif
+#if (Job)
   dncytemplate.job:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -23,3 +27,4 @@ services:
     ports:
       - "80"
       - "443"
+#endif
