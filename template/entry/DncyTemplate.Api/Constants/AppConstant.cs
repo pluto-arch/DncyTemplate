@@ -14,7 +14,7 @@ public class AppConstant
     /// <summary>
     /// 默认跨域名称
     /// </summary>
-    public const string DEFAULT_CORS_NAME = "default";
+    public const string DEFAULT_CORS_NAME = "full";
 
     /// <summary>
     /// 默认的http： context type 格式

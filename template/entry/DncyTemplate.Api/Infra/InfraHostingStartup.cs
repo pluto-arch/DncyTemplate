@@ -102,6 +102,18 @@ public class InfraHostingStartup : IHostingStartup
 
             #endregion
 
+
+            #region cors
+            services.AddCors(options =>
+            {
+                options.AddPolicy(AppConstant.DEFAULT_CORS_NAME, builder =>
+                {
+                    builder.SetIsOriginAllowed(_=>true)
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+                });
+            });
+            #endregion
         });
     }
 }

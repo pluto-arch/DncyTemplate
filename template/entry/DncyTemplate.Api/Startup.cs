@@ -34,11 +34,14 @@ public class Startup
     public void Configure(IApplicationBuilder app, IHostEnvironment env)
     {
 
+
         app.UseResponseCompression();
         app.UseForwardedHeaders()
             .UseCertificateForwarding();
 
         app.UseHttpRequestLogging();
+
+        app.UseCors(AppConstant.DEFAULT_CORS_NAME);
 
         if (env.IsEnvironment(AppConstant.EnvironmentName.DEV))
         {
@@ -52,10 +55,9 @@ public class Startup
             // TODO Notice: UseHsts, UseHttpsRedirection are not necessary if using reverse proxy with ssl, like nginx with ssl proxy
             app.UseHsts();
         }
-
+       
         app.UseRequestLocalization();
         app.UseHttpsRedirection();
-        app.UseCors(AppConstant.DEFAULT_CORS_NAME);
         app.UseAuthentication();
         app.UseMultiTenancy()
             .UseUnitofWork();

@@ -12,7 +12,6 @@ public static class SwaggerApplicationBuilderExtension
     public static IApplicationBuilder UseCustomSwagger(this IApplicationBuilder app)
     {
         app.UseSwagger();
-        // c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PlutoNetCoreTemplate.API v1")
         var versionProvider = app.ApplicationServices.GetRequiredService<IApiVersionDescriptionProvider>();
         app.UseSwaggerUI(options =>
         {
