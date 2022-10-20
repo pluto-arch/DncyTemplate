@@ -1,11 +1,140 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @inject IHtmlLocalizer<SharedResource> _localizer
 @{
-    ViewData["Title"] = "Home Page";
-    ViewData["CurrentMenu"] = "home_index";
+    ViewData["Title"] = "看板";
 }
 
-<div class="text-center">
-    <h1 class="display-4">@_localizer[SharedResource.Welcome]</h1>
-    <a>@ViewBag.Demo</a>
+<div class="row align-items-end">
+    <div class="col-8">
+        <!-- Page Title -->
+        <div class="page-title mb-30">
+            <h5 class="mb-0">Dashboard</h5>
+            <span>Welcome Back, Samantha Sarah!</span>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="dashboard-dropdown text-right mb-30">
+            <div class="dropdown">
+                <button
+                    class="btn dropdown-toggle"
+                    type="button"
+                    id="dashboardDropdown"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                >
+                    <i class="ti-more"></i>
+                </button>
+                <div
+                    class="dropdown-menu dropdown-menu-right"
+                    aria-labelledby="dashboardDropdown"
+                >
+                    <a class="dropdown-item" href="#"
+                    ><i class="ti-pencil-alt"></i> Quick Edit</a
+                    >
+                    <a class="dropdown-item" href="#"
+                    ><i class="ti-settings"></i> Settings</a
+                    >
+                    <a class="dropdown-item" href="#"
+                    ><i class="ti-eraser"></i> Remove</a
+                    >
+                    <a class="dropdown-item" href="#"
+                    ><i class="ti-trash"></i> Delete</a
+                    >
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="col-md-6 col-xl-3 mb-30">
+        <div class="card bg-boxshadow full-height wow fadeInUp"
+             data-wow-delay="200ms">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="az-content-label">Today Sales</div>
+                        <h5 class="mb-0">2,369.78</h5>
+                        <span class="success-text"><i class="ti-arrow-up"></i> 3.87%</span>
+                    </div>
+                    <div class="col">
+                        <div class="chart text-right">
+                            <div class="">
+                                <span id="sparkline6">3,4,4,7,5,9,10,6,4,4,7,5,9,10</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xl-3 mb-30">
+        <div class="card bg-boxshadow full-height wow fadeInUp"
+             data-wow-delay="300ms">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="az-content-label">This Weeks Sales</div>
+                        <h5>5,869</h5>
+                        <span class="text-danger"><i class="ti-arrow-down"></i> 4.99%</span>
+                    </div>
+                    <div class="col">
+                        <div class="chart text-right">
+                            <div class="">
+                                <span id="sparkline5">3,4,4,7,5,9,10,6,4,4,7,5,9,10</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xl-3 mb-30">
+        <div class="card bg-boxshadow full-height wow fadeInUp"
+             data-wow-delay="400ms">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="az-content-label">This Month Sales</div>
+                        <h5>16,869</h5>
+                        <span class="success-text"><i class="ti-arrow-up"></i> 1.90%</span>
+                    </div>
+                    <div class="col">
+                        <div class="chart text-right">
+                            <div class="">
+                                <span id="sparkline14">3,4,4,7,5,9,10,6,4,4,7,5,9,10</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xl-3 mb-30">
+        <div class="card bg-boxshadow full-height wow fadeInUp"
+             data-wow-delay="500ms">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="az-content-label">This Year Sales</div>
+                        <h5>65,869</h5>
+                        <span class="success-text"><i class="ti-arrow-up"></i> 7.85%</span>
+                    </div>
+                    <div class="col">
+                        <div class="chart text-right">
+                            <div class="">
+                                <span id="sparkline15">3,4,4,7,5,9,10,6,4,4,7,5,9,10</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

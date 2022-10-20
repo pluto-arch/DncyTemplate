@@ -10,8 +10,20 @@
 		<RuntimeIdentifiers>linux-x64</RuntimeIdentifiers>
 	</PropertyGroup>
 
+	<ItemGroup>
+	  <Compile Remove="Views\新文件夹\**" />
+	  <Content Remove="Views\新文件夹\**" />
+	  <EmbeddedResource Remove="Views\新文件夹\**" />
+	  <None Remove="Views\新文件夹\**" />
+	</ItemGroup>
 
 	<ItemGroup>
+	  <Content Remove="bundleconfig.json" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
 		<PackageReference Include="Dncy.MultiTenancy.AspNetCore" Version="1.0.3" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.5" />
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
@@ -56,6 +68,31 @@
 		<Content Update="wwwroot\favicon.ico">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <UpToDateCheckInput Remove="Views\Shared\_MainLayout.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <_ContentIncludedByDefault Remove="Views\LayoutComponents\_TopHeaderLeft.cshtml" />
+	  <_ContentIncludedByDefault Remove="Views\Shared\_MainLayout.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <UpToDateCheckInput Remove="Views\LayoutComponents\_TopHeaderLeft.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="HtmlHelpers\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="bundleconfig.json" />
 	</ItemGroup>
 
 </Project>

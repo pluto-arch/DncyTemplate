@@ -75,16 +75,19 @@ namespace DncyTemplate.Mvc.Controllers
 
 
 
-        [HttpPost]
-        public IActionResult SwitchLanguage([FromForm] string culture, string returnUrl)
+        [HttpGet]
+        public IActionResult SwitchLanguage(string culture, string returnUrl)
         {
             Response.Cookies.Append(
                 CookieRequestCultureProvider.DefaultCookieName,
                 CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
                 new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
             );
-
-            return LocalRedirect(returnUrl);
+            if (!string.IsNullOrEmpty(returnUrl))
+            {
+                return LocalRedirect(returnUrl);
+            }
+            return RedirectToAction("Index","Home");
         }
 
         [HttpPost]

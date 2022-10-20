@@ -6,6 +6,9 @@ using DncyTemplate.Mvc.Constants;
 using DncyTemplate.Mvc.Infra;
 using DncyTemplate.Mvc.Infra.UnitofWork;
 
+using Microsoft.AspNetCore.Hosting.Server.Features;
+using ILogger = Microsoft.Extensions.Logging.ILogger;
+
 namespace DncyTemplate.Mvc;
 
 public class Startup
@@ -35,6 +38,10 @@ public class Startup
 
     public void Configure(IApplicationBuilder app, IHostEnvironment env)
     {
+
+        var serverAddressesFeature = app.ServerFeatures.Get<IServerAddressesFeature>();
+        var address = serverAddressesFeature.Addresses;
+        Log.Logger.Information("应用程序运行地址: {@Address}", address);
 
         app.UseForwardedHeaders()
             .UseCertificateForwarding();
@@ -71,6 +78,5 @@ public class Startup
                 "default",
                 "{controller=Home}/{action=Index}/{id?}");
         });
-
     }
 }

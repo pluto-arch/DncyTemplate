@@ -1,0 +1,77 @@
+﻿@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Options
+
+@inject IViewLocalizer Localizer
+@inject IOptions<RequestLocalizationOptions> LocOptions
+
+
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var cultureItems = LocOptions.Value.SupportedUICultures?
+        .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
+        .ToList();
+    var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+    var current = cultureItems?.FirstOrDefault(x => x.Value == requestCulture?.RequestCulture.UICulture.Name);
+}
+
+
+<!--top header left-->
+<div class="left-side-content-area d-flex align-items-center">
+    <!-- Mobile Logo -->
+    <div class="mobile-logo mr-3 mr-sm-4">
+        <a href="index.html"><img src="img/core-img/small-logo.png" alt="Mobile Logo" /></a>
+    </div>
+
+    <!-- Triggers -->
+    <div class="admetro-triggers mr-1 mr-sm-3">
+        <div class="menu-collasped" id="menuCollasped">
+            <i class="ti-align-right"></i>
+        </div>
+        <div class="mobile-menu-open" id="mobileMenuOpen">
+            <i class="ti-align-right"></i>
+        </div>
+    </div>
+
+    <!-- Left Side Nav -->
+    @if (current != null)
+    {
+        <ul class="left-side-navbar d-flex align-items-center">
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false">
+                    @current?.Text
+                    &nbsp;<i class="fa fa-angle-down"></i>
+                </button>
+                <!-- Dropdown Menu -->
+                <div class="dropdown-menu" style="width: 200px" aria-labelledby="dropdownMenuButton">
+                    @foreach (SelectListItem lan in cultureItems)
+                    {
+                        if (current.Value == lan.Value)
+                        {
+                            <a class="dropdown-item disabled"
+                               asp-controller="Home" 
+                               asp-action="SwitchLanguage" 
+                               asp-route-culture="@lan.Value" 
+                               asp-route-returnUrl="@returnUrl">@lan.Text</a>
+                        }
+                        else
+                        {
+                            <a class="dropdown-item"
+                               asp-controller="Home" 
+                               asp-action="SwitchLanguage" 
+                               asp-route-culture="@lan.Value" 
+                               asp-route-returnUrl="@returnUrl">@lan.Text</a>
+                        }
+                        
+                    }
+                </div>
+            </li>
+        </ul>
+    }
+</div>
