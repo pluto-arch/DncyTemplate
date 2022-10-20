@@ -176,6 +176,15 @@ public partial interface IRepository<TEntity> : IQueryable<TEntity>, IRepository
         CancellationToken cancellationToken = default);
 
     #endregion
+
+
+    /// <summary>
+    /// 执行SQL语句返回受影响的行数
+    /// </summary>
+    /// <param name="sql"></param>
+    /// <param name="param"></param>
+    /// <returns></returns>
+    Task<int> ExecuteSqlRawAsync(string sql,params object[] param);
 }
 
 

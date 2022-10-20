@@ -6,7 +6,7 @@ global using System.Net.Mime;
 global using System.Text;
 global using System.Threading;
 global using System.Threading.Tasks;
-
+global using System.ComponentModel.DataAnnotations;
 global using DncyTemplate.Api.Constants;
 global using DncyTemplate.Api.Infra;
 global using DncyTemplate.Domain.Collections;

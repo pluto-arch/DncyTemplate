@@ -1,4 +1,4 @@
-﻿namespace DncyTemplate.Api.Controllers;
+﻿namespace DncyTemplate.Api.Infra;
 
 
 /// <summary>

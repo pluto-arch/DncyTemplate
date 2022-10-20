@@ -35,14 +35,14 @@ namespace DncyTemplate.Mvc.Controllers
 
         public async Task<IActionResult> Product()
         {
-            var models = await _repository.AsNoTracking().Select(x => new ProductItemModel(x.Id, x.Name, x.CreationTime.DateTime)).ToPagedListAsync(1, 20);
+            var models = await _repository.AsNoTracking().Select(x => new ProductListItemDto(x.Id, x.Name, x.CreationTime.DateTime)).ToPagedListAsync(1, 20);
             return View(models);
         }
 
 
         public async Task<IActionResult> Generate([FromServices] IHostEnvironment env)
         {
-            var models = await _repository.AsNoTracking().Select(x => new ProductItemModel(x.Id, x.Name, x.CreationTime.DateTime)).ToPagedListAsync(1, 20);
+            var models = await _repository.AsNoTracking().Select(x => new ProductListItemDto(x.Id, x.Name, x.CreationTime.DateTime)).ToPagedListAsync(1, 20);
             ViewData["data"] = models;
             ViewData["Host"] = Request.IsHttps ? $"https://{Request.Host}" : $"http://{Request.Host}";
             IViewEngine viewEngine = HttpContext.RequestServices.GetService(typeof(ICompositeViewEngine)) as ICompositeViewEngine;

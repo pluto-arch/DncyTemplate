@@ -103,11 +103,7 @@ public class EfCoreBaseRepository<TDbContext, TEntity> : IRepository<TEntity>
     {
         List<TEntity> entities = await DbSet.Where(predicate).ToListAsync(cancellationToken);
 
-        foreach (TEntity entity in entities)
-        {
-            DbSet.Remove(entity);
-        }
-
+        DbSet.RemoveRange(entities);
         if (autoSave)
         {
             await _dbContext.SaveChangesAsync(cancellationToken);
@@ -234,6 +230,12 @@ public class EfCoreBaseRepository<TDbContext, TEntity> : IRepository<TEntity>
         CancellationToken cancellationToken = default)
     {
         return ( await GetListAsync(specification, cancellationToken) ).FirstOrDefault()!;
+    }
+
+    /// <inheritdoc />
+    public async Task<int> ExecuteSqlRawAsync(string sql, params object[] param)
+    {
+        return await _dbContext.Database.ExecuteSqlRawAsync(sql,param);
     }
 
     public virtual async Task<IQueryable<TEntity>> IncludeRelatedAsync(

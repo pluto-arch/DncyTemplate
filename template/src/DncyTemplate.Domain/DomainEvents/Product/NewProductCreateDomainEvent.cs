@@ -6,9 +6,9 @@ namespace DncyTemplate.Domain.DomainEvents.Product;
 /// </summary>
 public class NewProductCreateDomainEvent : INotification
 {
-    public NewProductCreateDomainEvent(Aggregates.Product.Product prodId)
+    public NewProductCreateDomainEvent(Aggregates.Product.Product prod)
     {
-        Id = prodId;
+        Prod = prod;
     }
-    public Aggregates.Product.Product Id { get; set; }
+    public Aggregates.Product.Product Prod { get; set; }
 }
