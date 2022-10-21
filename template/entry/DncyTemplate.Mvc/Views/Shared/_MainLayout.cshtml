@@ -9,19 +9,17 @@
 @inject ICurrentTenant _currentTenant;
 @{
     var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
-    var tenants = _tenanOptions.Value.Tenants.Select(c => new SelectListItem { Value = c.TenantId, Text = c.TenantName, Selected = _currentTenant.Id == c.TenantId }).ToList();
+    var tenants = _tenanOptions.Value.Tenants.Select(c => new SelectListItem {Value = c.TenantId, Text = c.TenantName, Selected = _currentTenant.Id == c.TenantId}).ToList();
     tenants.Insert(0, new SelectListItem("选择租户", "-1", _currentTenant == null));
 }
-
-
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"] - DncyTemplate.Mvc</title>
-    <link rel="icon" href="img/core-img/favicon.ico">
+    <link rel="icon" href="~/img/core-img/favicon.ico">
 
     <link rel="stylesheet" href="~/css/default-assets/notification.css">
     <link rel="stylesheet" href="~/css/c3.min.css">
@@ -32,94 +30,92 @@
             overflow: hidden;
         }
         .contentHeight {
+            overflow: auto;
             height: calc(100vh - 130px);
             height: -webkit-calc(100vh - 130px);
             height: -moz-calc(100vh - 130px);
         }
     </style>
 
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/cookie/jquery.cookie.min.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/admetro.bundle.min.js"></script>
+
+
 </head>
 
 <body>
 
-    <!-- Preloader -->
-    @*<div id="preloader">loading</div>*@
+<!-- Preloader -->
+@*<div id="preloader">loading</div>*@
 
 
-    <div class="admetro-page-wrapper">
-        <!--side menu-->
-        <partial name="~/views/LayoutComponents/_Sidemenu.cshtml" />
+<div class="admetro-page-wrapper">
+    <!--side menu-->
+    <partial name="~/views/LayoutComponents/_Sidemenu.cshtml"/>
 
-        <!-- Page Content -->
-        <div class="admetro-page-content">
-            <!-- Top Header Area -->
-            <header class="top-header-area d-flex align-items-center justify-content-between">
-                <partial name="~/views/LayoutComponents/_TopHeaderLeft.cshtml" />
-                <partial name="~/views/LayoutComponents/_TopHeaderRight.cshtml" />
-            </header>
+    <!-- Page Content -->
+    <div class="admetro-page-content">
+        <!-- Top Header Area -->
+        <header class="top-header-area d-flex align-items-center justify-content-between">
+            <partial name="~/views/LayoutComponents/_TopHeaderLeft.cshtml"/>
+            <partial name="~/views/LayoutComponents/_TopHeaderRight.cshtml"/>
+        </header>
 
 
-            <!-- Main Content Area -->
-            <div class="main-content contentHeight">
-                @RenderBody()
-            </div>
-
-            <!-- Footer Area -->
-            <footer class="footer-area d-flex align-items-center flex-wrap">
-                <!-- Copywrite Text -->
-                <div class="copywrite-text">
-                    <p>
-                        Admetro &copy; 2019 created by
-                        <a href="http://www.bootstrapmb.com/">Designing World</a>
-                    </p>
-                </div>
-                <!-- Footer Nav -->
-                <ul class="footer-nav d-flex align-items-center">
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Privacy</a></li>
-                    <li><a href="#">Purchase</a></li>
-                </ul>
-            </footer>
+        <!-- Main Content Area -->
+        <div class="main-content contentHeight">
+              @RenderBody()
         </div>
+        
+        <!-- Footer Area -->
+        <footer class="footer-area d-flex align-items-center flex-wrap">
+            <!-- Copywrite Text -->
+            <div class="copywrite-text">
+                <p>
+                    Admetro &copy; 2019 created by
+                    <a href="http://www.bootstrapmb.com/">Designing World</a>
+                </p>
+            </div>
+            <!-- Footer Nav -->
+            <ul class="footer-nav d-flex align-items-center">
+                <li>
+                    <a href="#">About</a>
+                </li>
+                <li>
+                    <a href="#">Privacy</a>
+                </li>
+                <li>
+                    <a href="#">Purchase</a>
+                </li>
+            </ul>
+        </footer>
     </div>
+</div>
+<!-- Active JS -->
+<script src="~/js/default-assets/active.min.js"></script>
+<script src="~/js/custom/notify.min.js"></script>
+<!-- These plugins only need for the run this page -->
+<script src="~/js/default-assets/todolist.js"></script>
+<script src="~/js/default-assets/bootstrap-growl.min.js"></script>
+<script src="~/js/default-assets/bootstrap-growl-active.js"></script>
 
+<script src="~/js/default-assets/sparkline-small.js"></script>
+<script src="~/js/default-assets/sparkline.min.js"></script>
+<script src="~/js/default-assets/sparkline.js"></script>
+<script src="~/js/default-assets/chart-sparkline.js"></script>
 
-    <script src="~/js/jquery.min.js"></script>
-    <script src="~/js/cookie/jquery.cookie.js"></script>
-    <script src="~/js/popper.min.js"></script>
-    <script src="~/js/bootstrap.min.js"></script>
-    <script src="~/js/admetro.bundle.js"></script>
-
-    <!-- Active JS -->
-    <script src="~/js/default-assets/active.js"></script>
-    <script src="~/js/custom/notify.js"></script>
-
-    <!-- These plugins only need for the run this page -->
-    <script src="~/js/default-assets/todolist.js"></script>
-    <script src="~/js/default-assets/bootstrap-growl.min.js"></script>
-    <script src="~/js/default-assets/bootstrap-growl-active.js"></script>
-
-    <script src="~/js/default-assets/sparkline-small.js"></script>
-    <script src="~/js/default-assets/sparkline.min.js"></script>
-    <script src="~/js/default-assets/sparkline.js"></script>
-    <script src="~/js/default-assets/chart-sparkline.js"></script>
-
-    <script src="~/js/amcharts.js"></script>
-    <script src="~/js/serial.js"></script>
-    <script src="~/js/light.js"></script>
-    <script src="~/js/default-assets/column-barchart.js"></script>
-    <script src="~/js/default-assets/line-and-areachart.js"></script>
-
-    <script src="~/js/d3.min.js"></script>
-    <script src="~/js/c3.min.js"></script>
-    <script src="~/js/default-assets/c3-api-chart.js"></script>
-    <script src="~/js/default-assets/c3-chart-script.js"></script>
-    @if (ViewData["CurrentMenu"] != null)
-    {
-        <script type="text/javascript">
-            document.getElementById("@ViewData["CurrentMenu"]").classList.add("active");
-        </script>
-    }
-    @await RenderSectionAsync("Scripts", required: false)
+<script src="~/js/amcharts.js"></script>
+<script src="~/js/serial.js"></script>
+<script src="~/js/light.js"></script>
+<script src="~/js/default-assets/column-barchart.js"></script>
+<script src="~/js/default-assets/line-and-areachart.js"></script>
+<script src="~/js/d3.min.js"></script>
+<script src="~/js/c3.min.js"></script>
+<script src="~/js/default-assets/c3-api-chart.js"></script>
+<script src="~/js/default-assets/c3-chart-script.js"></script>
+@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

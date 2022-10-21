@@ -7,15 +7,15 @@
 @import url("https://fonts.googleapis.com/css?family=Archivo:400,500,600,700");
 @import url(bootstrap.min.css);
 @import url(owl.carousel.min.css);
-@import url(animate.css);
-@import url(nice-select.css);
+@import url(animate.min.css);
+@import url(nice-select.min.css);
 @import url(jquery-ui.min.css);
-@import url(default-assets/themify-icons.css);
+@import url(default-assets/themify-icons.min.css);
 @import url(font-awesome.min.css);
 @import url(pe-icon-7-stroke.min.css);
-@import url(style.css);
+@import url(style.min.css);
 @import url(material-design-iconic-font.min.css);
-@import url(../etline/style.css);
+@import url(../etline/style.min.css);
 /* :: Reboot CSS */
 * {
 	margin: 0;

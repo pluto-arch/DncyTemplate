@@ -35,7 +35,7 @@ namespace DncyTemplate.Mvc.Controllers
 
         public async Task<IActionResult> Product()
         {
-            var models = await _repository.AsNoTracking().Select(x => new ProductListItemDto(x.Id, x.Name, x.CreationTime.DateTime)).ToPagedListAsync(1, 20);
+            var models = await _repository.AsNoTracking().Select(x => new ProductListItemDto(x.Id, x.Name, x.CreationTime.DateTime)).ToPagedListAsync(1, 200);
             return View(models);
         }
 

@@ -32,8 +32,13 @@ public class TempAuthenticationHandler : IAuthenticationHandler
     public async Task<AuthenticateResult> AuthenticateAsync()
     {
         var tenantId = _context.Request.Cookies.FirstOrDefault(x => x.Key == AppConstant.TENANT_KEY);
+        if (!string.IsNullOrEmpty(tenantId.Value))
+        {
+            await Task.Yield();
+            return DebugUser(tenantId.Value);
+        }
         await Task.Yield();
-        return DebugUser(tenantId.Value);
+        return DebugUser("T20210602000001");
     }
 
     private static AuthenticateResult DebugUser(string tenantId)
