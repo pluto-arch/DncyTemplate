@@ -126,6 +126,9 @@
   <data name="Menu.Product" xml:space="preserve">
     <value>Product</value>
   </data>
+  <data name="ProductRequired" xml:space="preserve">
+    <value>1111111111111</value>
+  </data>
   <data name="User.Name" xml:space="preserve">
     <value>UserName</value>
   </data>

@@ -2,6 +2,9 @@
 
 public class AppConstant
 {
+
+    public const string SERVICE_NAME = "DncyTemplate.Mvc";
+
     /// <summary>
     /// 租户解析的key
     /// </summary>
@@ -11,6 +14,12 @@ public class AppConstant
     /// 默认跨域名称
     /// </summary>
     public const string DEFAULT_CORS_NAME = "default";
+
+
+    /// <summary>
+    /// 临时cookie存储的用户信息key
+    /// </summary>
+    public const string TEMP_COOKIE_USER_KEY = "tenant_id";
 
     /// <summary>
     /// 环境名称

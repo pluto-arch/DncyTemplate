@@ -22,19 +22,11 @@ public class InfraHostingStartup : IHostingStartup
 
 
             #region 本地化
-            services.AddLocalization(options => { options.ResourcesPath = "Resources"; });
-            services.Configure<RequestLocalizationOptions>(options =>
-            {
-                var supportedCultures = new[] { new CultureInfo("en-US"), new CultureInfo("zh-CN") };
-                options.DefaultRequestCulture = new RequestCulture("zh-CN", "zh-CN");
-                options.SupportedCultures = supportedCultures;
-                options.SupportedUICultures = supportedCultures;
-                options.ApplyCurrentCultureToResponseHeaders = true;
-            });
+            services.AddAppLocalization();
             #endregion
 
             #region mvc基础
-            services.AddMvc(options =>
+            services.AddControllersWithViews(options =>
                 {
                     var F = services.BuildServiceProvider().GetService<IStringLocalizerFactory>();
                     options.SetUpDefaultDataAnnotation(F);
@@ -45,7 +37,6 @@ public class InfraHostingStartup : IHostingStartup
                     options.SetUpDataAnnotationLocalizerProvider();
                 })
                 .AddControllersAsServices()
-                .AddDataAnnotationsLocalization()
                 .AddRazorRuntimeCompilation();
             #endregion
 

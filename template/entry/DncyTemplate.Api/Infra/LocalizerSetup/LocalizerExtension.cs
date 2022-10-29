@@ -9,10 +9,10 @@ namespace DncyTemplate.Api.Infra.LocalizerSetup;
 public static class LocalizerExtension
 {
 
-    public static IServiceCollection AddAppAddLocalization(this IServiceCollection services)
+    public static IServiceCollection AddAppLocalization(this IServiceCollection services)
     {
         services.AddLocalization(options => { options.ResourcesPath = "Resources"; });
-        services.Configure<RequestLocalizationOptions>(options =>
+        services.AddRequestLocalization(options =>
         {
             var supportedCultures = new[] { new CultureInfo("en-US"), new CultureInfo("zh-CN") };
             options.DefaultRequestCulture = new RequestCulture("zh-CN", "zh-CN");

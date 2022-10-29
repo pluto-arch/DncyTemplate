@@ -117,7 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="LoginPassword" xml:space="preserve">
+    <value>密码</value>
+  </data>
+  <data name="LoginUserName" xml:space="preserve">
+    <value>账号</value>
+  </data>
+  <data name="MustEmailAddress" xml:space="preserve">
+    <value>{0} 不是有效的邮箱地址</value>
+  </data>
   <data name="PageSizeMessage" xml:space="preserve">
-    <value>页大小必须在{1}~{2}之间</value>
+    <value>{0} 必须在 {1} 和 {2} 之间.</value>
+  </data>
+  <data name="PwdMust8length" xml:space="preserve">
+    <value>密码必须是8位</value>
   </data>
 </root>

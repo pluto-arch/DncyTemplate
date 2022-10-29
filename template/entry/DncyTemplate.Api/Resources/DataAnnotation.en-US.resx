@@ -117,10 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="LengthLimit" xml:space="preserve">
+    <value>The field {0} must be a string with a minimum length of {2} and a maximum length of {1}.</value>
+  </data>
   <data name="PageIndexVerifyMessage" xml:space="preserve">
     <value>{0} value bust between {1} and {2}.</value>
   </data>
   <data name="PageSizeVerifyMessage" xml:space="preserve">
     <value>{0} value bust between {1} and {2}.</value>
+  </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>aaa</value>
+  </data>
+  <data name="ValueIsRequired" xml:space="preserve">
+    <value>{0} is required</value>
   </data>
 </root>

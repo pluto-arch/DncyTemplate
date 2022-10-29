@@ -7,6 +7,10 @@ namespace DncyTemplate.Mvc
 {
     public class DataAnnotation 
     {
+        public const string LoginPassword = nameof(LoginPassword);
+        public const string LoginUserName = nameof(LoginUserName);
+        public const string MustEmailAddress = nameof(MustEmailAddress);
+        public const string PwdMust8length = nameof(PwdMust8length);
         public const string PageSizeMessage = nameof(PageSizeMessage);
     }
 		    public class DefaultDataAnnotation 

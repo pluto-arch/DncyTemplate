@@ -19,7 +19,7 @@ public class InfraHostingStartup : IHostingStartup
         {
 
             #region 本地化
-            services.AddAppAddLocalization();
+            services.AddAppLocalization();
             #endregion
 
             #region mvc builder

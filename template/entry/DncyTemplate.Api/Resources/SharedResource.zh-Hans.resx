@@ -126,6 +126,9 @@
   <data name="Menu.Product" xml:space="preserve">
     <value>产品</value>
   </data>
+  <data name="ProductRequired" xml:space="preserve">
+    <value>222222222222</value>
+  </data>
   <data name="User.Name" xml:space="preserve">
     <value>用户名称</value>
   </data>

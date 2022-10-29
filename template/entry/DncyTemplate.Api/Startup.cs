@@ -33,7 +33,7 @@ public class Startup
 
     public void Configure(IApplicationBuilder app, IHostEnvironment env)
     {
-
+        app.UseRequestLocalization();
 
         app.UseResponseCompression();
         app.UseForwardedHeaders()
@@ -55,8 +55,7 @@ public class Startup
             // TODO Notice: UseHsts, UseHttpsRedirection are not necessary if using reverse proxy with ssl, like nginx with ssl proxy
             app.UseHsts();
         }
-       
-        app.UseRequestLocalization();
+
         app.UseHttpsRedirection();
         app.UseAuthentication();
         app.UseMultiTenancy()

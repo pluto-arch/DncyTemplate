@@ -1,11 +1,12 @@
-﻿using Dncy.MultiTenancy.AspNetCore;
+﻿using System.Web;
+using Dncy.MultiTenancy.AspNetCore;
 using DncyTemplate.Application;
 using DncyTemplate.Domain;
 using DncyTemplate.Infra;
 using DncyTemplate.Mvc.Constants;
 using DncyTemplate.Mvc.Infra;
 using DncyTemplate.Mvc.Infra.UnitofWork;
-
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 
@@ -46,6 +47,8 @@ public class Startup
         app.UseForwardedHeaders()
             .UseCertificateForwarding();
 
+        app.UseRequestLocalization();
+
         app.UseResponseCompression()
             .UseResponseCaching();
 
@@ -57,13 +60,13 @@ public class Startup
         }
         else
         {
-            app.UseInternalServerErrorHandle(); // 处理500错误
-            app.UseStatusCodePagesWithRedirects("/error/{0}");
+            app.UseExceptionHandler("/error/500");
+            app.UseStatusCodePagesWithReExecute("/error/{0}");
             // TODO Notice: UseHsts, UseHttpsRedirection are not necessary if using reverse proxy with ssl, like nginx with ssl proxy
             app.UseHsts();
         }
 
-        app.UseRequestLocalization();
+      
         app.UseHttpsRedirection();
         app.UseStaticFiles();
         app.UseAuthentication();

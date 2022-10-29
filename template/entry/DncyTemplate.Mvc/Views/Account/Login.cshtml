@@ -1,0 +1,111 @@
+﻿@using Microsoft.AspNetCore.Mvc.ModelBinding
+@using Microsoft.Extensions.Localization
+@model DncyTemplate.Mvc.Models.Account.LoginModel
+
+@inject IStringLocalizer<DataAnnotation> _stringLocalizer
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <!-- Title -->
+    <title>Admetro - Responsive Bootstrap 4 Admin Template</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="~/img/core-img/favicon.ico">
+
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/css/animate.min.css">
+    <link rel="stylesheet" href="~/css/nice-select.min.css">
+    <link rel="stylesheet" href="~/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="~/css/default-assets/themify-icons.min.css">
+    <link rel="stylesheet" href="~/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/pe-icon-7-stroke.min.css">
+    <link rel="stylesheet" href="~/css/style.min.css">
+    <link rel="stylesheet" href="~/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="~/etline/style.min.css">
+
+    <!-- Master Stylesheet [If you remove this CSS file, your file will be broken undoubtedly.] -->
+    <link rel="stylesheet" href="~/css/login.css">
+
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="spinner-single-content bg-boxshadow p-5 text-center mb-30 bg-primary" style="height: 100vh;display: flex;justify-content: center;align-items: center;">
+            <div class="lds-hourglass"></div>
+        </div>
+    </div>
+    <div class="main-content- h-100vh">
+        <div class="container h-100">
+            <div class="row h-100 justify-content-center align-items-center">
+                <div class="col-lg-6 mx-auto">
+                    <!-- Middle Box -->
+                    <div class="middle-box my-5 text-center bg-white p-4 p-sm-5 bg-boxshadow">
+                        <h5 class="mb-50">@_stringLocalizer[DataAnnotation.LoginUserName]</h5>
+
+                        <!-- Form -->
+                        <form class="login-form" method="post" asp-controller="Account" asp-action="Login">
+                            @Html.AntiForgeryToken()
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <!-- Form Group -->
+                            <div class="form-group">
+                                <label asp-for="UserName"></label>
+                                <input type="text" asp-for="UserName" class="form-control login" placeholder="邮箱" required="">
+                            </div>
+
+                            <!-- Form Group -->
+                            <div class="form-group">
+                                <label asp-for="Password"></label>
+                                <input type="password" asp-for="Password" class="form-control login" placeholder="密码" required="">
+                            </div>
+                            <button type="submit" class="btn- btn-success btn-1 btn-1c w-100 text-center">登录</button>
+                            @Html.ValidationSummary()
+                            <div class="d-flex justify-content-between mt-15">
+                                <label class="ckbox">
+                                    <input type="checkbox">
+                                    <span></span><small class="text-color-gray">保持登录</small>
+                                </label>
+                                <a class="forgot_pass text-color-gray mb-10" href="#"></a>
+                                <a class="forgot_pass text-color-gray mb-10" href="#"><small>忘记密码?</small></a>
+                            </div>
+                            <div class="login-icon mt-15 mb-15">
+                                <a href="#"><i class="ti-facebook"></i></a>
+                                <a class="info-color" href="#"><i class="ti-linkedin"></i></a>
+                                <a class="danger-color" href="#"><i class="ti-pinterest"></i></a>
+                                <a class="success-color" href="#"><i class="ti-dribbble"></i></a>
+                            </div>
+                            <p class="text-center  font-size-12">没有账户?</p>
+                            <a class="btn- btn-primary btn-1 btn-1a  w-100 text-center" href="#">创建账号</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================================
+    ********* Page Wrapper Area End ***********
+    ======================================= -->
+    <!-- Must needed plugins to the run this Template -->
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/admetro.bundle.min.js"></script>
+
+    <!-- Active JS -->
+    <script src="~/js/default-assets/active.min.js"></script>
+</body>
+
+</html>

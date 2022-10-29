@@ -52,15 +52,6 @@
 		</None>
 	</ItemGroup>
 
-
-	<ItemGroup>
-		<Compile Update="Resources\ResourceNameGenerator.cs">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>ResourceNameGenerator.tt</DependentUpon>
-		</Compile>
-	</ItemGroup>
-
 	<ItemGroup>
 		<Content Update="wwwroot\*\**">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -89,10 +80,28 @@
 
 	<ItemGroup>
 	  <Folder Include="HtmlHelpers\" />
+	  <Folder Include="Models\Account\" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <None Include="bundleconfig.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Resources\ResourceNameGenerator.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>ResourceNameGenerator.tt</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Resources\DataAnnotation.en-US.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\DataAnnotation.zh-Hans.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
 	</ItemGroup>
 
 </Project>

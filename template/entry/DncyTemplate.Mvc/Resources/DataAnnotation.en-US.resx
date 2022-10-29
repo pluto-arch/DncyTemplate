@@ -117,7 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="LoginPassword" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="LoginUserName" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="MustEmailAddress" xml:space="preserve">
+    <value>{0} is not an valid email address</value>
+  </data>
   <data name="PageSizeMessage" xml:space="preserve">
     <value>{0} value bust between {1} and {2}.</value>
+  </data>
+  <data name="PwdMust8length" xml:space="preserve">
+    <value>password must 8 char</value>
   </data>
 </root>
