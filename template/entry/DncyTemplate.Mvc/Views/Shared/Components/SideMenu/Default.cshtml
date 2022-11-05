@@ -1,6 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using DncyTemplate.Mvc.HtmlHelpers
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @inject IHtmlLocalizer<MenuResource> _localizer
+@model List<DncyTemplate.Application.Models.Permission.MenuModel>
 
 <!-- Sidemenu Area -->
 <div class="admetro-sidemenu-area">
@@ -22,20 +24,20 @@
         <div class="side-menu-area">
             <!-- Sidebar Menu -->
             <ul class="sidebar-menu" data-widget="tree">
-                <li class="@Html.IsMenuActive("Home","Index")">
-                    <a asp-controller="Home" asp-action="Index">
+                <li class="@Html.IsMenuActive("Home", "Index")">
+                    <a onclick="return loading(this);" asp-controller="Home" asp-action="Index" asp-fragment="">
                         <i class="ti-home"></i>
                         <span>@_localizer[MenuResource.Dashboard]</span>
                     </a>
                 </li>
-                <li class="@Html.IsMenuActive("Home","Product")">
-                    <a asp-controller="Home" asp-action="Product">
+                <li class="@Html.IsMenuActive("Home", "Product")">
+                    <a onclick="return loading(this);" asp-controller="Home" asp-action="Product">
                         <i class="ti-settings"></i>
                         <span>@_localizer[MenuResource.TableList]</span>
                     </a>
                 </li>
-                <li>
-                    <a href="timeline.html"><i class="ti-pulse"></i> <span>Timeline</span></a>
+                <li class="@Html.IsMenuActive("Home", "Product")">
+                    <a asp-controller="Home" asp-action="Generate"><i class="ti-pulse"></i> <span>产品创建(权限)</span></a>
                 </li>
                 <li class="treeview">
                     <a href="javascript:void(0)">
@@ -44,10 +46,10 @@
                     </a>
                     <ul class="treeview-menu">
                         <li class="@Html.IsMenuActive("Home", "Product")">
-                            <a asp-controller="Home" asp-action="Product">Accordion</a>
+                            <a onclick="return loading()" asp-controller="Home" asp-action="Product">Accordion</a>
                         </li>
                         <li class="@Html.IsMenuActive("Home", "Product")">
-                            <a asp-controller="Home" asp-action="Product">Button</a>
+                            <a onclick="return loading()" asp-controller="Home" asp-action="Product">Button</a>
                         </li>
                         <li class="@Html.IsMenuActive("Home", "Product")">
                             <a asp-controller="Home" asp-action="Index">Badges</a>

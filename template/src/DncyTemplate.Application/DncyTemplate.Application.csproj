@@ -26,8 +26,10 @@
 	<ItemGroup>
 	  <Folder Include="AppServices\Product\" />
 	  <Folder Include="AppServices\Generics\" />
+	  <Folder Include="AppServices\System\" />
 	  <Folder Include="DomainEventHandlers\Product\" />
 	  <Folder Include="Models\Generics\" />
+	  <Folder Include="Models\Permission\" />
 	  <Folder Include="Permission\" />
 	  <Folder Include="Constants\" />
 	  <Folder Include="AutoMapperProfiles\" />

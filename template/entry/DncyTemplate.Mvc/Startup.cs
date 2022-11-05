@@ -44,10 +44,12 @@ public class Startup
         var address = serverAddressesFeature.Addresses;
         Log.Logger.Information("应用程序运行地址: {@Address}", address);
 
-        app.UseForwardedHeaders()
-            .UseCertificateForwarding();
 
         app.UseRequestLocalization();
+
+        app.UseForwardedHeaders()
+            .UseCertificateForwarding();
+       
 
         app.UseResponseCompression()
             .UseResponseCaching();
@@ -56,6 +58,8 @@ public class Startup
 
         if (env.IsEnvironment(AppConstant.EnvironmentName.DEV))
         {
+            // 初始化种子数据
+            app.DataSeederAsync().Wait();
             app.UseDeveloperExceptionPage();
         }
         else

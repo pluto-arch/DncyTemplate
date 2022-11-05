@@ -7,42 +7,45 @@ namespace DncyTemplate.Mvc
 {
     public class DataAnnotation 
     {
-        public const string LoginPassword = nameof(LoginPassword);
-        public const string LoginUserName = nameof(LoginUserName);
-        public const string MustEmailAddress = nameof(MustEmailAddress);
-        public const string PwdMust8length = nameof(PwdMust8length);
-        public const string PageSizeMessage = nameof(PageSizeMessage);
+                    public const string PwdMust8length = "PwdMust8length";
+                    public const string LoginUserName = "LoginUserName";
+                    public const string MustEmailAddress = "MustEmailAddress";
+                    public const string UserNotExist = "UserNotExist";
+                    public const string LoginPassword = "LoginPassword";
+                    public const string PageSizeMessage = "PageSizeMessage";
     }
 		    public class DefaultDataAnnotation 
     {
-        public const string AttemptedValueIsInvalidAccessor = nameof(AttemptedValueIsInvalidAccessor);
-        public const string NonPropertyAttemptedValueIsInvalidAccessor = nameof(NonPropertyAttemptedValueIsInvalidAccessor);
-        public const string MissingBindRequiredValueAccessor = nameof(MissingBindRequiredValueAccessor);
-        public const string NonPropertyUnknownValueIsInvalidAccessor = nameof(NonPropertyUnknownValueIsInvalidAccessor);
-        public const string ValueIsInvalidAccessor = nameof(ValueIsInvalidAccessor);
-        public const string ValueMustNotBeNullAccessor = nameof(ValueMustNotBeNullAccessor);
-        public const string NonPropertyValueMustBeANumberAccessor = nameof(NonPropertyValueMustBeANumberAccessor);
-        public const string MissingKeyOrValueAccessor = nameof(MissingKeyOrValueAccessor);
-        public const string UnknownValueIsInvalidAccessor = nameof(UnknownValueIsInvalidAccessor);
-        public const string MissingRequestBodyRequiredValueAccessor = nameof(MissingRequestBodyRequiredValueAccessor);
-        public const string ValueMustBeANumberAccessor = nameof(ValueMustBeANumberAccessor);
+                    public const string AttemptedValueIsInvalidAccessor = "AttemptedValueIsInvalidAccessor";
+                    public const string NonPropertyAttemptedValueIsInvalidAccessor = "NonPropertyAttemptedValueIsInvalidAccessor";
+                    public const string MissingBindRequiredValueAccessor = "MissingBindRequiredValueAccessor";
+                    public const string NonPropertyUnknownValueIsInvalidAccessor = "NonPropertyUnknownValueIsInvalidAccessor";
+                    public const string ValueIsInvalidAccessor = "ValueIsInvalidAccessor";
+                    public const string ValueMustNotBeNullAccessor = "ValueMustNotBeNullAccessor";
+                    public const string NonPropertyValueMustBeANumberAccessor = "NonPropertyValueMustBeANumberAccessor";
+                    public const string MissingKeyOrValueAccessor = "MissingKeyOrValueAccessor";
+                    public const string UnknownValueIsInvalidAccessor = "UnknownValueIsInvalidAccessor";
+                    public const string MissingRequestBodyRequiredValueAccessor = "MissingRequestBodyRequiredValueAccessor";
+                    public const string ValueMustBeANumberAccessor = "ValueMustBeANumberAccessor";
     }
 		    public class MenuResource 
     {
-        public const string Dashboard = nameof(Dashboard);
-        public const string TableList = nameof(TableList);
+                    public const string Dashboard = "Dashboard";
+                    public const string TableList = "TableList";
     }
 		    public class SharedResource 
     {
-        public const string Menu_Home = "Menu.Home";
-        public const string ErrorController_Error_DefaultMessageWithPath = "ErrorController.Error.DefaultMessageWithPath";
-        public const string BtnText_GoBack = "BtnText.GoBack";
-        public const string Welcome = nameof(Welcome);
-        public const string Menu_Product = "Menu.Product";
-        public const string ErrorController_Error_DefaultMessage = "ErrorController.Error.DefaultMessage";
-        public const string ErrorView_TraceId = "ErrorView.TraceId";
-        public const string WebSite_Name = "WebSite.Name";
-        public const string ErrorController_Error_DefaultMessageWithMessage = "ErrorController.Error.DefaultMessageWithMessage";
+                    public const string Menu_Home = "Menu.Home";
+                    public const string ErrorController_Error_DefaultMessageWithPath = "ErrorController.Error.DefaultMessageWithPath";
+                    public const string BtnText_GoBack = "BtnText.GoBack";
+                    public const string Culture_zh_CN = "Culture.zh-CN";
+                    public const string Welcome = "Welcome";
+                    public const string Menu_Product = "Menu.Product";
+                    public const string Culture_en_US = "Culture.en-US";
+                    public const string ErrorController_Error_DefaultMessageWithMessage = "ErrorController.Error.DefaultMessageWithMessage";
+                    public const string ErrorView_TraceId = "ErrorView.TraceId";
+                    public const string WebSite_Name = "WebSite.Name";
+                    public const string ErrorController_Error_DefaultMessage = "ErrorController.Error.DefaultMessage";
     }
 		    
 }

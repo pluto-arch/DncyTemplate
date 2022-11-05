@@ -41,16 +41,6 @@ public class InfraHostingStartup : IHostingStartup
             #endregion
 
 
-            #region auth
-            services.AddAuthentication(options =>
-            {
-                options.AddScheme<TempAuthenticationHandler>(TempAuthenticationHandler.SchemeName, nameof(TempAuthenticationHandler));
-                options.DefaultAuthenticateScheme = TempAuthenticationHandler.SchemeName;
-                options.DefaultChallengeScheme = TempAuthenticationHandler.SchemeName;
-            });
-            #endregion
-
-
             #region response Compression
             services.AddResponseCompression(options =>
             {

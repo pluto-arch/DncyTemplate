@@ -37,7 +37,34 @@
 
     <!-- Master Stylesheet [If you remove this CSS file, your file will be broken undoubtedly.] -->
     <link rel="stylesheet" href="~/css/login.css">
+    <style>
+        .middle-box {
+            position: relative;
+        }
 
+        .set-culture {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+        .set-culture  .nice-select {
+            border: none;
+        }
+
+        .nice-select .current {
+            text-transform: capitalize;
+        }
+
+        .nice-select ul li {
+            text-transform: capitalize;
+        }
+
+        .main-content- {
+            background-image: url('https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/V-_oS6r-i7wAAAAAAAAAAAAAFl94AQBr');
+            background-repeat: no-repeat;
+        }
+    </style>
 </head>
 
 <body>
@@ -48,30 +75,29 @@
         </div>
     </div>
     <div class="main-content- h-100vh">
+        
         <div class="container h-100">
             <div class="row h-100 justify-content-center align-items-center">
                 <div class="col-lg-6 mx-auto">
                     <!-- Middle Box -->
                     <div class="middle-box my-5 text-center bg-white p-4 p-sm-5 bg-boxshadow">
+                        @await Html.PartialAsync("_SelectLanguagePartial")
                         <h5 class="mb-50">@_stringLocalizer[DataAnnotation.LoginUserName]</h5>
-
                         <!-- Form -->
                         <form class="login-form" method="post" asp-controller="Account" asp-action="Login">
                             @Html.AntiForgeryToken()
+                            <input type="hidden" asp-for="ReturnUrl"/>
                             <div asp-validation-summary="All" class="text-danger"></div>
                             <!-- Form Group -->
                             <div class="form-group">
-                                <label asp-for="UserName"></label>
                                 <input type="text" asp-for="UserName" class="form-control login" placeholder="邮箱" required="">
                             </div>
 
                             <!-- Form Group -->
                             <div class="form-group">
-                                <label asp-for="Password"></label>
                                 <input type="password" asp-for="Password" class="form-control login" placeholder="密码" required="">
                             </div>
                             <button type="submit" class="btn- btn-success btn-1 btn-1c w-100 text-center">登录</button>
-                            @Html.ValidationSummary()
                             <div class="d-flex justify-content-between mt-15">
                                 <label class="ckbox">
                                     <input type="checkbox">
@@ -102,6 +128,7 @@
     <script src="~/js/jquery.min.js"></script>
     <script src="~/js/popper.min.js"></script>
     <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/admetro.bundle.min.js"></script>
 
     <!-- Active JS -->

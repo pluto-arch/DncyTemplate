@@ -46,6 +46,8 @@ public class Startup
         if (env.IsEnvironment(AppConstant.EnvironmentName.DEV))
         {
             //app.UseDeveloperExceptionPage();
+            // 初始化种子数据
+            app.DataSeederAsync().Wait();
             app.UseExceptionHandle();
             app.UseCustomSwagger();
         }

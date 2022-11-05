@@ -39,4 +39,12 @@ public class AppConstant
         /// </summary>
         public const string RELEASE = "release";
     }
+
+
+    public class Culture
+    {
+        public static (string key,string name) ZN_CH = ("zh-CN","中文");
+
+        public static (string key, string name) EN_US = ("en-US", "English(US)");
+    }
 }

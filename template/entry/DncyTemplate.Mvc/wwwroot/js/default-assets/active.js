@@ -9,10 +9,12 @@
 
     // :: Preloader Active Code
     admetro_window.on("load", function () {
-        $("#preloader").fadeOut(1000, function () {
+        $("#preloader").fadeOut(0, function () {
             $(this).remove();
         });
     });
+
+
 
     // :: Slimscroll Active Code
     if ($.fn.slimscroll) {

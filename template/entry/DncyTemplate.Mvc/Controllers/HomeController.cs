@@ -1,9 +1,10 @@
 ﻿using DncyTemplate.Application.Models.Product;
+using DncyTemplate.Application.Permission;
 using DncyTemplate.Domain.Aggregates.Product;
 using DncyTemplate.Domain.Repository;
 using DncyTemplate.Infra.EntityFrameworkCore.Extension;
 using DncyTemplate.Mvc.Constants;
-
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
@@ -14,6 +15,7 @@ using Microsoft.Extensions.Localization;
 
 namespace DncyTemplate.Mvc.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -35,11 +37,13 @@ namespace DncyTemplate.Mvc.Controllers
 
         public async Task<IActionResult> Product()
         {
+            await Task.Delay(5000);
             var models = await _repository.AsNoTracking().Select(x => new ProductListItemDto(x.Id, x.Name, x.CreationTime.DateTime)).ToPagedListAsync(1, 200);
             return View(models);
         }
 
 
+        [Authorize(ProductPermission.Product.Create)]
         public async Task<IActionResult> Generate([FromServices] IHostEnvironment env)
         {
             var models = await _repository.AsNoTracking().Select(x => new ProductListItemDto(x.Id, x.Name, x.CreationTime.DateTime)).ToPagedListAsync(1, 20);
@@ -76,6 +80,7 @@ namespace DncyTemplate.Mvc.Controllers
 
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult SwitchLanguage(string culture, string returnUrl)
         {
             Response.Cookies.Append(

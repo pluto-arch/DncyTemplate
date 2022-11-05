@@ -120,6 +120,12 @@
   <data name="BtnText.GoBack" xml:space="preserve">
     <value>返回</value>
   </data>
+  <data name="Culture.en-US" xml:space="preserve">
+    <value>英文</value>
+  </data>
+  <data name="Culture.zh-CN" xml:space="preserve">
+    <value>中文</value>
+  </data>
   <data name="ErrorController.Error.DefaultMessage" xml:space="preserve">
     <value>处理请求失败</value>
   </data>

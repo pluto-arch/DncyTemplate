@@ -132,4 +132,7 @@
   <data name="PwdMust8length" xml:space="preserve">
     <value>密码必须是8位</value>
   </data>
+  <data name="UserNotExist" xml:space="preserve">
+    <value>用户不存在</value>
+  </data>
 </root>

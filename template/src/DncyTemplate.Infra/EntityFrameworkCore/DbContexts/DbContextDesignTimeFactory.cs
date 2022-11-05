@@ -9,7 +9,7 @@ public class DbContextDesignTimeFactory : IDesignTimeDbContextFactory<DeviceCent
     public DeviceCenterMigrationDbContext CreateDbContext(string[] args)
     {
         DbContextOptionsBuilder<DeviceCenterMigrationDbContext> optionsBuilder = new();
-        optionsBuilder.UseSqlServer(@"Server=127.0.0.1,1433;Database=Pnct_Default;User Id=sa;Password=970307lBX;Trusted_Connection = False;");
+        optionsBuilder.UseSqlServer(@"Server=192.168.0.126,1433;Database=Pnct_Default;User Id=sa;Password=970307lBx;Trusted_Connection = False;");
         return new DeviceCenterMigrationDbContext(optionsBuilder.Options);
     }
 }
@@ -29,6 +29,7 @@ public class DeviceCenterMigrationDbContext : DbContext
     {
         modelBuilder.ApplyConfiguration(new DeviceEntityTypeConfiguration())
             .ApplyConfiguration(new DeviceTagEntityTypeConfiguration())
-            .ApplyConfiguration(new ProductEntityTypeConfiguration());
+            .ApplyConfiguration(new ProductEntityTypeConfiguration())
+            .ApplyConfiguration(new PermissionEntityTypeConfiguration());
     }
 }

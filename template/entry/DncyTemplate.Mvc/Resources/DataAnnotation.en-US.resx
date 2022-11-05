@@ -132,4 +132,7 @@
   <data name="PwdMust8length" xml:space="preserve">
     <value>password must 8 char</value>
   </data>
+  <data name="UserNotExist" xml:space="preserve">
+    <value>user not exist</value>
+  </data>
 </root>

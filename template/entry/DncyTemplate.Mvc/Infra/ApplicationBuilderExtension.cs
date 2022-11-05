@@ -1,4 +1,5 @@
-﻿using DncyTemplate.Mvc.Infra.ExceptionHandlers;
+﻿using DncyTemplate.Domain.Infra;
+using DncyTemplate.Mvc.Infra.ExceptionHandlers;
 
 namespace DncyTemplate.Mvc.Infra;
 
@@ -36,6 +37,29 @@ public static class ApplicationBuilderExtension
         {
             exceptionHandlerApp.Run(InternalServerErrorHandler.Handler);
         });
+        return app;
+    }
+
+
+    /// <summary>
+    /// 种子数据初始化
+    /// </summary>
+    /// <param name="app"></param>
+    /// <returns></returns>
+    public static async Task<IApplicationBuilder> DataSeederAsync(this IApplicationBuilder app)
+    {
+        using IServiceScope serviceScope = app.ApplicationServices.CreateScope();
+        var seeders = serviceScope.ServiceProvider.GetServices<IDataSeedProvider>();
+        if (!seeders.Any())
+        {
+            return app;
+        }
+
+        foreach (var seeder in seeders.OrderByDescending(x => x.Sorts).ToList())
+        {
+            await seeder.SeedAsync(serviceScope.ServiceProvider);
+        }
+
         return app;
     }
 }

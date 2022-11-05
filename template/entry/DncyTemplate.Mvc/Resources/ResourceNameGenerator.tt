@@ -43,18 +43,11 @@ namespace DncyTemplate.Mvc
 <#
 		    foreach(var key in item.Value)
 			{
-			    if(key.Contains(".")) 
-                {
+			   
 #>
-        public const string <#=key.Replace(".", "_")#> = "<#=key#>";
+                    public const string <#=key.Replace(".", "_").Replace("-", "_")#> = "<#=key#>";
 <#              
-                } 
-                else 
-                { 
-#>
-        public const string <#=key#> = nameof(<#=key#>);
-<#              
-                }
+
 			}
 		#>
     }

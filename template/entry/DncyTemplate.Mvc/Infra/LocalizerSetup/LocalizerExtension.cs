@@ -3,6 +3,8 @@ using System.Globalization;
 using DncyTemplate.Mvc.Constants;
 using Microsoft.AspNetCore.Mvc.DataAnnotations;
 using Microsoft.Extensions.Localization;
+using static DncyTemplate.Mvc.Constants.AppConstant;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DncyTemplate.Mvc.Infra.LocalizerSetup;
 
@@ -13,8 +15,8 @@ public static class LocalizerExtension
         services.AddLocalization(options => { options.ResourcesPath = "Resources"; });
         services.AddRequestLocalization(options =>
         {
-            var supportedCultures = new[] { new CultureInfo("en-US"), new CultureInfo("zh-CN") };
-            options.DefaultRequestCulture = new RequestCulture("zh-CN", "zh-CN");
+            var supportedCultures = new[] { new CultureInfo(Culture.EN_US.key), new CultureInfo(Culture.ZN_CH.key) };
+            options.DefaultRequestCulture = new RequestCulture(Culture.ZN_CH.key, Culture.EN_US.key);
             options.SupportedCultures = supportedCultures;
             options.SupportedUICultures = supportedCultures;
             options.ApplyCurrentCultureToResponseHeaders = true;
