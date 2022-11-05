@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using DncyTemplate.Mvc.HtmlHelpers
 @using Microsoft.AspNetCore.Mvc.TagHelpers
+@using DncyTemplate.Application.Permission
 @inject IHtmlLocalizer<MenuResource> _localizer
 @model List<DncyTemplate.Application.Models.Permission.MenuModel>
 
@@ -36,7 +37,7 @@
                         <span>@_localizer[MenuResource.TableList]</span>
                     </a>
                 </li>
-                <li class="@Html.IsMenuActive("Home", "Product")">
+                <li class="@Html.IsMenuActive("Home", "Product")" asp-authorize asp-permission-code="@ProductPermission.Product.Default">
                     <a asp-controller="Home" asp-action="Generate"><i class="ti-pulse"></i> <span>产品创建(权限)</span></a>
                 </li>
                 <li class="treeview">

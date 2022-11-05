@@ -88,6 +88,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Reference Include="Dncy.Permission">
+	    <HintPath>..\..\..\..\DncyComponent\Dncy.Permission\bin\Debug\net6.0\Dncy.Permission.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Compile Update="Resources\ResourceNameGenerator.cs">
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>

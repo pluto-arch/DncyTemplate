@@ -3,8 +3,6 @@
 using DncyTemplate.Domain.Aggregates.System;
 using DncyTemplate.Domain.Repository;
 
-using Microsoft.EntityFrameworkCore;
-
 namespace DncyTemplate.Infra.EntityFrameworkCore.Repositories;
 
 public class EfCorePermissionGrantStore : IPermissionGrantStore
