@@ -36,6 +36,7 @@
 		<Folder Include="Infra\UnitofWork\" />
 		<Folder Include="Infra\Authorization\" />
 		<Folder Include="Infra\LocalizerSetup\" />
+		<Folder Include="Models\ModelBinding\" />
 	</ItemGroup>
 
 

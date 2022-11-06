@@ -5,6 +5,7 @@ using DncyTemplate.Application;
 using DncyTemplate.Domain;
 using DncyTemplate.Infra;
 
+using Microsoft.AspNetCore.Hosting.Server.Features;
 
 namespace DncyTemplate.Api;
 public class Startup
@@ -33,6 +34,11 @@ public class Startup
 
     public void Configure(IApplicationBuilder app, IHostEnvironment env)
     {
+
+        var serverAddressesFeature = app.ServerFeatures.Get<IServerAddressesFeature>();
+        var address = serverAddressesFeature.Addresses;
+        Log.Logger.Information("应用程序运行地址: {@Address}", address);
+
         app.UseRequestLocalization();
 
         app.UseResponseCompression();

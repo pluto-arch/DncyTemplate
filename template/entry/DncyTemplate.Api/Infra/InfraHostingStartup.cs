@@ -2,7 +2,7 @@
 
 using DncyTemplate.Api.Infra.ExceptionHandlers;
 using DncyTemplate.Api.Infra.LocalizerSetup;
-
+using DncyTemplate.Api.Models.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Localization;
@@ -26,6 +26,8 @@ public class InfraHostingStartup : IHostingStartup
 
             services.AddControllers(options =>
                 {
+                    options.ModelBinderProviders.Insert(0, new SortingBinderProvider());
+
                     options.Filters.Add<ActionExecptionFilter>();
                     // 本地化 默认的模型验证信息
                     var F = services.BuildServiceProvider().GetService<IStringLocalizerFactory>();

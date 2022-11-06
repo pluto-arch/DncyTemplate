@@ -37,8 +37,8 @@
                         <span>@_localizer[MenuResource.TableList]</span>
                     </a>
                 </li>
-                <li class="@Html.IsMenuActive("Home", "Product")" asp-authorize asp-permission-code="@ProductPermission.Product.Default">
-                    <a asp-controller="Home" asp-action="Generate"><i class="ti-pulse"></i> <span>产品创建(权限)</span></a>
+                <li class="@Html.IsMenuActive("Product", "Index")" asp-authorize asp-permission-code="@ProductPermission.Product.Default">
+                    <a asp-controller="Product" asp-action="Index"><i class="ti-pulse"></i> <span>产品列表(权限)</span></a>
                 </li>
                 <li class="treeview">
                     <a href="javascript:void(0)">

@@ -1,0 +1,241 @@
+﻿@using DncyTemplate.Application.Models.Product
+@using DncyTemplate.Application.Permission
+@using DncyTemplate.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model IPagedList<ProductListItemDto>
+
+@{
+    ViewData["Title"] = "Product List";
+}
+
+
+<div class="row align-items-end mt-15">
+    <div class="col-12">
+        <!-- Page Title -->
+        <div class="page-title mb-30">
+            <h5 class="mb-0">产品列表</h5>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <div class="d-flex justify-content-between">
+            <div>
+                <div class="widget-content widget-content-area text-left">
+                    <button class="btn- btn-success btn-1 btn-1c mb-4 mr-3" asp-authorize asp-permission-code="@ProductPermission.Product.Create">新增</button>
+                </div>
+            </div>
+
+            <div>
+                <div class="widget-content widget-content-area text-right">
+                    <form method="get" class="form-horizontal well">
+                        <div class="default-repeater">
+                            <div class="form-group mb-5">
+                                <div class="row">
+                                    <div>
+                                        <input type="text" name="keyword" value="" placeholder="产品名称" style="height: 42px" class="form-control form-control-sm" />
+                                    </div>
+                                    <div class="ml-2">
+                                        <button class="btn- btn-primary btn-1 btn-1a mb-4 mr-3">查询</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>序号</th>
+                <th>名称</th>
+                <th>创建时间</th>
+                <th>操作</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Grade -->
+            <tr class="gradeX">
+                <td>Trident</td>
+                <td>
+                    Internet Explorer 4.0
+                </td>
+                <td>Win 95+</td>
+                <td class="center">4</td>
+                <td class="center">X</td>
+            </tr>
+            <!-- Grade -->
+            <tr class="gradeA">
+                <td>Trident</td>
+                <td>Internet Explorer 7</td>
+                <td>Win XP SP2+</td>
+                <td class="center">7</td>
+                <td class="center">A</td>
+            </tr>
+            <!-- Grade -->
+            <tr class="gradeA">
+                <td>Webkit</td>
+                <td>OmniWeb 5.5</td>
+                <td>OSX.4+</td>
+                <td class="center">420</td>
+                <td class="center">A</td>
+            </tr>
+            <!-- Grade -->
+            <tr class="gradeA">
+                <td>Webkit</td>
+                <td>iPod Touch / iPhone</td>
+                <td>iPod</td>
+                <td class="center">420.1</td>
+                <td class="center">A</td>
+            </tr>
+            <!-- Grade -->
+            <tr class="gradeA">
+                <td>Webkit</td>
+                <td>S60</td>
+                <td>S60</td>
+                <td class="center">413</td>
+                <td class="center">A</td>
+            </tr>
+            <!-- Grade -->
+            <tr class="gradeA">
+                <td>Presto</td>
+                <td>Opera 7.0</td>
+                <td>Win 95+ / OSX.1+</td>
+                <td class="center">-</td>
+                <td class="center">A</td>
+            </tr>
+            <!-- Grade -->
+            <tr class="gradeA">
+                <td>Presto</td>
+                <td>Opera 7.5</td>
+                <td>Win 95+ / OSX.2+</td>
+                <td class="center">-</td>
+                <td class="center">A</td>
+            </tr>
+            <!-- Grade -->
+            <tr class="gradeA">
+                <td>Presto</td>
+                <td>Opera 8.0</td>
+                <td>Win 95+ / OSX.2+</td>
+                <td class="center">-</td>
+                <td class="center">A</td>
+            </tr>
+            <!-- Grade -->
+            <tr class="gradeA">
+                <td>Presto</td>
+                <td>Opera 8.5</td>
+                <td>Win 95+ / OSX.2+</td>
+                <td class="center">-</td>
+                <td class="center">A</td>
+            </tr>
+            <!-- Grade -->
+            <tr class="gradeA">
+                <td>Presto</td>
+                <td>Opera 9.0</td>
+                <td>Win 95+ / OSX.3+</td>
+                <td class="center">-</td>
+                <td class="center">A</td>
+            </tr>
+            <!-- Grade -->
+            <tr class="gradeA">
+                <td>Presto</td>
+                <td>Opera 9.2</td>
+                <td>Win 88+ / OSX.3+</td>
+                <td class="center">-</td>
+                <td class="center">A</td>
+            </tr>
+            <!-- Grade -->
+            <tr class="gradeA">
+                <td>Presto</td>
+                <td>Opera 9.5</td>
+                <td>Win 88+ / OSX.3+</td>
+                <td class="center">-</td>
+                <td class="center">A</td>
+            </tr>
+            <!-- Grade -->
+            <tr class="gradeA">
+                <td>Presto</td>
+                <td>Opera for Wii</td>
+                <td>Wii</td>
+                <td class="center">-</td>
+                <td class="center">A</td>
+            </tr>
+            <!-- Grade -->
+            <tr class="gradeA">
+                <td>Presto</td>
+                <td>Nokia N800</td>
+                <td>N800</td>
+                <td class="center">-</td>
+                <td class="center">A</td>
+            </tr>
+            <!-- Grade -->
+            <tr class="gradeA">
+                <td>Presto</td>
+                <td>Nintendo DS browser</td>
+                <td>Nintendo DS</td>
+                <td class="center">8.5</td>
+                <td class="center">C/A<sup>1</sup></td>
+            </tr>
+            <!-- Grade -->
+            <tr class="gradeC">
+                <td>KHTML</td>
+                <td>Konqureror 3.1</td>
+                <td>KDE 3.1</td>
+                <td class="center">3.1</td>
+                <td class="center">C</td>
+            </tr>
+            <!-- Grade -->
+            <tr class="gradeA">
+                <td>KHTML</td>
+                <td>Konqureror 3.3</td>
+                <td>KDE 3.3</td>
+                <td class="center">3.3</td>
+                <td class="center">A</td>
+            </tr>
+            <!-- Grade -->
+            <tr class="gradeA">
+                <td>KHTML</td>
+                <td>Konqureror 3.5</td>
+                <td>KDE 3.5</td>
+                <td class="center">3.5</td>
+                <td class="center">A</td>
+            </tr>
+            <!-- Grade -->
+            <tr class="gradeX">
+                <td>Tasman</td>
+                <td>Internet Explorer 4.5</td>
+                <td>Mac OS 8-9</td>
+                <td class="center">-</td>
+                <td class="center">X</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr class="text-right">
+                <th colspan="5">
+                    <span>上一页</span>
+                    <span>下一页</span>
+                </th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<ul class="list-group list-group-flush">
+    @foreach (var item in Model.Items)
+    {
+        <li class="list-group-item">@item.Name</li>
+    }
+</ul>
+@section Scripts
+    {
+    <!-- These plugins only need for the run this page -->
+    <script src="~/js/default-assets/data-table.min.js"></script>
+    <script src="~/js/default-assets/data-table-active.js"></script>
+}
