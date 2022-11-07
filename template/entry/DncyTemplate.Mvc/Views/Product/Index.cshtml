@@ -2,13 +2,16 @@
 @using DncyTemplate.Application.Permission
 @using DncyTemplate.Mvc.TagHelpers
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-
 @model IPagedList<ProductListItemDto>
 
 @{
     ViewData["Title"] = "Product List";
 }
 
+@section Styles
+{
+    <link rel="stylesheet" href="~/lib/layui/css/layui.css"  media="all">
+}
 
 <div class="row align-items-end mt-15">
     <div class="col-12">
@@ -22,18 +25,20 @@
         <div class="d-flex justify-content-between">
             <div>
                 <div class="widget-content widget-content-area text-left">
-                    <button class="btn- btn-success btn-1 btn-1c mb-4 mr-3" asp-authorize asp-permission-code="@ProductPermission.Product.Create">新增</button>
+                        <button class="btn- btn-primary btn-1 btn-1a mb-4 mr-3" asp-authorize asp-permission-code="@ProductPermission.Product.Create">新增</button>
                 </div>
             </div>
 
             <div>
                 <div class="widget-content widget-content-area text-right">
-                    <form method="get" class="form-horizontal well">
+                    <form id="searchForm" method="get" class="form-horizontal well">
+                        <input type="hidden" name="pageNo" value="0"/>
+                        <input type="hidden" name="pageSize" value="20" />
                         <div class="default-repeater">
                             <div class="form-group mb-5">
                                 <div class="row">
                                     <div>
-                                        <input type="text" name="keyword" value="" placeholder="产品名称" style="height: 42px" class="form-control form-control-sm" />
+                                        <input type="text" name="keyword" value="" placeholder="产品名称" style="height: 42px" class="form-control form-control-sm"/>
                                     </div>
                                     <div class="ml-2">
                                         <button class="btn- btn-primary btn-1 btn-1a mb-4 mr-3">查询</button>
@@ -218,24 +223,42 @@
         </tbody>
         <tfoot>
             <tr class="text-right">
-                <th colspan="5">
-                    <span>上一页</span>
-                    <span>下一页</span>
-                </th>
+                <th id="page-control" colspan="5"></th>
             </tr>
         </tfoot>
     </table>
 </div>
 
-<ul class="list-group list-group-flush">
-    @foreach (var item in Model.Items)
-    {
-        <li class="list-group-item">@item.Name</li>
-    }
-</ul>
 @section Scripts
-    {
+{
     <!-- These plugins only need for the run this page -->
     <script src="~/js/default-assets/data-table.min.js"></script>
     <script src="~/js/default-assets/data-table-active.js"></script>
+    <script src="~/lib/layui/layui.js" charset="utf-8"></script>
+    <script>
+        layui.use(['laypage'], function() {
+            var laypage = layui.laypage;
+
+            //完整功能
+            laypage.render({
+                elem: 'page-control'
+                , count: @Model.TotalCount  //数据总数
+                , limit: @Model.PageSize
+                , curr: @Model.PageIndex
+                , theme:'#2478fd'
+                , layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh']
+                , jump: function (obj, first) {
+                    //obj包含了当前分页的所有参数，比如：
+                    console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+                    console.log(obj.limit); //得到每页显示的条数
+                    $('input[name=pageNo]').val(Number(obj.curr));
+                    $('input[name=pageSize]').val(Number(obj.limit));
+
+                    if (!first) {
+                        $('#searchForm').submit();
+                    }
+                }
+            });
+        })
+    </script>
 }

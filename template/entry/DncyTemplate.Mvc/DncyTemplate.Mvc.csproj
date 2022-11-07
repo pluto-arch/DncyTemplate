@@ -85,6 +85,9 @@
 
 	<ItemGroup>
 	  <None Include="bundleconfig.json" />
+	  <None Include="wwwroot\lib\layui\font\iconfont.svg" />
+	  <None Include="wwwroot\lib\layui\font\iconfont.woff2" />
+	  <None Include="wwwroot\lib\layui\layui.js" />
 	</ItemGroup>
 
 	<ItemGroup>
