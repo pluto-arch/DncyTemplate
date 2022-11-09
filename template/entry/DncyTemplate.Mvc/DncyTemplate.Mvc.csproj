@@ -106,10 +106,10 @@
 
 	<ItemGroup>
 	  <EmbeddedResource Update="Resources\DataAnnotation.en-US.resx">
-	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <Generator></Generator>
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\DataAnnotation.zh-Hans.resx">
-	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <Generator></Generator>
 	  </EmbeddedResource>
 	</ItemGroup>
 
