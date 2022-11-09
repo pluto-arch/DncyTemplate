@@ -1,9 +1,11 @@
 ﻿
 using AutoMapper;
+using Dncy.Tools;
 using DncyTemplate.Application.AppServices.Generics;
 using DncyTemplate.Application.Models.Product;
 using DncyTemplate.Domain.DomainEvents.Product;
 using DncyTemplate.Domain.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace DncyTemplate.Application.AppServices.Product;
 
@@ -25,5 +27,15 @@ public class ProductAppService
         entity = await _repository.InsertAsync(entity, true);
         entity.AddDomainEvent(new NewProductCreateDomainEvent(entity));
         return _mapper.Map<ProductDto>(entity);
+    }
+
+    protected override IQueryable<Domain.Aggregates.Product.Product> CreateFilteredQuery(ProductPagedRequest requestModel)
+    {
+        var q = base.CreateFilteredQuery(requestModel);
+        if (!string.IsNullOrEmpty(requestModel.Keyword))
+        {
+            q=q.Where(x=>EF.Functions.Like(x.Name, $"%{requestModel.Keyword}%"));
+        }
+        return q;
     }
 }

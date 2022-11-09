@@ -17,16 +17,28 @@ namespace DncyTemplate.Mvc.Controllers
         public async Task<IActionResult> Index([FromQuery] ProductPagedRequest request)
         {
             var pageData = await _productAppService.GetListAsync(request);
-
-            var res = new PagedList<ProductListItemDto>
-            {
-                PageIndex = request.PageNo,
-                PageSize = request.PageSize,
-                TotalCount = 100,
-                Items = new List<ProductListItemDto>()
-            };
-
-            return View(res);
+            ViewBag.Keywords = request.Keyword;
+            return View(pageData);
         }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public async Task<IActionResult> CreateAsync([FromForm]ProductCreateRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(request);
+            }
+
+            var result = await _productAppService.CreateAsync(request);
+            return RedirectToAction("Index");
+        }
+
     }
 }

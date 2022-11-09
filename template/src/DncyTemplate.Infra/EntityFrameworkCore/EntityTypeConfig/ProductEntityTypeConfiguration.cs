@@ -47,6 +47,7 @@ public class ProductEntityTypeConfiguration : IEntityTypeConfiguration<Product>
         builder.Ignore(e => e.DomainEvents);
         builder.Property(e => e.Name).HasMaxLength(20);
         builder.Property(e => e.Remark).HasMaxLength(100);
+        builder.Property(e => e.CreationTime).IsRequired().HasDefaultValueSql("GETDATE()");
     }
 }
 

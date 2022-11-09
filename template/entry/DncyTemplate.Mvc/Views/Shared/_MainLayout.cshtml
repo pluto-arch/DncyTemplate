@@ -117,6 +117,11 @@
 <script src="~/js/c3.min.js"></script>
 <script src="~/js/default-assets/c3-api-chart.js"></script>
 <script src="~/js/default-assets/c3-chart-script.js"></script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
 <script>
         const loading = function (e) {
             if ($(e).parent("li").hasClass('active')) {

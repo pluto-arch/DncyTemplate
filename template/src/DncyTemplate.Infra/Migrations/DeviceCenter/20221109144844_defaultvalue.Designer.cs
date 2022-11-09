@@ -4,6 +4,7 @@ using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DncyTemplate.Infra.Migrations.DeviceCenter
 {
     [DbContext(typeof(DeviceCenterMigrationDbContext))]
-    partial class DeviceCenterMigrationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221109144844_defaultvalue")]
+    partial class defaultvalue
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

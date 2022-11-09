@@ -104,7 +104,7 @@ public static class EntityFrameworkServiceExtension
             var properties = item.GetProperties().Where(x => x.PropertyType.IsGenericType);
             if (!properties.Any())
             {
-                Log.Logger.Warning($"{item.Name} does not have any entity properties for default repository inject");
+                Log.Logger.Warning("{Name} does not have any entity properties for default repository inject", item.Name);
                 return;
             }
             foreach (var p in properties)

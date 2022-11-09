@@ -9,8 +9,8 @@
 }
 
 @section Styles
-{
-    <link rel="stylesheet" href="~/lib/layui/css/layui.css"  media="all">
+    {
+    <link rel="stylesheet" href="~/lib/layui/css/layui.css" media="all">
 }
 
 <div class="row align-items-end mt-15">
@@ -25,20 +25,24 @@
         <div class="d-flex justify-content-between">
             <div>
                 <div class="widget-content widget-content-area text-left">
-                        <button class="btn- btn-primary btn-1 btn-1a mb-4 mr-3" asp-authorize asp-permission-code="@ProductPermission.Product.Create">新增</button>
+                    <a class="btn- btn-primary btn-1 btn-1a mb-4 mr-3"
+                       asp-controller="Product"
+                       asp-action="Create"
+                       asp-authorize
+                       asp-permission-code="@ProductPermission.Product.Create">新增</a>
                 </div>
             </div>
 
             <div>
                 <div class="widget-content widget-content-area text-right">
                     <form id="searchForm" method="get" class="form-horizontal well">
-                        <input type="hidden" name="pageNo" value="0"/>
+                        <input type="hidden" name="pageNo" value="0" />
                         <input type="hidden" name="pageSize" value="20" />
                         <div class="default-repeater">
                             <div class="form-group mb-5">
                                 <div class="row">
                                     <div>
-                                        <input type="text" name="keyword" value="" placeholder="产品名称" style="height: 42px" class="form-control form-control-sm"/>
+                                        <input type="text" name="keyword" value="@ViewBag.Keywords" placeholder="产品名称" style="height: 42px" class="form-control form-control-sm" />
                                     </div>
                                     <div class="ml-2">
                                         <button class="btn- btn-primary btn-1 btn-1a mb-4 mr-3">查询</button>
@@ -67,159 +71,27 @@
         </thead>
         <tbody>
             <!-- Grade -->
-            <tr class="gradeX">
-                <td>Trident</td>
-                <td>
-                    Internet Explorer 4.0
-                </td>
-                <td>Win 95+</td>
-                <td class="center">4</td>
-                <td class="center">X</td>
-            </tr>
-            <!-- Grade -->
-            <tr class="gradeA">
-                <td>Trident</td>
-                <td>Internet Explorer 7</td>
-                <td>Win XP SP2+</td>
-                <td class="center">7</td>
-                <td class="center">A</td>
-            </tr>
-            <!-- Grade -->
-            <tr class="gradeA">
-                <td>Webkit</td>
-                <td>OmniWeb 5.5</td>
-                <td>OSX.4+</td>
-                <td class="center">420</td>
-                <td class="center">A</td>
-            </tr>
-            <!-- Grade -->
-            <tr class="gradeA">
-                <td>Webkit</td>
-                <td>iPod Touch / iPhone</td>
-                <td>iPod</td>
-                <td class="center">420.1</td>
-                <td class="center">A</td>
-            </tr>
-            <!-- Grade -->
-            <tr class="gradeA">
-                <td>Webkit</td>
-                <td>S60</td>
-                <td>S60</td>
-                <td class="center">413</td>
-                <td class="center">A</td>
-            </tr>
-            <!-- Grade -->
-            <tr class="gradeA">
-                <td>Presto</td>
-                <td>Opera 7.0</td>
-                <td>Win 95+ / OSX.1+</td>
-                <td class="center">-</td>
-                <td class="center">A</td>
-            </tr>
-            <!-- Grade -->
-            <tr class="gradeA">
-                <td>Presto</td>
-                <td>Opera 7.5</td>
-                <td>Win 95+ / OSX.2+</td>
-                <td class="center">-</td>
-                <td class="center">A</td>
-            </tr>
-            <!-- Grade -->
-            <tr class="gradeA">
-                <td>Presto</td>
-                <td>Opera 8.0</td>
-                <td>Win 95+ / OSX.2+</td>
-                <td class="center">-</td>
-                <td class="center">A</td>
-            </tr>
-            <!-- Grade -->
-            <tr class="gradeA">
-                <td>Presto</td>
-                <td>Opera 8.5</td>
-                <td>Win 95+ / OSX.2+</td>
-                <td class="center">-</td>
-                <td class="center">A</td>
-            </tr>
-            <!-- Grade -->
-            <tr class="gradeA">
-                <td>Presto</td>
-                <td>Opera 9.0</td>
-                <td>Win 95+ / OSX.3+</td>
-                <td class="center">-</td>
-                <td class="center">A</td>
-            </tr>
-            <!-- Grade -->
-            <tr class="gradeA">
-                <td>Presto</td>
-                <td>Opera 9.2</td>
-                <td>Win 88+ / OSX.3+</td>
-                <td class="center">-</td>
-                <td class="center">A</td>
-            </tr>
-            <!-- Grade -->
-            <tr class="gradeA">
-                <td>Presto</td>
-                <td>Opera 9.5</td>
-                <td>Win 88+ / OSX.3+</td>
-                <td class="center">-</td>
-                <td class="center">A</td>
-            </tr>
-            <!-- Grade -->
-            <tr class="gradeA">
-                <td>Presto</td>
-                <td>Opera for Wii</td>
-                <td>Wii</td>
-                <td class="center">-</td>
-                <td class="center">A</td>
-            </tr>
-            <!-- Grade -->
-            <tr class="gradeA">
-                <td>Presto</td>
-                <td>Nokia N800</td>
-                <td>N800</td>
-                <td class="center">-</td>
-                <td class="center">A</td>
-            </tr>
-            <!-- Grade -->
-            <tr class="gradeA">
-                <td>Presto</td>
-                <td>Nintendo DS browser</td>
-                <td>Nintendo DS</td>
-                <td class="center">8.5</td>
-                <td class="center">C/A<sup>1</sup></td>
-            </tr>
-            <!-- Grade -->
-            <tr class="gradeC">
-                <td>KHTML</td>
-                <td>Konqureror 3.1</td>
-                <td>KDE 3.1</td>
-                <td class="center">3.1</td>
-                <td class="center">C</td>
-            </tr>
-            <!-- Grade -->
-            <tr class="gradeA">
-                <td>KHTML</td>
-                <td>Konqureror 3.3</td>
-                <td>KDE 3.3</td>
-                <td class="center">3.3</td>
-                <td class="center">A</td>
-            </tr>
-            <!-- Grade -->
-            <tr class="gradeA">
-                <td>KHTML</td>
-                <td>Konqureror 3.5</td>
-                <td>KDE 3.5</td>
-                <td class="center">3.5</td>
-                <td class="center">A</td>
-            </tr>
-            <!-- Grade -->
-            <tr class="gradeX">
-                <td>Tasman</td>
-                <td>Internet Explorer 4.5</td>
-                <td>Mac OS 8-9</td>
-                <td class="center">-</td>
-                <td class="center">X</td>
-            </tr>
+            @if (Model != null && Model.Items != null && Model.Items.Any())
+            {
+                @foreach (var item in Model.Items)
+                {
+                    <tr class="gradeX">
+                        <td>@item.Id</td>
+                        <td>
+                            @item.Name
+                        </td>
+                        <td>@($"{item.CreateTime:yyyy/MM/dd HH:mm:ss}")</td>
+                        <td class="center">4</td>
+                        <td class="center">X</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr class="text-right text-center">
+                    <th colspan="5">暂无数据</th>
+                </tr>
+            }
         </tbody>
         <tfoot>
             <tr class="text-right">
@@ -230,29 +102,26 @@
 </div>
 
 @section Scripts
-{
+    {
     <!-- These plugins only need for the run this page -->
     <script src="~/js/default-assets/data-table.min.js"></script>
     <script src="~/js/default-assets/data-table-active.js"></script>
     <script src="~/lib/layui/layui.js" charset="utf-8"></script>
     <script>
-        layui.use(['laypage'], function() {
+        layui.use(['laypage'], function () {
             var laypage = layui.laypage;
 
             //完整功能
             laypage.render({
                 elem: 'page-control'
                 , count: @Model.TotalCount  //数据总数
-                , limit: @Model.PageSize
-                , curr: @Model.PageIndex
-                , theme:'#2478fd'
+                                , limit: @Model.PageSize
+                                , curr: @Model.PageIndex
+                                , theme: '#2478fd'
                 , layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh']
                 , jump: function (obj, first) {
-                    //obj包含了当前分页的所有参数，比如：
-                    console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
-                    console.log(obj.limit); //得到每页显示的条数
-                    $('input[name=pageNo]').val(Number(obj.curr));
-                    $('input[name=pageSize]').val(Number(obj.limit));
+                    $('input[name=pageNo]').val(Number(obj.curr)); //得到当前页，以便向服务端请求对应页的数据。
+                    $('input[name=pageSize]').val(Number(obj.limit));  //得到每页显示的条数
 
                     if (!first) {
                         $('#searchForm').submit();

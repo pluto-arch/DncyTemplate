@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
 
 namespace DncyTemplate.Application.Models.Product;
 
@@ -9,5 +10,7 @@ public class ProductCreateRequest
     [Display(Name = "ProductName")]
     public string Name { get; set; }
 
+    [Required(ErrorMessage = "ValueIsRequired")]
+    [StringLength(maximumLength: 200, MinimumLength = 3)]
     public string Remark { get; set; }
 }

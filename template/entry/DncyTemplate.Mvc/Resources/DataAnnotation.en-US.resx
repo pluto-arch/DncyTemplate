@@ -135,4 +135,7 @@
   <data name="UserNotExist" xml:space="preserve">
     <value>user not exist</value>
   </data>
+  <data name="ValueIsRequired" xml:space="preserve">
+    <value>{0} is required</value>
+  </data>
 </root>

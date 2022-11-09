@@ -135,4 +135,7 @@
   <data name="UserNotExist" xml:space="preserve">
     <value>用户不存在</value>
   </data>
+  <data name="ValueIsRequired" xml:space="preserve">
+    <value>{0} 不能为空</value>
+  </data>
 </root>
