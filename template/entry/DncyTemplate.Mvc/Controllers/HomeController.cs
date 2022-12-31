@@ -35,47 +35,40 @@ namespace DncyTemplate.Mvc.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Product()
-        {
-            await Task.Delay(5000);
-            var models = await _repository.AsNoTracking().Select(x => new ProductListItemDto(x.Id, x.Name, x.CreationTime.DateTime)).ToPagedListAsync(1, 200);
-            return View(models);
-        }
 
-
-        [Authorize(ProductPermission.Product.Create)]
-        public async Task<IActionResult> Generate([FromServices] IHostEnvironment env)
-        {
-            var models = await _repository.AsNoTracking().Select(x => new ProductListItemDto(x.Id, x.Name, x.CreationTime.DateTime)).ToPagedListAsync(1, 20);
-            ViewData["data"] = models;
-            ViewData["Host"] = Request.IsHttps ? $"https://{Request.Host}" : $"http://{Request.Host}";
-            IViewEngine viewEngine = HttpContext.RequestServices.GetService(typeof(ICompositeViewEngine)) as ICompositeViewEngine;
-            ViewEngineResult viewResult = viewEngine?.FindView(ControllerContext, "Templates/ProductListTemplate", true);
-            if (viewResult?.Success == false)
-            {
-                return Ok("error");
-            }
-
-            await using var writer = new StringWriter();
-            if (viewResult != null)
-            {
-                var viewContext = new ViewContext(
-                    ControllerContext,
-                    viewResult.View,
-                    ViewData,
-                    TempData,
-                    writer,
-                    new HtmlHelperOptions()
-                );
-                await viewResult.View.RenderAsync(viewContext);
-            }
-
-            var html = writer.GetStringBuilder().ToString();
-            var culture = Request.HttpContext.Features.Get<IRequestCultureFeature>()?.RequestCulture.Culture;
-            var path = Path.Combine(env.ContentRootPath, "wwwroot", "htmls", $"product_{culture?.Name}.html");
-            await System.IO.File.WriteAllTextAsync(path, html);
-            return RedirectToAction(nameof(Product));
-        }
+        // [Authorize(ProductPermission.Product.Create)]
+        // public async Task<IActionResult> Generate([FromServices] IHostEnvironment env)
+        // {
+        //     var models = await _repository.AsNoTracking().Select(x => new ProductListItemDto(x.Id, x.Name, x.CreationTime.DateTime)).ToPagedListAsync(1, 20);
+        //     ViewData["data"] = models;
+        //     ViewData["Host"] = Request.IsHttps ? $"https://{Request.Host}" : $"http://{Request.Host}";
+        //     IViewEngine viewEngine = HttpContext.RequestServices.GetService(typeof(ICompositeViewEngine)) as ICompositeViewEngine;
+        //     ViewEngineResult viewResult = viewEngine?.FindView(ControllerContext, "Templates/ProductListTemplate", true);
+        //     if (viewResult?.Success == false)
+        //     {
+        //         return Ok("error");
+        //     }
+        //
+        //     await using var writer = new StringWriter();
+        //     if (viewResult != null)
+        //     {
+        //         var viewContext = new ViewContext(
+        //             ControllerContext,
+        //             viewResult.View,
+        //             ViewData,
+        //             TempData,
+        //             writer,
+        //             new HtmlHelperOptions()
+        //         );
+        //         await viewResult.View.RenderAsync(viewContext);
+        //     }
+        //
+        //     var html = writer.GetStringBuilder().ToString();
+        //     var culture = Request.HttpContext.Features.Get<IRequestCultureFeature>()?.RequestCulture.Culture;
+        //     var path = Path.Combine(env.ContentRootPath, "wwwroot", "htmls", $"product_{culture?.Name}.html");
+        //     await System.IO.File.WriteAllTextAsync(path, html);
+        //     return RedirectToAction(nameof(Product));
+        // }
 
 
 

@@ -61,11 +61,11 @@ namespace DncyTemplate.Mvc.Controllers
                 return View(model);
             }
 
-            var user = InMemoryAccount.Users.FirstOrDefault(x => x.Account == model.UserName);
+            var user = InMemoryAccount.Users.FirstOrDefault(x => x.Account == model.UsernameOrEmailAddress);
             if (user==null)
             {
-                ModelState.AddModelError(nameof(model.UserName), "UserNotExist");
-                return View("Login", model);
+                ModelState.AddModelError(nameof(model.UsernameOrEmailAddress), "用户不存在");
+                return View(model);
             }
 
             var claims = new List<Claim>
@@ -126,11 +126,17 @@ namespace DncyTemplate.Mvc.Controllers
 
             _logger.LogInformation("User {Name} logged in at {Time}.", user.Name, DateTime.UtcNow);
             
-
+            
             if (Url.IsLocalUrl(model.ReturnUrl))
                 return Redirect(model.ReturnUrl);
             else
                 return RedirectToAction("Index", "Home");
         }
+        
+        public string GetAppHomeUrl()
+        {
+            return Url.Action("Index", "Home");
+        }
+        
     }
 }

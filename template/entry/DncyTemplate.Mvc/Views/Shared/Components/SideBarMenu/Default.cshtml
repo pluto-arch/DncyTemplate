@@ -1,0 +1,28 @@
+<div class="layui-side-scroll">
+    <div id="sideMenu">
+        <ul lay-filter="sideMenu" class="layui-nav arrow pear-menu layui-nav-tree pear-nav-tree">
+
+            <li class="layui-nav-item">
+                <a menu-url="/dashboard/hostconsole" class="site-demo-active" menu-type="1" menu-id="dashboard.hostconsole" menu-title="控制台">
+                    <i class="layui-icon layui-icon-console"></i>
+                    <span>控制台</span>
+                </a>
+            </li>
+
+            <li class="layui-nav-item">
+                <a href="javascript:;" menu-type="0" menu-id="devicemanage">
+                    <i class="layui-icon layui-icon-read"></i>
+                    <span>设备管理</span>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd>
+                        <a menu-url="/product/index" class="site-demo-active" menu-type="1" menu-id="product.index" menu-title="产品管理">
+                            <i class="layui-icon layui-icon-console"></i>
+                            <span>产品管理</span>
+                        </a>
+                    </dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+</div>

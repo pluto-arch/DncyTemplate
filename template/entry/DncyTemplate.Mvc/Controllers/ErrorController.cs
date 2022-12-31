@@ -2,7 +2,7 @@
 using System.Web;
 
 using DncyTemplate.Mvc.Models;
-
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.Extensions.Localization;
 
@@ -11,6 +11,7 @@ namespace DncyTemplate.Mvc.Controllers
     /// <summary>
     /// 错误处理器
     /// </summary>
+    [AllowAnonymous]
     public class ErrorController : Controller
     {
         private readonly IStringLocalizer<SharedResource> _localizedizer;

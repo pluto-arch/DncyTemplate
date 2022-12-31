@@ -21,24 +21,24 @@ namespace DncyTemplate.Mvc.Controllers
             return View(pageData);
         }
 
-        [HttpGet]
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [AutoValidateAntiforgeryToken]
-        public async Task<IActionResult> CreateAsync([FromForm]ProductCreateRequest request)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(request);
-            }
-
-            var result = await _productAppService.CreateAsync(request);
-            return RedirectToAction("Index");
-        }
+        // [HttpGet]
+        // public IActionResult Create()
+        // {
+        //     return View();
+        // }
+        //
+        // [HttpPost]
+        // [AutoValidateAntiforgeryToken]
+        // public async Task<IActionResult> CreateAsync([FromForm]ProductCreateRequest request)
+        // {
+        //     if (!ModelState.IsValid)
+        //     {
+        //         return View(request);
+        //     }
+        //
+        //     var result = await _productAppService.CreateAsync(request);
+        //     return RedirectToAction("Index");
+        // }
 
     }
 }

@@ -68,6 +68,9 @@
 	<ItemGroup>
 	  <_ContentIncludedByDefault Remove="Views\LayoutComponents\_TopHeaderLeft.cshtml" />
 	  <_ContentIncludedByDefault Remove="Views\Shared\_MainLayout.cshtml" />
+	  <_ContentIncludedByDefault Remove="Views\Shared\Templates\ProductListTemplate.cshtml" />
+	  <_ContentIncludedByDefault Remove="Views\Product\Create.cshtml" />
+	  <_ContentIncludedByDefault Remove="Views\Product\Index.cshtml" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -81,13 +84,6 @@
 	<ItemGroup>
 	  <Folder Include="HtmlHelpers\" />
 	  <Folder Include="Models\Account\" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Include="bundleconfig.json" />
-	  <None Include="wwwroot\lib\layui\font\iconfont.svg" />
-	  <None Include="wwwroot\lib\layui\font\iconfont.woff2" />
-	  <None Include="wwwroot\lib\layui\layui.js" />
 	</ItemGroup>
 
 	<ItemGroup>

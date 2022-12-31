@@ -1,133 +1,91 @@
-﻿@model DncyTemplate.Mvc.Models.Account.LoginModel
+﻿@using Microsoft.AspNetCore.Mvc.ModelBinding
+@using Microsoft.Extensions.Localization
+@model DncyTemplate.Mvc.Models.Account.LoginModel
 
 @{
-    Layout = null;
+    ViewBag.Title = "登陆";
 }
 
 
-<!DOCTYPE html>
-<html lang="en">
+@section styles{
+    <link rel="stylesheet" href="~/css/views/login.css" asp-append-version="true" />
+}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="description" content="">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <!-- Title -->
-    <title>Admetro - Responsive Bootstrap 4 Admin Template</title>
-
-    <!-- Favicon -->
-    <link rel="icon" href="~/img/core-img/favicon.ico">
-
-    <link rel="stylesheet" href="~/css/bootstrap.min.css">
-    <link rel="stylesheet" href="~/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="~/css/animate.min.css">
-    <link rel="stylesheet" href="~/css/nice-select.min.css">
-    <link rel="stylesheet" href="~/css/jquery-ui.min.css">
-    <link rel="stylesheet" href="~/css/default-assets/themify-icons.min.css">
-    <link rel="stylesheet" href="~/css/font-awesome.min.css">
-    <link rel="stylesheet" href="~/css/pe-icon-7-stroke.min.css">
-    <link rel="stylesheet" href="~/css/style.min.css">
-    <link rel="stylesheet" href="~/css/material-design-iconic-font.min.css">
-    <link rel="stylesheet" href="~/etline/style.min.css">
-
-    <!-- Master Stylesheet [If you remove this CSS file, your file will be broken undoubtedly.] -->
-    <link rel="stylesheet" href="~/css/login.css">
-    <style>
-        .middle-box {
-            position: relative;
-        }
-
-        .set-culture {
-            position: absolute;
-            top: 0;
-            right: 0;
-        }
-
-        .set-culture  .nice-select {
-                border: none;
-        }
-        .nice-select .current {
-            text-transform: capitalize;
-        }
-
-        .nice-select ul li {
-            text-transform: capitalize;
-        }
-
-        .main-content- {
-            background-image: url('https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/V-_oS6r-i7wAAAAAAAAAAAAAFl94AQBr');
-            background-repeat: no-repeat;
-        }
-    </style>
-</head>
-
-<body>
-    <!-- Preloader -->
-    <div id="preloader">
-        <div class="spinner-single-content bg-boxshadow p-5 text-center mb-30 bg-primary" style="height: 100vh;display: flex;justify-content: center;align-items: center;">
-            <div class="lds-hourglass"></div>
-        </div>
-    </div>
-    <div class="main-content- h-100vh">
-        <div class="container h-100">
-            <div class="row h-100 justify-content-center align-items-center">
-                <div class="col-lg-6 mx-auto">
-                    <!-- Middle Box -->
-                    <div class="middle-box my-5 text-center bg-white p-4 p-sm-5 bg-boxshadow">
-                        @await Html.PartialAsync("_SelectLanguagePartial")
-                        <h5 class="mb-50">User Login</h5>
-                        <!-- Form -->
-                        <form class="login-form" method="post" asp-controller="Account" asp-action="Login">
-                            @Html.AntiForgeryToken()
-                            <input type="hidden" asp-for="ReturnUrl"/>
-                            <div asp-validation-summary="All" class="text-danger"></div>
-                            <!-- Form Group -->
-                            <div class="form-group">
-                                <input type="text" asp-for="UserName" class="form-control login" placeholder="user account" required="">
-                            </div>
-
-                            <!-- Form Group -->
-                            <div class="form-group">
-                                <input type="password" asp-for="Password" class="form-control login" placeholder="password" required="">
-                            </div>
-                            <button type="submit" class="btn- btn-success btn-1 btn-1c w-100 text-center">Login</button>
-                            @Html.ValidationSummary()
-                            <div class="d-flex justify-content-between mt-15">
-                                <label class="ckbox">
-                                    <input type="checkbox">
-                                    <span></span><small class="text-color-gray">keep logined</small>
-                                </label>
-                                <a class="forgot_pass text-color-gray mb-10" href="#"></a>
-                                <a class="forgot_pass text-color-gray mb-10" href="#"><small>Forget Password?</small></a>
-                            </div>
-                            <div class="login-icon mt-15 mb-15">
-                                <a href="#"><i class="ti-facebook"></i></a>
-                                <a class="info-color" href="#"><i class="ti-linkedin"></i></a>
-                                <a class="danger-color" href="#"><i class="ti-pinterest"></i></a>
-                                <a class="success-color" href="#"><i class="ti-dribbble"></i></a>
-                            </div>
-                            <p class="text-center  font-size-12">No Account?</p>
-                            <a class="btn- btn-primary btn-1 btn-1a  w-100 text-center" href="#">Create Account</a>
-                        </form>
+<div class="user-login">
+    <div class="layui-container">
+        <div class="layui-row">
+            <div class="layui-col-md7 layui-col-sm6 layui-hide-xs">
+                <img src="~/images/guoqing.jpg" />
+            </div>
+            <div class="layui-col-sm6 layui-col-md5 layui-col-xs12">
+                <form class="layui-form" action="javascript:void(0);">
+                    <input type="hidden" name="returnUrl" value="@ViewData["returnUrl"]" />
+                    <input type="hidden" name="returnUrlHash" />
+                    <div class="layui-form-item">
+                        <img class="logo" src="~/images/logo.png" />
+                        <div class="title">AbpTemplate</div>
+                        <div class="desc">
+                            一 万 年 太 久，只 争 朝 夕
+                        </div>
                     </div>
-                </div>
+                    <div class="layui-form-item">
+                        <input type="text" name="usernameOrEmailAddress" placeholder="account or email: admin" hover class="layui-input" required autofocus maxlength="50" />
+                    </div>
+                    <div class="layui-form-item">
+                        <input type="password" name="password" placeholder="password: 123qwe" hover class="layui-input" required maxlength="8" />
+                    </div>
+                    <div class="layui-form-item">
+                        <input type="checkbox" name="rememberMe" title="remember me" lay-skin="primary" checked>
+                    </div>
+                    <div class="layui-form-item">
+                        <button class="pear-btn pear-btn-primary login" lay-submit lay-filter="LAY-user-login-submit">Login</button>
+                    </div>
+                    <div class="external-login">
+                        <img src="~/images/miniprogram.png" title="小程序登录" alt="小程序登录" class="wx-logo">
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
+<div class="user-login-foot">
+    © <a target="_blank" href="https://gitee.com/pear-admin/pear-admin-abp.git">PearAdminAbp @System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription</a>
+    <a target="_blank" href="http://www.pearadmin.com">About Us</a>
+</div>
 
-    <!-- ======================================
-    ********* Page Wrapper Area End ***********
-    ======================================= -->
-    <!-- Must needed plugins to the run this Template -->
-    <script src="~/js/jquery.min.js"></script>
-    <script src="~/js/popper.min.js"></script>
-    <script src="~/js/bootstrap.min.js"></script>
-    <script src="~/js/admetro.bundle.min.js"></script>
+@section scripts{
+    <script type="text/javascript">
+        layui.use(['abp', 'form', 'element', 'jquery'], function () {
+            var $ = layui.jquery;
+            var abp = layui.abp;
+            var form = layui.form;
+            var element = layui.element;
 
-    <!-- Active JS -->
-    <script src="~/js/default-assets/active.min.js"></script>
-</body>
+            // abp.multiTenancy.setTenantIdCookie(@ViewBag.TenantId);
+            form.render();
 
-</html>
+            if(window !=top){
+                top.location.href=location.href;
+            }
+
+            form.on('submit(LAY-user-login-submit)', function (data) {
+                data.field.rememberMe = data.field.rememberMe == "on";//默认值是on
+                var field = data.field; //获取提交的字段
+
+                var waitIndex = layer.load(2);
+                abp.ajax({
+                    url: "@Url.Action("Login", "Account")",
+                    data: JSON.stringify(field),
+                    abpHandleError: false
+                }).fail(function (jqXHR) {
+                    layer.msg(jqXHR.message, { icon: 5 });
+                }).always(function () {
+                    layer.close(waitIndex);
+                });
+
+                return false;
+            });
+        })
+    </script>
+}
+

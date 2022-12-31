@@ -1,156 +1,239 @@
-﻿@{
-    ViewData["Title"] = "看板";
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using DncyTemplate.Mvc.Views.Shared.Components.RightNavbarUserArea
+@using DncyTemplate.Mvc.Views.Shared.Components.SideBarMenu
+@{
+    ViewData["Title"] = "Home Page";
+    ViewBag.CurrentPageName = "pages.home";
 }
 
-<div class="row align-items-end">
-    <div class="col-8">
-        <!-- Page Title -->
-        <div class="page-title mb-30">
-            <h5 class="mb-0">Dashboard</h5>
-            <span>Welcome Back, Samantha Sarah!</span>
+@section styles{
+    <link rel="stylesheet" href="~/css/loader.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+}
+
+
+<!-- 布局框架 -->
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">
+            <img class="logo" src="" />
+            <span class="title"></span>
         </div>
+        <ul class="layui-nav layui-layout-left">
+            <li class="collapse layui-nav-item"><a href="#" class="layui-icon layui-icon-shrink-right"></a></li>
+            <li class="refresh layui-nav-item"><a href="#" class="layui-icon layui-icon-refresh-1" loading=600></a></li>
+        </ul>
+        <div id="control" class="layui-layout-control"></div>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item layui-hide-xs">
+                <a class="social">
+                    <i class="layui-icon layui-icon-dialogue"></i>
+                    <span id="headerMessage"></span>
+                </a>
+            </li>
+            <li class="layui-nav-item layui-hide-xs"><a href="#" class="fullScreen layui-icon layui-icon-screen-full"></a></li>
+            <li class="layui-nav-item layui-hide-xs"><a href="https://gitee.com/pear-admin/pear-admin-abp" class="layui-icon layui-icon-website"></a></li>
+            <li class="layui-nav-item layui-hide-xs">
+                <a class="notice">
+                    <i class="layui-icon layui-icon-notice"></i>
+                    <span id="headerNotice"></span>
+                </a>
+            </li>
+            @await Component.InvokeAsync(typeof(RightNavbarUserAreaViewComponent))
+            <li class="layui-nav-item setting"><a href="#" class="layui-icon layui-icon-more-vertical"></a></li>
+        </ul>
     </div>
-    <div class="col-4">
-        <div class="dashboard-dropdown text-right mb-30">
-            <div class="dropdown">
-                <button
-                    class="btn dropdown-toggle"
-                    type="button"
-                    id="dashboardDropdown"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                >
-                    <i class="ti-more"></i>
-                </button>
-                <div
-                    class="dropdown-menu dropdown-menu-right"
-                    aria-labelledby="dashboardDropdown"
-                >
-                    <a class="dropdown-item" href="#"
-                    ><i class="ti-pencil-alt"></i> Quick Edit</a
-                    >
-                    <a class="dropdown-item" href="#"
-                    ><i class="ti-settings"></i> Settings</a
-                    >
-                    <a class="dropdown-item" href="#"
-                    ><i class="ti-eraser"></i> Remove</a
-                    >
-                    <a class="dropdown-item" href="#"
-                    ><i class="ti-trash"></i> Delete</a
-                    >
-                </div>
-            </div>
+    <div class="layui-side layui-bg-black">
+        <div class="layui-logo">
+            <img class="logo" src="" />
+            <span class="title"></span>
         </div>
+        @await Component.InvokeAsync(typeof(SideBarMenuViewComponent))
+    </div>
+    <div class="layui-body">
+        <div id="content"></div>
+    </div>
+
+    <!-- 遮盖层 -->
+    <div class="pear-cover"></div>
+    <!-- 加载动画-->
+    <div class="loader-main">
+        <div class="loader"></div>
     </div>
 </div>
-
-<div class="row">
-    <div class="col-md-6 col-xl-3 mb-30">
-        <div class="card bg-boxshadow full-height wow fadeInUp"
-             data-wow-delay="100ms">
-            <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <div class="az-content-label">Today Sales</div>
-                        <h5 class="mb-0">2,369.78</h5>
-                        <span class="success-text"><i class="ti-arrow-up"></i> 3.87%</span>
-                    </div>
-                    <div class="col">
-                        <div class="chart text-right">
-                            <div class="">
-                                <span id="sparkline6">3,4,4,7,5,9,10,6,4,4,7,5,9,10</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-6 col-xl-3 mb-30">
-        <div class="card bg-boxshadow full-height wow fadeInUp"
-             data-wow-delay="120ms">
-            <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <div class="az-content-label">This Weeks Sales</div>
-                        <h5>5,869</h5>
-                        <span class="text-danger"><i class="ti-arrow-down"></i> 4.99%</span>
-                    </div>
-                    <div class="col">
-                        <div class="chart text-right">
-                            <div class="">
-                                <span id="sparkline5">3,4,4,7,5,9,10,6,4,4,7,5,9,10</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-6 col-xl-3 mb-30">
-        <div class="card bg-boxshadow full-height wow fadeInUp"
-             data-wow-delay="140ms">
-            <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <div class="az-content-label">This Month Sales</div>
-                        <h5>16,869</h5>
-                        <span class="success-text"><i class="ti-arrow-up"></i> 1.90%</span>
-                    </div>
-                    <div class="col">
-                        <div class="chart text-right">
-                            <div class="">
-                                <span id="sparkline14">3,4,4,7,5,9,10,6,4,4,7,5,9,10</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-6 col-xl-3 mb-30">
-        <div class="card bg-boxshadow full-height wow fadeInUp"
-             data-wow-delay="160ms">
-            <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <div class="az-content-label">This Year Sales</div>
-                        <h5>65,869</h5>
-                        <span class="success-text"><i class="ti-arrow-up"></i> 7.85%</span>
-                    </div>
-                    <div class="col">
-                        <div class="chart text-right">
-                            <div class="">
-                                <span id="sparkline15">3,4,4,7,5,9,10,6,4,4,7,5,9,10</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<!-- 移 动 端 便 捷 操 作 -->
+<div class="pear-collapsed-pe collapse">
+    <a href="#" class="layui-icon layui-icon-shrink-right"></a>
 </div>
 
-<div class="row align-items-end">
-    <div class="col-8">
-        <div class="page-title mb-30">
-            <a class="btn- btn-primary btn-1 btn-1a" onclick="doRequest()">ajax请求带权限的页面或者接口</a>
-        </div>
-    </div>
-   
-</div>
+@section scripts{
+    <script type="text/javascript">
+    layui.use(['admin', 'layer', 'encrypt', 'abp'], function () {
+        var admin = layui.admin;
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var encrypt = layui.encrypt;
+        var abp = layui.abp;
+        var currMessageIndex = "";
 
-<script>
-    function doRequest() {
-        $.ajax({
-            url: "/home/Generate",
-            success: function() {
-                alert('aaa');
+        var config = {
+            logo: {
+                title: "PearAdmin Abp",
+                image: "/images/logo.png"
+            },
+            menu: {
+                control: false,
+                accordion: true,
+                collaspe: false,
+                async: false,
+                select: 'dashboard.hostconsole' // 菜单默认选中的menuid
+            },
+            tab: {
+                enable: true,
+                keepState: true,
+                session: true,
+                preload: false,
+                max: 20,
+                index: { // tab标签默认选中展示的index
+                     id: 'dashboard.hostconsole',
+                     href: '@Url.Action( "HostConsole", "Dashboard")',
+                     title: "@Html.Raw("控制台")",
+                     close:false
+                }
+            },
+            theme: {
+                defaultColor: "1",
+                defaultMenu: "dark-theme",
+                defaultHeader: "dark-theme",
+                allowCustom: false,
+                banner: true
+            },
+            colors: [
+                {
+                    id: "1",
+                    color: "#2d8cf0",
+                    second: "#ecf5ff"
+                },
+                {
+                    id: "2",
+                    color: "#36b368",
+                    second: "#f0f9eb"
+                },
+                {
+                    id: "3",
+                    color: "#f6ad55",
+                    second: "#fdf6ec"
+                },
+                {
+                    id: "4",
+                    color: "#f56c6c",
+                    second: "#fef0f0"
+                },
+                {
+                    id: "5",
+                    color: "3963bc",
+                    second: "#ecf5ff"
+                },
+                {
+                    id: "6",
+                    color: "#f7cfea",
+                    second: "#ecf5ff"
+                }
+            ],
+            other: {
+                keepLoad: "1200",
+                autoHead: false,
+                footer: false
+            },
+            header: {
+                message: false
             }
+        };
+        admin.render(config);
+
+        window.selectedWindow = function () {
+            return $(".layui-body .layui-tab-content .layui-show")[0].children[0].contentWindow;
+        }
+
+        // function loadUnreadNotificationCount() {
+        //     abp.ajax({
+        //         url: "",
+        //         type: "Get",
+        //         abpHandleError: false
+        //     }).done(function (data) {
+        //         if (data.code == 200 && data.data > 0) {
+        //             notificationUnread();
+        //         }
+        //     }).fail(function (jqXHR) {
+        //         layer.msg(jqXHR.message, { icon: 5 });
+        //     });
+        // }
+        //
+        // function loadUnreadMessageCount() {
+        //     abp.ajax({
+        //         url: "",
+        //         type: "Get",
+        //         abpHandleError: false
+        //     }).done(function (data) {
+        //         if (data.code == 200 && data.data > 0) {
+        //             messageUnread();
+        //         }
+        //     }).fail(function (jqXHR) {
+        //         layer.msg(jqXHR.message, { icon: 5 });
+        //     });
+        // }
+
+        $(".social").click(function () {
+            currMessageIndex = layer.open({
+                type: 2,
+                title: "传音",
+                content: "HostConsole",
+                area: ["1000px","645px"],
+                shade: 0.3,
+                maxmin: true,
+                shadeClose: true,
+                resize: true,
+                end: function () {
+                    currMessageIndex = "";
+                }
+            });
         });
-    }
-</script>
+
+        $(".notice").click(function () {
+            layer.open({
+                type: 2,
+                title: "消息通知",
+                content: "/dashboard/HostConsole",
+                area: ["800px","600px"],
+                shade: 0.1
+            });
+        });
+
+        // abp.event.on('app.chat.messageReceived', function (message) {
+        //     if (currMessageIndex == "") {
+        //         messageUnread();
+        //     }
+        // });
+        //
+        // abp.event.on('abp.notifications.received', function (userNotification) {
+        //     abp.notifications.showUiNotifyForUserNotification(userNotification);
+        //     notificationUnread();
+        // });
+        //
+        // function notificationUnread() {
+        //     $("#headerNotice").addClass("layui-badge-dot");
+        // }
+        //
+        // function messageUnread() {
+        //     $("#headerMessage").addClass("layui-badge-dot");
+        // }
+
+        var init = function () {
+            // loadUnreadNotificationCount();
+            // loadUnreadMessageCount();
+        };
+        init();
+    });
+    </script>
+}
+
