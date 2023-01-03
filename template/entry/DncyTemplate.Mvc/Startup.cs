@@ -56,7 +56,7 @@ public class Startup
 
         app.UseHttpRequestLogging();
 
-        if (env.IsEnvironment(AppConstant.EnvironmentName.DEV))
+        if (!env.IsEnvironment(AppConstant.EnvironmentName.DEV))
         {
             // 初始化种子数据
             app.DataSeederAsync().Wait();

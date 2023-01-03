@@ -86,7 +86,7 @@
                 accordion: true,
                 collaspe: false,
                 async: false,
-                select: 'dashboard.hostconsole' // 菜单默认选中的menuid
+                select: encrypt.md5("app.menu.dashboard.hostconsole") // 菜单默认选中的menuid
             },
             tab: {
                 enable: true,
@@ -95,7 +95,7 @@
                 preload: false,
                 max: 20,
                 index: { // tab标签默认选中展示的index
-                     id: 'dashboard.hostconsole',
+                     id: encrypt.md5("app.menu.dashboard.hostconsole"),
                      href: '@Url.Action( "HostConsole", "Dashboard")',
                      title: "@Html.Raw("控制台")",
                      close:false

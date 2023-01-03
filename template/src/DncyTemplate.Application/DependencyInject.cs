@@ -16,7 +16,7 @@ namespace DncyTemplate.Application
 
 
             #region permission
-            services.AddScoped<IPermissionChecker, DefaultPermissionChecker>();
+            services.AddScoped<IPermissionChecker, PermissionChecker>();
             // permission definition 
             services.AddSingleton<IPermissionDefinitionManager, DefaultPermissionDefinitionManager>();
             services.AddSingleton<IPermissionDefinitionProvider, PermissionDefinitionProvider>();

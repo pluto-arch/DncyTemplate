@@ -1,28 +1,86 @@
+@using System.Security.Cryptography
+@using System.Text
+@using DncyTemplate.Infra.Extensions
+@model DncyTemplate.Mvc.Views.Shared.Components.SideBarMenu.SideBarMenuViewModel
+
+@{
+    var calculateMenuId = new Func<string, string>((Name) =>
+    {
+        using (var md5 = MD5.Create())
+        {
+            var hashTarget = Name;
+            var md5ComputeHash = md5.ComputeHash(Encoding.UTF8.GetBytes(hashTarget));
+            var bitConverterResult = BitConverter.ToString(md5ComputeHash);
+            var replaceResult = bitConverterResult.Replace("-", "");
+            return replaceResult.ToLower();
+        }
+    });
+
+    var orderedMenuItems = Model.Items.Where(x => x.IsVisible).ToList();
+}
+
+
 <div class="layui-side-scroll">
     <div id="sideMenu">
         <ul lay-filter="sideMenu" class="layui-nav arrow pear-menu layui-nav-tree pear-nav-tree">
-
-            <li class="layui-nav-item">
-                <a menu-url="/dashboard/hostconsole" class="site-demo-active" menu-type="1" menu-id="dashboard.hostconsole" menu-title="控制台">
-                    <i class="layui-icon layui-icon-console"></i>
-                    <span>控制台</span>
-                </a>
-            </li>
-
-            <li class="layui-nav-item">
-                <a href="javascript:;" menu-type="0" menu-id="devicemanage">
-                    <i class="layui-icon layui-icon-read"></i>
-                    <span>设备管理</span>
-                </a>
-                <dl class="layui-nav-child">
-                    <dd>
-                        <a menu-url="/product/index" class="site-demo-active" menu-type="1" menu-id="product.index" menu-title="产品管理">
-                            <i class="layui-icon layui-icon-console"></i>
-                            <span>产品管理</span>
-                        </a>
-                    </dd>
-                </dl>
-            </li>
+            @foreach (var menuItem in orderedMenuItems)
+            {
+                <li class="layui-nav-item">
+                    @if (menuItem.Items.IsNullOrEmpty())
+                    {
+                        <li class="layui-nav-item" asp-permission="@menuItem.Permission">
+                            <a menu-url="@menuItem.Url" class="site-demo-active" menu-type="1" menu-id="@calculateMenuId(menuItem.Name)"
+                               menu-title="@menuItem.DisplayName">
+                                <i class="layui-icon @Html.Raw(menuItem.Icon)"></i>
+                                <span>@menuItem.DisplayName</span>
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="layui-nav-item" asp-authorize asp-permission="@menuItem.Permission">
+                            <a href="javascript:;" menu-type="0" menu-id="@calculateMenuId(menuItem.Name)">
+                                <i class="layui-icon @Html.Raw(menuItem.Icon)"></i>
+                                <span>@menuItem.DisplayName</span>
+                            </a>
+                            <dl class="layui-nav-child">
+                                @foreach (var subMenuItem in menuItem.Items)
+                                {
+                                    <dd asp-authorize asp-permission="@subMenuItem.Permission">
+                                        @if (subMenuItem.Items.IsNullOrEmpty())
+                                        {
+                                            <a menu-url="@subMenuItem.Url" class="site-demo-active" menu-type="1"
+                                               menu-id="@calculateMenuId(subMenuItem.Name)" menu-title="@subMenuItem.DisplayName">
+                                                <i class="layui-icon @Html.Raw(subMenuItem.Icon)"></i>
+                                                <span>@subMenuItem.DisplayName</span>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="javascript:;" menu-type="0" menu-id="@calculateMenuId(subMenuItem.Name)" asp-authorize asp-permission="@subMenuItem.Permission">
+                                                <i class="layui-icon @Html.Raw(subMenuItem.Icon)"></i>
+                                                <span>@subMenuItem.DisplayName</span>
+                                            </a>
+                                            <dl class="layui-nav-child" asp-authorize asp-permission="@subMenuItem.Permission">
+                                                @foreach (var subSubMenuItem in subMenuItem.Items)
+                                                {
+                                                    <dd asp-authorize asp-permission="@subSubMenuItem.Permission">
+                                                        <a menu-url="@subSubMenuItem.Url" class="site-demo-active" menu-type="1"
+                                                           menu-id="@calculateMenuId(subSubMenuItem.Name)" menu-title="@subSubMenuItem.DisplayName">
+                                                            <i class="layui-icon @Html.Raw(subSubMenuItem.Icon)"></i>
+                                                            <span>@subSubMenuItem.DisplayName</span>
+                                                        </a>
+                                                    </dd>
+                                                }
+                                            </dl>
+                                        }
+                                    </dd>
+                                }
+                            </dl>
+                        </li>
+                    }
+                </li>
+            }
         </ul>
     </div>
 </div>
