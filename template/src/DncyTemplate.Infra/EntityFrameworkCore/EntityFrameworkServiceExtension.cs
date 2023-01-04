@@ -26,7 +26,7 @@ public static class EntityFrameworkServiceExtension
     {
         service.AddEntityFrameworkSqlServer();
         service.AddSingleton<IConnectionStringResolve, DefaultConnectionStringResolve>();
-        service.AddDbContextPool<DeviceCenterDbContext>((serviceProvider, optionsBuilder) =>
+        service.AddDbContext<DeviceCenterDbContext>((serviceProvider, optionsBuilder) =>
         {
             optionsBuilder.UseSqlServer(configuration.GetConnectionString(DbConstants.DEFAULT_CONNECTIONSTRING_NAME),
                 sqlOptions =>
@@ -41,16 +41,14 @@ public static class EntityFrameworkServiceExtension
             var connectionStringResolve = serviceProvider.GetRequiredService<IConnectionStringResolve>();
             optionsBuilder.AddInterceptors(new TenantDbConnectionInterceptor(connectionStringResolve, DbConstants.DEFAULT_CONNECTIONSTRING_NAME));
 
-            optionsBuilder.UseInternalServiceProvider(serviceProvider);
+            // optionsBuilder.UseInternalServiceProvider(serviceProvider);
 
 #if DEBUG
             optionsBuilder.EnableSensitiveDataLogging();
 #endif
         });
 
-        //分表使用 - 替换ef的缓存，造成性能会下降 并且不能使用 AddDbContextPool.
-        //service.Replace(ServiceDescriptor.Singleton<IModelCacheKeyFactory, DeviceCenterDbContext.DynamicModelCacheKeyFactory>());
-
+        
         service.AddUnitofWork();
         service.AddDefaultRepository();
         service.ApplyEntityDefaultNavicationProperty();
