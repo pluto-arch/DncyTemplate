@@ -11,6 +11,7 @@
 		<PackageReference Include="Dncy.Permission" Version="1.0.10" />
 		<PackageReference Include="Dncy.Specifications" Version="1.0.1" />
 		<PackageReference Include="Dncy.Tools.Core" Version="1.0.6" />
+		<PackageReference Include="Dncy.Tools.SnowFlake" Version="1.0.5" />
 		<PackageReference Include="MediatR" Version="10.0.1" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
 	</ItemGroup>

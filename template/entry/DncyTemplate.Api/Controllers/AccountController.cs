@@ -71,7 +71,11 @@ public class AccountController : ControllerBase, IApiResultWapper
             claims: claims,
             signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
         );
-        return this.Success(new JwtSecurityTokenHandler().WriteToken(token));
+        return this.Success(new
+        {
+            tenant=u.TenantId,
+            token=new JwtSecurityTokenHandler().WriteToken(token)
+        },$"{user} 登录成功");
     }
 
 

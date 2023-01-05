@@ -1,5 +1,6 @@
 ﻿
 using AutoMapper;
+using Dncy.SnowFlake;
 using Dncy.Tools;
 using DncyTemplate.Application.AppServices.Generics;
 using DncyTemplate.Application.Models.Product;
@@ -13,6 +14,9 @@ namespace DncyTemplate.Application.AppServices.Product;
 public class ProductAppService
     :EntityKeyCrudAppService<Domain.Aggregates.Product.Product, string, ProductDto, ProductPagedRequest, ProductListItemDto, ProductUpdateRequest, ProductCreateRequest>,IProductAppService
 {
+
+    private static SnowFlake idg_1 = new SnowFlake(1);
+
     /// <inheritdoc />
     public ProductAppService(IRepository<Domain.Aggregates.Product.Product, string> repository, IMapper mapper) : base(repository, mapper)
     {
@@ -22,10 +26,10 @@ public class ProductAppService
     public override async Task<ProductDto> CreateAsync(ProductCreateRequest requestModel)
     {
         var entity = _mapper.Map<Domain.Aggregates.Product.Product>(requestModel);
-        var stamp = new DateTimeOffset(DateTime.Now).ToUnixTimeMilliseconds();
-        entity.Id=$"{stamp}{Random.Shared.Next(10000, 100000)}";
-        entity = await _repository.InsertAsync(entity, true);
+        entity.Id=idg_1.GetUniqueId();
+        entity.CreationTime=DateTimeOffset.Now;
         entity.AddDomainEvent(new NewProductCreateDomainEvent(entity));
+        entity = await _repository.InsertAsync(entity, true);
         return _mapper.Map<ProductDto>(entity);
     }
 
