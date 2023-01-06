@@ -19,5 +19,10 @@ public record MenuPermission
         SkipCheck = skipCheck;
     }
 
+    public MenuPermission()
+    {
+
+    }
+
     public static MenuPermission SkipCheckPermission() => new MenuPermission(true);
 }

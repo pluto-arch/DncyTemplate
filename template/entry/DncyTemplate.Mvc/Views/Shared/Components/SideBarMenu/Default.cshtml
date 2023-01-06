@@ -1,6 +1,8 @@
 @using System.Security.Cryptography
 @using System.Text
+@using DncyTemplate.Application.Models.Application.Navigation
 @using DncyTemplate.Infra.Extensions
+@using DncyTemplate.Mvc.TagHelpers
 @model DncyTemplate.Mvc.Views.Shared.Components.SideBarMenu.SideBarMenuViewModel
 
 @{
@@ -14,6 +16,21 @@
             var replaceResult = bitConverterResult.Replace("-", "");
             return replaceResult.ToLower();
         }
+    });
+
+
+    var selSubPermiss = new Func<List<MenuPermission>, MenuPermission>(subMenus=>
+    {
+        if (subMenus.All(x=>x.SkipCheck))
+        {
+            return MenuPermission.SkipCheckPermission();
+        }
+        var codes = new List<string>();
+        foreach (var item in subMenus)
+        {
+            codes.AddRange(item.PermissionCode);
+        }
+        return new MenuPermission(codes.ToArray());
     });
 
     var orderedMenuItems = Model.Items.Where(x => x.IsVisible).ToList();
@@ -38,7 +55,7 @@
                     }
                     else
                     {
-                        <li class="layui-nav-item" asp-authorize asp-permission="@menuItem.Permission">
+                        <li class="layui-nav-item" asp-authorize asp-permission="@selSubPermiss(menuItem.Items.Select(x=>x.Permission).ToList())">
                             <a href="javascript:;" menu-type="0" menu-id="@calculateMenuId(menuItem.Name)">
                                 <i class="layui-icon @Html.Raw(menuItem.Icon)"></i>
                                 <span>@menuItem.DisplayName</span>

@@ -2,6 +2,8 @@
 
 namespace DncyTemplate.Api.Infra.UnitofWork;
 
+
+[Obsolete("replace with action filter")]
 public class UnitOfWorkMiddleware
 {
     private readonly RequestDelegate _next;
@@ -24,8 +26,7 @@ public class UnitOfWorkMiddleware
                 {
                     continue;
                 }
-
-                await uow.SaveChangesAsync(context.RequestAborted);
+                await uow.SaveChangesAsync();
             }
         }
     }
@@ -39,6 +40,7 @@ public static class UnitOfWorkApplicationBuilderExtension
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
+    [Obsolete("replace with action filter")]
     public static IApplicationBuilder UseUnitofWork(this IApplicationBuilder app)
     {
         app.UseMiddleware<UnitOfWorkMiddleware>();

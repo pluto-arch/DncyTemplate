@@ -10,6 +10,7 @@ public class SideBarMenuViewComponent : ViewComponent
 {
     public static List<MenuItemModel> Menus = new();
     private readonly IStringLocalizer<SharedResource> _localizer;
+    private static object _instance = new object();
 
     public SideBarMenuViewComponent(IStringLocalizer<SharedResource> localizer)
     {
@@ -20,17 +21,25 @@ public class SideBarMenuViewComponent : ViewComponent
     public async Task<IViewComponentResult> InvokeAsync()
     {
         await Task.Yield();
-        if (!Menus.Any())
+        if (Menus.Any())
         {
-            initMenu();
+            return View(new SideBarMenuViewModel
+            {
+                Items = Menus.ToImmutableList()
+            });
         }
 
-        var model = new SideBarMenuViewModel
+        lock (_instance)
+        {
+            if (!Menus.Any())
+            {
+                initMenu();
+            }
+        }
+        return View(new SideBarMenuViewModel
         {
             Items = Menus.ToImmutableList()
-        };
-
-        return View(model);
+        });
     }
 
 
@@ -81,5 +90,29 @@ public class SideBarMenuViewComponent : ViewComponent
                 }
             }
         });
+
+
+        Menus.Add(new MenuItemModel
+        {
+            Name = "app.menu.accescontrol",
+            Icon = "layui-icon-read",
+            DisplayName = "访问控制",
+            IsEnabled = true,
+            IsVisible = true,
+            Items = new List<MenuItemModel>
+            {
+                new MenuItemModel
+                {
+                    Name = "app.menu.accescontrol.tenants",
+                    Icon = "layui-icon-console",
+                    DisplayName = "租户管理",
+                    Url = "/tenant",
+                    IsEnabled = true,
+                    IsVisible = true,
+                    Permission=new MenuPermission(true)
+                }
+            }
+        });
+
     }
 }

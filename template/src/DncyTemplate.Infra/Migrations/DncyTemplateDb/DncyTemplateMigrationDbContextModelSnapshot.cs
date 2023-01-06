@@ -4,18 +4,16 @@ using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DncyTemplate.Infra.Migrations.DeviceCenter
+namespace DncyTemplate.Infra.Migrations.DncyTemplateDb
 {
-    [DbContext(typeof(DeviceCenterMigrationDbContext))]
-    [Migration("20221104125339_PermissionGrant")]
-    partial class PermissionGrant
+    [DbContext(typeof(DncyTemplateMigrationDbContext))]
+    partial class DncyTemplateMigrationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,7 +84,9 @@ namespace DncyTemplate.Infra.Migrations.DeviceCenter
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTimeOffset>("CreationTime")
-                        .HasColumnType("datetimeoffset");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetimeoffset")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");

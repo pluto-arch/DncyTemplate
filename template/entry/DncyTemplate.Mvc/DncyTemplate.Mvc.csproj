@@ -11,13 +11,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="Views\新文件夹\**" />
-	  <Content Remove="Views\新文件夹\**" />
-	  <EmbeddedResource Remove="Views\新文件夹\**" />
-	  <None Remove="Views\新文件夹\**" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <Content Remove="bundleconfig.json" />
 	</ItemGroup>
 

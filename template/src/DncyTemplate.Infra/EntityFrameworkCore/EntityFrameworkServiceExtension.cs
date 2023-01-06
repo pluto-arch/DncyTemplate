@@ -26,7 +26,7 @@ public static class EntityFrameworkServiceExtension
     {
         service.AddEntityFrameworkSqlServer();
         service.AddSingleton<IConnectionStringResolve, DefaultConnectionStringResolve>();
-        service.AddDbContext<DeviceCenterDbContext>((serviceProvider, optionsBuilder) =>
+        service.AddDbContext<DncyTemplateDbContext>((serviceProvider, optionsBuilder) =>
         {
             optionsBuilder.UseSqlServer(configuration.GetConnectionString(DbConstants.DEFAULT_CONNECTIONSTRING_NAME),
                 sqlOptions =>
@@ -40,8 +40,6 @@ public static class EntityFrameworkServiceExtension
             //多租户模式下解析租户连接字符串使用
             var connectionStringResolve = serviceProvider.GetRequiredService<IConnectionStringResolve>();
             optionsBuilder.AddInterceptors(new TenantDbConnectionInterceptor(connectionStringResolve, DbConstants.DEFAULT_CONNECTIONSTRING_NAME));
-
-            // optionsBuilder.UseInternalServiceProvider(serviceProvider);
 
 #if DEBUG
             optionsBuilder.EnableSensitiveDataLogging();

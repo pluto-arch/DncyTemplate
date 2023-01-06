@@ -49,12 +49,9 @@ public class Startup
 
         app.UseForwardedHeaders()
             .UseCertificateForwarding();
-       
 
         app.UseResponseCompression()
             .UseResponseCaching();
-
-        app.UseHttpRequestLogging();
 
         if (!env.IsEnvironment(AppConstant.EnvironmentName.DEV))
         {
@@ -73,6 +70,7 @@ public class Startup
       
         app.UseHttpsRedirection();
         app.UseStaticFiles();
+        app.UseHttpRequestLogging();
         app.UseAuthentication();
         app.UseMiddleware<MultiTenancyMiddleware>();
         app.UseMiddleware<UnitOfWorkMiddleware>();

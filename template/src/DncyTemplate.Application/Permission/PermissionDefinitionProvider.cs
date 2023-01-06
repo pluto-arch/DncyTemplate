@@ -29,6 +29,12 @@ public class PermissionDefinitionProvider : IPermissionDefinitionProvider
             .AddChild(DevicesPermission.Devices.Create, "新增设备")
             .AddChild(DevicesPermission.Devices.Edit, "编辑设备")
             .AddChild(DevicesPermission.Devices.Delete, "删除设备");
+
+
+        // 租户
+        var tenantGroup = context.AddGroup(TenantPermission.GroupName, "租户管理");
+        tenantGroup.AddPermission(TenantPermission.Tenant.Default, "租户列表")
+            .AddChild(TenantPermission.Tenant.Detail, "租户详情");
         
     }
 }
@@ -63,4 +69,19 @@ public static class ProductPermission
         public const string Delete = Default + ".Delete";
     }
 }
+
+
+
+public static class TenantPermission
+{
+    public const string GroupName = "TenantManager";
+
+    public static class Tenant
+    {
+        public const string Default = GroupName + ".Tenants";
+        public const string Detail = Default + ".Detail";
+    }
+}
+
+
 #endregion

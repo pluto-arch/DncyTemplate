@@ -1,6 +1,6 @@
 @{
     Layout = null;
-    var pageTitle = !string.IsNullOrWhiteSpace(ViewBag.Title) ? ViewBag.Title + " / " : "";
+    var pageTitle = !string.IsNullOrWhiteSpace(ViewBag.Title) ? ViewBag.Title:"后台管理系统";
 }
 
 <!DOCTYPE html>
@@ -13,7 +13,7 @@
     <link rel="shortcut icon" href="~/images/favicon.ico" asp-append-version="true">
     <link rel="stylesheet" href="~/libs/pear/css/pear.css" asp-append-version="true" />
     <style id="pearadmin-bg-color"></style>
-    @RenderSection("styles", required: false)
+    @await RenderSectionAsync("styles", required: false)
 </head>
 <body class="layui-layout-body pear-admin">
 
@@ -22,6 +22,6 @@
 <script src="~/libs/layui/layui.js" asp-append-version="true"></script>
 <script src="~/libs/pear/pear.js" asp-append-version="true"></script>
 <script src="~/libs/signalr/signalr.js" asp-append-version="true"></script>
-@RenderSection("scripts", required: false)
+@await RenderSectionAsync("scripts", required: false)
 </body>
 </html>

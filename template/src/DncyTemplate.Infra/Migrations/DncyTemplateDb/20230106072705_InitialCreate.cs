@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace DncyTemplate.Infra.Migrations.DeviceCenter
+namespace DncyTemplate.Infra.Migrations.DncyTemplateDb
 {
     public partial class InitialCreate : Migration
     {
@@ -23,6 +23,23 @@ namespace DncyTemplate.Infra.Migrations.DeviceCenter
                 });
 
             migrationBuilder.CreateTable(
+                name: "PermissionGrant",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    ProviderName = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    TenantId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreateTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PermissionGrant", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
@@ -30,7 +47,7 @@ namespace DncyTemplate.Infra.Migrations.DeviceCenter
                     Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     ProjectId = table.Column<int>(type: "int", nullable: true),
                     Remark = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    CreationTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreationTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false, defaultValueSql: "GETDATE()"),
                     TenantId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Deleted = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -92,6 +109,9 @@ namespace DncyTemplate.Infra.Migrations.DeviceCenter
 
             migrationBuilder.DropTable(
                 name: "DeviceTags");
+
+            migrationBuilder.DropTable(
+                name: "PermissionGrant");
 
             migrationBuilder.DropTable(
                 name: "Devices");

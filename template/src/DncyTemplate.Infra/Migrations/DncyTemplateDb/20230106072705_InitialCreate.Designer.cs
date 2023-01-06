@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DncyTemplate.Infra.Migrations.DeviceCenter
+namespace DncyTemplate.Infra.Migrations.DncyTemplateDb
 {
-    [DbContext(typeof(DeviceCenterMigrationDbContext))]
-    [Migration("20221109144844_defaultvalue")]
-    partial class defaultvalue
+    [DbContext(typeof(DncyTemplateMigrationDbContext))]
+    [Migration("20230106072705_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

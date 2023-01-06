@@ -37,7 +37,7 @@ public class Startup
 
         var serverAddressesFeature = app.ServerFeatures.Get<IServerAddressesFeature>();
         var address = serverAddressesFeature.Addresses;
-        Log.Logger.Information("应用程序运行地址: {@Address}", address);
+        Log.Logger.Information("应用程序运行地址: {@Address}. net version:{version}", address,Environment.Version);
 
         app.UseRequestLocalization();
 
@@ -66,8 +66,7 @@ public class Startup
 
         app.UseHttpsRedirection();
         app.UseAuthentication();
-        app.UseMultiTenancy()
-            .UseUnitofWork();
+        app.UseMultiTenancy();
         app.UseRouting();
         app.UseAuthorization();
         app.UseEndpoints(endpoints =>
