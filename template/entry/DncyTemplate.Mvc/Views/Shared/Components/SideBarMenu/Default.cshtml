@@ -8,14 +8,12 @@
 @{
     var calculateMenuId = new Func<string, string>((Name) =>
     {
-        using (var md5 = MD5.Create())
-        {
-            var hashTarget = Name;
-            var md5ComputeHash = md5.ComputeHash(Encoding.UTF8.GetBytes(hashTarget));
-            var bitConverterResult = BitConverter.ToString(md5ComputeHash);
-            var replaceResult = bitConverterResult.Replace("-", "");
-            return replaceResult.ToLower();
-        }
+        using var md5 = MD5.Create();
+        var hashTarget = Name;
+        var md5ComputeHash = md5.ComputeHash(Encoding.UTF8.GetBytes(hashTarget));
+        var bitConverterResult = BitConverter.ToString(md5ComputeHash);
+        var replaceResult = bitConverterResult.Replace("-", "");
+        return replaceResult.ToLower();
     });
 
 

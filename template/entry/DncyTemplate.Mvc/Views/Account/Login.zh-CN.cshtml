@@ -13,10 +13,7 @@
 
 <div class="user-login">
     <div class="layui-container">
-        <div class="layui-row">
-            <div class="layui-col-md7 layui-col-sm6 layui-hide-xs">
-                <img src="~/images/guoqing.jpg"/>
-            </div>
+        <div style="display: flex; width: 100%;justify-content: center">
             <div class="layui-col-sm6 layui-col-md5 layui-col-xs12">
                 <form class="layui-form" method="post">
                     @Html.AntiForgeryToken()
@@ -24,7 +21,7 @@
                     <input type="hidden" name="returnUrlHash"/>
                     <div class="layui-form-item">
                         <img class="logo" src="~/images/logo.png"/>
-                        <div class="title">AbpTemplate</div>
+                        <div class="title">Dncy Template</div>
                         <div class="desc">
                             一 万 年 太 久，只 争 朝 夕
                         </div>
@@ -43,17 +40,14 @@
                     <div class="layui-form-item">
                         <button class="pear-btn pear-btn-primary login" lay-submit lay-filter="LAY-user-login-submit">登陆</button>
                     </div>
-                    <div class="external-login">
-                        <img src="~/images/miniprogram.png" title="小程序登录" alt="小程序登录" class="wx-logo">
-                    </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
 <div class="user-login-foot">
-    © <a target="_blank" href="https://gitee.com/pear-admin/pear-admin-abp.git">PearAdminAbp @System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription</a>
-    <a target="_blank" href="http://www.pearadmin.com">关于我们</a>
+    <a target="_blank" href="https://dotnet.microsoft.com/en-us/" style="color: white">© DncyTemplate @System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription</a>
+    <a target="_blank" href="#" style="color: white">关于我们</a>
 </div>
 
 @section scripts{

@@ -31,12 +31,16 @@
     </div>
 </div>
 
-<script type="text/html" id="auditlog-executionTime">
-    <div class="layui-form-item">
-        <div class="layui-input-block">
-            <input type="checkbox" name="switch" lay-skin="switch" checked="{{d.isAvaliable}}" />
-        </div>
-    </div>
+<script type="text/html" id="tenant-status">
+    <input type="checkbox" name="switch" lay-skin="switch" value="{{d.tenantId}}" checked="{{d.isAvaliable}}" lay-text="启用|停用" lay-filter="tenant-enable"/>
+</script>
+
+
+<script type="text/html" id="tenant-toolbar">
+    <button class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
+        <i class="layui-icon layui-icon-add-1"></i>
+        新增
+    </button>
 </script>
 
 
@@ -62,7 +66,7 @@
             table.render({
                 elem: '#tenant-table',
                 url: "@Url.Action("List", "Tenant")",
-                page: true,
+                page: false,
                 where: {},
                 height: 'full-150',
                 parseData: function (res) {
@@ -73,23 +77,30 @@
                 },
                 cols: [
                     [
-                        { title: 'ID', field: 'tenantId', align: 'center', width: 100 },
-                        { title: '租户名称', field: 'tenantName', align: 'center', width: 250 },
-                        { title: '状态', field: 'isAvaliable', align: 'center', width: 200, templet: "#auditlog-executionTime" }
+                        { title: 'ID', field: 'tenantId', align: 'center', width: 80,type:'checkbox' },
+                        { title: 'ID', field: 'tenantId', align: 'center', width: 180 },
+                        { title: '租户名称', field: 'tenantName', align: 'center' },
+                        { title: '状态', field: 'isAvaliable', align: 'center', templet: "#tenant-status" }
                     ]
                 ],
                 skin: 'line',
                 toolbar: 'true',
+                toolbar: '#tenant-toolbar',
                 defaultToolbar: [{
                     layEvent: 'refresh',
                     icon: 'layui-icon-refresh',
-                }, 'filter', 'print', 'exports']
+                }]
             });
 
             table.on('toolbar(tenant-table)', function (obj) {
                 if (obj.event === 'refresh') {
                     window.refresh();
                 }
+            });
+
+
+            form.on('switch(tenant-enable)', function (obj) {
+                layer.tips(this.value + ' ' + this.name + '：' + obj.elem.checked, obj.othis);
             });
 
             window.refresh = function () {

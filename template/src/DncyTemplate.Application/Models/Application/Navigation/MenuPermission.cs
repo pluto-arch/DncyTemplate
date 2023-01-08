@@ -13,7 +13,14 @@ public record MenuPermission
         PermissionCode = permissionCode;
         RequiredAll = requiredAll;
     }
-    
+
+
+    public MenuPermission(params string[] permissionCode)
+    {
+        PermissionCode = permissionCode;
+    }
+
+
     public MenuPermission(bool skipCheck)
     {
         SkipCheck = skipCheck;
