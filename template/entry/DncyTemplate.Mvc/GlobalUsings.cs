@@ -1,7 +1,4 @@
-﻿global using System;
-global using System.IO;
-global using System.Linq;
-global using Microsoft.AspNetCore.Builder;
+﻿global using Microsoft.AspNetCore.Builder;
 global using Microsoft.AspNetCore.Hosting;
 global using Microsoft.AspNetCore.Http;
 global using Microsoft.AspNetCore.HttpOverrides;
@@ -11,3 +8,6 @@ global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Hosting;
 global using Microsoft.Extensions.Logging;
 global using Serilog;
+global using System;
+global using System.IO;
+global using System.Linq;

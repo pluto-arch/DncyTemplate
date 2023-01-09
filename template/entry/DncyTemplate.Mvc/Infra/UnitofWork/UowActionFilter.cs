@@ -1,10 +1,11 @@
-﻿using DncyTemplate.Domain.UnitOfWork;
+﻿using System.Reflection;
+using DncyTemplate.Domain.UnitOfWork;
 using Microsoft.AspNetCore.Mvc.Filters;
-using System.Reflection;
+using Microsoft.Extensions.Options;
 
-namespace DncyTemplate.Api.Infra.UnitofWork;
+namespace DncyTemplate.Mvc.Infra.UnitofWork;
 
-public class UowActionFilter : IAsyncActionFilter
+public class UowActionFilter:IAsyncActionFilter
 {
     private readonly IOptions<UnitOfWorkCollectionOptions> _options;
     public UowActionFilter(IOptions<UnitOfWorkCollectionOptions> options)

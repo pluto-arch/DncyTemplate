@@ -1,6 +1,4 @@
-﻿using DncyTemplate.Api.Controllers;
-
-using Microsoft.AspNetCore.Diagnostics;
+﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.Extensions.Logging.Abstractions;
 
 namespace DncyTemplate.Api.Infra.ExceptionHandlers;

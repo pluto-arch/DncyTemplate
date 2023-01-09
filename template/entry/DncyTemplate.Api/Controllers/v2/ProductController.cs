@@ -1,6 +1,6 @@
 ﻿using DncyTemplate.Application.AppServices.Product;
 using DncyTemplate.Application.Models.Product;
-using DncyTemplate.Domain.Aggregates.Product;
+using System.ComponentModel.DataAnnotations;
 
 namespace DncyTemplate.Api.Controllers.v2
 {

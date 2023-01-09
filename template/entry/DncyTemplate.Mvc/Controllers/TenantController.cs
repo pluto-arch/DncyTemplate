@@ -10,7 +10,7 @@ namespace DncyTemplate.Mvc.Controllers;
 /// </summary>
 [AutoResolveDependency]
 [Authorize(Roles = "SA")]
-public partial class TenantController: Controller
+public partial class TenantController : Controller
 {
     [AutoInject]
     protected readonly IOptions<TenantConfigurationOptions> _tenantConfigurationOptions;
@@ -38,31 +38,31 @@ public partial class TenantController: Controller
         }
         return Json(new
         {
-            code= 200,
-            count= tenants.Count(),
-            msg="操作成功",
-            data=tenantVm
+            code = 200,
+            count = tenants.Count(),
+            msg = "操作成功",
+            data = tenantVm
         });
     }
 
     [HttpGet]
     public IActionResult Detail(string tenantId)
     {
-        var tenant = _tenantConfigurationOptions.Value.Tenants.FirstOrDefault(x=>x.TenantId==tenantId);
+        var tenant = _tenantConfigurationOptions.Value.Tenants.FirstOrDefault(x => x.TenantId == tenantId);
         if (tenant == null)
         {
             return NotFound();
         }
         return Json(new
         {
-            code= 200,
-            msg="操作成功",
-            data=new TenantViewModel
+            code = 200,
+            msg = "操作成功",
+            data = new TenantViewModel
             {
                 TenantId = tenant.TenantId,
                 TenantName = tenant.TenantName,
                 IsAvaliable = tenant.IsAvaliable,
-                ConnectionStrings= tenant.ConnectionStrings,
+                ConnectionStrings = tenant.ConnectionStrings,
             }
         });
     }

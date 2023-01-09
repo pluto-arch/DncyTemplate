@@ -1,12 +1,11 @@
-﻿using System.IO.Compression;
-
-using DncyTemplate.Api.Infra.ExceptionHandlers;
+﻿using DncyTemplate.Api.Infra.ExceptionHandlers;
 using DncyTemplate.Api.Infra.LocalizerSetup;
 using DncyTemplate.Api.Infra.UnitofWork;
 using DncyTemplate.Api.Models.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Localization;
+using System.IO.Compression;
 
 [assembly: HostingStartup(typeof(InfraHostingStartup))]
 namespace DncyTemplate.Api.Infra;
@@ -111,7 +110,7 @@ public class InfraHostingStartup : IHostingStartup
             {
                 options.AddPolicy(AppConstant.DEFAULT_CORS_NAME, builder =>
                 {
-                    builder.SetIsOriginAllowed(_=>true)
+                    builder.SetIsOriginAllowed(_ => true)
                     .AllowAnyHeader()
                     .AllowAnyMethod();
                 });

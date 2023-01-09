@@ -1,7 +1,5 @@
 ﻿using DncyTemplate.Domain.Collections;
 
-using Microsoft.EntityFrameworkCore;
-
 namespace DncyTemplate.Infra.EntityFrameworkCore.Extension;
 
 public static class QueryablePageListExtensions

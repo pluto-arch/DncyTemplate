@@ -1,10 +1,7 @@
-﻿using System.Reflection;
-
-using Dncy.MultiTenancy;
+﻿using Dncy.MultiTenancy;
 using Dncy.MultiTenancy.AspNetCore;
 using Dncy.MultiTenancy.ConnectionStrings;
 using Dncy.MultiTenancy.Store;
-
 using DncyTemplate.Application;
 using DncyTemplate.Domain;
 using DncyTemplate.Infra;
@@ -13,11 +10,11 @@ using DncyTemplate.Job.Infra;
 using DncyTemplate.Job.Infra.Listenings;
 using DncyTemplate.Job.Infra.Stores;
 using DncyTemplate.Job.Models;
-
 using Quartz;
 using Quartz.Impl;
 using Quartz.Simpl;
 using Quartz.Spi;
+using System.Reflection;
 
 namespace DncyTemplate.Job;
 

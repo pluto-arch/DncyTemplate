@@ -1,5 +1,4 @@
-﻿using Dncy.MultiTenancy;
-using DncyTemplate.Domain.Infra;
+﻿using DncyTemplate.Domain.Infra;
 
 
 namespace DncyTemplate.Domain.UnitOfWork;

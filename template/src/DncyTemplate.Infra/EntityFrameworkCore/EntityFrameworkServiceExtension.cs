@@ -9,7 +9,6 @@ using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 using DncyTemplate.Infra.EntityFrameworkCore.Interceptor;
 using DncyTemplate.Infra.EntityFrameworkCore.Repositories;
 using DncyTemplate.Infra.EntityFrameworkCore.UnitOfWork;
-using Microsoft.EntityFrameworkCore;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore;
 
@@ -46,7 +45,7 @@ public static class EntityFrameworkServiceExtension
 #endif
         });
 
-        
+
         service.AddUnitofWork();
         service.AddDefaultRepository();
         service.ApplyEntityDefaultNavicationProperty();
@@ -67,7 +66,7 @@ public static class EntityFrameworkServiceExtension
     }
 
 
-    
+
     private static void AddUnitofWork(this IServiceCollection service)
     {
         service.AddScoped(typeof(IUnitOfWork<>), typeof(EfCoreUnitOfWork<>));

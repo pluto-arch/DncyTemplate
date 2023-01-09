@@ -1,20 +1,18 @@
 using Dncy.Permission;
-using DncyTemplate.Application.Permission.Models;
-using DncyTemplate.Domain.Collections;
 
 namespace DncyTemplate.Application.Permission;
 
-[Injectable(InjectLifeTime.Scoped,typeof(IPermissionAppService))]
+[Injectable(InjectLifeTime.Scoped, typeof(IPermissionAppService))]
 [AutoResolveDependency]
-public partial class PermissionAppService:IPermissionAppService
+public partial class PermissionAppService : IPermissionAppService
 {
     [AutoInject]
     private readonly IPermissionManager _permissionManager;
-    
+
     [AutoInject]
     private readonly IPermissionDefinitionManager _permissionDefinitionManager;
-    
-    
+
+
     public List<dynamic> GetPermissions()
     {
         var res = new List<dynamic>();

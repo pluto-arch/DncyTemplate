@@ -4,7 +4,7 @@ public class ProductListItemDto
 {
     public ProductListItemDto()
     {
-        CreateTime=DateTime.Now;
+        CreateTime = DateTime.Now;
     }
 
     public ProductListItemDto(string id, string name, DateTime createTime)

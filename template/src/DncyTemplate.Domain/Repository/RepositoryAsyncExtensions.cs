@@ -1,6 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-using DncyTemplate.Domain.Infra;
+﻿using DncyTemplate.Domain.Infra;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DncyTemplate.Domain.Repository;
 

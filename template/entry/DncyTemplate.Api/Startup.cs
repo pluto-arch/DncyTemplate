@@ -1,6 +1,5 @@
 ﻿using DncyTemplate.Api.Infra.ApiDoc;
 using DncyTemplate.Api.Infra.Tenancy;
-using DncyTemplate.Api.Infra.UnitofWork;
 using DncyTemplate.Application;
 using DncyTemplate.Domain;
 using DncyTemplate.Infra;
@@ -37,7 +36,7 @@ public class Startup
 
         var serverAddressesFeature = app.ServerFeatures.Get<IServerAddressesFeature>();
         var address = serverAddressesFeature.Addresses;
-        Log.Logger.Information("应用程序运行地址: {@Address}. net version:{version}", address,Environment.Version);
+        Log.Logger.Information("应用程序运行地址: {@Address}. net version:{version}", address, Environment.Version);
 
         app.UseRequestLocalization();
 

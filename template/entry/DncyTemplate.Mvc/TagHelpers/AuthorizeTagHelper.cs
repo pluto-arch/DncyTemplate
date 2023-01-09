@@ -28,7 +28,7 @@ namespace DncyTemplate.Mvc.TagHelpers
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
             var user = _httpContextAccessor.HttpContext?.User;
-            if (user==null)
+            if (user == null)
             {
                 output.SuppressOutput();
                 return;
@@ -45,14 +45,14 @@ namespace DncyTemplate.Mvc.TagHelpers
                 await base.ProcessAsync(context, output);
                 return;
             }
-            
 
-            if (MenuPermission==null)
+
+            if (MenuPermission == null)
             {
                 output.SuppressOutput();
                 return;
             }
-                
+
             var grantRes = await _permissionChecker.IsGrantedAsync(user, MenuPermission.PermissionCode);
             if (MenuPermission.RequiredAll)
             {
@@ -63,8 +63,8 @@ namespace DncyTemplate.Mvc.TagHelpers
             }
             else
             {
-                if (grantRes.Result.All(x=>x.Value == PermissionGrantResult.Prohibited||x
-                        .Value==PermissionGrantResult.Undefined))
+                if (grantRes.Result.All(x => x.Value == PermissionGrantResult.Prohibited || x
+                        .Value == PermissionGrantResult.Undefined))
                 {
                     output.SuppressOutput();
                 }

@@ -1,7 +1,4 @@
-﻿using DncyTemplate.Domain.Infra;
-using DncyTemplate.Domain.UnitOfWork;
-
-using Microsoft.Extensions.DependencyInjection;
+﻿using DncyTemplate.Domain.UnitOfWork;
 
 namespace DncyTemplate.Domain
 {

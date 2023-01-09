@@ -18,7 +18,7 @@ public class MenuItemModel
     public string Url { get; set; }
 
     /// <summary>A custom object related to this menu item.</summary>
-    public Dictionary<string,string> MetaData { get; set; }
+    public Dictionary<string, string> MetaData { get; set; }
 
     /// <summary>
     /// Target of the menu item. Can be "_blank", "_self", "_parent", "_top" or a frame name.

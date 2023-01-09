@@ -1,8 +1,7 @@
-﻿using System.Globalization;
-
-using Microsoft.AspNetCore.Localization;
+﻿using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.DataAnnotations;
 using Microsoft.Extensions.Localization;
+using System.Globalization;
 
 namespace DncyTemplate.Api.Infra.LocalizerSetup;
 

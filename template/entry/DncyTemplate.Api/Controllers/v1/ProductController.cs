@@ -1,7 +1,8 @@
 ﻿using Dncy.MultiTenancy;
 using DncyTemplate.Application.AppServices.Product;
 using Microsoft.AspNetCore.Authorization;
-using AppModelAlias=DncyTemplate.Application.Models;
+using System.ComponentModel.DataAnnotations;
+using AppModelAlias = DncyTemplate.Application.Models;
 
 namespace DncyTemplate.Api.Controllers.v1
 {
@@ -33,13 +34,13 @@ namespace DncyTemplate.Api.Controllers.v1
             }
             var res = await _productsRepository.GetListAsync(new AppModelAlias.Product.ProductPagedRequest
             {
-                PageNo= pageNo,
-                PageSize= pageSize
+                PageNo = pageNo,
+                PageSize = pageSize
             })!;
             return this.Success(new
             {
-                tenant=_currentTenant.Id,
-                products=res
+                tenant = _currentTenant.Id,
+                products = res
             });
         }
 

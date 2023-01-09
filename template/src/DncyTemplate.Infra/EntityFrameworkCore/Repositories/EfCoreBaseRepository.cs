@@ -1,22 +1,16 @@
-﻿using System.Collections;
-using System.Linq.Expressions;
-
-using Dncy.Specifications;
+﻿using Dncy.Specifications;
 using Dncy.Specifications.EntityFrameworkCore;
 using Dncy.Specifications.EntityFrameworkCore.Evaluatiors;
 using Dncy.Specifications.Evaluators;
 using Dncy.Specifications.Exceptions;
-
 using DncyTemplate.Domain.Collections;
 using DncyTemplate.Domain.Exceptions;
 using DncyTemplate.Domain.Infra;
 using DncyTemplate.Domain.Repository;
 using DncyTemplate.Domain.UnitOfWork;
 using DncyTemplate.Infra.EntityFrameworkCore.Extension;
-
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.Extensions.Options;
+using System.Collections;
+using System.Linq.Expressions;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.Repositories;
 
@@ -235,7 +229,7 @@ public class EfCoreBaseRepository<TDbContext, TEntity> : IRepository<TEntity>
     /// <inheritdoc />
     public async Task<int> ExecuteSqlRawAsync(string sql, params object[] param)
     {
-        return await _dbContext.Database.ExecuteSqlRawAsync(sql,param);
+        return await _dbContext.Database.ExecuteSqlRawAsync(sql, param);
     }
 
     public virtual async Task<IQueryable<TEntity>> IncludeRelatedAsync(

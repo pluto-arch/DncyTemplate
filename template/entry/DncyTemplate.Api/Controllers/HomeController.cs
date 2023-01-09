@@ -1,5 +1,4 @@
-﻿using Dncy.MultiTenancy;
-using Microsoft.Extensions.Localization;
+﻿using Microsoft.Extensions.Localization;
 
 namespace DncyTemplate.Api.Controllers
 {

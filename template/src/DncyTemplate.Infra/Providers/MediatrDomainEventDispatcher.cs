@@ -2,8 +2,6 @@
 
 using MediatR;
 
-using Microsoft.Extensions.Logging;
-
 namespace DncyTemplate.Infra.Providers;
 
 public class MediatrDomainEventDispatcher : IDomainEventDispatcher

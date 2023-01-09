@@ -1,7 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿namespace DncyTemplate.Application.Models.Product;
 
-namespace DncyTemplate.Application.Models.Product;
-
-public class ProductUpdateRequest:ProductCreateRequest
+public class ProductUpdateRequest : ProductCreateRequest
 {
 }

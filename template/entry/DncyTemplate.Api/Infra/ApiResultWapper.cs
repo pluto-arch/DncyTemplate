@@ -79,7 +79,7 @@ public record ApiResult<T> : ApiResult
     ///     执行成功
     /// </summary>
     /// <returns></returns>
-    public static ApiResult<T> Success(T data,string message)
+    public static ApiResult<T> Success(T data, string message)
     {
         return new() { Code = 200, Message = message, Data = data };
     }
@@ -127,9 +127,9 @@ public static class ApiResultWapper
         return ApiResult<TData>.Success(result);
     }
 
-    public static ApiResult<TData> Success<TData>(this IApiResultWapper _, TData result,string message)
+    public static ApiResult<TData> Success<TData>(this IApiResultWapper _, TData result, string message)
     {
-        return ApiResult<TData>.Success(result,message);
+        return ApiResult<TData>.Success(result, message);
     }
 
     public static ApiResult<TData> Fail<TData>(this IApiResultWapper _, string message = "服务异常", TData data = default)

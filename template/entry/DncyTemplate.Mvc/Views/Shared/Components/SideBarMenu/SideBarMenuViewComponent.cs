@@ -1,8 +1,7 @@
-using System.Collections.Immutable;
-using DncyTemplate.Application.Constants;
 using DncyTemplate.Application.Models.Application.Navigation;
 using DncyTemplate.Application.Permission;
 using Microsoft.Extensions.Localization;
+using System.Collections.Immutable;
 
 namespace DncyTemplate.Mvc.Views.Shared.Components.SideBarMenu;
 
@@ -65,7 +64,7 @@ public class SideBarMenuViewComponent : ViewComponent
             DisplayName = "设备管理",
             IsEnabled = true,
             IsVisible = true,
-            Permission = new MenuPermission(new[] { ProductPermission.Product.Default, DevicesPermission.Devices.Default}),
+            Permission = new MenuPermission(new[] { ProductPermission.Product.Default, DevicesPermission.Devices.Default }),
             Items = new List<MenuItemModel>
             {
                 new MenuItemModel
@@ -109,7 +108,7 @@ public class SideBarMenuViewComponent : ViewComponent
                     Url = "/tenant",
                     IsEnabled = true,
                     IsVisible = true,
-                    Permission=new MenuPermission(TenantPermission.Tenant.Default)
+                    Permission=new MenuPermission(true)
                 }
             }
         });

@@ -4,7 +4,7 @@ using DncyTemplate.Domain.Aggregates.Product;
 
 namespace DncyTemplate.Application.AutoMapperProfiles;
 
-public class ProductProfile: Profile
+public class ProductProfile : Profile
 {
     public ProductProfile()
     {

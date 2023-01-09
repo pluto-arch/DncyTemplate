@@ -1,5 +1,4 @@
 ﻿using Dncy.Permission;
-using Dncy.Permission.Models;
 
 namespace DncyTemplate.Application.Permission;
 
@@ -21,7 +20,7 @@ public class PermissionDefinitionProvider : IPermissionDefinitionProvider
             .AddChild(ProductPermission.Product.Create, "创建产品")
             .AddChild(ProductPermission.Product.Edit, "编辑产品")
             .AddChild(ProductPermission.Product.Delete, "删除产品");
-        
+
         // 设备
         var deviceGroup = context.AddGroup(DevicesPermission.GroupName, "设备管理");
         deviceGroup.AddPermission(DevicesPermission.Devices.Default, "设备列表")
@@ -35,7 +34,7 @@ public class PermissionDefinitionProvider : IPermissionDefinitionProvider
         var tenantGroup = context.AddGroup(TenantPermission.GroupName, "租户管理");
         tenantGroup.AddPermission(TenantPermission.Tenant.Default, "租户列表")
             .AddChild(TenantPermission.Tenant.Detail, "租户详情");
-        
+
     }
 }
 
@@ -45,7 +44,7 @@ public class PermissionDefinitionProvider : IPermissionDefinitionProvider
 public static class DevicesPermission
 {
     public const string GroupName = "DeviceManager";
-    
+
     public static class Devices
     {
         public const string Default = GroupName + ".Devices";

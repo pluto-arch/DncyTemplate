@@ -1,7 +1,6 @@
 ﻿
 using AutoMapper;
 using Dncy.SnowFlake;
-using Dncy.Tools;
 using DncyTemplate.Application.AppServices.Generics;
 using DncyTemplate.Application.Models.Product;
 using DncyTemplate.Domain.DomainEvents.Product;
@@ -10,9 +9,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DncyTemplate.Application.AppServices.Product;
 
-[Injectable(InjectLifeTime.Scoped,typeof(IProductAppService))]
+[Injectable(InjectLifeTime.Scoped, typeof(IProductAppService))]
 public class ProductAppService
-    :EntityKeyCrudAppService<Domain.Aggregates.Product.Product, string, ProductDto, ProductPagedRequest, ProductListItemDto, ProductUpdateRequest, ProductCreateRequest>,IProductAppService
+    : EntityKeyCrudAppService<Domain.Aggregates.Product.Product, string, ProductDto, ProductPagedRequest, ProductListItemDto, ProductUpdateRequest, ProductCreateRequest>, IProductAppService
 {
 
     private static SnowFlake idg_1 = new SnowFlake(1);
@@ -26,8 +25,8 @@ public class ProductAppService
     public override async Task<ProductDto> CreateAsync(ProductCreateRequest requestModel)
     {
         var entity = _mapper.Map<Domain.Aggregates.Product.Product>(requestModel);
-        entity.Id=idg_1.GetUniqueId();
-        entity.CreationTime=DateTimeOffset.Now;
+        entity.Id = idg_1.GetUniqueId();
+        entity.CreationTime = DateTimeOffset.Now;
         entity.AddDomainEvent(new NewProductCreateDomainEvent(entity));
         entity = await _repository.InsertAsync(entity, true);
         return _mapper.Map<ProductDto>(entity);
@@ -38,7 +37,7 @@ public class ProductAppService
         var q = base.CreateFilteredQuery(requestModel);
         if (!string.IsNullOrEmpty(requestModel.Keyword))
         {
-            q=q.Where(x=>EF.Functions.Like(x.Name, $"%{requestModel.Keyword}%"));
+            q = q.Where(x => EF.Functions.Like(x.Name, $"%{requestModel.Keyword}%"));
         }
         return q;
     }

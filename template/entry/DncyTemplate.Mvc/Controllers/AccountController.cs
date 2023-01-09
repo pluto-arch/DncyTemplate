@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using Dncy.MultiTenancy;
+﻿using Dncy.MultiTenancy;
 using Dncy.MultiTenancy.Model;
 using Dncy.Permission;
 using DncyTemplate.Mvc.Constants;
@@ -8,6 +7,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Localization;
+using System.Security.Claims;
 
 namespace DncyTemplate.Mvc.Controllers
 {
@@ -46,7 +46,7 @@ namespace DncyTemplate.Mvc.Controllers
             returnUrl ??= Url.Content("~/");
             ViewData["returnUrl"] = returnUrl;
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return  RedirectToAction("Login"); ;
+            return RedirectToAction("Login"); ;
         }
 
 
@@ -54,7 +54,7 @@ namespace DncyTemplate.Mvc.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login([FromForm]LoginModel model)
+        public async Task<IActionResult> Login([FromForm] LoginModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -62,7 +62,7 @@ namespace DncyTemplate.Mvc.Controllers
             }
 
             var user = InMemoryAccount.Users.FirstOrDefault(x => x.Account == model.UsernameOrEmailAddress);
-            if (user==null)
+            if (user == null)
             {
                 ModelState.AddModelError(nameof(model.UsernameOrEmailAddress), "用户不存在");
                 return View(model);
@@ -78,7 +78,7 @@ namespace DncyTemplate.Mvc.Controllers
             {
                 foreach (var item in user.Roles)
                 {
-                    claims.Add(new (ClaimTypes.Role, item.ToString()));
+                    claims.Add(new(ClaimTypes.Role, item.ToString()));
                 }
             }
 
@@ -125,18 +125,18 @@ namespace DncyTemplate.Mvc.Controllers
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
 
             _logger.LogInformation("User {Name} logged in at {Time}.", user.Name, DateTime.UtcNow);
-            
-            
+
+
             if (Url.IsLocalUrl(model.ReturnUrl))
                 return Redirect(model.ReturnUrl);
             else
                 return RedirectToAction("Index", "Home");
         }
-        
+
         public string GetAppHomeUrl()
         {
             return Url.Action("Index", "Home");
         }
-        
+
     }
 }

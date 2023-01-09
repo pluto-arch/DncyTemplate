@@ -21,7 +21,7 @@ public class EfCoreUnitOfWork<TContext> : IUnitOfWork<TContext> where TContext :
 
     public TContext Context => GetDbContext();
 
-    
+
     private async Task UowScopeManager_OnScopeChanged(IServiceProvider provider)
     {
         _serviceProvider = provider ?? throw new ArgumentNullException(nameof(provider));
@@ -33,10 +33,10 @@ public class EfCoreUnitOfWork<TContext> : IUnitOfWork<TContext> where TContext :
     public TContext GetDbContext() => _currenDbContext;
 
 
-    public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)=>_currenDbContext.SaveChangesAsync(cancellationToken);
+    public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) => _currenDbContext.SaveChangesAsync(cancellationToken);
 
-    public int SaveChanges()=>_currenDbContext.SaveChanges();
-   
+    public int SaveChanges() => _currenDbContext.SaveChanges();
+
 
     public IRepository<TEntity> GetRepository<TEntity>() where TEntity : BaseEntity
     {

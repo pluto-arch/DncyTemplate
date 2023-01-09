@@ -1,9 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
+using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.IdentityModel.Tokens;
 
 namespace DncyTemplate.Api.Controllers;
 
@@ -73,9 +72,9 @@ public class AccountController : ControllerBase, IApiResultWapper
         );
         return this.Success(new
         {
-            tenant=u.TenantId,
-            token=new JwtSecurityTokenHandler().WriteToken(token)
-        },$"{user} 登录成功");
+            tenant = u.TenantId,
+            token = new JwtSecurityTokenHandler().WriteToken(token)
+        }, $"{user} 登录成功");
     }
 
 

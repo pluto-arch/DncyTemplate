@@ -16,8 +16,8 @@ public static class TypeExtensions
     {
         return @object.GetType().GetGenericTypeName();
     }
-    
-    
+
+
     public static bool IsNullOrEmpty<T>(this ICollection<T> source) => source == null || source.Count <= 0;
 
 }

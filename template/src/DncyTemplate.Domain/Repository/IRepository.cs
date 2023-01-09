@@ -1,10 +1,8 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-using Dncy.Specifications;
-
+﻿using Dncy.Specifications;
 using DncyTemplate.Domain.Collections;
 using DncyTemplate.Domain.Infra;
 using DncyTemplate.Domain.UnitOfWork;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DncyTemplate.Domain.Repository;
 
@@ -184,7 +182,7 @@ public partial interface IRepository<TEntity> : IQueryable<TEntity>, IRepository
     /// <param name="sql"></param>
     /// <param name="param"></param>
     /// <returns></returns>
-    Task<int> ExecuteSqlRawAsync(string sql,params object[] param);
+    Task<int> ExecuteSqlRawAsync(string sql, params object[] param);
 }
 
 

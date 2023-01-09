@@ -1,14 +1,11 @@
-﻿using System.Web;
-using Dncy.MultiTenancy.AspNetCore;
+﻿using Dncy.MultiTenancy.AspNetCore;
 using DncyTemplate.Application;
 using DncyTemplate.Domain;
 using DncyTemplate.Infra;
 using DncyTemplate.Mvc.Constants;
 using DncyTemplate.Mvc.Infra;
 using DncyTemplate.Mvc.Infra.UnitofWork;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting.Server.Features;
-using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace DncyTemplate.Mvc;
 
@@ -67,13 +64,12 @@ public class Startup
             app.UseHsts();
         }
 
-      
+
         app.UseHttpsRedirection();
         app.UseStaticFiles();
         app.UseHttpRequestLogging();
         app.UseAuthentication();
         app.UseMiddleware<MultiTenancyMiddleware>();
-        app.UseMiddleware<UnitOfWorkMiddleware>();
         app.UseRouting();
         app.UseAuthorization();
         app.UseEndpoints(endpoints =>

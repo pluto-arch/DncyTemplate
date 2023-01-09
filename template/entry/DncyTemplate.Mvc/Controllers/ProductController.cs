@@ -1,6 +1,5 @@
 ﻿using DncyTemplate.Application.AppServices.Product;
 using DncyTemplate.Application.Models.Product;
-using DncyTemplate.Domain.Collections;
 using Microsoft.AspNetCore.Authorization;
 
 namespace DncyTemplate.Mvc.Controllers

@@ -54,7 +54,7 @@
         public string Tenant { get; set; }
     }
 
-    public enum RoleEnum:byte
+    public enum RoleEnum : byte
     {
         /// <summary>
         /// 超级管理员

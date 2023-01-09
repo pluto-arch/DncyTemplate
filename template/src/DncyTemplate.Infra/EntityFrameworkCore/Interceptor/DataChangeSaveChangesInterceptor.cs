@@ -1,10 +1,7 @@
 ﻿using Dncy.MultiTenancy;
 
 using DncyTemplate.Domain.Infra;
-
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.Interceptor;
 

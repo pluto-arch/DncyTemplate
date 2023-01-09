@@ -8,18 +8,11 @@ public record MenuPermission
 
     public bool SkipCheck { get; set; }
 
-    public MenuPermission(string[] permissionCode,bool requiredAll=false)
+    public MenuPermission(string[] permissionCode, bool requiredAll = false)
     {
         PermissionCode = permissionCode;
         RequiredAll = requiredAll;
     }
-
-
-    public MenuPermission(params string[] permissionCode)
-    {
-        PermissionCode = permissionCode;
-    }
-
 
     public MenuPermission(bool skipCheck)
     {

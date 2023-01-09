@@ -43,7 +43,7 @@ public class AppConstant
 
     public class Culture
     {
-        public static (string key,string name) ZN_CH = ("zh-CN","中文");
+        public static (string key, string name) ZN_CH = ("zh-CN", "中文");
 
         public static (string key, string name) EN_US = ("en-US", "English(US)");
     }

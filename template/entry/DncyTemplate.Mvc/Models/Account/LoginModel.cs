@@ -9,7 +9,7 @@ namespace DncyTemplate.Mvc.Models.Account
         public string UsernameOrEmailAddress { get; set; }
 
         [Display(Name = "LoginPassword")]
-        [StringLength(8,ErrorMessage = "PwdMust8length")]
+        [StringLength(8, ErrorMessage = "PwdMust8length")]
         [Required(ErrorMessage = "ValueIsRequired")]
         public string Password { get; set; }
 

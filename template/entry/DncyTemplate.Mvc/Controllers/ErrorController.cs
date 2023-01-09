@@ -1,10 +1,9 @@
-﻿using System.Diagnostics;
-using System.Web;
-
-using DncyTemplate.Mvc.Models;
+﻿using DncyTemplate.Mvc.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.Extensions.Localization;
+using System.Diagnostics;
+using System.Web;
 
 namespace DncyTemplate.Mvc.Controllers
 {
