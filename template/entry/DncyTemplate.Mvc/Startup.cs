@@ -39,8 +39,8 @@ public class Startup
 
         var serverAddressesFeature = app.ServerFeatures.Get<IServerAddressesFeature>();
         var address = serverAddressesFeature.Addresses;
-        Log.Logger.Information("应用程序运行地址: {@Address}", address);
-
+        Log.Logger.Information("运行地址: {@Address}", address);
+        Log.Logger.Information("NET框架版本: {@version}", System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription);
 
         app.UseRequestLocalization();
 

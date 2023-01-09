@@ -1,5 +1,6 @@
 ﻿using DncyTemplate.Application.AppServices.Product;
 using DncyTemplate.Application.Models.Product;
+using DncyTemplate.Domain.Collections;
 using Microsoft.AspNetCore.Authorization;
 
 namespace DncyTemplate.Mvc.Controllers
@@ -13,12 +14,25 @@ namespace DncyTemplate.Mvc.Controllers
         [AutoInject]
         private readonly IProductAppService _productAppService;
 
-        public async Task<IActionResult> Index([FromQuery] ProductPagedRequest request)
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK,Type=typeof(IPagedList<ProductListItemDto>))]
+        public async Task<IActionResult> List([FromQuery] ProductPagedRequest request)
         {
             var pageData = await _productAppService.GetListAsync(request);
-            ViewBag.Keywords = request.Keyword;
-            return View(pageData);
+            return Json(new
+            {
+                code = 200,
+                count = pageData.TotalCount,
+                msg = "操作成功",
+                data = pageData.Items
+            });
         }
+
 
         // [HttpGet]
         // public IActionResult Create()

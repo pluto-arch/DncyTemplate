@@ -64,7 +64,6 @@ public class SideBarMenuViewComponent : ViewComponent
             DisplayName = "设备管理",
             IsEnabled = true,
             IsVisible = true,
-            Permission = new MenuPermission(new[] { ProductPermission.Product.Default, DevicesPermission.Devices.Default }),
             Items = new List<MenuItemModel>
             {
                 new MenuItemModel
@@ -104,8 +103,18 @@ public class SideBarMenuViewComponent : ViewComponent
                 {
                     Name = "app.menu.accescontrol.tenants",
                     Icon = "layui-icon-console",
-                    DisplayName = "租户管理",
+                    DisplayName = "租户列表",
                     Url = "/tenant",
+                    IsEnabled = true,
+                    IsVisible = true,
+                    Permission=new MenuPermission(true)
+                },
+                new MenuItemModel
+                {
+                    Name = "app.menu.accescontrol.roles",
+                    Icon = "layui-icon-console",
+                    DisplayName = "角色列表",
+                    Url = "/roles",
                     IsEnabled = true,
                     IsVisible = true,
                     Permission=new MenuPermission(true)

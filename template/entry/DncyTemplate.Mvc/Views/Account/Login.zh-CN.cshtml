@@ -3,7 +3,7 @@
 @model DncyTemplate.Mvc.Models.Account.LoginModel
 
 @{
-    ViewBag.Title = "登陆";
+    ViewData["Title"] = "登陆";
 }
 
 
@@ -17,7 +17,6 @@
             <div class="layui-col-sm6 layui-col-md5 layui-col-xs12">
                 <form class="layui-form" method="post">
                     @Html.AntiForgeryToken()
-                    <input type="hidden" name="returnUrl" value="@ViewData["returnUrl"]"/>
                     <input type="hidden" name="returnUrlHash"/>
                     <div class="layui-form-item">
                         <img class="logo" src="~/images/logo.png"/>

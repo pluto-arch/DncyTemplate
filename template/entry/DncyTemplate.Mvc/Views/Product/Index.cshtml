@@ -1,7 +1,117 @@
 
 @{
-    ViewBag.Title = "��Ʒ����";
-    ViewBag.CurrentPageName = "pages.products";
+    ViewData["Title"] = "产品管理";
 }
 
-<h1>this is products</h1>
+
+
+<div class="layui-card">
+    <div class="layui-card-body">
+        <form class="layui-form form-search" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">产品名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="keyword" placeholder="请输入产品名称" autocomplete="off" class="layui-input">
+                </div>
+                <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="product-query">
+                    <i class="layui-icon layui-icon-search"></i>
+                    查询
+                </button>
+                <button type="reset" class="pear-btn pear-btn-md">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    重置
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="layui-card">
+    <div class="layui-card-body">
+        <table id="product-table" lay-filter="product-table"></table>
+    </div>
+</div>
+
+<script type="text/html" id="create-time">
+    {{layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}
+</script>
+
+
+<script type="text/html" id="toolbar">
+    <button class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
+        <i class="layui-icon layui-icon-add-1"></i>
+        新增
+    </button>
+</script>
+
+
+@section scripts{
+    <script type="text/javascript">
+        layui.use(['abp', 'form', 'table'], function () {
+            var $ = layui.$;
+            var form = layui.form;
+            var table = layui.table;
+
+            form.render();
+
+            form.on('submit(product-query)', function (data) {
+                table.reload('product-table',
+                    {
+                        where: data.field,
+                        request: {
+                            pageName: 'pageNo',
+                            limitName: 'pageSize'
+                        },
+                        page: {
+                            curr: 1
+                        }
+                    });
+                return false;
+            });
+
+            table.render({
+                elem: '#product-table',
+                url: "@Url.Action("List", "Product")",
+                page: true,
+                where: {},
+                height: 'full-150',
+                request: {
+                    pageName: 'pageNo',
+                    limitName: 'pageSize'
+                },
+                response: {
+                    statusCode: 200 //规定成功的状态码，默认：0
+                },
+                cols: [
+                    [
+                        { title: 'ID', field: 'id', align: 'center', width: 80, type: 'checkbox' },
+                        { title: 'ID', field: 'id', align: 'center', width: 180 },
+                        { title: '名称', field: 'name', align: 'center' },
+                        { title: '创建时间', field: 'createTime', align: 'center', templet: "#create-time" }
+                    ]
+                ],
+                skin: 'line',
+                toolbar: '#toolbar',
+                defaultToolbar: [{
+                    layEvent: 'refresh',
+                    icon: 'layui-icon-refresh'
+                }]
+            });
+
+            table.on('toolbar(product-table)', function (obj) {
+                if (obj.event === 'refresh') {
+                    window.refresh();
+                }
+            });
+
+
+            form.on('switch(product-table)', function (obj) {
+                layer.tips(this.value + ' ' + this.name + '：' + obj.elem.checked, obj.othis);
+            });
+
+            window.refresh = function () {
+                table.reload('product-table');
+            }
+        });
+    </script>
+}

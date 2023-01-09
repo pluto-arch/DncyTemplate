@@ -1,6 +1,5 @@
 @{
     Layout = null;
-    var pageTitle = !string.IsNullOrWhiteSpace(ViewBag.Title) ? ViewBag.Title + " / " : "";
 }
 
 
@@ -10,7 +9,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>@pageTitle</title>
+    <title>@(ViewData["Title"] ?? "µÇÂ¼")</title>
     <link rel="shortcut icon" href="~/images/favicon.ico" asp-append-version="true">
     <link rel="stylesheet" href="~/libs/pear/css/pear.css" asp-append-version="true"/>
     @await RenderSectionAsync("styles", required: false)
