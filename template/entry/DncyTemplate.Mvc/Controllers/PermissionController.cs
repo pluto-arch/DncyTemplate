@@ -1,4 +1,6 @@
+using Dncy.Permission;
 using DncyTemplate.Application.Permission;
+using DncyTemplate.Mvc.Models.Permission;
 
 namespace DncyTemplate.Mvc.Controllers;
 
@@ -18,5 +20,12 @@ public partial class PermissionController : Controller
     {
         var permissions = await _permissionAppService.GetPermissionsAsync(providerName,providerValue);
         return Json(permissions);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> GrantAsync([FromQuery]string providerName, [FromQuery] string providerValue, [FromBody] PermissionSelectedViewModel permissions)
+    {
+        await _permissionAppService.GrantAsync(permissions.Permissions.ToArray(), providerName, providerValue);
+        return Json(new {success=true,msg="操作成功"});
     }
 }

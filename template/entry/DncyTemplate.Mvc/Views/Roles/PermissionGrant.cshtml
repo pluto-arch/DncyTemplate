@@ -22,6 +22,9 @@
             <div class="layui-form-item">
                 <button class="pear-btn pear-btn-primary" lay-submit lay-filter="role-submit" id="role-submit">提交</button>
             </div>
+            <div class="layui-form-item">
+                <a class="pear-btn pear-btn-primary" id="dddd">提交</a>
+            </div>
         </form>
     </div>
 </div>
@@ -29,12 +32,13 @@
 
 @section scripts{
     <script type="text/javascript">
-        layui.use(['abp', 'element', 'form', 'dtree'], function () {
+        layui.use(['abp', 'element', 'form', 'dtree', "toast"], function () {
             var $ = layui.$;
             var abp = layui.abp;
             var form = layui.form;
             var element = layui.element;
             var dtree = layui.dtree;
+            var toast = layui.toast;
 
             @*
             form.val("role-form", @Html.Raw(JsonExtensions.ToJsonString(Model.Role,true,false)));
@@ -44,9 +48,8 @@
             dtree.render({
                 elem: "#permission-tree",
                 initLevel: "2",
-                data: @Html.Raw(JsonConvert.SerializeObject(Model.Data,setting)),
+                data: @Html.Raw(JsonConvert.SerializeObject(Model.Data, setting)),
                 width: "100%",
-                height: "full-150",
                 line: true,
                 response: { message: "msg", statusCode: 0 },
                 checkbar: true,
@@ -59,37 +62,34 @@
                 $("#role-submit").click();
             }
 
+            $("#dddd").click(function () {
+                toast.success({ title: "成功消息", message: "消息描述" })
+            });
+
             form.on('submit(role-submit)', function (data) {
-                data.field.isStatic = data.field.isStatic === "on";//switch默认值是on
-                data.field.grantedPermissionNames = getRolePermissions();
+                //data.field.isStatic = data.field.isStatic === "on";
+                data.field.permissions = getRolePermissions();
 
-                //var waitIndex = parent.layer.load(2);
-
-                console.log(data.field);
-
-                @*
+                var waitIndex = parent.layer.load(2);
+               
                 abp.ajax({
-                    url: "@Url.Action(Model.Role.Id > 0? "UpdateRole": "CreateRole", "Roles")",
+                    url: "@Html.Raw(Url.Action("Grant", "Permission",new {providerName="role",providerValue=ViewData["roleName"]}))",
                     data: JSON.stringify(data.field),
                     abpHandleError: false
                 }).done(function (data) {
-                    if (data.code == 200) {
-                        data.index = index;
-                        let parentWindow = parent.selectedWindow().window;
-                        parentWindow.saveCallback(data);
-                    }
+                    toast.success({ title: "成功消息", message: "消息描述" });
                 }).fail(function (jqXHR) {
-                    parent.layer.msg(jqXHR.message, { icon: 5 });
+                    toast.error({title:"危险消息",message:"消息描述"})
                 }).always(function () {
                     parent.layer.close(waitIndex);
                 });
-                *@
                 return false;
             });
 
             function getRolePermissions() {
                 var selectedNode = dtree.getCheckbarNodesParam("permission-tree");
-                var ids = selectedNode.map(function (d) { return d.nodeId });
+                selectedNode=selectedNode.filter(x=>x.level!=="1");
+                var ids = selectedNode.map(function (d) { return d.nodeId});
                 return ids;
             }
         });

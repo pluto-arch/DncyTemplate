@@ -5,6 +5,14 @@ using DncyTemplate.Application.Constants;
 
 namespace DncyTemplate.Application.Permission;
 
+
+public class PermissionGrantCache
+{
+    // TODO ConcurrentDictionary just as an example
+    public static readonly ConcurrentDictionary<string, string> Cache = new();
+}
+
+
 [AutoResolveDependency]
 public partial class CachedPermissionManager : IPermissionManager
 {
@@ -17,8 +25,7 @@ public partial class CachedPermissionManager : IPermissionManager
     [AutoInject]
     private readonly IPermissionGrantStore _permissionGrantStore;
 
-    // TODO ConcurrentDictionary just as an example
-    private static readonly ConcurrentDictionary<string, string> permissionCached = new();
+    private static readonly ConcurrentDictionary<string, string> permissionCached = PermissionGrantCache.Cache;
 
     /// <inheritdoc />
     public async Task<bool> IsGrantedAsync(string name, string providerName, string providerKey)

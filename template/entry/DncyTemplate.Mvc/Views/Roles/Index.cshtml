@@ -1,4 +1,9 @@
-﻿@{
+﻿@using Dncy.Permission
+@using DncyTemplate.Application.Permission
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@inject IPermissionChecker _permissionChecker;
+
+@{
     ViewData["Title"] = "角色列表";
 }
 
@@ -37,7 +42,14 @@
 
 
 <script type="text/html" id="operbar">
-    <a class="pear-btn pear-btn-primary pear-btn-xs" lay-event="setpermission">设置权限</a>
+    @if (await _permissionChecker.IsGrantedAsync(User, RolePermission.Roles.GrantPermission))
+    {
+        <a class="pear-btn pear-btn-primary pear-btn-xs" lay-event="setpermission">设置权限</a>
+    }
+    else
+    {
+        <span>/</span>
+    }
 </script>
 
 
@@ -128,7 +140,7 @@
                 }
 
                 window.power = function(obj) {
-                    parent.layui.drawer.open({
+                    drawer.open({
                         legacy: false,
                         title: [obj.displayName + ' 资源权限', 'font-size:16px;color:#2d8cf0'],
                         offset: 'r',

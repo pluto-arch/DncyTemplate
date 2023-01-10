@@ -77,6 +77,7 @@
 	<ItemGroup>
 	  <Folder Include="HtmlHelpers\" />
 	  <Folder Include="Models\Account\" />
+	  <Folder Include="Models\Permission\" />
 	</ItemGroup>
 
 	<ItemGroup>

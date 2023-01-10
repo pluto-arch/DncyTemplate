@@ -22,6 +22,10 @@ public partial class RolesController: Controller
 
     public async Task<IActionResult> PermissionGrant(string roleName)
     {
+        if (roleName.IsNullOrEmpty())
+        {
+            return RedirectToAction("Error", "Error", new { code = HttpStatusCode.NotFound, error = "角色不存在" });
+        }
         var role = roleName.ToLower();
         if (role!="sa"&&role!="admin"&&role!="member")
         {
@@ -35,15 +39,15 @@ public partial class RolesController: Controller
             {
                 Id = group.Name,
                 Title = group.DisplayName,
-                children = new List<PermissionTreeViewModel>(),
-                CheckArr=group.Permissions.Any(x=>x.IsGrant)?"1":"0"
+                Children = new List<PermissionTreeViewModel>(),
+                CheckArr=group.Permissions.Any(x=>x.IsGrant)?"1":"0",
             };
             group.Permissions = group.Permissions.OrderBy(x => x.Name).ToList();
             foreach (var item in group.Permissions)
             {
                 if (item.ParentName.IsNullOrEmpty())
                 {
-                    g.children.Add(new PermissionTreeViewModel
+                    g.Children.Add(new PermissionTreeViewModel
                     {
                         Id = item.Name,
                         ParentId = g.Id,
@@ -53,8 +57,8 @@ public partial class RolesController: Controller
                 }
                 else
                 {
-                    var up = g.children.FirstOrDefault(x=>x.Id==item.ParentName);
-                    up.children.Add(new PermissionTreeViewModel
+                    var up = g.Children.FirstOrDefault(x=>x.Id==item.ParentName);
+                    up.Children.Add(new PermissionTreeViewModel
                     {
                         Id = item.Name,
                         ParentId = up.Id,
@@ -66,7 +70,7 @@ public partial class RolesController: Controller
             permissionsVm.Add(g);
         }
 
-        ViewData["role"] = roleName;
+        ViewData["roleName"] = roleName;
 
         return View(new RolePermissionGrantViewModel
         {

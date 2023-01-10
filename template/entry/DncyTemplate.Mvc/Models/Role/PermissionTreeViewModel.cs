@@ -4,7 +4,7 @@ public class PermissionTreeViewModel
 {
     public PermissionTreeViewModel()
     {
-        children=new List<PermissionTreeViewModel>();
+        Children = new List<PermissionTreeViewModel>();
     }
 
     public string Id { get; set; }
@@ -13,7 +13,7 @@ public class PermissionTreeViewModel
 
     public string Title { get; set; }
 
-    public List<PermissionTreeViewModel> children { get; set; }
+    public List<PermissionTreeViewModel> Children { get; set; }
 
     private bool _isAssigned;
     public bool IsAssigned

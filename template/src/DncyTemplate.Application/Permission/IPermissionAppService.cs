@@ -9,4 +9,6 @@ public interface IPermissionAppService
     /// </summary>
     /// <returns></returns>
     Task<List<PermissionGroupDto>> GetPermissionsAsync(string providerName,string providerValue);
+
+    Task GrantAsync(string[] permissions, string providerName, string providerValue);
 }
