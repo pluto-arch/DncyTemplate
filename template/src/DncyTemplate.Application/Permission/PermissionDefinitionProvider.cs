@@ -15,25 +15,35 @@ public class PermissionDefinitionProvider : IPermissionDefinitionProvider
 
         // 产品
         var productGroup = context.AddGroup(ProductPermission.GroupName, "产品管理");
-        productGroup.AddPermission(ProductPermission.Product.Default, "产品列表")
-            .AddChild(ProductPermission.Product.Detail, "产品详情")
-            .AddChild(ProductPermission.Product.Create, "创建产品")
-            .AddChild(ProductPermission.Product.Edit, "编辑产品")
-            .AddChild(ProductPermission.Product.Delete, "删除产品");
+        var ppm = productGroup.AddPermission(ProductPermission.Product.Default, "产品列表");
+        ppm.AddChild(ProductPermission.Product.Detail, "产品详情");
+        ppm.AddChild(ProductPermission.Product.Create, "创建产品");
+        ppm.AddChild(ProductPermission.Product.Edit, "编辑产品");
+        ppm.AddChild(ProductPermission.Product.Delete, "删除产品");
+
 
         // 设备
         var deviceGroup = context.AddGroup(DevicesPermission.GroupName, "设备管理");
-        deviceGroup.AddPermission(DevicesPermission.Devices.Default, "设备列表")
-            .AddChild(DevicesPermission.Devices.Detail, "设备详情")
-            .AddChild(DevicesPermission.Devices.Create, "新增设备")
-            .AddChild(DevicesPermission.Devices.Edit, "编辑设备")
-            .AddChild(DevicesPermission.Devices.Delete, "删除设备");
+        var dpm= deviceGroup.AddPermission(DevicesPermission.Devices.Default, "设备列表");
+        dpm.AddChild(DevicesPermission.Devices.Detail, "设备详情");
+        dpm.AddChild(DevicesPermission.Devices.Create, "新增设备");
+        dpm.AddChild(DevicesPermission.Devices.Edit, "编辑设备");
+        dpm.AddChild(DevicesPermission.Devices.Delete, "删除设备");
+
+
+        
+        // 角色
+        var roleGroup = context.AddGroup(RolePermission.GroupName, "角色管理");
+        var rpm = roleGroup.AddPermission(RolePermission.Roles.Default, "角色列表");
+        rpm.AddChild(RolePermission.Roles.Edit, "编辑角色");
+        rpm.AddChild(RolePermission.Roles.Delete, "删除角色");
+        rpm.AddChild(RolePermission.Roles.GrantPermission, "权限设置");
 
 
         // 租户
         var tenantGroup = context.AddGroup(TenantPermission.GroupName, "租户管理");
-        tenantGroup.AddPermission(TenantPermission.Tenant.Default, "租户列表")
-            .AddChild(TenantPermission.Tenant.Detail, "租户详情");
+        var tpm = tenantGroup.AddPermission(TenantPermission.Tenant.Default, "租户列表");
+        tpm.AddChild(TenantPermission.Tenant.Detail, "租户详情");
 
     }
 }
@@ -66,6 +76,22 @@ public static class ProductPermission
         public const string Create = Default + ".Create";
         public const string Edit = Default + ".Edit";
         public const string Delete = Default + ".Delete";
+    }
+}
+
+
+public static class RolePermission
+{
+    public const string GroupName = "RoleManager";
+
+    public static class Roles
+    {
+        public const string Default = GroupName + ".Roles";
+        public const string GrantPermission = Default + ".GrantPermission";
+        public const string Disable = Default + ".Disable";
+        public const string Enable = Default + ".Enable";
+        public const string Delete = Default + ".Delete";
+        public const string Edit = Default + ".Edit";
     }
 }
 

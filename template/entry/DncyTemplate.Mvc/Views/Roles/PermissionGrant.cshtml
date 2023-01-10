@@ -1,0 +1,97 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Newtonsoft.Json
+@using Newtonsoft.Json.Serialization
+@model DncyTemplate.Mvc.Models.Role.RolePermissionGrantViewModel
+
+@{
+    var setting = new JsonSerializerSettings
+    {
+        ContractResolver = new CamelCasePropertyNamesContractResolver()
+    };
+}
+
+<div class="layui-card">
+    <div class="layui-card-body">
+        <ul id="permission-tree" class="dtree" data-id="0"></ul>
+    </div>
+</div>
+
+<div class="layui-card">
+    <div class="layui-card-body">
+        <form class="layui-form" action="" lay-filter="role-form">
+            <div class="layui-form-item">
+                <button class="pear-btn pear-btn-primary" lay-submit lay-filter="role-submit" id="role-submit">提交</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+        layui.use(['abp', 'element', 'form', 'dtree'], function () {
+            var $ = layui.$;
+            var abp = layui.abp;
+            var form = layui.form;
+            var element = layui.element;
+            var dtree = layui.dtree;
+
+            @*
+            form.val("role-form", @Html.Raw(JsonExtensions.ToJsonString(Model.Role,true,false)));
+            *@
+            form.render();
+
+            dtree.render({
+                elem: "#permission-tree",
+                initLevel: "2",
+                data: @Html.Raw(JsonConvert.SerializeObject(Model.Data,setting)),
+                width: "100%",
+                height: "full-150",
+                line: true,
+                response: { message: "msg", statusCode: 0 },
+                checkbar: true,
+                ficon: ["1", "-1"],
+                icon: ["0", "2"],
+                dataStyle: "layuiStyle"
+            });
+
+            window.submitForm = function () {
+                $("#role-submit").click();
+            }
+
+            form.on('submit(role-submit)', function (data) {
+                data.field.isStatic = data.field.isStatic === "on";//switch默认值是on
+                data.field.grantedPermissionNames = getRolePermissions();
+
+                //var waitIndex = parent.layer.load(2);
+
+                console.log(data.field);
+
+                @*
+                abp.ajax({
+                    url: "@Url.Action(Model.Role.Id > 0? "UpdateRole": "CreateRole", "Roles")",
+                    data: JSON.stringify(data.field),
+                    abpHandleError: false
+                }).done(function (data) {
+                    if (data.code == 200) {
+                        data.index = index;
+                        let parentWindow = parent.selectedWindow().window;
+                        parentWindow.saveCallback(data);
+                    }
+                }).fail(function (jqXHR) {
+                    parent.layer.msg(jqXHR.message, { icon: 5 });
+                }).always(function () {
+                    parent.layer.close(waitIndex);
+                });
+                *@
+                return false;
+            });
+
+            function getRolePermissions() {
+                var selectedNode = dtree.getCheckbarNodesParam("permission-tree");
+                var ids = selectedNode.map(function (d) { return d.nodeId });
+                return ids;
+            }
+        });
+    </script>
+}

@@ -9,20 +9,14 @@ public partial class PermissionController : Controller
     [AutoInject]
     private readonly IPermissionAppService _permissionAppService;
 
-    // GET
-    public IActionResult Index()
-    {
-        return View();
-    }
-
-
     /// <summary>
     /// 权限列表
     /// </summary>
     /// <returns></returns>
-    public JsonResult GetPermissionList()
+    [HttpGet]
+    public async Task<IActionResult> PermissionsAsync(string providerName,string providerValue)
     {
-        var permissions = _permissionAppService.GetPermissions();
+        var permissions = await _permissionAppService.GetPermissionsAsync(providerName,providerValue);
         return Json(permissions);
     }
 }

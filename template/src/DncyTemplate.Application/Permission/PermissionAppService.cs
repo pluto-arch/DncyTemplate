@@ -1,4 +1,5 @@
 using Dncy.Permission;
+using DncyTemplate.Application.Permission.Models;
 
 namespace DncyTemplate.Application.Permission;
 
@@ -13,29 +14,32 @@ public partial class PermissionAppService : IPermissionAppService
     private readonly IPermissionDefinitionManager _permissionDefinitionManager;
 
 
-    public List<dynamic> GetPermissions()
+    public async Task<List<PermissionGroupDto>> GetPermissionsAsync(string providerName,string providerValue)
     {
-        var res = new List<dynamic>();
+        var res = new List<PermissionGroupDto>();
         var groups = _permissionDefinitionManager.GetGroups();
         foreach (var item in groups)
         {
-            var group = new
+            var group = new PermissionGroupDto
             {
-                groupName = item.Name,
-                displayName = item.DisplayName,
-                permissions = new List<dynamic>()
+                Name = item.Name,
+                DisplayName = item.DisplayName,
+                Permissions = new List<PermissionDto>()
             };
-
+            var grantModel = item.GetPermissionsWithChildren();
+            var grantResult= await _permissionManager.IsGrantedAsync(grantModel.Select(x => x.Name).ToArray(), providerName, providerValue);
             foreach (var permission in item.GetPermissionsWithChildren())
             {
-                var permissionGrantModel = new
+                _ = grantResult.Result.TryGetValue(permission.Name, out var isGranted);
+                var permiss = new PermissionDto
                 {
-                    permission.Name,
-                    permission.DisplayName,
+                    Name = permission.Name,
+                    DisplayName = permission.DisplayName,
                     ParentName = permission.Parent?.Name!,
-                    permission.AllowedProviders,
+                    IsGrant = isGranted==Dncy.Permission.Models.PermissionGrantResult.Granted,
+                    AllowProviders = permission.AllowedProviders.ToArray(),
                 };
-                group.permissions.Add(permissionGrantModel);
+                group.Permissions.Add(permiss);
             }
             res.Add(group);
         }

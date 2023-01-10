@@ -55,7 +55,6 @@ layui.define(['jquery', 'element', 'layer', 'loading'], function (exports) {
 		if (opt.target) appendToTarget(opt);
 		if (opt.url) loadFragment(opt);
 		var layerIndex = layer.open(opt);
-
 		return layerIndex;
 	}
 
@@ -152,7 +151,6 @@ layui.define(['jquery', 'element', 'layer', 'loading'], function (exports) {
 		if (option.resize === undefined) option.resize = false;
 		if (option.success === undefined) option.success = function () { }; // 处理遮罩需要
 		if (option.end === undefined) option.end = function () { };
-
 		return option;
 	}
 

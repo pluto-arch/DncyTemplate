@@ -5,6 +5,7 @@ using DncyTemplate.Application.AppServices.Generics;
 using DncyTemplate.Application.Models.Product;
 using DncyTemplate.Domain.DomainEvents.Product;
 using DncyTemplate.Domain.Repository;
+using DncyTemplate.Infra.Utils;
 using Microsoft.EntityFrameworkCore;
 
 namespace DncyTemplate.Application.AppServices.Product;
@@ -25,7 +26,7 @@ public class ProductAppService
     public override async Task<ProductDto> CreateAsync(ProductCreateRequest requestModel)
     {
         var entity = _mapper.Map<Domain.Aggregates.Product.Product>(requestModel);
-        entity.Id = idg_1.GetUniqueId();
+        entity.Id = SnowFlakeId.Generator.GetUniqueId();
         entity.CreationTime = DateTimeOffset.Now;
         entity.AddDomainEvent(new NewProductCreateDomainEvent(entity));
         entity = await _repository.InsertAsync(entity, true);

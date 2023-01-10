@@ -1,3 +1,5 @@
+using DncyTemplate.Application.Permission.Models;
+
 namespace DncyTemplate.Application.Permission;
 
 public interface IPermissionAppService
@@ -6,5 +8,5 @@ public interface IPermissionAppService
     /// 分页筛选获取权限树结构（树形结构数据）
     /// </summary>
     /// <returns></returns>
-    List<dynamic> GetPermissions();
+    Task<List<PermissionGroupDto>> GetPermissionsAsync(string providerName,string providerValue);
 }
