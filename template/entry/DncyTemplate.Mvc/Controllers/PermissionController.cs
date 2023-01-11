@@ -1,10 +1,12 @@
 using Dncy.Permission;
 using DncyTemplate.Application.Permission;
 using DncyTemplate.Mvc.Models.Permission;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DncyTemplate.Mvc.Controllers;
 
 
+[Authorize]
 [AutoResolveDependency]
 public partial class PermissionController : Controller
 {

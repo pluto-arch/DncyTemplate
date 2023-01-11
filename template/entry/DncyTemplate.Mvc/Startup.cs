@@ -5,6 +5,7 @@ using DncyTemplate.Infra;
 using DncyTemplate.Mvc.BackgroundServices;
 using DncyTemplate.Mvc.Constants;
 using DncyTemplate.Mvc.Infra;
+using DncyTemplate.Mvc.Infra.ExceptionHandlers;
 using DncyTemplate.Mvc.Infra.UnitofWork;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 
@@ -63,8 +64,8 @@ public class Startup
         }
         else
         {
-            app.UseExceptionHandler("/error/500");
-            app.UseStatusCodePagesWithReExecute("/error/{0}");
+            app.UseInternalServerErrorHandle();
+            //app.UseStatusCodePagesWithReExecute("/error/{0}");
             // TODO Notice: UseHsts, UseHttpsRedirection are not necessary if using reverse proxy with ssl, like nginx with ssl proxy
             app.UseHsts();
         }
@@ -73,6 +74,16 @@ public class Startup
         app.UseHttpsRedirection();
         app.UseStaticFiles();
         app.UseHttpRequestLogging();
+
+        //app.Use(async (ctx,next) =>
+        //{
+        //    if (DateTime.Now.Ticks%2==0)
+        //    {
+        //        throw new Exception();
+        //    }
+        //    await next(ctx);
+        //});
+
         app.UseAuthentication();
         app.UseMiddleware<MultiTenancyMiddleware>();
         app.UseRouting();

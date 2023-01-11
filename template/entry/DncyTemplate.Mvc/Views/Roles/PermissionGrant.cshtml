@@ -79,6 +79,7 @@
                 }).done(function (data) {
                     toast.success({ title: "成功消息", message: "消息描述" });
                 }).fail(function (jqXHR) {
+                    console.log(jqXHR)
                     toast.error({title:"危险消息",message:"消息描述"})
                 }).always(function () {
                     parent.layer.close(waitIndex);
