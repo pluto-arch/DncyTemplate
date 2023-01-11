@@ -2,6 +2,7 @@
 using DncyTemplate.Application;
 using DncyTemplate.Domain;
 using DncyTemplate.Infra;
+using DncyTemplate.Mvc.BackgroundServices;
 using DncyTemplate.Mvc.Constants;
 using DncyTemplate.Mvc.Infra;
 using DncyTemplate.Mvc.Infra.UnitofWork;
@@ -31,6 +32,10 @@ public class Startup
         services.AddApplicationModule(Configuration);
         services.AddDomainModule();
         services.AddInfraModule(Configuration);
+
+        #region background service
+        services.AddHostedService<PrductBackgroundService>();
+        #endregion
     }
 
 

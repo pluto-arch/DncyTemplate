@@ -1,4 +1,5 @@
-﻿using DncyTemplate.Api.Infra.ApiDoc;
+﻿using DncyTemplate.Api.BackgroundServices;
+using DncyTemplate.Api.Infra.ApiDoc;
 using DncyTemplate.Api.Infra.Tenancy;
 using DncyTemplate.Application;
 using DncyTemplate.Domain;
@@ -29,6 +30,10 @@ public class Startup
         services.AddApplicationModule(Configuration);
         services.AddInfraModule(Configuration);
         services.AddDomainModule();
+
+        #region background service
+        services.AddHostedService<PrductBackgroundService>();
+        #endregion
     }
 
     public void Configure(IApplicationBuilder app, IHostEnvironment env)

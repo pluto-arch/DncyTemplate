@@ -63,7 +63,7 @@ public partial class PermissionAppService : IPermissionAppService
             await _permissionGrantStore.RemoveGrantAsync(names, providerName, providerValue);
             names.AsParallel().ForAll(x =>
             {
-                PermissionGrantCache.Cache.AddOrUpdate(string.Format(CacheKeyFormatConstants.Permission_Grant_CacheKey_Format, providerName, providerValue, x), true.ToString(), (k, oldv) => true.ToString());
+                PermissionGrantCache.Cache.AddOrUpdate(string.Format(CacheKeyFormatConstants.Permission_Grant_CacheKey_Format, providerName, providerValue, x), false.ToString(), (k, oldv) => false.ToString());
             });
             return;
         }
@@ -74,7 +74,7 @@ public partial class PermissionAppService : IPermissionAppService
             await _permissionGrantStore.RemoveGrantAsync(exp.ToArray(), providerName, providerValue);
             exp.AsParallel().ForAll(x =>
             {
-                PermissionGrantCache.Cache.AddOrUpdate(string.Format(CacheKeyFormatConstants.Permission_Grant_CacheKey_Format, providerName, providerValue, x), true.ToString(), (k, oldv) => true.ToString());
+                PermissionGrantCache.Cache.AddOrUpdate(string.Format(CacheKeyFormatConstants.Permission_Grant_CacheKey_Format, providerName, providerValue, x), false.ToString(), (k, oldv) => false.ToString());
             });
         }
 

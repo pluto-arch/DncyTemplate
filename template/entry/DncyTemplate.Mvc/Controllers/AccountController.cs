@@ -1,6 +1,7 @@
 ﻿using Dncy.MultiTenancy;
 using Dncy.MultiTenancy.Model;
 using Dncy.Permission;
+using DncyTemplate.Application.Constants;
 using DncyTemplate.Mvc.Constants;
 using DncyTemplate.Mvc.Models.Account;
 using Microsoft.AspNetCore.Authentication;
@@ -93,7 +94,7 @@ namespace DncyTemplate.Mvc.Controllers
                     grantList.AddRange(permiss);
                 }
                 grantList.AddRange(await _permissionGrantStore.GetListAsync("user", user.Id));
-                claims.Add(new Claim("permission", string.Join("|", grantList.Select(x => x.Name))));
+                claims.Add(new Claim(UserClaimConstants.CLAIM_PERMISSION, string.Join("|", grantList.Select(x => x.Name).Distinct())));
             }
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

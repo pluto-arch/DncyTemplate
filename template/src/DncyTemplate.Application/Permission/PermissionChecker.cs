@@ -1,5 +1,6 @@
 using Dncy.Permission;
 using Dncy.Permission.Models;
+using DncyTemplate.Application.Constants;
 using System.Security.Claims;
 
 namespace DncyTemplate.Application.Permission;
@@ -30,24 +31,22 @@ public class PermissionChecker : IPermissionChecker
 
         if (!permissionDefinition.IsEnabled)
         {
-            return false;
+            return await Task.FromResult(false);
         }
 
-        foreach (var permissionValueProvider in _permissionValueProviders)
+        var userPermissions = claimsPrincipal.FindFirst(UserClaimConstants.CLAIM_PERMISSION);
+        if (userPermissions == null)
         {
-            if (permissionDefinition.AllowedProviders.Any() &&
-                !permissionDefinition.AllowedProviders.Contains(permissionValueProvider.Name))
-            {
-                continue;
-            }
-            var result = await permissionValueProvider.CheckAsync(claimsPrincipal, permissionDefinition);
-            if (result == PermissionGrantResult.Granted)
-            {
-                return true;
-            }
+            return await Task.FromResult(false);
         }
 
-        return false;
+        var userPermissionsArr = userPermissions.Value.Split('|');
+        if (userPermissionsArr.Contains(name))
+        {
+            return await Task.FromResult(true);
+        }
+
+        return await Task.FromResult(false);
     }
 
     /// <inheritdoc />
@@ -57,8 +56,8 @@ public class PermissionChecker : IPermissionChecker
 
         names ??= Array.Empty<string>();
 
-        List<PermissionDefinition> permissionDefinitions = new List<PermissionDefinition>();
-
+        var userPermissions = claimsPrincipal.FindFirst(UserClaimConstants.CLAIM_PERMISSION);
+        var userPermissionsArr = userPermissions?.Value.Split('|');
         foreach (string name in names)
         {
             var permission = _permissionDefinitionManager.Get(name);
@@ -68,36 +67,19 @@ public class PermissionChecker : IPermissionChecker
                 continue;
             }
 
-            if (permission.IsEnabled)
+            if (userPermissions == null)
             {
-                permissionDefinitions.Add(permission);
+                result.Result.Add(name, PermissionGrantResult.Prohibited);
+                continue;
+            }
+            
+            if (userPermissionsArr.Contains(name))
+            {
+                result.Result.Add(name, PermissionGrantResult.Granted);
+                continue;
             }
         }
-
-        foreach (var permissionValueProvider in _permissionValueProviders)
-        {
-            var pf = permissionDefinitions.Where(x => !x.AllowedProviders.Any() || x.AllowedProviders.Contains(permissionValueProvider.Name)).ToList();
-
-            var multipleResult = await permissionValueProvider.CheckAsync(claimsPrincipal, pf);
-
-            foreach (var grantResult in multipleResult.Result)
-            {
-                if (result.Result.ContainsKey(grantResult.Key))
-                {
-                    if (result.Result[grantResult.Key] == PermissionGrantResult.Granted || result.Result[grantResult.Key] == PermissionGrantResult.Undefined)
-                    {
-                        continue;
-                    }
-                    result.Result[grantResult.Key] = grantResult.Value;
-                }
-                else
-                {
-                    result.Result[grantResult.Key] = grantResult.Value;
-                }
-            }
-        }
-
-        return result;
+        return await Task.FromResult(result);
     }
 
 }

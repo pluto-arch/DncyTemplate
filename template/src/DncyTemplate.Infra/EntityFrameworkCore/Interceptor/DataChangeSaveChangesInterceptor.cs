@@ -1,6 +1,8 @@
 ﻿using Dncy.MultiTenancy;
 
 using DncyTemplate.Domain.Infra;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.Interceptor;
@@ -63,10 +65,8 @@ public class DataChangeSaveChangesInterceptor : SaveChangesInterceptor
         domainEntities.ToList().ForEach(entity => entity.ClearDomainEvents());
         foreach (var domainEvent in domainEvents)
         {
-            // TODO 直接使用领域事件触发器以同一个dbcontext内执行领域事件 阻塞式。
             await _dispatcher.Dispatch(domainEvent, cancellationToken);
         }
-
     }
 
 }

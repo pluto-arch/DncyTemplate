@@ -1,6 +1,5 @@
 ﻿
 using AutoMapper;
-using Dncy.SnowFlake;
 using DncyTemplate.Application.AppServices.Generics;
 using DncyTemplate.Application.Models.Product;
 using DncyTemplate.Domain.DomainEvents.Product;
@@ -14,9 +13,6 @@ namespace DncyTemplate.Application.AppServices.Product;
 public class ProductAppService
     : EntityKeyCrudAppService<Domain.Aggregates.Product.Product, string, ProductDto, ProductPagedRequest, ProductListItemDto, ProductUpdateRequest, ProductCreateRequest>, IProductAppService
 {
-
-    private static SnowFlake idg_1 = new SnowFlake(1);
-
     /// <inheritdoc />
     public ProductAppService(IRepository<Domain.Aggregates.Product.Product, string> repository, IMapper mapper) : base(repository, mapper)
     {
