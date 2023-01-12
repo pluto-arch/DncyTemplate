@@ -1,5 +1,4 @@
 ﻿using DncyTemplate.Mvc.Infra.LocalizerSetup;
-using DncyTemplate.Mvc.Infra.UnitofWork;
 using DncyTemplate.Mvc.Models.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.ResponseCompression;
@@ -23,7 +22,6 @@ public class InfraHostingStartup : IHostingStartup
             #region mvc基础
             services.AddControllersWithViews(options =>
                 {
-                    options.Filters.Add<UowActionFilter>();
                     options.ModelBinderProviders.Insert(0, new SortingBinderProvider());
                     var F = services.BuildServiceProvider().GetService<IStringLocalizerFactory>();
                     options.SetUpDefaultDataAnnotation(F);

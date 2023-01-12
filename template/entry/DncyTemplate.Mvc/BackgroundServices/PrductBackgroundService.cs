@@ -2,7 +2,7 @@
 
 namespace DncyTemplate.Mvc.BackgroundServices;
 
-public class PrductBackgroundService: BackgroundService
+public class PrductBackgroundService : BackgroundService
 {
 
     private readonly IServiceScopeFactory _scopeFactory;
@@ -43,7 +43,7 @@ public class PrductBackgroundService: BackgroundService
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex,"产品发件箱失败：{mesg}",ex.Message);
+            _logger.LogError(ex, "产品发件箱失败：{mesg}", ex.Message);
             throw;
         }
     }

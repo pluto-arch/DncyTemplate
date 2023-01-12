@@ -9,7 +9,7 @@ namespace DncyTemplate.Mvc.Controllers;
 
 
 [AutoResolveDependency]
-public partial class RolesController: Controller
+public partial class RolesController : Controller
 {
 
     [AutoInject]
@@ -27,11 +27,11 @@ public partial class RolesController: Controller
             return RedirectToAction("Error", "Error", new { code = HttpStatusCode.NotFound, error = "角色不存在" });
         }
         var role = roleName.ToLower();
-        if (role!="sa"&&role!="admin"&&role!="member")
+        if (role != "sa" && role != "admin" && role != "member")
         {
-            return RedirectToAction("Error","Error",new {code=HttpStatusCode.NotFound,error="角色不存在"});
+            return RedirectToAction("Error", "Error", new { code = HttpStatusCode.NotFound, error = "角色不存在" });
         }
-        var permissions = await _permissionAppService.GetPermissionsAsync("role",roleName);
+        var permissions = await _permissionAppService.GetPermissionsAsync("role", roleName);
         var permissionsVm = new List<PermissionTreeViewModel>();
         foreach (var group in permissions)
         {
@@ -40,7 +40,7 @@ public partial class RolesController: Controller
                 Id = group.Name,
                 Title = group.DisplayName,
                 Children = new List<PermissionTreeViewModel>(),
-                CheckArr=group.Permissions.Any(x=>x.IsGrant)?"1":"0",
+                CheckArr = group.Permissions.Any(x => x.IsGrant) ? "1" : "0",
             };
             group.Permissions = group.Permissions.OrderBy(x => x.Name).ToList();
             foreach (var item in group.Permissions)
@@ -57,7 +57,7 @@ public partial class RolesController: Controller
                 }
                 else
                 {
-                    var up = g.Children.FirstOrDefault(x=>x.Id==item.ParentName);
+                    var up = g.Children.FirstOrDefault(x => x.Id == item.ParentName);
                     up.Children.Add(new PermissionTreeViewModel
                     {
                         Id = item.Name,

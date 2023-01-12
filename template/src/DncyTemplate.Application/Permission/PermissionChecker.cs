@@ -72,7 +72,7 @@ public class PermissionChecker : IPermissionChecker
                 result.Result.Add(name, PermissionGrantResult.Prohibited);
                 continue;
             }
-            
+
             if (userPermissionsArr.Contains(name))
             {
                 result.Result.Add(name, PermissionGrantResult.Granted);

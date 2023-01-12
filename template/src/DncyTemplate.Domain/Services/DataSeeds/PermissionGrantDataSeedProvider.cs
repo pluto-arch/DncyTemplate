@@ -5,7 +5,6 @@ using Dncy.Permission;
 using DncyTemplate.Domain.Aggregates.System;
 using DncyTemplate.Domain.Infra;
 using DncyTemplate.Domain.Repository;
-using DncyTemplate.Domain.UnitOfWork;
 
 namespace DncyTemplate.Domain.Services.DataSeeds
 {
@@ -15,13 +14,11 @@ namespace DncyTemplate.Domain.Services.DataSeeds
 
         private readonly ICurrentTenant _currentTenant;
         private readonly IPermissionDefinitionManager _definitionManager;
-        private readonly UnitOfWorkScopeManager _unitOfWorkScopeManager;
 
-        public PermissionGrantDataSeedProvider(ICurrentTenant currentTenant, IPermissionDefinitionManager definitionManager, UnitOfWorkScopeManager unitOfWorkScopeManager)
+        public PermissionGrantDataSeedProvider(ICurrentTenant currentTenant, IPermissionDefinitionManager definitionManager)
         {
             _currentTenant = currentTenant;
             _definitionManager = definitionManager;
-            _unitOfWorkScopeManager = unitOfWorkScopeManager;
         }
         public int Sorts => 100;
 
@@ -42,7 +39,6 @@ namespace DncyTemplate.Domain.Services.DataSeeds
             var rep = serviceProvider.GetRequiredService<IRepository<PermissionGrant>>();
             foreach (var (id, name) in tenantIds)
             {
-                using (_unitOfWorkScopeManager.Begin())
                 using (_currentTenant.Change(new TenantInfo(id, name)))
                 {
                     if (rep.Any())

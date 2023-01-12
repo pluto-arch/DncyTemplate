@@ -1,8 +1,6 @@
 using Dncy.Permission;
 using DncyTemplate.Application.Constants;
 using DncyTemplate.Application.Permission.Models;
-using DncyTemplate.Domain.Aggregates.System;
-using System.Xml.Linq;
 
 namespace DncyTemplate.Application.Permission;
 
@@ -58,7 +56,7 @@ public partial class PermissionAppService : IPermissionAppService
     {
         var old = await _permissionGrantStore.GetListAsync(providerName, providerValue);
         var names = old.Select(x => x.Name).ToArray();
-        if (permissions is {Length:<=0})
+        if (permissions is { Length: <= 0 })
         {
             await _permissionGrantStore.RemoveGrantAsync(names, providerName, providerValue);
             names.AsParallel().ForAll(x =>

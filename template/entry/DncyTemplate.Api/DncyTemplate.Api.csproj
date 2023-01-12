@@ -33,7 +33,6 @@
 		<Folder Include="Infra\Firewall\" />
 		<Folder Include="Constants\" />
 		<Folder Include="Infra\ApiDoc\" />
-		<Folder Include="Infra\UnitofWork\" />
 		<Folder Include="Infra\Authorization\" />
 		<Folder Include="Infra\LocalizerSetup\" />
 		<Folder Include="Models\ModelBinding\" />

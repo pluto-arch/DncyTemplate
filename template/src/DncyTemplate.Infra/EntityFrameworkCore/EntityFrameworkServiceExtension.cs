@@ -25,13 +25,13 @@ public static class EntityFrameworkServiceExtension
     {
         service.AddEntityFrameworkSqlServer();
         service.AddSingleton<IConnectionStringResolve, DefaultConnectionStringResolve>();
-        service.AddDbContext<DncyTemplateDbContext>((serviceProvider, optionsBuilder) =>
+        service.AddDbContextPool<DncyTemplateDbContext>((serviceProvider, optionsBuilder) =>
         {
             optionsBuilder.UseSqlServer(configuration.GetConnectionString(DbConstants.DEFAULT_CONNECTIONSTRING_NAME),
                 sqlOptions =>
                 {
                     sqlOptions.MigrationsAssembly(Assembly.GetExecutingAssembly().GetName().Name);
-                    sqlOptions.EnableRetryOnFailure(3, TimeSpan.FromSeconds(10), null);
+                    //sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
                 });
 
             var mediator = serviceProvider.GetService<IDomainEventDispatcher>() ?? NullDomainEventDispatcher.Instance;

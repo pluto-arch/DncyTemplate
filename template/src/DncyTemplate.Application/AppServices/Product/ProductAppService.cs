@@ -2,9 +2,7 @@
 using AutoMapper;
 using DncyTemplate.Application.AppServices.Generics;
 using DncyTemplate.Application.Models.Product;
-using DncyTemplate.Domain.DomainEvents.Product;
 using DncyTemplate.Domain.Repository;
-using DncyTemplate.Infra.Utils;
 using Microsoft.EntityFrameworkCore;
 
 namespace DncyTemplate.Application.AppServices.Product;
@@ -16,17 +14,6 @@ public class ProductAppService
     /// <inheritdoc />
     public ProductAppService(IRepository<Domain.Aggregates.Product.Product, string> repository, IMapper mapper) : base(repository, mapper)
     {
-    }
-
-    /// <inheritdoc cref="AlternateKeyCrudAppService{TEntity,TKey,TDto,TGetListRequest,TListItemDto,TUpdateRequest,TCreateRequest}"/>
-    public override async Task<ProductDto> CreateAsync(ProductCreateRequest requestModel)
-    {
-        var entity = _mapper.Map<Domain.Aggregates.Product.Product>(requestModel);
-        entity.Id = SnowFlakeId.Generator.GetUniqueId();
-        entity.CreationTime = DateTimeOffset.Now;
-        entity.AddDomainEvent(new NewProductCreateDomainEvent(entity));
-        entity = await _repository.InsertAsync(entity, true);
-        return _mapper.Map<ProductDto>(entity);
     }
 
     protected override IQueryable<Domain.Aggregates.Product.Product> CreateFilteredQuery(ProductPagedRequest requestModel)

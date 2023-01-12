@@ -1,4 +1,5 @@
 ﻿using Dncy.Permission;
+using DncyTemplate.Application.Behaviors;
 using DncyTemplate.Application.Permission;
 using DncyTemplate.Infra.EntityFrameworkCore.Repositories;
 
@@ -13,6 +14,8 @@ namespace DncyTemplate.Application
                 .Where(x => !string.IsNullOrEmpty(x.FullName) && ( !x.FullName.Contains("Microsoft", StringComparison.OrdinalIgnoreCase) || !x.FullName.Contains("System", StringComparison.OrdinalIgnoreCase) ));
             services.AddAutoMapper(assemblies.ToArray());
             services.AddMediatR(assemblies.ToArray());
+
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(TransactionBehavior<,>));
 
 
             #region permission

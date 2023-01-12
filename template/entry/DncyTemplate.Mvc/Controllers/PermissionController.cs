@@ -1,12 +1,9 @@
-using Dncy.Permission;
 using DncyTemplate.Application.Permission;
 using DncyTemplate.Mvc.Models.Permission;
-using Microsoft.AspNetCore.Authorization;
 
 namespace DncyTemplate.Mvc.Controllers;
 
 
-[Authorize]
 [AutoResolveDependency]
 public partial class PermissionController : Controller
 {
@@ -18,16 +15,16 @@ public partial class PermissionController : Controller
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public async Task<IActionResult> PermissionsAsync(string providerName,string providerValue)
+    public async Task<IActionResult> PermissionsAsync(string providerName, string providerValue)
     {
-        var permissions = await _permissionAppService.GetPermissionsAsync(providerName,providerValue);
+        var permissions = await _permissionAppService.GetPermissionsAsync(providerName, providerValue);
         return Json(permissions);
     }
 
     [HttpPost]
-    public async Task<IActionResult> GrantAsync([FromQuery]string providerName, [FromQuery] string providerValue, [FromBody] PermissionSelectedViewModel permissions)
+    public async Task<IActionResult> GrantAsync([FromQuery] string providerName, [FromQuery] string providerValue, [FromBody] PermissionSelectedViewModel permissions)
     {
         await _permissionAppService.GrantAsync(permissions.Permissions.ToArray(), providerName, providerValue);
-        return Json(new {success=true,msg="操作成功"});
+        return Json(new { success = true, msg = "操作成功" });
     }
 }

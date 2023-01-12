@@ -20,8 +20,7 @@ namespace DncyTemplate.Mvc.Controllers
         }
 
         [HttpGet]
-       
-        [ProducesResponseType(StatusCodes.Status200OK,Type=typeof(IPagedList<ProductListItemDto>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IPagedList<ProductListItemDto>))]
         public async Task<IActionResult> List([FromQuery] ProductPagedRequest request)
         {
             var pageData = await _productAppService.GetListAsync(request);

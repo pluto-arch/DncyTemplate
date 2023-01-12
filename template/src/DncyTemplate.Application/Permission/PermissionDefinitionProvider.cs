@@ -24,14 +24,14 @@ public class PermissionDefinitionProvider : IPermissionDefinitionProvider
 
         // 设备
         var deviceGroup = context.AddGroup(DevicesPermission.GroupName, "设备管理");
-        var dpm= deviceGroup.AddPermission(DevicesPermission.Devices.Default, "设备列表");
+        var dpm = deviceGroup.AddPermission(DevicesPermission.Devices.Default, "设备列表");
         dpm.AddChild(DevicesPermission.Devices.Detail, "设备详情");
         dpm.AddChild(DevicesPermission.Devices.Create, "新增设备");
         dpm.AddChild(DevicesPermission.Devices.Edit, "编辑设备");
         dpm.AddChild(DevicesPermission.Devices.Delete, "删除设备");
 
 
-        
+
         // 角色
         var roleGroup = context.AddGroup(RolePermission.GroupName, "角色管理");
         var rpm = roleGroup.AddPermission(RolePermission.Roles.Default, "角色列表");

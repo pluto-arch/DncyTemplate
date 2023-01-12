@@ -1,8 +1,6 @@
 ﻿using Dncy.MultiTenancy;
 
 using DncyTemplate.Domain.Infra;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.Interceptor;
@@ -20,18 +18,24 @@ public class DataChangeSaveChangesInterceptor : SaveChangesInterceptor
     public override InterceptionResult<int> SavingChanges(DbContextEventData eventData,
            InterceptionResult<int> result)
     {
-        MultiTenancyTracking(eventData.Context);
-        SoftDeleteTracking(eventData.Context);
-        DispatchDomainEventsAsync(eventData.Context).Wait();
+        if (eventData.Context is not null)
+        {
+            MultiTenancyTracking(eventData.Context);
+            SoftDeleteTracking(eventData.Context);
+            DispatchDomainEventsAsync(eventData.Context).Wait();
+        }
         return base.SavingChanges(eventData, result);
     }
 
     public override async ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData,
         InterceptionResult<int> result, CancellationToken cancellationToken = default)
     {
-        MultiTenancyTracking(eventData.Context);
-        SoftDeleteTracking(eventData.Context);
-        await DispatchDomainEventsAsync(eventData.Context, cancellationToken);
+        if (eventData.Context is not null)
+        {
+            MultiTenancyTracking(eventData.Context);
+            SoftDeleteTracking(eventData.Context);
+            await DispatchDomainEventsAsync(eventData.Context, cancellationToken);
+        }
         return await base.SavingChangesAsync(eventData, result, cancellationToken);
     }
 

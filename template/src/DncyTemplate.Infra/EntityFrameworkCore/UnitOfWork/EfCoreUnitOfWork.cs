@@ -10,25 +10,12 @@ public class EfCoreUnitOfWork<TContext> : IUnitOfWork<TContext> where TContext :
     private IServiceProvider _serviceProvider;
     private bool disposedValue;
 
-    public EfCoreUnitOfWork(TContext rootContext, UnitOfWorkScopeManager uowScopeManager)
+    public EfCoreUnitOfWork(TContext rootContext)
     {
         _currenDbContext = rootContext ?? throw new ArgumentNullException(nameof(rootContext));
-        if (uowScopeManager != null)
-        {
-            uowScopeManager.OnScopeChanged += UowScopeManager_OnScopeChanged;
-        }
     }
 
     public TContext Context => GetDbContext();
-
-
-    private async Task UowScopeManager_OnScopeChanged(IServiceProvider provider)
-    {
-        _serviceProvider = provider ?? throw new ArgumentNullException(nameof(provider));
-        _currenDbContext = _serviceProvider.GetRequiredService<TContext>();
-        await Task.CompletedTask;
-    }
-
 
     public TContext GetDbContext() => _currenDbContext;
 

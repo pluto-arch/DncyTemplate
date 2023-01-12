@@ -1,5 +1,7 @@
 ﻿using DncyTemplate.Application.AppServices.Product;
+using DncyTemplate.Application.Command.Product;
 using DncyTemplate.Application.Models.Product;
+using MediatR;
 using System.ComponentModel.DataAnnotations;
 
 namespace DncyTemplate.Api.Controllers.v2
@@ -14,6 +16,8 @@ namespace DncyTemplate.Api.Controllers.v2
         [AutoInject]
         private readonly IProductAppService _productAppService;
 
+        [AutoInject]
+        private readonly IMediator _mediator;
 
         /// <summary>
         /// 获取产品列表
@@ -47,9 +51,9 @@ namespace DncyTemplate.Api.Controllers.v2
         /// <returns></returns>
         [HttpPost]
         [Produces(typeof(ProductDto))]
-        public async Task<ApiResult> CreateAsync([FromForm] ProductCreateRequest request)
+        public async Task<ApiResult> CreateAsync([FromForm] CreateProductCommand request)
         {
-            var productDto = await _productAppService.CreateAsync(request);
+            var productDto = await _mediator.Send(request);
             return this.Success(productDto);
         }
 
