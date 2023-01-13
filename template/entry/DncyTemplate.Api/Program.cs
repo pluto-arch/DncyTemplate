@@ -34,8 +34,8 @@ public class Program
             .ConfigureWebHostDefaults(webhost =>
             {
                 webhost.UseStartup<Startup>()
-                        .UseIISIntegration()
                         .CaptureStartupErrors(false);
+
             })
             .UseSerilog(dispose: true)
             .Build();

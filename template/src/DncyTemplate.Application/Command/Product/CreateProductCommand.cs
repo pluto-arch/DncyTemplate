@@ -6,7 +6,7 @@ namespace DncyTemplate.Application.Command.Product
     public class CreateProductCommand : IRequest<ProductDto>
     {
         [Required(ErrorMessage = "ValueIsRequired")]
-        [StringLength(maximumLength: 10, MinimumLength = 3, ErrorMessage = "LengthLimit")]
+        [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessage = "LengthLimit")]
         [Display(Name = "ProductName")]
         public string Name { get; set; }
 

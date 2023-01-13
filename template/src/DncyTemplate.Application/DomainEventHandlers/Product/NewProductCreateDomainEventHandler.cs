@@ -19,7 +19,7 @@ public partial class NewProductCreateDomainEventHandler : INotificationHandler<N
         await Task.Delay(20, cancellationToken);
         _logger.LogInformation("处理 ：{domainEventName} 领域事件完成", nameof(NewProductCreateDomainEvent));
 
-        notification.Prod.Remark = "domain event updated";
+        notification.Prod.Remark = $"domain event updated {DateTimeOffset.UtcNow.Ticks}";
 
         // 添加集成事件到信箱
         _integrationEventBox.AddAndSaveEvent($"新产品创建了，{notification.Prod.Id}");
