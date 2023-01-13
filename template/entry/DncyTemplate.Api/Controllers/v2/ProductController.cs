@@ -51,7 +51,7 @@ namespace DncyTemplate.Api.Controllers.v2
         /// <returns></returns>
         [HttpPost]
         [Produces(typeof(ProductDto))]
-        public async Task<ApiResult> CreateAsync([FromBody]CreateProductCommand request)
+        public async Task<ApiResult> CreateAsync([FromBody] CreateProductCommand request)
         {
             var productDto = await _mediator.Send(request);
             return this.Success(productDto);

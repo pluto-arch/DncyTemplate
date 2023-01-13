@@ -70,17 +70,6 @@ public static class EntityFrameworkServiceExtension
     private static void AddUnitofWork(this IServiceCollection service)
     {
         service.AddScoped(typeof(IUnitOfWork<>), typeof(EfCoreUnitOfWork<>));
-        var assembly = Assembly.GetExecutingAssembly();
-        var context = assembly.GetTypes()
-            .Where(x => x.GetInterface(nameof(IUowDbContext)) != null && !x.Name.Contains("Migration")).ToList();
-        service.Configure<UnitOfWorkCollectionOptions>(s =>
-        {
-            foreach (var item in context)
-            {
-                var uowType = typeof(IUnitOfWork<>).MakeGenericType(item);
-                s.DbContexts.Add(item.Name, uowType);
-            }
-        });
     }
 
 
