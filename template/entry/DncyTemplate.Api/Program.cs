@@ -1,4 +1,6 @@
-﻿using ILogger = Serilog.ILogger;
+﻿using Serilog.Core;
+using Serilog.Events;
+using ILogger = Serilog.ILogger;
 
 namespace DncyTemplate.Api;
 public class Program

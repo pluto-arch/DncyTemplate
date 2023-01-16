@@ -20,7 +20,6 @@ public class PrductBackgroundService : BackgroundService
     {
         while (!stoppingToken.IsCancellationRequested)
         {
-            await Task.Delay(30, stoppingToken);
             await PublishOutstandingIntegrationEvents(stoppingToken);
         }
     }

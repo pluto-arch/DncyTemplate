@@ -6,7 +6,7 @@ using System.Web;
 
 namespace DncyTemplate.Api.Infra;
 
-public class FirewallAttribute : ActionFilterAttribute
+public class FirewallFilterAttribute : ActionFilterAttribute
 {
     public int Limit { get; set; }
 

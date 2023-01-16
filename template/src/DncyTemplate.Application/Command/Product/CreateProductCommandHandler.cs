@@ -25,7 +25,7 @@ namespace DncyTemplate.Application.Command.Product
             entity.Id = SnowFlakeId.Generator.GetUniqueId();
             entity.CreationTime = DateTimeOffset.Now;
             entity.AddDomainEvent(new NewProductCreateDomainEvent(entity));
-            entity = await _repository.InsertAsync(entity, true);
+            entity = await _repository.InsertAsync(entity, true, cancellationToken);
             return _mapper.Map<ProductDto>(entity);
         }
     }

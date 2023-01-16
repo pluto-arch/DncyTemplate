@@ -1,4 +1,5 @@
-﻿using DncyTemplate.Api.Infra.ExceptionHandlers;
+﻿using DncyTemplate.Api.Infra.AuditLog;
+using DncyTemplate.Api.Infra.ExceptionHandlers;
 using DncyTemplate.Api.Infra.LocalizerSetup;
 using DncyTemplate.Api.Models.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Versioning;
@@ -28,7 +29,9 @@ public class InfraHostingStartup : IHostingStartup
                     options.ModelBinderProviders.Insert(0, new SortingBinderProvider());
 
                     options.Filters.Add<ActionExecptionFilter>();
-                    //options.Filters.Add<UowActionFilter>();
+
+                    options.Filters.Add(typeof(AuditLogActionFilter));
+
                     // 本地化 默认的模型验证信息
                     var F = services.BuildServiceProvider().GetService<IStringLocalizerFactory>();
                     // 默认的数据验证本地化
