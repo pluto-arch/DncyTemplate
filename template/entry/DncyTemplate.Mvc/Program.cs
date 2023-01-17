@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Options;
+using Serilog.Enrichers.Sensitive;
 using ILogger = Serilog.ILogger;
 
 namespace DncyTemplate.Mvc;
@@ -66,6 +68,11 @@ public class Program
         return new LoggerConfiguration()
             .ReadFrom.Configuration(configuration)
             .Enrich.WithProperty("AppName", applicationName)
+            .Enrich.WithSensitiveDataMasking(o =>
+            {
+                // TODO config Sensitive filter rules
+                // https://github.com/serilog-contrib/Serilog.Enrichers.Sensitive
+            })
             .CreateLogger();
     }
     #endregion
