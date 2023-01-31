@@ -18,18 +18,16 @@ namespace DncyTemplate.Application.Behaviors
         {
             string typeName = request?.GetGenericTypeName();
             TResponse response = default;
-            using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled))
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            try
             {
-                try
-                {
-                    response = await next();
-                    scope.Complete();
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "ERROR Handling transaction for {CommandName} ({@Command})", typeName, request);
-                    throw;
-                }
+                response = await next();
+                scope.Complete();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "ERROR Handling transaction for {CommandName} ({@Command})", typeName, request);
+                throw;
             }
 
             return response;
