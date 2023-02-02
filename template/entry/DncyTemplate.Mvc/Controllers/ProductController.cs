@@ -14,31 +14,44 @@ namespace DncyTemplate.Mvc.Controllers
         [AutoInject]
         private readonly IProductAppService _productAppService;
 
-        public async Task<IActionResult> Index([FromQuery] ProductPagedRequest request)
-        {
-            var pageData = await _productAppService.GetListAsync(request);
-            ViewBag.Keywords = request.Keyword;
-            return View(pageData);
-        }
-
-        [HttpGet]
-        public IActionResult Create()
+        public IActionResult Index()
         {
             return View();
         }
 
-        [HttpPost]
-        [AutoValidateAntiforgeryToken]
-        public async Task<IActionResult> CreateAsync([FromForm]ProductCreateRequest request)
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IPagedList<ProductListItemDto>))]
+        public async Task<IActionResult> List([FromQuery] ProductPagedRequest request)
         {
-            if (!ModelState.IsValid)
+            var pageData = await _productAppService.GetListAsync(request);
+            return Json(new
             {
-                return View(request);
-            }
-
-            var result = await _productAppService.CreateAsync(request);
-            return RedirectToAction("Index");
+                code = 200,
+                count = pageData.TotalCount,
+                msg = "操作成功",
+                data = pageData.Items
+            });
         }
+
+
+        // [HttpGet]
+        // public IActionResult Create()
+        // {
+        //     return View();
+        // }
+        //
+        // [HttpPost]
+        // [AutoValidateAntiforgeryToken]
+        // public async Task<IActionResult> CreateAsync([FromForm]ProductCreateRequest request)
+        // {
+        //     if (!ModelState.IsValid)
+        //     {
+        //         return View(request);
+        //     }
+        //
+        //     var result = await _productAppService.CreateAsync(request);
+        //     return RedirectToAction("Index");
+        // }
 
     }
 }

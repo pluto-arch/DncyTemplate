@@ -8,7 +8,7 @@ namespace DncyTemplate.Application.AppServices.Generics;
 
 public abstract class AlternateKeyCrudAppService<TEntity, TKey, TDto, TGetListRequest, TListItemDto, TUpdateRequest, TCreateRequest>
     where TEntity : BaseEntity
-    where TGetListRequest:PageRequest
+    where TGetListRequest : PageRequest
 {
     protected readonly IRepository<TEntity> _repository;
 
@@ -94,7 +94,7 @@ public abstract class AlternateKeyCrudAppService<TEntity, TKey, TDto, TGetListRe
     {
         if (requestModel is PageRequest model)
         {
-            return query.Skip((model.PageNo - 1) * model.PageSize).Take(model.PageSize);
+            return query.Skip(( model.PageNo - 1 ) * model.PageSize).Take(model.PageSize);
         }
         return query;
     }

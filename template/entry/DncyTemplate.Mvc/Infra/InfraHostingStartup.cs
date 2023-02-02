@@ -1,14 +1,10 @@
-﻿using System.Globalization;
-using System.IO.Compression;
-
-using DncyTemplate.Mvc.Infra.Authorization;
-using DncyTemplate.Mvc.Infra.LocalizerSetup;
+﻿using DncyTemplate.Mvc.Infra.LocalizerSetup;
 using DncyTemplate.Mvc.Models.ModelBinding;
-
-using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Localization;
+using System.IO.Compression;
+using DncyTemplate.Mvc.Infra.AuditLog;
 
 [assembly: HostingStartup(typeof(DncyTemplate.Mvc.Infra.InfraHostingStartup))]
 namespace DncyTemplate.Mvc.Infra;
@@ -20,8 +16,6 @@ public class InfraHostingStartup : IHostingStartup
     {
         builder.ConfigureServices((_, services) =>
         {
-
-
             #region 本地化
             services.AddAppLocalization();
             #endregion
@@ -30,6 +24,8 @@ public class InfraHostingStartup : IHostingStartup
             services.AddControllersWithViews(options =>
                 {
                     options.ModelBinderProviders.Insert(0, new SortingBinderProvider());
+
+                    options.Filters.Add<AuditLogActionFilter>();
 
                     var F = services.BuildServiceProvider().GetService<IStringLocalizerFactory>();
                     options.SetUpDefaultDataAnnotation(F);

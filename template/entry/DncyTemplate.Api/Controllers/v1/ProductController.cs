@@ -1,8 +1,8 @@
-﻿using DncyTemplate.Domain.Aggregates.Product;
-using DncyTemplate.Domain.DomainEvents.Product;
-using DncyTemplate.Domain.Repository;
-using DncyTemplate.Infra.EntityFrameworkCore.Extension;
-using Microsoft.EntityFrameworkCore;
+﻿using Dncy.MultiTenancy;
+using DncyTemplate.Application.AppServices.Product;
+using Microsoft.AspNetCore.Authorization;
+using System.ComponentModel.DataAnnotations;
+using AppModelAlias = DncyTemplate.Application.Models;
 
 namespace DncyTemplate.Api.Controllers.v1
 {
@@ -11,25 +11,37 @@ namespace DncyTemplate.Api.Controllers.v1
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiVersion("1.0")]
     [AutoResolveDependency]
+    [Authorize]
     public partial class ProductController : ControllerBase, IApiResultWapper
     {
         [AutoInject]
-        private readonly IRepository<Product> _productsRepository;
+        private readonly IProductAppService _productsRepository;
+
+        [AutoInject]
+        private readonly ICurrentTenant _currentTenant;
 
         /// <summary>
         /// 获取产品列表
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Produces(typeof(IPagedList<Product>))]
+        [Produces(typeof(IPagedList<AppModelAlias.Product.ProductListItemDto>))]
         public async Task<ApiResult> GetAsync(int pageNo = 1, [Range(minimum: 1, maximum: 255, ErrorMessage = "PageSizeMessage")] byte pageSize = 20)
         {
             if (pageSize <= 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(pageSize));
             }
-            var res = await _productsRepository.AsNoTracking().ToPagedListAsync(pageNo, pageSize);
-            return this.Success(res);
+            var res = await _productsRepository.GetListAsync(new AppModelAlias.Product.ProductPagedRequest
+            {
+                PageNo = pageNo,
+                PageSize = pageSize
+            })!;
+            return this.Success(new
+            {
+                tenant = _currentTenant.Id,
+                products = res
+            });
         }
 
 
@@ -38,26 +50,15 @@ namespace DncyTemplate.Api.Controllers.v1
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        [Produces(typeof(Product))]
+        [Produces(typeof(AppModelAlias.Product.ProductDto))]
         public async Task<ApiResult> PostAsync([FromForm] string name)
         {
-            var product = new Product
+            var productDto = await _productsRepository.CreateAsync(new Application.Models.Product.ProductCreateRequest
             {
-                Id = $"P{DateTime.Now.Ticks}",
                 Name = name,
-                Remark = $"{name} remarks",
-                CreationTime = DateTimeOffset.Now,
-            };
-            product.AddDevice(new Device
-            {
-                Name = "admin",
-                SerialNo = "sssssss",
-                Coordinate = (GeoCoordinate)"123.22,31.333",
-                Online = true,
+                Remark = $"{name} remark"
             });
-            product.AddDomainEvent(new NewProductCreateDomainEvent(product));
-            product = await _productsRepository.InsertAsync(product);
-            return this.Success(product);
+            return this.Success(productDto);
         }
     }
 }

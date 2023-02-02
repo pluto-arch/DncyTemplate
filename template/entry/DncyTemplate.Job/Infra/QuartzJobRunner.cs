@@ -72,8 +72,8 @@ public class QuartzJobRunner : IJob
                     }
                     else
                     {
-                        IUnitOfWork<DeviceCenterDbContext> uow = scope.ServiceProvider
-                            .GetRequiredService<IUnitOfWork<DeviceCenterDbContext>>();
+                        IUnitOfWork<DncyTemplateDbContext> uow = scope.ServiceProvider
+                            .GetRequiredService<IUnitOfWork<DncyTemplateDbContext>>();
                         _logger.LogInformation("{jobType} executing...", jobType.Name);
                         await jobToExecute.Execute(context);
                         await uow.SaveChangesAsync();

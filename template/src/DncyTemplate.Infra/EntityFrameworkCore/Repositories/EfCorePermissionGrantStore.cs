@@ -36,26 +36,26 @@ public class EfCorePermissionGrantStore : IPermissionGrantStore
     }
 
     /// <inheritdoc />
-    public async Task GrantAsync(string name, string providerName, string providerKey)
+    public async Task SaveAsync(string name, string providerName, string providerKey)
     {
         await _permissionGrants.InsertAsync(new PermissionGrant(name, providerName, providerKey), true);
     }
 
     /// <inheritdoc />
-    public async Task GrantAsync(string[] name, string providerName, string providerKey)
+    public async Task SaveAsync(string[] name, string providerName, string providerKey)
     {
         var tempList = name.Select(x => new PermissionGrant(x, providerName, providerKey));
         await _permissionGrants.InsertAsync(tempList, true);
     }
 
     /// <inheritdoc />
-    public async Task CancleGrantAsync(string name, string providerName, string providerKey)
+    public async Task RemoveGrantAsync(string name, string providerName, string providerKey)
     {
         await _permissionGrants.DeleteAsync(x => x.Name == name && x.ProviderName == providerName && x.ProviderKey == providerKey, true);
     }
 
     /// <inheritdoc />
-    public async Task CancleGrantAsync(string[] name, string providerName, string providerKey)
+    public async Task RemoveGrantAsync(string[] name, string providerName, string providerKey)
     {
         await _permissionGrants.DeleteAsync(x => name.Contains(x.Name) && x.ProviderName == providerName && x.ProviderKey == providerKey, true);
     }

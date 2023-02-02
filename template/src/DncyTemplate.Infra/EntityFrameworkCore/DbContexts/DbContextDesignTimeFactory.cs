@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore.Design;
 namespace DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 
 
-public class DbContextDesignTimeFactory : IDesignTimeDbContextFactory<DeviceCenterMigrationDbContext>
+public class DbContextDesignTimeFactory : IDesignTimeDbContextFactory<DncyTemplateMigrationDbContext>
 {
-    public DeviceCenterMigrationDbContext CreateDbContext(string[] args)
+    public DncyTemplateMigrationDbContext CreateDbContext(string[] args)
     {
-        DbContextOptionsBuilder<DeviceCenterMigrationDbContext> optionsBuilder = new();
+        DbContextOptionsBuilder<DncyTemplateMigrationDbContext> optionsBuilder = new();
         optionsBuilder.UseSqlServer(@"Server=192.168.0.126,1433;Database=Pnct_Default;User Id=sa;Password=970307lBx;Trusted_Connection = False;");
-        return new DeviceCenterMigrationDbContext(optionsBuilder.Options);
+        return new DncyTemplateMigrationDbContext(optionsBuilder.Options);
     }
 }
 
@@ -18,9 +18,9 @@ public class DbContextDesignTimeFactory : IDesignTimeDbContextFactory<DeviceCent
 /// <summary>
 /// ef迁移使用
 /// </summary>
-public class DeviceCenterMigrationDbContext : DbContext
+public class DncyTemplateMigrationDbContext : DbContext
 {
-    public DeviceCenterMigrationDbContext(DbContextOptions<DeviceCenterMigrationDbContext> options)
+    public DncyTemplateMigrationDbContext(DbContextOptions<DncyTemplateMigrationDbContext> options)
         : base(options)
     {
     }

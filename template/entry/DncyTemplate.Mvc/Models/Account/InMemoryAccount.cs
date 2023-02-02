@@ -1,4 +1,6 @@
-﻿namespace DncyTemplate.Mvc.Models.Account
+﻿using System.ComponentModel;
+
+namespace DncyTemplate.Mvc.Models.Account
 {
     public class InMemoryAccount
     {
@@ -54,19 +56,22 @@
         public string Tenant { get; set; }
     }
 
-    public enum RoleEnum:byte
+    public enum RoleEnum : byte
     {
         /// <summary>
         /// 超级管理员
         /// </summary>
+        [Description("超级管理员")]
         SA,
         /// <summary>
         /// 管理员
         /// </summary>
+        [Description("管理员")]
         Admin,
         /// <summary>
         /// 普通成员
         /// </summary>
+        [Description("普通成员")]
         Member
     }
 }

@@ -25,11 +25,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="EntityFrameworkCore\DbContexts\" />
 	  <Folder Include="EntityFrameworkCore\Extension\" />
 	  <Folder Include="Constants\" />
 	  <Folder Include="Extensions\" />
-	  <Folder Include="Utils\" />
+	  <Folder Include="Migrations\" />
 	</ItemGroup>
 
 </Project>

@@ -1,0 +1,27 @@
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>@(ViewData["Title"] ?? "µÇÂ¼")</title>
+    <link rel="shortcut icon" href="~/images/favicon.ico" asp-append-version="true">
+    <link rel="stylesheet" href="~/libs/pear/css/pear.css" asp-append-version="true"/>
+    @await RenderSectionAsync("styles", required: false)
+</head>
+<body style="background-image: url(/images/background.svg);background-color: #665fbc;" style="background-size: cover;">
+
+@RenderBody()
+
+<script src="~/libs/jquery/jquery-3.3.1.min.js" asp-append-version="true"></script>
+<script src="~/libs/layui/layui.js" asp-append-version="true"></script>
+<script src="~/libs/pear/pear.js" asp-append-version="true"></script>
+@await Html.PartialAsync("_ValidationScriptsPartial")
+@await RenderSectionAsync("scripts", required: false)
+</body>
+</html>

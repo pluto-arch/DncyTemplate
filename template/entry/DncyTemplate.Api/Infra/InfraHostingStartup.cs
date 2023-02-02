@@ -1,11 +1,11 @@
-﻿using System.IO.Compression;
-
+﻿using DncyTemplate.Api.Infra.AuditLog;
 using DncyTemplate.Api.Infra.ExceptionHandlers;
 using DncyTemplate.Api.Infra.LocalizerSetup;
 using DncyTemplate.Api.Models.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Localization;
+using System.IO.Compression;
 
 [assembly: HostingStartup(typeof(InfraHostingStartup))]
 namespace DncyTemplate.Api.Infra;
@@ -29,6 +29,9 @@ public class InfraHostingStartup : IHostingStartup
                     options.ModelBinderProviders.Insert(0, new SortingBinderProvider());
 
                     options.Filters.Add<ActionExecptionFilter>();
+
+                    options.Filters.Add<AuditLogActionFilter>();
+
                     // 本地化 默认的模型验证信息
                     var F = services.BuildServiceProvider().GetService<IStringLocalizerFactory>();
                     // 默认的数据验证本地化
@@ -52,7 +55,6 @@ public class InfraHostingStartup : IHostingStartup
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 });
             #endregion
-
 
             #region response Compression
             services.AddResponseCompression(options =>
@@ -110,7 +112,7 @@ public class InfraHostingStartup : IHostingStartup
             {
                 options.AddPolicy(AppConstant.DEFAULT_CORS_NAME, builder =>
                 {
-                    builder.SetIsOriginAllowed(_=>true)
+                    builder.SetIsOriginAllowed(_ => true)
                     .AllowAnyHeader()
                     .AllowAnyMethod();
                 });

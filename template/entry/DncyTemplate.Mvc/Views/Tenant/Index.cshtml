@@ -1,0 +1,110 @@
+﻿@{
+    ViewData["Title"] = "租户管理";
+}
+
+
+<div class="layui-card">
+    <div class="layui-card-body">
+        <form class="layui-form form-search" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">租户名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="serviceName" placeholder="请输入租户名称" autocomplete="off" class="layui-input">
+                </div>
+                <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="tenant-query">
+                    <i class="layui-icon layui-icon-search"></i>
+                    查询
+                </button>
+                <button type="reset" class="pear-btn pear-btn-md">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    重置
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="layui-card">
+    <div class="layui-card-body">
+        <table id="tenant-table" lay-filter="tenant-table"></table>
+    </div>
+</div>
+
+<script type="text/html" id="tenant-status">
+    <input type="checkbox" name="switch" lay-skin="switch" value="{{d.tenantId}}" checked="{{d.isAvaliable}}" lay-text="启用|停用" lay-filter="tenant-enable"/>
+</script>
+
+
+<script type="text/html" id="tenant-toolbar">
+    <button class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
+        <i class="layui-icon layui-icon-add-1"></i>
+        新增
+    </button>
+</script>
+
+
+@section scripts{
+    <script type="text/javascript">
+        layui.use(['abp', 'form', 'table'], function () {
+            var $ = layui.$;
+            var form = layui.form;
+            var table = layui.table;
+           
+            form.render();
+
+            form.on('submit(tenant-query)', function (data) {
+                table.reload('tenant-table', {
+                    where: data.field,
+                    page: {
+                        curr: 1
+                    }
+                })
+                return false;
+            });
+
+            table.render({
+                elem: '#tenant-table',
+                url: "@Url.Action("List", "Tenant")",
+                page: false,
+                where: {},
+                height: 'full-150',
+                parseData: function (res) {
+                    return res;
+                },
+                response: {
+                    statusCode: 200 //规定成功的状态码，默认：0
+                },
+                cols: [
+                    [
+                        { title: 'ID', field: 'tenantId', align: 'center', width: 80,type:'checkbox' },
+                        { title: 'ID', field: 'tenantId', align: 'center', width: 180 },
+                        { title: '租户名称', field: 'tenantName', align: 'center' },
+                        { title: '状态', field: 'isAvaliable', align: 'center', templet: "#tenant-status" }
+                    ]
+                ],
+                skin: 'line',
+                toolbar: 'true',
+                toolbar: '#tenant-toolbar',
+                defaultToolbar: [{
+                    layEvent: 'refresh',
+                    icon: 'layui-icon-refresh',
+                }]
+            });
+
+            table.on('toolbar(tenant-table)', function (obj) {
+                if (obj.event === 'refresh') {
+                    window.refresh();
+                }
+            });
+
+
+            form.on('switch(tenant-enable)', function (obj) {
+                layer.tips(this.value + ' ' + this.name + '：' + obj.elem.checked, obj.othis);
+            });
+
+            window.refresh = function () {
+                table.reload('tenant-table');
+            }
+        });
+    </script>
+}

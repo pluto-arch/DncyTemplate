@@ -1,0 +1,26 @@
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>@(ViewData["Title"] ?? "后台管理系统")</title>
+    <link rel="shortcut icon" href="~/images/favicon.ico" asp-append-version="true">
+    <link rel="stylesheet" href="~/libs/pear/css/pear.css" asp-append-version="true" />
+    <style id="pearadmin-bg-color"></style>
+    @await RenderSectionAsync("styles", required: false)
+</head>
+<body class="layui-layout-body pear-admin">
+
+@RenderBody()
+
+<script src="~/libs/layui/layui.js" asp-append-version="true"></script>
+<script src="~/libs/pear/pear.js" asp-append-version="true"></script>
+<script src="~/libs/signalr/signalr.js" asp-append-version="true"></script>
+@await RenderSectionAsync("scripts", required: false)
+</body>
+</html>

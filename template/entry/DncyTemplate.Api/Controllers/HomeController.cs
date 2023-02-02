@@ -1,5 +1,5 @@
-﻿using Dncy.MultiTenancy;
-using Microsoft.Extensions.Localization;
+﻿using Microsoft.Extensions.Localization;
+using System.ComponentModel.DataAnnotations;
 
 namespace DncyTemplate.Api.Controllers
 {
@@ -12,7 +12,7 @@ namespace DncyTemplate.Api.Controllers
         private readonly IStringLocalizer<SharedResource> _stringLocalizer;
 
         [HttpGet]
-        public ApiResult TestLocalize()
+        public ApiResult TestLocalize([EmailAddress] string name)
         {
             var text = _stringLocalizer[SharedResource.Hello];
             return this.Success<string>(text);

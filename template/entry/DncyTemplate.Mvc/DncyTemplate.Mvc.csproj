@@ -11,13 +11,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="Views\新文件夹\**" />
-	  <Content Remove="Views\新文件夹\**" />
-	  <EmbeddedResource Remove="Views\新文件夹\**" />
-	  <None Remove="Views\新文件夹\**" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <Content Remove="bundleconfig.json" />
 	</ItemGroup>
 
@@ -34,6 +27,7 @@
 		<PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
 		<PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0" />
 		<PackageReference Include="Serilog.Enrichers.Process" Version="2.0.2" />
+		<PackageReference Include="Serilog.Enrichers.Sensitive" Version="1.5.1" />
 		<PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
 		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
 	</ItemGroup>
@@ -68,6 +62,9 @@
 	<ItemGroup>
 	  <_ContentIncludedByDefault Remove="Views\LayoutComponents\_TopHeaderLeft.cshtml" />
 	  <_ContentIncludedByDefault Remove="Views\Shared\_MainLayout.cshtml" />
+	  <_ContentIncludedByDefault Remove="Views\Shared\Templates\ProductListTemplate.cshtml" />
+	  <_ContentIncludedByDefault Remove="Views\Product\Create.cshtml" />
+	  <_ContentIncludedByDefault Remove="Views\Product\Index.cshtml" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -80,14 +77,10 @@
 
 	<ItemGroup>
 	  <Folder Include="HtmlHelpers\" />
+	  <Folder Include="Infra\AuditLog\" />
 	  <Folder Include="Models\Account\" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Include="bundleconfig.json" />
-	  <None Include="wwwroot\lib\layui\font\iconfont.svg" />
-	  <None Include="wwwroot\lib\layui\font\iconfont.woff2" />
-	  <None Include="wwwroot\lib\layui\layui.js" />
+	  <Folder Include="Models\Permission\" />
+	  <Folder Include="BackgroundServices\" />
 	</ItemGroup>
 
 	<ItemGroup>

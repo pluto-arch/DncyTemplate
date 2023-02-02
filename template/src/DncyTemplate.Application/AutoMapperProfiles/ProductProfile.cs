@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
+using DncyTemplate.Application.Command.Product;
 using DncyTemplate.Application.Models.Product;
 using DncyTemplate.Domain.Aggregates.Product;
 
 namespace DncyTemplate.Application.AutoMapperProfiles;
 
-public class ProductProfile: Profile
+public class ProductProfile : Profile
 {
     public ProductProfile()
     {
@@ -20,6 +21,10 @@ public class ProductProfile: Profile
             .ForMember(x => x.CreateTime, o => o.MapFrom(z => z.CreationTime.DateTime));
 
         CreateMap<ProductCreateRequest, Product>();
+
+
+        CreateMap<CreateProductCommand, Product>();
+
 
         CreateMap<ProductUpdateRequest, Product>();
     }

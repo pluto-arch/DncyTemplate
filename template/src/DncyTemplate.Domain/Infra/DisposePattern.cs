@@ -23,17 +23,16 @@ public class DisposeAction : IDisposable
 
 public class AsyncDisposeAction : IAsyncDisposable
 {
-    private readonly Action _action;
+    private readonly Func<Task> _action;
 
-    public AsyncDisposeAction(Action action)
+    public AsyncDisposeAction(Func<Task> action)
     {
         _action = action;
     }
 
-    public ValueTask DisposeAsync()
+    public async ValueTask DisposeAsync()
     {
-        _action();
+        await _action();
         GC.SuppressFinalize(this);
-        return ValueTask.CompletedTask;
     }
 }

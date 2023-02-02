@@ -8,7 +8,7 @@
         "System": "Error",
         "Microsoft": "Error",
         "Microsoft.EntityFrameworkCore": "Error",
-        "Microsoft.EntityFrameworkCore.Database.Command": "Information"
+        "Microsoft.EntityFrameworkCore.Database.Command": "Error"
       }
     },
     "WriteTo": [

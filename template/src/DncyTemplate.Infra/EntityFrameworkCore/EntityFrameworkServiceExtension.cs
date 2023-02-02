@@ -9,7 +9,6 @@ using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 using DncyTemplate.Infra.EntityFrameworkCore.Interceptor;
 using DncyTemplate.Infra.EntityFrameworkCore.Repositories;
 using DncyTemplate.Infra.EntityFrameworkCore.UnitOfWork;
-using Microsoft.EntityFrameworkCore;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore;
 
@@ -26,13 +25,13 @@ public static class EntityFrameworkServiceExtension
     {
         service.AddEntityFrameworkSqlServer();
         service.AddSingleton<IConnectionStringResolve, DefaultConnectionStringResolve>();
-        service.AddDbContextPool<DeviceCenterDbContext>((serviceProvider, optionsBuilder) =>
+        service.AddDbContextPool<DncyTemplateDbContext>((serviceProvider, optionsBuilder) =>
         {
             optionsBuilder.UseSqlServer(configuration.GetConnectionString(DbConstants.DEFAULT_CONNECTIONSTRING_NAME),
                 sqlOptions =>
                 {
                     sqlOptions.MigrationsAssembly(Assembly.GetExecutingAssembly().GetName().Name);
-                    sqlOptions.EnableRetryOnFailure(3, TimeSpan.FromSeconds(10), null);
+                    //sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
                 });
 
             var mediator = serviceProvider.GetService<IDomainEventDispatcher>() ?? NullDomainEventDispatcher.Instance;
@@ -41,15 +40,11 @@ public static class EntityFrameworkServiceExtension
             var connectionStringResolve = serviceProvider.GetRequiredService<IConnectionStringResolve>();
             optionsBuilder.AddInterceptors(new TenantDbConnectionInterceptor(connectionStringResolve, DbConstants.DEFAULT_CONNECTIONSTRING_NAME));
 
-            optionsBuilder.UseInternalServiceProvider(serviceProvider);
-
 #if DEBUG
             optionsBuilder.EnableSensitiveDataLogging();
 #endif
         });
 
-        //分表使用 - 替换ef的缓存，造成性能会下降 并且不能使用 AddDbContextPool.
-        //service.Replace(ServiceDescriptor.Singleton<IModelCacheKeyFactory, DeviceCenterDbContext.DynamicModelCacheKeyFactory>());
 
         service.AddUnitofWork();
         service.AddDefaultRepository();
@@ -71,21 +66,10 @@ public static class EntityFrameworkServiceExtension
     }
 
 
-    
+
     private static void AddUnitofWork(this IServiceCollection service)
     {
         service.AddScoped(typeof(IUnitOfWork<>), typeof(EfCoreUnitOfWork<>));
-        var assembly = Assembly.GetExecutingAssembly();
-        var context = assembly.GetTypes()
-            .Where(x => x.GetInterface(nameof(IUowDbContext)) != null && !x.Name.Contains("Migration")).ToList();
-        service.Configure<UnitOfWorkCollectionOptions>(s =>
-        {
-            foreach (var item in context)
-            {
-                var uowType = typeof(IUnitOfWork<>).MakeGenericType(item);
-                s.DbContexts.Add(item.Name, uowType);
-            }
-        });
     }
 
 

@@ -1,4 +1,5 @@
 ﻿using Dncy.Permission;
+using DncyTemplate.Application.Behaviors;
 using DncyTemplate.Application.Permission;
 using DncyTemplate.Infra.EntityFrameworkCore.Repositories;
 
@@ -14,9 +15,11 @@ namespace DncyTemplate.Application
             services.AddAutoMapper(assemblies.ToArray());
             services.AddMediatR(assemblies.ToArray());
 
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(TransactionBehavior<,>));
+
 
             #region permission
-            services.AddScoped<IPermissionChecker, DefaultPermissionChecker>();
+            services.AddScoped<IPermissionChecker, PermissionChecker>();
             // permission definition 
             services.AddSingleton<IPermissionDefinitionManager, DefaultPermissionDefinitionManager>();
             services.AddSingleton<IPermissionDefinitionProvider, PermissionDefinitionProvider>();

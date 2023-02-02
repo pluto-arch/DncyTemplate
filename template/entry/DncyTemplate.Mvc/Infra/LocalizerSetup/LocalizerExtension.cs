@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Localization;
-using System.Globalization;
-using DncyTemplate.Mvc.Constants;
+﻿using DncyTemplate.Mvc.Constants;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.DataAnnotations;
 using Microsoft.Extensions.Localization;
+using System.Globalization;
 using static DncyTemplate.Mvc.Constants.AppConstant;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace DncyTemplate.Mvc.Infra.LocalizerSetup;
 

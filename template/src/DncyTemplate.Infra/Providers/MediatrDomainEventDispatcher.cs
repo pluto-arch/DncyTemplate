@@ -1,27 +1,21 @@
 ﻿using DncyTemplate.Domain.Infra;
-
 using MediatR;
-
-using Microsoft.Extensions.Logging;
 
 namespace DncyTemplate.Infra.Providers;
 
 public class MediatrDomainEventDispatcher : IDomainEventDispatcher
 {
     private readonly ILogger<MediatrDomainEventDispatcher> _log;
-    private readonly IServiceProvider _serviceProvider;
+    private readonly IMediator _mediator;
 
-    public MediatrDomainEventDispatcher(IServiceProvider serviceProvider, ILogger<MediatrDomainEventDispatcher> log)
+    public MediatrDomainEventDispatcher(IMediator mediator, ILogger<MediatrDomainEventDispatcher> log)
     {
-        _serviceProvider = serviceProvider;
+        _mediator = mediator;
         _log = log;
     }
 
     public async Task Dispatch(INotification domainEvent, CancellationToken cancellationToken = default)
     {
-        using var scope = _serviceProvider.CreateScope();
-        var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-        _log.LogDebug("Dispatching Domain Event as MediatR notification.  EventType: {eventType}", domainEvent.GetType());
-        await mediator.Publish(domainEvent, cancellationToken);
+        await _mediator.Publish(domainEvent, cancellationToken);
     }
 }

@@ -1,15 +1,21 @@
-﻿using Dncy.MultiTenancy;
-using Dncy.Permission;
+﻿using Dncy.Permission;
 using Dncy.Permission.Models;
 using DncyTemplate.Application.Constants;
 
 
 namespace DncyTemplate.Application.Permission;
 
+
+public class PermissionGrantCache
+{
+    // TODO ConcurrentDictionary just as an example
+    public static readonly ConcurrentDictionary<string, string> Cache = new();
+}
+
+
 [AutoResolveDependency]
 public partial class CachedPermissionManager : IPermissionManager
 {
-
     [AutoInject]
     private readonly ILogger<InMemoryPermissionManager> _logger;
 
@@ -19,11 +25,7 @@ public partial class CachedPermissionManager : IPermissionManager
     [AutoInject]
     private readonly IPermissionGrantStore _permissionGrantStore;
 
-    [AutoInject]
-    private readonly ICurrentTenant _currentTenant;
-
-    // TODO ConcurrentDictionary just as an example
-    private static readonly ConcurrentDictionary<string, string> permissionCached = new();
+    private static readonly ConcurrentDictionary<string, string> permissionCached = PermissionGrantCache.Cache;
 
     /// <inheritdoc />
     public async Task<bool> IsGrantedAsync(string name, string providerName, string providerKey)
@@ -40,7 +42,7 @@ public partial class CachedPermissionManager : IPermissionManager
             throw new ArgumentNullException(nameof(names));
         }
 
-        var result = new MultiplePermissionGrantResult();
+        MultiplePermissionGrantResult result = new MultiplePermissionGrantResult();
 
         if (names.Length == 1)
         {
@@ -48,7 +50,7 @@ public partial class CachedPermissionManager : IPermissionManager
             result.Result.Add(name,
                 await IsGrantedAsync(names.First(), providerName, providerKey)
                     ? PermissionGrantResult.Granted
-                    : PermissionGrantResult.Undefined);
+                    : PermissionGrantResult.Prohibited);
             return result;
         }
 
@@ -57,7 +59,7 @@ public partial class CachedPermissionManager : IPermissionManager
         foreach ((string Key, bool IsGranted) in cacheItems)
         {
             result.Result.Add(GetPermissionInfoFormCacheKey(Key).Name,
-                IsGranted ? PermissionGrantResult.Granted : PermissionGrantResult.Undefined);
+                IsGranted ? PermissionGrantResult.Granted : PermissionGrantResult.Prohibited);
         }
 
         return result;
@@ -69,17 +71,17 @@ public partial class CachedPermissionManager : IPermissionManager
 
     protected virtual async Task<(string Key, bool IsGranted)> GetCacheItemAsync(string name, string providerName, string providerKey)
     {
-        string cacheKey = string.Format(CacheKeyFormatConstants.Permission_Grant_CacheKey_Format, _currentTenant.Id, providerName, providerKey, name);
-        _logger.LogDebug("PermissionStore.GetCacheItemAsync: {cacheKey}", cacheKey);
+        string cacheKey = string.Format(CacheKeyFormatConstants.Permission_Grant_CacheKey_Format, providerName, providerKey, name);
+        _logger.LogDebug($"PermissionStore.GetCacheItemAsync: {cacheKey}");
         permissionCached.TryGetValue(cacheKey, out string value);
 
         if (value != null)
         {
-            _logger.LogDebug("Found in the cache: {cacheKey}", cacheKey);
+            _logger.LogDebug($"Found in the cache: {cacheKey}");
             return (cacheKey, Convert.ToBoolean(value));
         }
 
-        _logger.LogDebug("Not found in the cache: {cacheKey}", cacheKey);
+        _logger.LogDebug($"Not found in the cache: {cacheKey}");
         return await SetCacheItemsAsync(providerName, providerKey, name);
     }
 
@@ -88,22 +90,22 @@ public partial class CachedPermissionManager : IPermissionManager
     protected virtual async Task<(string Key, bool IsGranted)> SetCacheItemsAsync(string providerName, string providerKey, string currentName)
     {
         var permissions = _permissionDefinitionManager.GetPermissions();
-        _logger.LogDebug("Getting all granted permissions from the repository for this provider name,key: {providerName},{providerKey}", providerName, providerKey);
+        _logger.LogDebug($"Getting all granted permissions from the repository for this provider name,key: {providerName},{providerKey}");
         var grantedPermissionsHashSet = new HashSet<string>(( await _permissionGrantStore.GetListAsync(providerName, providerKey) ).Select(p => p.Name));
-        _logger.LogDebug("Setting the cache items. Count: {count}", permissions.Count);
+        _logger.LogDebug($"Setting the cache items. Count: {permissions.Count}");
         bool currentResult = false;
         foreach (var permission in permissions)
         {
             bool isGranted = grantedPermissionsHashSet.Contains(permission.Name);
-            permissionCached.TryAdd(string.Format(CacheKeyFormatConstants.Permission_Grant_CacheKey_Format, _currentTenant.Id, providerName, providerKey, permission.Name), isGranted.ToString());
+            permissionCached.TryAdd(string.Format(CacheKeyFormatConstants.Permission_Grant_CacheKey_Format, providerName, providerKey, permission.Name), isGranted.ToString());
             if (permission.Name == currentName)
             {
                 currentResult = isGranted;
             }
         }
 
-        _logger.LogDebug("Finished setting the cache items. Count: {count}", permissions.Count);
-        return (string.Format(CacheKeyFormatConstants.Permission_Grant_CacheKey_Format, _currentTenant.Id, providerName, providerKey, currentName), currentResult);
+        _logger.LogDebug($"Finished setting the cache items. Count: {permissions.Count}");
+        return (string.Format(CacheKeyFormatConstants.Permission_Grant_CacheKey_Format, providerName, providerKey, currentName), currentResult);
     }
 
 
@@ -111,11 +113,11 @@ public partial class CachedPermissionManager : IPermissionManager
     protected virtual async Task<List<(string Key, bool IsGranted)>> GetCacheItemsAsync(string[] names,
         string providerName, string providerKey)
     {
-        var cacheKeys = names.Select(x => string.Format(CacheKeyFormatConstants.Permission_Grant_CacheKey_Format, _currentTenant.Id, x, providerName, providerKey)).ToList();
+        var cacheKeys = names.Select(x => string.Format(CacheKeyFormatConstants.Permission_Grant_CacheKey_Format, providerName, providerKey, x)).ToList();
 
-        _logger.LogDebug("PermissionStore.GetCacheItemAsync: {cacheKeys}", string.Join(",", cacheKeys));
+        _logger.LogDebug($"PermissionStore.GetCacheItemAsync: {string.Join(",", cacheKeys)}");
 
-        var getCacheItemTasks = new List<(string key, string value)>();
+        List<(string key, string value)> getCacheItemTasks = new List<(string key, string value)>();
 
         foreach (string cacheKey in cacheKeys)
         {
@@ -123,38 +125,43 @@ public partial class CachedPermissionManager : IPermissionManager
             {
                 getCacheItemTasks.Add((cacheKey, value));
             }
+            else
+            {
+                getCacheItemTasks.Add((cacheKey, null));
+            }
         }
 
         if (getCacheItemTasks.All(x => x.value != null))
         {
-            _logger.LogDebug("Found in the cache: {cacheKeys}", string.Join(",", cacheKeys));
-            return Array.ConvertAll(getCacheItemTasks.ToArray(), i => (i.key, Convert.ToBoolean(i))).ToList();
+            _logger.LogDebug($"Found in the cache: {string.Join(",", cacheKeys)}");
+            return Array.ConvertAll(getCacheItemTasks.ToArray(), i => (i.key, Convert.ToBoolean(i.value))).ToList();
         }
 
         List<string> notCacheKeys = getCacheItemTasks.Where(x => x.value is null).Select(x => x.key).ToList();
 
-        _logger.LogDebug("Not found in the cache: {cacheKeys}", string.Join(",", cacheKeys));
+        _logger.LogDebug($"Not found in the cache: {string.Join(",", notCacheKeys)}");
+
         return await SetCacheItemsAsync(providerName, providerKey, notCacheKeys);
     }
 
 
     protected virtual async Task<List<(string Key, bool IsGranted)>> SetCacheItemsAsync(string providerName, string providerKey, List<string> notCacheKeys)
     {
-        var permissions = _permissionDefinitionManager.GetPermissions()
+        List<PermissionDefinition> permissions = _permissionDefinitionManager.GetPermissions()
             .Where(x => notCacheKeys.Any(k => GetPermissionInfoFormCacheKey(k).Name == x.Name)).ToList();
 
-        _logger.LogDebug("Getting not cache granted permissions from the repository for this provider name,key: {providerName},{providerKey}", providerName, providerKey);
+        _logger.LogDebug($"Getting not cache granted permissions from the repository for this provider name,key: {providerName},{providerKey}");
 
         var grantedPermissionsHashSet = new HashSet<string>(( await _permissionGrantStore.GetListAsync(notCacheKeys.Select(k => GetPermissionInfoFormCacheKey(k).Name).ToArray(), providerName, providerKey) ).Select(p => p.Name));
 
-        _logger.LogDebug("Setting the cache items. Count: {count}", permissions.Count);
+        _logger.LogDebug($"Setting the cache items. Count: {permissions.Count}");
 
-        var cacheItems = new List<(string Key, bool IsGranted)>();
+        List<(string Key, bool IsGranted)> cacheItems = new List<(string Key, bool IsGranted)>();
 
         foreach (PermissionDefinition permission in permissions)
         {
-            var isGranted = grantedPermissionsHashSet.Contains(permission.Name);
-            cacheItems.Add((string.Format(CacheKeyFormatConstants.Permission_Grant_CacheKey_Format, _currentTenant.Id, providerName, providerKey, permission.Name), isGranted));
+            bool isGranted = grantedPermissionsHashSet.Contains(permission.Name);
+            cacheItems.Add((string.Format(CacheKeyFormatConstants.Permission_Grant_CacheKey_Format, providerName, providerKey, permission.Name), isGranted));
         }
 
         foreach ((string key, bool isGranted) in cacheItems)
@@ -162,23 +169,25 @@ public partial class CachedPermissionManager : IPermissionManager
             permissionCached.TryAdd(key, isGranted.ToString());
         }
 
-        _logger.LogDebug("Finished setting the cache items. Count: {count}", permissions.Count);
+        _logger.LogDebug($"Finished setting the cache items. Count: {permissions.Count}");
 
         return cacheItems;
     }
 
 
 
-    protected virtual (string tenantId, string ProviderName, string ProviderKey, string Name) GetPermissionInfoFormCacheKey(string key)
+    protected virtual (string ProviderName, string ProviderKey, string Name) GetPermissionInfoFormCacheKey(
+            string key)
     {
-        string pattern = @"^t:(?<tenantId>.+),pn:(?<providerName>.+),pk:(?<providerKey>.+),n:(?<name>.+)$";
+        string pattern = @"^pn:(?<providerName>.+),pk:(?<providerKey>.+),n:(?<name>.+)$";
+
         Match match = Regex.Match(key, pattern, RegexOptions.IgnoreCase);
+
         string providerName = match.Groups["providerName"].Value;
         string providerKey = match.Groups["providerKey"].Value;
         string name = match.Groups["name"].Value;
-        string tenantId = match.Groups["tenantId"].Value;
 
-        return (tenantId, providerName, providerKey, name);
+        return (providerName, providerKey, name);
     }
 
     #endregion

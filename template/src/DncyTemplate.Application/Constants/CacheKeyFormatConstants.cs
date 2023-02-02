@@ -2,5 +2,5 @@
 
 public class CacheKeyFormatConstants
 {
-    public const string Permission_Grant_CacheKey_Format = "t:{0},pn:{1},pk:{2},n:{3}";
+    public const string Permission_Grant_CacheKey_Format = "pn:{0},pk:{1},n:{2}";
 }

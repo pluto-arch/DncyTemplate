@@ -4,7 +4,7 @@ namespace DncyTemplate.Mvc.HtmlHelpers
 {
     public static class MenuActivteHelper
     {
-        public static string IsMenuActive(this IHtmlHelper htmlHelper, string controller, string action,string area=null)
+        public static string IsMenuActive(this IHtmlHelper htmlHelper, string controller, string action, string area = null)
         {
             var routeData = htmlHelper.ViewContext.RouteData;
             // var areaName = routeData.Values["area"]?.ToString();

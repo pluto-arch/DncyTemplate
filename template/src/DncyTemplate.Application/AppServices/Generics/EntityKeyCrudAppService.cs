@@ -17,7 +17,7 @@ public class EntityKeyCrudAppService<TEntity, TKey, TDto, TGetListRequest, TList
     /// <inheritdoc />
     public EntityKeyCrudAppService(IRepository<TEntity, TKey> repository, IMapper mapper) : base(repository, mapper)
     {
-        _repository= repository;
+        _repository = repository;
     }
 
     protected override async Task<TEntity> GetEntityByIdAsync(TKey id) => await _repository.GetAsync(id);

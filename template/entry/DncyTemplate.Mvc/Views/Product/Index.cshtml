@@ -1,133 +1,117 @@
-﻿@using DncyTemplate.Application.Models.Product
-@using DncyTemplate.Application.Permission
-@using DncyTemplate.Mvc.TagHelpers
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@model IPagedList<ProductListItemDto>
 
 @{
-    ViewData["Title"] = "Product List";
+    ViewData["Title"] = "产品管理";
 }
 
-@section Styles
-    {
-    <link rel="stylesheet" href="~/lib/layui/css/layui.css" media="all">
-}
 
-<div class="row align-items-end mt-15">
-    <div class="col-12">
-        <!-- Page Title -->
-        <div class="page-title mb-30">
-            <h5 class="mb-0">产品列表</h5>
-        </div>
-    </div>
 
-    <div class="col-12">
-        <div class="d-flex justify-content-between">
-            <div>
-                <div class="widget-content widget-content-area text-left">
-                    <a class="btn- btn-primary btn-1 btn-1a mb-4 mr-3"
-                       asp-controller="Product"
-                       asp-action="Create"
-                       asp-authorize
-                       asp-permission-code="@ProductPermission.Product.Create">新增</a>
+<div class="layui-card">
+    <div class="layui-card-body">
+        <form class="layui-form form-search" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">产品名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="keyword" placeholder="请输入产品名称" autocomplete="off" class="layui-input">
                 </div>
+                <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="product-query">
+                    <i class="layui-icon layui-icon-search"></i>
+                    查询
+                </button>
+                <button type="reset" class="pear-btn pear-btn-md">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    重置
+                </button>
             </div>
-
-            <div>
-                <div class="widget-content widget-content-area text-right">
-                    <form id="searchForm" method="get" class="form-horizontal well">
-                        <input type="hidden" name="pageNo" value="0" />
-                        <input type="hidden" name="pageSize" value="20" />
-                        <div class="default-repeater">
-                            <div class="form-group mb-5">
-                                <div class="row">
-                                    <div>
-                                        <input type="text" name="keyword" value="@ViewBag.Keywords" placeholder="产品名称" style="height: 42px" class="form-control form-control-sm" />
-                                    </div>
-                                    <div class="ml-2">
-                                        <button class="btn- btn-primary btn-1 btn-1a mb-4 mr-3">查询</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
 
-
-<div class="table-responsive">
-    <table class="table table-striped table-bordered table-hover">
-        <thead>
-            <tr>
-                <th>序号</th>
-                <th>名称</th>
-                <th>创建时间</th>
-                <th>操作</th>
-                <th>操作</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Grade -->
-            @if (Model != null && Model.Items != null && Model.Items.Any())
-            {
-                @foreach (var item in Model.Items)
-                {
-                    <tr class="gradeX">
-                        <td>@item.Id</td>
-                        <td>
-                            @item.Name
-                        </td>
-                        <td>@($"{item.CreateTime:yyyy/MM/dd HH:mm:ss}")</td>
-                        <td class="center">4</td>
-                        <td class="center">X</td>
-                    </tr>
-                }
-            }
-            else
-            {
-                <tr class="text-right text-center">
-                    <th colspan="5">暂无数据</th>
-                </tr>
-            }
-        </tbody>
-        <tfoot>
-            <tr class="text-right">
-                <th id="page-control" colspan="5"></th>
-            </tr>
-        </tfoot>
-    </table>
+<div class="layui-card">
+    <div class="layui-card-body">
+        <table id="product-table" lay-filter="product-table"></table>
+    </div>
 </div>
 
-@section Scripts
-    {
-    <!-- These plugins only need for the run this page -->
-    <script src="~/js/default-assets/data-table.min.js"></script>
-    <script src="~/js/default-assets/data-table-active.js"></script>
-    <script src="~/lib/layui/layui.js" charset="utf-8"></script>
-    <script>
-        layui.use(['laypage'], function () {
-            var laypage = layui.laypage;
+<script type="text/html" id="create-time">
+    {{layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}
+</script>
 
-            //完整功能
-            laypage.render({
-                elem: 'page-control'
-                , count: @Model.TotalCount  //数据总数
-                                , limit: @Model.PageSize
-                                , curr: @Model.PageIndex
-                                , theme: '#2478fd'
-                , layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh']
-                , jump: function (obj, first) {
-                    $('input[name=pageNo]').val(Number(obj.curr)); //得到当前页，以便向服务端请求对应页的数据。
-                    $('input[name=pageSize]').val(Number(obj.limit));  //得到每页显示的条数
 
-                    if (!first) {
-                        $('#searchForm').submit();
-                    }
+<script type="text/html" id="toolbar">
+    <button class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
+        <i class="layui-icon layui-icon-add-1"></i>
+        新增
+    </button>
+</script>
+
+
+@section scripts{
+    <script type="text/javascript">
+        layui.use(['abp', 'form', 'table'], function () {
+            var $ = layui.$;
+            var form = layui.form;
+            var table = layui.table;
+
+            form.render();
+
+            form.on('submit(product-query)', function (data) {
+                table.reload('product-table',
+                    {
+                        where: data.field,
+                        request: {
+                            pageName: 'pageNo',
+                            limitName: 'pageSize'
+                        },
+                        page: {
+                            curr: 1
+                        }
+                    });
+                return false;
+            });
+
+            table.render({
+                elem: '#product-table',
+                url: "@Url.Action("List", "Product")",
+                page: true,
+                where: {},
+                height: 'full-150',
+                request: {
+                    pageName: 'pageNo',
+                    limitName: 'pageSize'
+                },
+                response: {
+                    statusCode: 200 //规定成功的状态码，默认：0
+                },
+                cols: [
+                    [
+                        { title: 'ID', field: 'id', align: 'center', width: 80, type: 'checkbox' },
+                        { title: 'ID', field: 'id', align: 'center', width: 180 },
+                        { title: '名称', field: 'name', align: 'center' },
+                        { title: '创建时间', field: 'createTime', align: 'center', templet: "#create-time" }
+                    ]
+                ],
+                skin: 'line',
+                toolbar: '#toolbar',
+                defaultToolbar: [{
+                    layEvent: 'refresh',
+                    icon: 'layui-icon-refresh'
+                }]
+            });
+
+            table.on('toolbar(product-table)', function (obj) {
+                if (obj.event === 'refresh') {
+                    window.refresh();
                 }
             });
-        })
+
+
+            form.on('switch(product-table)', function (obj) {
+                layer.tips(this.value + ' ' + this.name + '：' + obj.elem.checked, obj.othis);
+            });
+
+            window.refresh = function () {
+                table.reload('product-table');
+            }
+        });
     </script>
 }
