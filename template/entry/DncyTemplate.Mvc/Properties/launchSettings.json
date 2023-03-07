@@ -2,7 +2,7 @@
   "profiles": {
     "DncyTemplate.Mvc": {
       "commandName": "Project",
-      "launchBrowser": false,
+      "launchBrowser": true,
       "launchUrl": "home/index",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "dev"

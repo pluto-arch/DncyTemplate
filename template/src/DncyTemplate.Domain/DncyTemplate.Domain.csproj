@@ -6,11 +6,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Dncy.DependencyInjection.Generator" Version="1.0.0" />
+		<PackageReference Include="Dncy.DependencyInjection.Generator" Version="1.1.0" />
 		<PackageReference Include="Dncy.MultiTenancy" Version="1.1.2" />
 		<PackageReference Include="Dncy.Permission" Version="2.1.0" />
 		<PackageReference Include="Dncy.Specifications" Version="1.0.1" />
-		<PackageReference Include="Dncy.Tools.Core" Version="1.0.6" />
+		<PackageReference Include="Dncy.Tools.Core" Version="2.0.0" />
 		<PackageReference Include="Dncy.Tools.SnowFlake" Version="1.0.5" />
 		<PackageReference Include="MediatR" Version="10.0.1" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />

@@ -4,7 +4,8 @@
   "classifications": [
     "WEB",
     "net6",
-    "AspNetCore"
+    "DDD",
+    "microservice"
   ],
   "identity": "DncyTemplate",
   "name": "AspNetCore DDD Template",
@@ -32,13 +33,6 @@
           "description": "MVC"
         }
       ]
-    },
-    "Job": {
-      "type": "parameter",
-      "dataType": "bool",
-      "description": "是否包括后台服务",
-      "isRequired": false,
-      "defaultValue": "false"
     }
   },
   "sources": [
@@ -57,12 +51,6 @@
           ]
         },
         {
-          "condition": "(!Job)",
-          "exclude": [
-            "entry/DncyTemplate.Job/**/*"
-          ]
-        },
-        {
           "exclude": [
             "template.sln"
           ]
@@ -78,10 +66,6 @@
     {
       "path": "entry/DncyTemplate.Mvc/DncyTemplate.Mvc.csproj",
       "condition": "(ProjectType==\"MVC\")"
-    },
-    {
-      "path": "entry/DncyTemplate.Job/DncyTemplate.Job.csproj",
-      "condition": "(Job)"
     }
   ],
   "postActions": [
