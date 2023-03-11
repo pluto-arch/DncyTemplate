@@ -1,12 +1,11 @@
 ﻿using DncyTemplate.Domain.Aggregates.Product;
 using DncyTemplate.Domain.Aggregates.System;
-using DncyTemplate.Domain.UnitOfWork;
 using DncyTemplate.Infra.EntityFrameworkCore.EntityTypeConfig;
 
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 
-public class DncyTemplateDbContext : BaseDbContext<DncyTemplateDbContext>, IUowDbContext
+public class DncyTemplateDbContext : BaseDbContext<DncyTemplateDbContext>
 {
     public DncyTemplateDbContext(DbContextOptions<DncyTemplateDbContext> options)
         : base(options)

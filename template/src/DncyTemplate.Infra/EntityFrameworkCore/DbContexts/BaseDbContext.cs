@@ -1,12 +1,11 @@
 ﻿using Dncy.MultiTenancy;
 using DncyTemplate.Domain.Infra;
-using DncyTemplate.Domain.UnitOfWork;
 using DncyTemplate.Infra.EntityFrameworkCore.Extension;
 
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 
-public class BaseDbContext<TContext> : DbContext where TContext : DbContext, IUowDbContext
+public class BaseDbContext<TContext> : DbContext where TContext : DbContext
 {
     public BaseDbContext(DbContextOptions<TContext> options)
         : base(options)

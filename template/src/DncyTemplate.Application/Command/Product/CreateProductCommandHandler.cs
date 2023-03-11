@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using DncyTemplate.Application.Models.Product;
 using DncyTemplate.Domain.DomainEvents.Product;
-using DncyTemplate.Domain.Repository;
 using DncyTemplate.Infra.Utils;
 
 using ProductAgg = DncyTemplate.Domain.Aggregates.Product;
@@ -13,8 +12,6 @@ namespace DncyTemplate.Application.Command.Product
     public partial class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, ProductDto>
     {
         [AutoInject]
-        private readonly IRepository<ProductAgg.Product> _repository;
-        [AutoInject]
         private readonly IMapper _mapper;
         [AutoInject]
         private readonly ILogger<CreateProductCommandHandler> _logger;
@@ -25,7 +22,7 @@ namespace DncyTemplate.Application.Command.Product
             entity.Id = SnowFlakeId.Generator.GetUniqueId();
             entity.CreationTime = DateTimeOffset.Now;
             entity.AddDomainEvent(new NewProductCreateDomainEvent(entity));
-            entity = await _repository.InsertAsync(entity, true, cancellationToken);
+            //entity = await _repository.InsertAsync(entity, true, cancellationToken);
             return _mapper.Map<ProductDto>(entity);
         }
     }

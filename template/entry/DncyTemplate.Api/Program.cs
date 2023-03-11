@@ -1,6 +1,4 @@
-﻿using Serilog.Core;
-using Serilog.Enrichers.Sensitive;
-using Serilog.Events;
+﻿using Serilog.Enrichers.Sensitive;
 using ILogger = Serilog.ILogger;
 
 namespace DncyTemplate.Api;

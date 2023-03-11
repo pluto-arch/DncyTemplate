@@ -23,6 +23,6 @@
 	  <Folder Include="DomainEvents\Product\" />
 	  <Folder Include="Exceptions\" />
 	  <Folder Include="Collections\" />
-	  <Folder Include="Services\DataSeeds\" />
+	  <Folder Include="Services\" />
 	</ItemGroup>
 </Project>

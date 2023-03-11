@@ -1,5 +1,4 @@
 ﻿using DncyTemplate.Domain.Aggregates.Product;
-using DncyTemplate.Domain.Repository;
 using DncyTemplate.Mvc.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Localization;

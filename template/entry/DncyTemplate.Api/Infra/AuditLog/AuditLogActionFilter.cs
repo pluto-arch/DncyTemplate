@@ -1,6 +1,6 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc.Controllers;
+﻿using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
+using System.Diagnostics;
 
 namespace DncyTemplate.Api.Infra.AuditLog;
 
@@ -26,17 +26,17 @@ public class AuditLogActionFilter : IAsyncActionFilter
             return;
         }
 
-        var type = (context.ActionDescriptor as ControllerActionDescriptor).ControllerTypeInfo.AsType();
+        var type = ( context.ActionDescriptor as ControllerActionDescriptor ).ControllerTypeInfo.AsType();
 
         //方法信息
-        var method = (context.ActionDescriptor as ControllerActionDescriptor).MethodInfo;
+        var method = ( context.ActionDescriptor as ControllerActionDescriptor ).MethodInfo;
         //方法参数
         var arguments = context.ActionArguments;
         // var ip=context.HttpContext.Connection.RemoteIpAddress.ToString();
         // var trueIp = request.Headers["CF-Connecting-IP"].ToString(); // 由于X-Forwarded-For标头可能会被客户端篡改进行伪造，可以用CDN提供的一个转发客户端真实IP并且不可篡改的标头进行双重检查
         var auditInfo = new ApiAuditInfoModel
         {
-            UserInfo = context.HttpContext.User?.Identity?.Name??"",
+            UserInfo = context.HttpContext.User?.Identity?.Name ?? "",
             ServiceName = type.FullName,
             MethodName = method.Name,
             ////请求参数转Json
@@ -103,7 +103,7 @@ public class AuditLogActionFilter : IAsyncActionFilter
     /// <returns></returns>
     private bool ShouldSaveAudit(ActionExecutingContext context)
     {
-        if (!(context.ActionDescriptor is ControllerActionDescriptor descriptor))
+        if (!( context.ActionDescriptor is ControllerActionDescriptor descriptor ))
             return false;
         var methodInfo = descriptor.MethodInfo;
 

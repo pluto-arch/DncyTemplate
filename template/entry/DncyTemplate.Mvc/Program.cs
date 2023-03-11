@@ -1,4 +1,3 @@
-using Microsoft.Extensions.Options;
 using Serilog.Enrichers.Sensitive;
 using ILogger = Serilog.ILogger;
 
