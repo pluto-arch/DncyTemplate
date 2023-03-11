@@ -15,7 +15,7 @@
       {
         "Name": "Console",
         "Args": {
-          "outputTemplate": "==> {Timestamp:HH:mm:ss} [{Level:u3}] {Message:j} {NewLine} {Properties:j} {NewLine}{Exception}"
+          "outputTemplate": "==> {Timestamp:yy/MM/dd HH:mm:ss.fff} [{Level:u3}]{Message:j}{NewLine}{Properties:j}{NewLine}{Exception}"
         }
       }
     ]
