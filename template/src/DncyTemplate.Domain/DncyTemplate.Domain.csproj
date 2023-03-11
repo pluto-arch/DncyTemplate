@@ -5,7 +5,8 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
 
-	<ItemGroup>
+	<ItemGroup>		
+		<PackageReference Include="CommunityToolkit.Diagnostics" Version="8.1.0" />
 		<PackageReference Include="Dncy.DependencyInjection.Generator" Version="1.1.0" />
 		<PackageReference Include="Dncy.MultiTenancy" Version="1.1.2" />
 		<PackageReference Include="Dncy.Permission" Version="2.1.0" />

@@ -26,7 +26,7 @@ public static class EntityFrameworkServiceExtension
                 sqlOptions =>
                 {
                     sqlOptions.MigrationsAssembly(Assembly.GetExecutingAssembly().GetName().Name);
-                    sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromMilliseconds(400), null);
+                    //sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromMilliseconds(400), null);
                 });
 
             var mediator = serviceProvider.GetService<IDomainEventDispatcher>() ?? NullDomainEventDispatcher.Instance;
@@ -40,7 +40,7 @@ public static class EntityFrameworkServiceExtension
 #endif
         });
 
-
+        service.AddUnitofWork();
         service.ApplyEntityDefaultNavicationProperty();
         return service;
     }
@@ -60,10 +60,10 @@ public static class EntityFrameworkServiceExtension
 
 
 
-    //private static void AddUnitofWork(this IServiceCollection service)
-    //{
-    //    service.AddScoped(typeof(IUnitOfWork<>), typeof(EfCoreUnitOfWork<>));
-    //}
+    private static void AddUnitofWork(this IServiceCollection service)
+    {
+        service.AddScoped(typeof(EfUow<>));
+    }
 
 
 

@@ -1,7 +1,7 @@
 ﻿using Dncy.Permission;
 using DncyTemplate.Application.Behaviors;
 using DncyTemplate.Application.Permission;
-
+using DncyTemplate.Infra.EntityFrameworkCore.Repository;
 
 namespace DncyTemplate.Application
 {
@@ -23,7 +23,7 @@ namespace DncyTemplate.Application
             services.AddSingleton<IPermissionDefinitionManager, DefaultPermissionDefinitionManager>();
             services.AddSingleton<IPermissionDefinitionProvider, PermissionDefinitionProvider>();
 
-            //services.AddTransient<IPermissionGrantStore, EfCorePermissionGrantStore>();
+            services.AddTransient<IPermissionGrantStore, EfCorePermissionGrantStore>();
             services.AddTransient<IPermissionManager, CachedPermissionManager>();
             services.AddTransient<IPermissionValueProvider, RolePermissionValueProvider>();
             services.AddTransient<IPermissionValueProvider, UserPermissionValueProvider>();
