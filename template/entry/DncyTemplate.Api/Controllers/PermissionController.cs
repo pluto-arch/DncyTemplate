@@ -57,7 +57,7 @@ namespace DncyTemplate.Api.Controllers
                         {
                             permission.Name,
                             permission.DisplayName,
-                            ParentName = permission.Parent?.Name!,
+                            ParentName = permission.Parent,
                             permission.AllowedProviders,
                             IsGranted = permissionGrant != null,
                         };

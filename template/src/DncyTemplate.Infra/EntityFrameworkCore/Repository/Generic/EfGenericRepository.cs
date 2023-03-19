@@ -72,8 +72,7 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
         public virtual async Task DeleteAsync(Expression<Func<TEntity, bool>> predicate, bool autoSave = false,
         CancellationToken cancellationToken = default)
         {
-            List<TEntity> entities = await DbSet.Where(predicate).ToListAsync(cancellationToken);
-
+            var entities = DbSet.Where(predicate);
             DbSet.RemoveRange(entities);
             if (autoSave)
             {
