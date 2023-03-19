@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Controllers;
-using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
 
 [assembly: HostingStartup(typeof(DncyTemplate.Api.Infra.ApiDoc.SwaggerHostingStartup))]
