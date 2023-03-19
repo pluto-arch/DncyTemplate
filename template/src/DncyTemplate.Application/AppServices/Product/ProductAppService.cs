@@ -2,7 +2,8 @@
 using AutoMapper;
 using DncyTemplate.Application.AppServices.Generics;
 using DncyTemplate.Application.Models.Product;
-using DncyTemplate.Domain.Repository;
+using DncyTemplate.Infra.EntityFrameworkCore;
+using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 using Microsoft.EntityFrameworkCore;
 
 namespace DncyTemplate.Application.AppServices.Product;
@@ -12,7 +13,7 @@ public class ProductAppService
     : EntityKeyCrudAppService<Domain.Aggregates.Product.Product, string, ProductDto, ProductPagedRequest, ProductListItemDto, ProductUpdateRequest, ProductCreateRequest>, IProductAppService
 {
     /// <inheritdoc />
-    public ProductAppService(IRepository<Domain.Aggregates.Product.Product, string> repository, IMapper mapper) : base(repository, mapper)
+    public ProductAppService(EfUow<DncyTemplateDbContext> uow, IMapper mapper) : base(uow, mapper)
     {
     }
 

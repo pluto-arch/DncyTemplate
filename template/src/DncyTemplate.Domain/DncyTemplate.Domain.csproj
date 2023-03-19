@@ -5,10 +5,11 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
 
-	<ItemGroup>
+	<ItemGroup>		
+		<PackageReference Include="CommunityToolkit.Diagnostics" Version="8.1.0" />
 		<PackageReference Include="Dncy.DependencyInjection.Generator" Version="1.1.0" />
 		<PackageReference Include="Dncy.MultiTenancy" Version="1.1.2" />
-		<PackageReference Include="Dncy.Permission" Version="2.1.0" />
+		<PackageReference Include="Dncy.Permission" Version="2.1.1" />
 		<PackageReference Include="Dncy.Specifications" Version="1.0.1" />
 		<PackageReference Include="Dncy.Tools.Core" Version="2.0.0" />
 		<PackageReference Include="Dncy.Tools.SnowFlake" Version="1.0.5" />
@@ -23,6 +24,6 @@
 	  <Folder Include="DomainEvents\Product\" />
 	  <Folder Include="Exceptions\" />
 	  <Folder Include="Collections\" />
-	  <Folder Include="Services\DataSeeds\" />
+	  <Folder Include="Services\" />
 	</ItemGroup>
 </Project>

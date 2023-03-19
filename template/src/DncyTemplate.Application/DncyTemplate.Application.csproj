@@ -25,7 +25,6 @@
 
 	<ItemGroup>
 	  <Folder Include="AppServices\Product\" />
-	  <Folder Include="AppServices\Generics\" />
 	  <Folder Include="DomainEventHandlers\Product\" />
 	  <Folder Include="IntegrationEvents\Events\" />
 	  <Folder Include="Models\Generics\" />

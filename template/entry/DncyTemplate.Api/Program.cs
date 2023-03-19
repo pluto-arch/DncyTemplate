@@ -1,9 +1,8 @@
-﻿using Serilog.Core;
-using Serilog.Enrichers.Sensitive;
-using Serilog.Events;
+﻿using Serilog.Enrichers.Sensitive;
 using ILogger = Serilog.ILogger;
 
 namespace DncyTemplate.Api;
+
 public class Program
 {
     public static readonly string AppName = typeof(Program).Namespace;
@@ -37,8 +36,8 @@ public class Program
             .ConfigureWebHostDefaults(webhost =>
             {
                 webhost.UseStartup<Startup>()
-                        .CaptureStartupErrors(false);
-
+                    .UseKestrel()
+                    .CaptureStartupErrors(false);
             })
             .UseSerilog(dispose: true)
             .Build();
@@ -47,6 +46,7 @@ public class Program
 
 
     #region serilog
+
     /// <summary>
     /// 日志配置
     /// </summary>
@@ -57,6 +57,7 @@ public class Program
             .AddJsonFile("serilogsetting.json", false, true);
         return builder.Build();
     }
+
     /// <summary>
     /// 从配置创建serilog
     /// </summary>
@@ -68,13 +69,17 @@ public class Program
         return new LoggerConfiguration()
             .ReadFrom.Configuration(configuration)
             .Enrich.WithProperty("AppName", applicationName)
-            .Enrich.WithSensitiveDataMasking(o =>
+            .Enrich.WithSensitiveDataMasking(options =>
             {
                 // TODO config Sensitive filter rules
+                options.MaskValue = "***$***";
+                options.MaskProperties.Add("password"); // 当记录日志的属性中包括这些时会自动标记
+                options.MaskProperties.Add("token");
+                options.MaskProperties.Add("access_token");
                 // https://github.com/serilog-contrib/Serilog.Enrichers.Sensitive
             })
             .CreateLogger();
     }
-    #endregion
 
+    #endregion
 }

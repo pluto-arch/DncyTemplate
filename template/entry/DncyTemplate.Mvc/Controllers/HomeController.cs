@@ -1,6 +1,4 @@
-﻿using DncyTemplate.Domain.Aggregates.Product;
-using DncyTemplate.Domain.Repository;
-using DncyTemplate.Mvc.Constants;
+﻿using DncyTemplate.Mvc.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Localization;
@@ -13,13 +11,11 @@ namespace DncyTemplate.Mvc.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IStringLocalizer<SharedResource> _stringLocalizer;
-        private readonly IRepository<Product> _repository;
 
-        public HomeController(ILogger<HomeController> logger, IStringLocalizer<SharedResource> stringLocalizer, IRepository<Product> repository)
+        public HomeController(ILogger<HomeController> logger, IStringLocalizer<SharedResource> stringLocalizer)
         {
             _logger = logger;
             _stringLocalizer = stringLocalizer;
-            _repository = repository;
         }
 
 

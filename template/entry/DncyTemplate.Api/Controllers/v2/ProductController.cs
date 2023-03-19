@@ -2,6 +2,7 @@
 using DncyTemplate.Application.Command.Product;
 using DncyTemplate.Application.Models.Product;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using System.ComponentModel.DataAnnotations;
 
 namespace DncyTemplate.Api.Controllers.v2
@@ -10,6 +11,7 @@ namespace DncyTemplate.Api.Controllers.v2
     [ApiController]
     [Route("api/v{version:apiVersion}/products")]
     [ApiVersion("2.0")]
+    [Authorize]
     [AutoResolveDependency]
     public partial class ProductController : ControllerBase, IApiResultWapper
     {
@@ -21,6 +23,7 @@ namespace DncyTemplate.Api.Controllers.v2
 
         /// <summary>
         /// 获取产品列表
+        /// GET {PATH}?PageNo=1&pageSize=20&keyword=hahah&sorter={‘id’:'desc'}
         /// </summary>
         /// <returns></returns>
         [HttpGet]

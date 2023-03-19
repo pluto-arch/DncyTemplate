@@ -18,11 +18,11 @@ namespace DncyTemplate.Application.Behaviors
         {
             string typeName = request?.GetGenericTypeName();
             TResponse response = default;
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            //using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             try
             {
                 response = await next();
-                scope.Complete();
+                //scope.Complete();
             }
             catch (Exception ex)
             {

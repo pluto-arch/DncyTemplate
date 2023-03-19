@@ -1,8 +1,7 @@
 ﻿using Dncy.Permission;
 using DncyTemplate.Application.Behaviors;
 using DncyTemplate.Application.Permission;
-using DncyTemplate.Infra.EntityFrameworkCore.Repositories;
-
+using DncyTemplate.Infra.EntityFrameworkCore.Repository;
 
 namespace DncyTemplate.Application
 {

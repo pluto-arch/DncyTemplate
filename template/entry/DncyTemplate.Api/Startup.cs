@@ -36,10 +36,6 @@ public class Startup
         #endregion
 
 
-        #region 遥测
-
-        #endregion
-
     }
 
     public void Configure(IApplicationBuilder app, IHostEnvironment env)

@@ -1,10 +1,10 @@
-﻿using DncyTemplate.Mvc.Infra.LocalizerSetup;
+﻿using DncyTemplate.Mvc.Infra.AuditLog;
+using DncyTemplate.Mvc.Infra.LocalizerSetup;
 using DncyTemplate.Mvc.Models.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Localization;
 using System.IO.Compression;
-using DncyTemplate.Mvc.Infra.AuditLog;
 
 [assembly: HostingStartup(typeof(DncyTemplate.Mvc.Infra.InfraHostingStartup))]
 namespace DncyTemplate.Mvc.Infra;
