@@ -39,27 +39,5 @@ public class FirewallFilterAttribute : ActionFilterAttribute
         }
         #endregion
 
-        #region 请求频率限制
-
-        if (Limit > 0)
-        {
-            // TODO 请求频率处理
-            _memoryCache.TryGetValue($"Frequency:{ip}", out int count);
-            if (count > Limit)
-            {
-                // TODO:记录拦截日志
-                context.Result = new BadRequestObjectResult("请求频率太快了，歇会儿吧");
-                return;
-            }
-            else
-            {
-                count++;
-                var options = new MemoryCacheEntryOptions().SetSize(1).SetSlidingExpiration(TimeSpan.FromMinutes(1));
-                _memoryCache.Set($"Frequency:{ip}", count, options);
-            }
-
-        }
-        #endregion
-
     }
 }

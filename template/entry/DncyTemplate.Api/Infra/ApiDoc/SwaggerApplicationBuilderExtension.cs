@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ApiExplorer;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 namespace DncyTemplate.Api.Infra.ApiDoc;
 
@@ -11,6 +12,7 @@ public static class SwaggerApplicationBuilderExtension
     /// <returns></returns>
     public static IApplicationBuilder UseCustomSwagger(this IApplicationBuilder app)
     {
+
         app.UseSwagger();
         var versionProvider = app.ApplicationServices.GetRequiredService<IApiVersionDescriptionProvider>();
         app.UseSwaggerUI(options =>

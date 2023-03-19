@@ -56,7 +56,7 @@ namespace DncyTemplate.Application.AppServices.Generics
 
         protected abstract Task<TEntity> GetEntityByIdAsync(TKey id);
 
-        protected virtual IQueryable<TEntity> CreateFilteredQuery(TGetListRequest requestModel) => _repository.Query;
+        protected virtual IQueryable<TEntity> CreateFilteredQuery(TGetListRequest requestModel) => _repository.DbSet;
 
         protected virtual IQueryable<TEntity> ApplySorting(IQueryable<TEntity> query, TGetListRequest requestModel)
         {
