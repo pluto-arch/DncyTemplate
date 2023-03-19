@@ -21,7 +21,11 @@ namespace DncyTemplate.Api.Controllers
             return this.Success<string>(text);
         }
 
-
+        /// <summary>
+        /// 限流测试
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         [HttpGet("/rate_limit")]
         [EnableRateLimiting("home.RateLimit_action")]
         public ApiResult RateLimit([EmailAddress] string name)
