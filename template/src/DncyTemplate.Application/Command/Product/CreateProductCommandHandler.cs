@@ -20,7 +20,7 @@ namespace DncyTemplate.Application.Command.Product
         private readonly ILogger<CreateProductCommandHandler> _logger;
 
         [AutoInject]
-        private readonly EfUow<DncyTemplateDbContext> efUow;
+        private readonly EfUnitOfWork<DncyTemplateDbContext> efUow;
 
         public async Task<ProductDto> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {

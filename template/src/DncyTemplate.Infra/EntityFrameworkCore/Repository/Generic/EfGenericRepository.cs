@@ -13,15 +13,14 @@ using System.Linq.Expressions;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
 {
-    public class EfGenericRepository<TContext, TEntity> : IEfGenericRepository<TContext, TEntity>
+    public class EfRepository<TContext, TEntity> : IEfRepository<TEntity>
          where TContext : DbContext
          where TEntity : class, IEntity
     {
         private readonly ISpecificationEvaluator _specification = EfCoreSpecificationEvaluator.Default;
-        private readonly EfUow<TContext> _unitOfWork;
+        private readonly EfUnitOfWork<TContext> _unitOfWork;
 
-        [ActivatorUtilitiesConstructor]
-        public EfGenericRepository(EfUow<TContext> unitOfWork)
+        public EfRepository(EfUnitOfWork<TContext> unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -260,16 +259,14 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
 
             return _specification.GetQuery(DbSet, specification);
         }
-
     }
 
 
-    public class EfKeyedRepository<TDbContext, TEntity, TKey> : EfGenericRepository<TDbContext, TEntity>, IEfKeyedRepository<TDbContext, TEntity, TKey>
+    public class EfRepository<TDbContext, TEntity, TKey> : EfRepository<TDbContext, TEntity>, IEfRepository<TEntity, TKey>
             where TDbContext : DbContext
             where TEntity : class, IEntity
     {
-        [ActivatorUtilitiesConstructor]
-        public EfKeyedRepository(EfUow<TDbContext> unitOfWork) : base(unitOfWork) { }
+        public EfRepository(EfUnitOfWork<TDbContext> unitOfWork) : base(unitOfWork) { }
 
         public async Task DeleteAsync(TKey id, bool autoSave = false, CancellationToken cancellationToken = default)
         {

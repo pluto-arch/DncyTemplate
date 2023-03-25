@@ -6,9 +6,9 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
 {
     public class EfCorePermissionGrantStore : IPermissionGrantStore
     {
-        private readonly IEfGenericRepository<DncyTemplateDbContext, PermissionGrant> _permissionGrants;
+        private readonly IEfRepository<PermissionGrant> _permissionGrants;
 
-        public EfCorePermissionGrantStore(EfUow<DncyTemplateDbContext> uow)
+        public EfCorePermissionGrantStore(EfUnitOfWork<DncyTemplateDbContext> uow)
         {
             _permissionGrants = uow.Repository<PermissionGrant>();
         }

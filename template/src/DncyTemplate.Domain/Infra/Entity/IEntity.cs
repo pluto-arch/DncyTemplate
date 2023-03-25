@@ -9,7 +9,7 @@ public interface IEntity
     object[] GetKeys();
 }
 
-public interface IEntity<TKey>
+public interface IEntity<TKey> : IEntity
 {
     /// <summary>
     ///     Unique identifier for this entity.

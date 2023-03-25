@@ -13,7 +13,7 @@ public class ProductAppService
     : EntityKeyCrudAppService<Domain.Aggregates.Product.Product, string, ProductDto, ProductPagedRequest, ProductListItemDto, ProductUpdateRequest, ProductCreateRequest>, IProductAppService
 {
     /// <inheritdoc />
-    public ProductAppService(EfUow<DncyTemplateDbContext> uow, IMapper mapper) : base(uow, mapper)
+    public ProductAppService(EfUnitOfWork<DncyTemplateDbContext> uow, IMapper mapper) : base(uow, mapper)
     {
     }
 

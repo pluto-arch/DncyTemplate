@@ -12,10 +12,10 @@ namespace DncyTemplate.Application.AppServices.Generics
     where TEntity : BaseEntity
     where TGetListRequest : PageRequest
     {
-        protected readonly IEfKeyedRepository<DncyTemplateDbContext, TEntity, TKey> _repository;
+        protected readonly IEfRepository<TEntity, TKey> _repository;
         protected readonly IMapper _mapper;
 
-        protected AlternateKeyCrudAppService(EfUow<DncyTemplateDbContext> uow, IMapper mapper)
+        protected AlternateKeyCrudAppService(EfUnitOfWork<DncyTemplateDbContext> uow, IMapper mapper)
         {
             _repository = uow.Repository<TEntity, TKey>();
             _mapper = mapper;

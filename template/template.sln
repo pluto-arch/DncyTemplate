@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DncyTemplate.Domain", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DncyTemplate.Infra", "src\DncyTemplate.Infra\DncyTemplate.Infra.csproj", "{C84EBBAF-F2D3-458F-84BD-4D373A7A2715}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DncyTemplate.Test", "test\DncyTemplate.Test\DncyTemplate.Test.csproj", "{73EAD273-42D2-495C-A9C2-A1EA884138A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{C84EBBAF-F2D3-458F-84BD-4D373A7A2715}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C84EBBAF-F2D3-458F-84BD-4D373A7A2715}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C84EBBAF-F2D3-458F-84BD-4D373A7A2715}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73EAD273-42D2-495C-A9C2-A1EA884138A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73EAD273-42D2-495C-A9C2-A1EA884138A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73EAD273-42D2-495C-A9C2-A1EA884138A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73EAD273-42D2-495C-A9C2-A1EA884138A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,6 +67,7 @@ Global
 		{A449BC68-7BF3-4306-B73F-9045D0D20777} = {5A2AD551-D740-4141-9AF3-2F0F009807C0}
 		{0139B8F5-7C59-49A2-BA1A-E11CAC4A7571} = {5A2AD551-D740-4141-9AF3-2F0F009807C0}
 		{C84EBBAF-F2D3-458F-84BD-4D373A7A2715} = {5A2AD551-D740-4141-9AF3-2F0F009807C0}
+		{73EAD273-42D2-495C-A9C2-A1EA884138A3} = {C7EF86BE-FE86-4F28-9901-4B47B25EE032}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CC9D0D11-325F-4971-B20A-7ABB3058DA5E}
