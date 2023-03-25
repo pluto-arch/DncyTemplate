@@ -10,7 +10,7 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
         where TContext : DbContext
         where TEntity : class, IEntity
     {
-        IQueryable<TEntity> Query { get; }
+        DbSet<TEntity> DbSet { get; }
 
         IAsyncQueryableProvider AsyncExecuter { get; }
 

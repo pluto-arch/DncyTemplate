@@ -30,18 +30,18 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
 
         public virtual DbSet<TEntity> DbSet => _dbContext.Set<TEntity>();
 
-        public IQueryable<TEntity> Query => DbSet.AsQueryable();
+        private IQueryable<TEntity> _query => DbSet.AsQueryable();
 
-        public IEnumerator<TEntity> GetEnumerator() => Query.GetEnumerator();
+        public IEnumerator<TEntity> GetEnumerator() => _query.GetEnumerator();
 
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public Type ElementType => Query.ElementType;
+        public Type ElementType => _query.ElementType;
 
-        public Expression Expression => Query.Expression;
+        public Expression Expression => _query.Expression;
 
-        public IQueryProvider Provider => Query.Provider;
+        public IQueryProvider Provider => _query.Provider;
 
         public TContext Uow => _dbContext;
 
@@ -119,13 +119,13 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
 
         public virtual async Task<int> GetCountAsync(CancellationToken cancellationToken = default)
         {
-            return await Query.CountAsync(cancellationToken);
+            return await DbSet.CountAsync(cancellationToken);
         }
 
         public virtual async Task<int> GetCountAsync(Expression<Func<TEntity, bool>> predicate,
             CancellationToken cancellationToken = default)
         {
-            return await Query.CountAsync(predicate, cancellationToken);
+            return await DbSet.CountAsync(predicate, cancellationToken);
         }
 
         public virtual async Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> predicate,
@@ -133,19 +133,19 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
         {
             return includeDetails
                 ? await ( await IncludeRelatedAsync() ).Where(predicate).SingleOrDefaultAsync(cancellationToken)
-                : await Query.Where(predicate).SingleOrDefaultAsync(cancellationToken);
+                : await DbSet.Where(predicate).SingleOrDefaultAsync(cancellationToken);
         }
 
         public virtual async Task<List<TEntity>> GetListAsync(CancellationToken cancellationToken = default)
         {
-            return await Query.ToListAsync(cancellationToken);
+            return await DbSet.ToListAsync(cancellationToken);
         }
 
         public virtual async Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> predicate,
             Expression<Func<TEntity, object>> sorting, bool includeDetails = false,
             CancellationToken cancellationToken = default)
         {
-            IQueryable<TEntity> queryable = includeDetails ? await IncludeRelatedAsync() : Query;
+            IQueryable<TEntity> queryable = includeDetails ? await IncludeRelatedAsync() : DbSet;
             return await queryable.OrderBy(sorting).Where(predicate).ToListAsync(cancellationToken);
         }
 
@@ -154,7 +154,7 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
             bool includeDetails = false,
             CancellationToken cancellationToken = default)
         {
-            IQueryable<TEntity> queryable = includeDetails ? await IncludeRelatedAsync() : Query;
+            IQueryable<TEntity> queryable = includeDetails ? await IncludeRelatedAsync() : DbSet;
             return await queryable.OrderBy(sorting).Where(predicate)
                 .ToPagedListAsync(pageNo, pageSize, cancellationToken);
         }
@@ -213,7 +213,7 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
         {
             var includes = _dbContext.GetService<IOptions<IncludeRelatedPropertiesOptions>>().Value;
 
-            IQueryable<TEntity> query = Query;
+            IQueryable<TEntity> query = DbSet;
 
             if (propertySelectors is not null)
             {
@@ -247,7 +247,7 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
 
         protected IQueryable<TEntity> ApplySpecification(ISpecification<TEntity> specification)
         {
-            return _specification.GetQuery(Query, specification);
+            return _specification.GetQuery(DbSet, specification);
         }
 
         protected IQueryable<TResult> ApplySpecification<TResult>(ISpecification<TEntity, TResult> specification)
@@ -258,7 +258,7 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
             if (specification.Selector is null)
                 throw new SelectorNotFoundException();
 
-            return _specification.GetQuery(Query, specification);
+            return _specification.GetQuery(DbSet, specification);
         }
 
     }

@@ -12,7 +12,8 @@ namespace DncyTemplate.Application
             var assemblies = AppDomain.CurrentDomain.GetAssemblies()
                 .Where(x => !string.IsNullOrEmpty(x.FullName) && ( !x.FullName.Contains("Microsoft", StringComparison.OrdinalIgnoreCase) || !x.FullName.Contains("System", StringComparison.OrdinalIgnoreCase) ));
             services.AddAutoMapper(assemblies.ToArray());
-            services.AddMediatR(assemblies.ToArray());
+
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(TransactionBehavior<,>).Assembly));
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(TransactionBehavior<,>));
 

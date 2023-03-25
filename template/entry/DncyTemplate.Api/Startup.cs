@@ -1,4 +1,6 @@
-﻿using DncyTemplate.Api.BackgroundServices;
+﻿using System.Threading.RateLimiting;
+using Dncy.Tools;
+using DncyTemplate.Api.BackgroundServices;
 using DncyTemplate.Api.Infra.ApiDoc;
 using DncyTemplate.Api.Infra.Tenancy;
 using DncyTemplate.Application;
@@ -36,13 +38,39 @@ public class Startup
         #endregion
 
 
+        #region 速率限制
+        services.AddRateLimiter(options =>
+        {
+            options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
+                RateLimitPartition.GetFixedWindowLimiter(
+                    partitionKey: httpContext.Connection.RemoteIpAddress?.ToNumber().ToString(),
+                    factory: partition => new FixedWindowRateLimiterOptions
+                    {
+                        AutoReplenishment = true,
+                        PermitLimit = 50,
+                        QueueLimit = 10,
+                        Window = TimeSpan.FromMinutes(1)
+                    }));
+
+            // action or controller use [EnableRateLimiting("Api")] to enable this policy
+            options.AddPolicy("home.RateLimit_action", httpContext =>
+                 RateLimitPartition.GetFixedWindowLimiter(httpContext.Connection.RemoteIpAddress?.ToNumber().ToString(),
+                     partition => new FixedWindowRateLimiterOptions
+                     {
+                         AutoReplenishment = true,
+                         PermitLimit = 2,
+                         Window = TimeSpan.FromSeconds(10)
+                     }));
+
+        });
+        #endregion
     }
 
     public void Configure(IApplicationBuilder app, IHostEnvironment env)
     {
 
         var serverAddressesFeature = app.ServerFeatures.Get<IServerAddressesFeature>();
-        var address = serverAddressesFeature.Addresses;
+        var address = serverAddressesFeature?.Addresses;
         Log.Logger.Information("应用程序运行地址: {@Address}. net version:{version}", address, Environment.Version);
 
         app.UseRequestLocalization();
@@ -74,6 +102,7 @@ public class Startup
         app.UseAuthentication();
         app.UseMultiTenancy();
         app.UseRouting();
+        app.UseRateLimiter();
         app.UseAuthorization();
         app.UseEndpoints(endpoints =>
         {
