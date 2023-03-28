@@ -11,13 +11,11 @@ namespace DncyTemplate.Infra.EntityFrameworkCore
         private bool disposedValue;
         private IServiceProvider _serviceProvider;
 
-        private readonly ConcurrentDictionary<Type, object> _repositories = new ConcurrentDictionary<Type, object>();
-        private readonly ConcurrentDictionary<Type, object> _keyRepositories = new ConcurrentDictionary<Type, object>();
 
-        public EfUnitOfWork(IServiceProvider serviceProvider)
+        public EfUnitOfWork(IServiceProvider serviceProvider,TContext rootDbContext)
         {
             _serviceProvider = serviceProvider;
-            DbContext = _serviceProvider.GetService<TContext>();
+            DbContext = rootDbContext;
         }
 
         /// <summary>
@@ -70,8 +68,6 @@ namespace DncyTemplate.Infra.EntityFrameworkCore
             {
                 if (disposing)
                 {
-                    _repositories.Clear();
-                    _keyRepositories.Clear();
                     DbContext?.Dispose();
                 }
                 disposedValue = true;
