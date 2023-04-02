@@ -6,8 +6,7 @@ using System.Linq.Expressions;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
 {
-    public interface IEfGenericRepository<TContext, TEntity> : IQueryable<TEntity>
-        where TContext : DbContext
+    public interface IEfRepository<TEntity> : IQueryable<TEntity>
         where TEntity : class, IEntity
     {
         DbSet<TEntity> DbSet { get; }
@@ -21,8 +20,7 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
         /// <param name="autoSave"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<TEntity> InsertAsync([NotNull] TEntity entity, bool autoSave = false,
-            CancellationToken cancellationToken = default);
+        Task<TEntity> InsertAsync([NotNull] TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default);
 
 
         /// <summary>
@@ -32,8 +30,7 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
         /// <param name="autoSave"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task InsertAsync([NotNull] IEnumerable<TEntity> entities, bool autoSave = false,
-            CancellationToken cancellationToken = default);
+        Task InsertAsync([NotNull] IEnumerable<TEntity> entities, bool autoSave = false, CancellationToken cancellationToken = default);
 
 
         /// <summary>
@@ -43,8 +40,7 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
         /// <param name="autoSave"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task DeleteAsync([NotNull] TEntity entity, bool autoSave = false,
-            CancellationToken cancellationToken = default);
+        Task DeleteAsync([NotNull] TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default);
 
         /// <summary>
         ///     按条件删除
@@ -53,8 +49,7 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
         /// <param name="autoSave"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task DeleteAsync([NotNull] Expression<Func<TEntity, bool>> predicate, bool autoSave = false,
-            CancellationToken cancellationToken = default);
+        Task DeleteAsync([NotNull] Expression<Func<TEntity, bool>> predicate, bool autoSave = false, CancellationToken cancellationToken = default);
 
         /// <summary>
         ///     删除多个
@@ -63,8 +58,7 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
         /// <param name="autoSave"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task DeleteAsync([NotNull] IEnumerable<TEntity> entities, bool autoSave = false,
-            CancellationToken cancellationToken = default);
+        Task DeleteAsync([NotNull] IEnumerable<TEntity> entities, bool autoSave = false, CancellationToken cancellationToken = default);
 
 
         /// <summary>
@@ -74,15 +68,13 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
         /// <param name="autoSave"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<TEntity> UpdateAsync([NotNull] TEntity entity, bool autoSave = false,
-            CancellationToken cancellationToken = default);
+        Task<TEntity> UpdateAsync([NotNull] TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default);
 
         /// <summary>
         ///     更新
         /// </summary>
         /// <returns></returns>
-        Task UpdateAsync([NotNull] IEnumerable<TEntity> entities, bool autoSave = false,
-            CancellationToken cancellationToken = default);
+        Task UpdateAsync([NotNull] IEnumerable<TEntity> entities, bool autoSave = false, CancellationToken cancellationToken = default);
 
 
         /// <summary>
@@ -194,8 +186,7 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
     }
 
 
-    public interface IEfKeyedRepository<TContext, TEntity, TKey> : IEfGenericRepository<TContext, TEntity>
-        where TContext : DbContext
+    public interface IEfRepository<TEntity, TKey> : IEfRepository<TEntity>
        where TEntity : class, IEntity
     {
         Task DeleteAsync(TKey id, bool autoSave = false, CancellationToken cancellationToken = default);

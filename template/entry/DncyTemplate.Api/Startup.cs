@@ -1,13 +1,12 @@
-﻿using System.Threading.RateLimiting;
-using Dncy.Tools;
+﻿using Dncy.Tools;
 using DncyTemplate.Api.BackgroundServices;
 using DncyTemplate.Api.Infra.ApiDoc;
 using DncyTemplate.Api.Infra.Tenancy;
 using DncyTemplate.Application;
 using DncyTemplate.Domain;
 using DncyTemplate.Infra;
-
 using Microsoft.AspNetCore.Hosting.Server.Features;
+using System.Threading.RateLimiting;
 
 namespace DncyTemplate.Api;
 public class Startup
@@ -41,16 +40,16 @@ public class Startup
         #region 速率限制
         services.AddRateLimiter(options =>
         {
-            options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
-                RateLimitPartition.GetFixedWindowLimiter(
-                    partitionKey: httpContext.Connection.RemoteIpAddress?.ToNumber().ToString(),
-                    factory: partition => new FixedWindowRateLimiterOptions
-                    {
-                        AutoReplenishment = true,
-                        PermitLimit = 50,
-                        QueueLimit = 10,
-                        Window = TimeSpan.FromMinutes(1)
-                    }));
+            //options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
+            //    RateLimitPartition.GetFixedWindowLimiter(
+            //        partitionKey: httpContext.Connection.RemoteIpAddress?.ToNumber().ToString(),
+            //        factory: partition => new FixedWindowRateLimiterOptions
+            //        {
+            //            AutoReplenishment = true,
+            //            PermitLimit = 50,
+            //            QueueLimit = 10,
+            //            Window = TimeSpan.FromMinutes(1)
+            //        }));
 
             // action or controller use [EnableRateLimiting("Api")] to enable this policy
             options.AddPolicy("home.RateLimit_action", httpContext =>

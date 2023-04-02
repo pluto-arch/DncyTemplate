@@ -9,7 +9,7 @@
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<SatelliteResourceLanguages>zh-Hans;zh-CN</SatelliteResourceLanguages>
 		<DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
-		<RuntimeIdentifiers>linux-x64</RuntimeIdentifiers>
+		<RuntimeIdentifiers>linux-x64;win-x64</RuntimeIdentifiers>
 	</PropertyGroup>
 
 	<ItemGroup>

@@ -13,7 +13,7 @@ namespace DncyTemplate.Application.AppServices.Generics
     {
 
         /// <inheritdoc />
-        public EntityKeyCrudAppService(EfUow<DncyTemplateDbContext> uow, IMapper mapper) : base(uow, mapper)
+        public EntityKeyCrudAppService(EfUnitOfWork<DncyTemplateDbContext> uow, IMapper mapper) : base(uow, mapper)
         {
         }
 

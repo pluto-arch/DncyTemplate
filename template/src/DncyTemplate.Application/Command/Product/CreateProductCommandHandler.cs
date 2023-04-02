@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
 using DncyTemplate.Application.Models.Product;
-using DncyTemplate.Domain.Aggregates.Product;
 using DncyTemplate.Domain.DomainEvents.Product;
 using DncyTemplate.Infra.EntityFrameworkCore;
 using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 using DncyTemplate.Infra.Utils;
-using Microsoft.EntityFrameworkCore;
 using ProductAgg = DncyTemplate.Domain.Aggregates.Product;
 
 
@@ -20,11 +18,11 @@ namespace DncyTemplate.Application.Command.Product
         private readonly ILogger<CreateProductCommandHandler> _logger;
 
         [AutoInject]
-        private readonly EfUow<DncyTemplateDbContext> efUow;
+        private readonly EfUnitOfWork<DncyTemplateDbContext> efUow;
 
         public async Task<ProductDto> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
-            var repository=efUow.Repository<DncyTemplate.Domain.Aggregates.Product.Product>();
+            var repository = efUow.Repository<DncyTemplate.Domain.Aggregates.Product.Product>();
             var entity = _mapper.Map<ProductAgg.Product>(request);
             entity.Id = SnowFlakeId.Generator.GetUniqueId();
             entity.CreationTime = DateTimeOffset.Now;

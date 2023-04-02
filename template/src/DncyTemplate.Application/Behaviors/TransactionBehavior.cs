@@ -1,6 +1,5 @@
 ﻿using DncyTemplate.Infra.Extensions;
 using Microsoft.Extensions.Logging.Abstractions;
-using System.Transactions;
 
 namespace DncyTemplate.Application.Behaviors
 {

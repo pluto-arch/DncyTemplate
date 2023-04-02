@@ -1,29 +1,27 @@
 ﻿using DncyTemplate.Domain.Infra;
 using DncyTemplate.Infra.EntityFrameworkCore.Repository;
-using System.Collections.Concurrent;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore
 {
-    public class EfUow<TContext> : IDisposable, IAsyncDisposable
+
+    public class EfUnitOfWork<TContext> : IDisposable, IAsyncDisposable
         where TContext : DbContext
     {
         private bool disposedValue;
         private IServiceProvider _serviceProvider;
 
-        private readonly ConcurrentDictionary<Type, object> _repositories = new ConcurrentDictionary<Type, object>();
-        private readonly ConcurrentDictionary<Type, object> _keyRepositories = new ConcurrentDictionary<Type, object>();
 
-        public EfUow(IServiceProvider serviceProvider)
+        public EfUnitOfWork(IServiceProvider serviceProvider, TContext rootDbContext)
         {
             _serviceProvider = serviceProvider;
-            DbContext = _serviceProvider.GetService<TContext>();
+            DbContext = rootDbContext;
         }
 
         /// <summary>
-        /// 切换子uow作用域
+        /// 新作用域
         /// </summary>
         /// <returns></returns>
-        public IDisposable Change()
+        public IDisposable NewScope()
         {
             var previousDbContext = DbContext;
             var previousProvider = _serviceProvider;
@@ -41,26 +39,14 @@ namespace DncyTemplate.Infra.EntityFrameworkCore
             });
         }
 
-        public IEfGenericRepository<TContext, T> Repository<T>() where T : class, IEntity
+        public IEfRepository<T> Repository<T>() where T : class, IEntity
         {
-            if (_repositories.Keys.Contains(typeof(T)))
-            {
-                return _repositories[typeof(T)] as IEfGenericRepository<TContext, T>;
-            }
-            var repository = ActivatorUtilities.CreateInstance<EfGenericRepository<TContext, T>>(_serviceProvider, this);
-            _repositories.AddOrUpdate(typeof(T), () => repository, (k, _) => repository);
-            return repository;
+            return _serviceProvider.GetRequiredService<IEfRepository<T>>();
         }
 
-        public IEfKeyedRepository<TContext, T, TKey> Repository<T, TKey>() where T : class, IEntity
+        public IEfRepository<T, TKey> Repository<T, TKey>() where T : class, IEntity
         {
-            if (_keyRepositories.Keys.Contains(typeof(T)))
-            {
-                return _keyRepositories[typeof(T)] as IEfKeyedRepository<TContext, T, TKey>;
-            }
-            var repository = ActivatorUtilities.CreateInstance<EfKeyedRepository<TContext, T, TKey>>(_serviceProvider, this);
-            _keyRepositories.AddOrUpdate(typeof(T), () => repository, (k, _) => repository);
-            return repository;
+            return _serviceProvider.GetRequiredService<IEfRepository<T, TKey>>();
         }
 
         public int Complete()
@@ -81,8 +67,6 @@ namespace DncyTemplate.Infra.EntityFrameworkCore
             {
                 if (disposing)
                 {
-                    _repositories.Clear();
-                    _keyRepositories.Clear();
                     DbContext?.Dispose();
                 }
                 disposedValue = true;

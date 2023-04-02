@@ -5,6 +5,7 @@ using DncyTemplate.Infra.Constants;
 using DncyTemplate.Infra.EntityFrameworkCore.ConnectionStringResolve;
 using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 using DncyTemplate.Infra.EntityFrameworkCore.Interceptor;
+using DncyTemplate.Infra.EntityFrameworkCore.Repository;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore;
 
@@ -41,6 +42,7 @@ public static class EntityFrameworkServiceExtension
         });
 
         service.AddUnitofWork();
+        service.AddDefaultRepository();
         service.ApplyEntityDefaultNavicationProperty();
         return service;
     }
@@ -62,50 +64,43 @@ public static class EntityFrameworkServiceExtension
 
     private static void AddUnitofWork(this IServiceCollection service)
     {
-        service.AddScoped(typeof(EfUow<>));
+        service.AddScoped(typeof(EfUnitOfWork<>));
     }
 
 
 
-    //private static void AddDefaultRepository(this IServiceCollection services, Assembly assembly = null, List<Type> context = null)
-    //{
-    //    assembly ??= Assembly.GetExecutingAssembly();
-    //    context ??= assembly.GetTypes().Where(x => x.GetInterface(nameof(IUowDbContext)) != null).ToList();
-    //    if (context is null or { Count: <= 0 })
-    //    {
-    //        return;
-    //    }
+    private static void AddDefaultRepository(this IServiceCollection services, Assembly assembly = null, List<Type> context = null)
+    {
+        assembly ??= Assembly.GetExecutingAssembly();
+        context ??= assembly.GetTypes().Where(x => x.IsAssignableTo(typeof(DbContext)) && !x.Name.Contains("Migration")).ToList();
+        if (context is null or { Count: <= 0 })
+        {
+            return;
+        }
 
-    //    Parallel.ForEach(context, item =>
-    //    {
-    //        var properties = item.GetProperties().Where(x => x.PropertyType.IsGenericType);
-    //        if (!properties.Any())
-    //        {
-    //            Log.Logger.Warning("{Name} does not have any entity properties for default repository inject", item.Name);
-    //            return;
-    //        }
-    //        foreach (var p in properties)
-    //        {
-    //            var entityType = p.PropertyType.GenericTypeArguments.FirstOrDefault(x => x.IsAssignableTo(typeof(IEntity)));
-    //            if (entityType == null)
-    //            {
-    //                continue;
-    //            }
 
-    //            var baseImpl = typeof(EfCoreBaseRepository<,>).MakeGenericType(item, entityType);
-    //            var baseRep = typeof(IRepository<>).MakeGenericType(entityType);
-    //            services.RegisterType(baseRep, baseImpl);
+        Parallel.ForEach(context, item =>
+        {
+            var entitTypies = from property in item.GetTypeInfo().GetProperties(BindingFlags.Instance | BindingFlags.Public)
+                              where IsAssignableToGenericType(property.PropertyType, typeof(DbSet<>)) && typeof(IEntity).IsAssignableFrom(property.PropertyType.GenericTypeArguments[0])
+                              select property.PropertyType.GenericTypeArguments[0];
 
-    //            var primaryKeyType = EntityHelper.FindPrimaryKeyType(entityType);
-    //            if (primaryKeyType != null)
-    //            {
-    //                var keyImpl = typeof(EfCoreBaseRepository<,,>).MakeGenericType(item, entityType, primaryKeyType);
-    //                var keyRep = typeof(IRepository<,>).MakeGenericType(entityType, primaryKeyType);
-    //                services.RegisterType(keyRep, keyImpl);
-    //            }
-    //        }
-    //    });
-    //}
+
+            foreach (var entityType in entitTypies)
+            {
+                var defType = typeof(IEfRepository<>).MakeGenericType(entityType);
+                var implementingType = EfRepositoryHelper.GetRepositoryType(item, entityType);
+                services.RegisterType(defType, implementingType);
+
+                Type keyType = EntityHelper.FindPrimaryKeyType(entityType);
+                if (keyType != null)
+                {
+                    services.RegisterType(typeof(IEfRepository<,>).MakeGenericType(entityType, keyType),
+                        EfRepositoryHelper.GetRepositoryType(item, entityType, keyType));
+                }
+            }
+        });
+    }
 
     private static IServiceCollection RegisterType(this IServiceCollection services, Type type, Type implementationType)
     {
@@ -113,8 +108,33 @@ public static class EntityFrameworkServiceExtension
         {
             services.TryAddTransient(type, implementationType);
         }
-
         return services;
+    }
+
+
+    public static bool IsAssignableToGenericType(Type givenType, Type genericType)
+    {
+        TypeInfo typeInfo = givenType.GetTypeInfo();
+        if (typeInfo.IsGenericType && givenType.GetGenericTypeDefinition() == genericType)
+        {
+            return true;
+        }
+
+        Type[] interfaces = typeInfo.GetInterfaces();
+        foreach (Type type in interfaces)
+        {
+            if (type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == genericType)
+            {
+                return true;
+            }
+        }
+
+        if (typeInfo.BaseType == null)
+        {
+            return false;
+        }
+
+        return IsAssignableToGenericType(typeInfo.BaseType, genericType);
     }
     #endregion
 
