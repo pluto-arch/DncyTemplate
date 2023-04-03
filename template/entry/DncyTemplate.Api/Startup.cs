@@ -1,13 +1,17 @@
-﻿using System.Threading.RateLimiting;
+﻿using System.Diagnostics;
+using System.Threading.RateLimiting;
 using Dncy.Tools;
 using DncyTemplate.Api.BackgroundServices;
 using DncyTemplate.Api.Infra.ApiDoc;
+using DncyTemplate.Api.Infra.AuditLog;
 using DncyTemplate.Api.Infra.Tenancy;
 using DncyTemplate.Application;
 using DncyTemplate.Domain;
 using DncyTemplate.Infra;
 
 using Microsoft.AspNetCore.Hosting.Server.Features;
+using Microsoft.Extensions.Primitives;
+using Serilog.Context;
 
 namespace DncyTemplate.Api;
 public class Startup
@@ -28,7 +32,7 @@ public class Startup
         });
         #endregion
 
-
+        services.AddHttpClient();
         services.AddApplicationModule(Configuration);
         services.AddInfraModule(Configuration);
         services.AddDomainModule();
@@ -79,6 +83,16 @@ public class Startup
         app.UseForwardedHeaders()
             .UseCertificateForwarding();
 
+        
+        app.Use((context, next) =>
+        {
+            var activity = Activity.Current;
+            context.Request.Headers.TryGetValue("Cko-Correlation-Id", out StringValues correlationId);
+            var traceId = activity.GetTraceId()??context.TraceIdentifier;
+            context.Response.Headers.TryAdd("trace_id",traceId??correlationId);
+            return next();
+        });
+        
         app.UseHttpRequestLogging();
 
         app.UseCors(AppConstant.DEFAULT_CORS_NAME);

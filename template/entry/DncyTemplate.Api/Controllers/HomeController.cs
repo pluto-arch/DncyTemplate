@@ -22,6 +22,12 @@ namespace DncyTemplate.Api.Controllers
         [AutoInject]
         private readonly EfUnitOfWork<DncyTemplateDbContext> _efUow;
 
+        [AutoInject]
+        private readonly IHttpClientFactory _httpClientFactory;
+
+        [AutoInject]
+        private readonly ILogger<HomeController> _logger;
+
         [HttpGet]
         public ApiResult TestLocalize([EmailAddress] string name)
         {
@@ -63,6 +69,18 @@ namespace DncyTemplate.Api.Controllers
         }
 
 
+
+        [HttpGet("loc")]
+        [AllowAnonymous]
+        public async Task<ApiResult> RpcCall()
+        {
+            var client = _httpClientFactory.CreateClient("mvc");
+            _logger.LogInformation("开始请求");
+            var response = await client.GetStringAsync("http://localhost:6000/home/users");
+            return this.Success(response);
+        }
+        
+        
         /// <summary>
         /// 限流测试
         /// </summary>

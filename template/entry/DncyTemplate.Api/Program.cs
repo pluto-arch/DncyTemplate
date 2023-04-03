@@ -1,4 +1,5 @@
-﻿using Serilog.Enrichers.Sensitive;
+﻿using DncyTemplate.Api.Infra.AuditLog;
+using Serilog.Enrichers.Sensitive;
 using ILogger = Serilog.ILogger;
 
 namespace DncyTemplate.Api;
@@ -33,6 +34,13 @@ public class Program
     {
         IHost host = Host.CreateDefaultBuilder(args)
             .UseContentRoot(Directory.GetCurrentDirectory())
+            .ConfigureLogging(builder =>
+            {
+                builder.Configure(option =>
+                {
+                    option.ActivityTrackingOptions=ActivityTrackingOptions.TraceId | ActivityTrackingOptions.SpanId;
+                });
+            })
             .ConfigureWebHostDefaults(webhost =>
             {
                 webhost.UseStartup<Startup>()
@@ -69,6 +77,7 @@ public class Program
         return new LoggerConfiguration()
             .ReadFrom.Configuration(configuration)
             .Enrich.WithProperty("AppName", applicationName)
+            .Enrich.With<ActivityEnricher>()
             .Enrich.WithSensitiveDataMasking(options =>
             {
                 // TODO config Sensitive filter rules
@@ -78,6 +87,7 @@ public class Program
                 options.MaskProperties.Add("access_token");
                 // https://github.com/serilog-contrib/Serilog.Enrichers.Sensitive
             })
+            .WriteTo.Seq("http://localhost:5341",apiKey:"soXHWgIp0Y6878oFPZDG")
             .CreateLogger();
     }
 
