@@ -35,7 +35,6 @@
 		<Folder Include="Infra\ApiDoc\" />
 		<Folder Include="Infra\Authorization\" />
 		<Folder Include="Infra\LocalizerSetup\" />
-		<Folder Include="Infra\AuditLog\" />
 		<Folder Include="Models\ModelBinding\" />
 		<Folder Include="BackgroundServices\" />
 	</ItemGroup>

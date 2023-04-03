@@ -6,7 +6,10 @@ using DncyTemplate.Application;
 using DncyTemplate.Domain;
 using DncyTemplate.Infra;
 using Microsoft.AspNetCore.Hosting.Server.Features;
+using Microsoft.Extensions.Primitives;
+using System.Diagnostics;
 using System.Threading.RateLimiting;
+using DncyTemplate.Api.Infra.LogSetup;
 
 namespace DncyTemplate.Api;
 public class Startup
@@ -27,7 +30,7 @@ public class Startup
         });
         #endregion
 
-
+        services.AddHttpClient();
         services.AddApplicationModule(Configuration);
         services.AddInfraModule(Configuration);
         services.AddDomainModule();
@@ -77,6 +80,16 @@ public class Startup
         app.UseResponseCompression();
         app.UseForwardedHeaders()
             .UseCertificateForwarding();
+
+
+        app.Use((context, next) =>
+        {
+            var activity = Activity.Current;
+            context.Request.Headers.TryGetValue("Cko-Correlation-Id", out StringValues correlationId);
+            var traceId = activity.GetTraceId() ?? context.TraceIdentifier;
+            context.Response.Headers.TryAdd("trace_id", traceId ?? correlationId);
+            return next();
+        });
 
         app.UseHttpRequestLogging();
 

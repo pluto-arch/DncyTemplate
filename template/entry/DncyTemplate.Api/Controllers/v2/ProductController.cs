@@ -28,7 +28,7 @@ namespace DncyTemplate.Api.Controllers.v2
         /// <returns></returns>
         [HttpGet]
         [Produces(typeof(IPagedList<ProductListItemDto>))]
-        public async Task<ApiResult> ListAsync([FromQuery]ProductPagedRequest request)
+        public async Task<ApiResult> ListAsync([FromQuery] ProductPagedRequest request)
         {
             var res = await _productAppService.GetListAsync(request);
             return this.Success(res);

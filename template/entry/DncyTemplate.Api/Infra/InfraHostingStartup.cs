@@ -1,5 +1,4 @@
-﻿using DncyTemplate.Api.Infra.AuditLog;
-using DncyTemplate.Api.Infra.ExceptionHandlers;
+﻿using DncyTemplate.Api.Infra.ExceptionHandlers;
 using DncyTemplate.Api.Infra.LocalizerSetup;
 using DncyTemplate.Api.Models.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Versioning;

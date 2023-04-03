@@ -1,4 +1,4 @@
-﻿namespace DncyTemplate.Mvc.Infra.AuditLog;
+﻿namespace DncyTemplate.Api.Infra.LogSetup;
 
 public class ApiAuditInfoModel
 {

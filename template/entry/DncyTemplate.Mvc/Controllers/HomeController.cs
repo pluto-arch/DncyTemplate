@@ -25,6 +25,16 @@ namespace DncyTemplate.Mvc.Controllers
         }
 
 
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Users()
+        {
+            _logger.LogInformation("接收到请求");
+            return Ok("Hello");
+        }
+
+
+
         // [Authorize(ProductPermission.Product.Create)]
         // public async Task<IActionResult> Generate([FromServices] IHostEnvironment env)
         // {

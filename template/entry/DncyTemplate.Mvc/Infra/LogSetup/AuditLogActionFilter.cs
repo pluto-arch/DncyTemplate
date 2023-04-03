@@ -1,13 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Newtonsoft.Json;
 using System.Diagnostics;
 
-namespace DncyTemplate.Api.Infra.AuditLog;
+namespace DncyTemplate.Mvc.Infra.LogSetup;
 
-
-/// <summary>
-/// 接口审计日志
-/// </summary>
 public class AuditLogActionFilter : IAsyncActionFilter
 {
     private readonly ILogger<AuditLogActionFilter> _logger;
@@ -71,22 +68,15 @@ public class AuditLogActionFilter : IAsyncActionFilter
             stopwatch.Stop();
             // 执行时长
 
-            if (result != null) // 结果信息
+            if (result is { Result: not ViewResult }) // 结果信息
             {
-                switch (result.Result)
+                auditInfo.ReturnValue = result.Result switch
                 {
-                    case ObjectResult objectResult:
-                        auditInfo.ReturnValue = JsonConvert.SerializeObject(objectResult.Value);
-                        break;
-
-                    case JsonResult jsonResult:
-                        auditInfo.ReturnValue = JsonConvert.SerializeObject(jsonResult.Value);
-                        break;
-
-                    case ContentResult contentResult:
-                        auditInfo.ReturnValue = contentResult.Content;
-                        break;
-                }
+                    ObjectResult objectResult => JsonConvert.SerializeObject(objectResult.Value),
+                    JsonResult jsonResult => JsonConvert.SerializeObject(jsonResult.Value),
+                    ContentResult contentResult => contentResult.Content,
+                    _ => auditInfo.ReturnValue
+                };
             }
 
             // 存储， 推荐使用eventbus发布，由消费这慢慢写入持久化设施
@@ -136,5 +126,31 @@ public class AuditLogActionFilter : IAsyncActionFilter
         //    }
         //}
         return true;
+    }
+
+    public class MyJsonConverter : JsonConverter
+    {
+        /// <inheritdoc />
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            var t = value.GetType().GetProperties();
+            foreach (var prop in t)
+            {
+                // filter secret value
+            }
+
+        }
+
+        /// <inheritdoc />
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            return null;
+        }
+
+        /// <inheritdoc />
+        public override bool CanConvert(Type objectType)
+        {
+            return true;
+        }
     }
 }

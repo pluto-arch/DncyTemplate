@@ -1,3 +1,4 @@
+using DncyTemplate.Mvc.Infra.LogSetup;
 using Serilog.Enrichers.Sensitive;
 using ILogger = Serilog.ILogger;
 
@@ -33,6 +34,13 @@ public class Program
     {
         IHost host = Host.CreateDefaultBuilder(args)
             .UseContentRoot(Directory.GetCurrentDirectory())
+            .ConfigureLogging(builder =>
+            {
+                builder.Configure(option =>
+                {
+                    option.ActivityTrackingOptions = ActivityTrackingOptions.TraceId | ActivityTrackingOptions.SpanId;
+                });
+            })
             .ConfigureWebHostDefaults(webhost =>
             {
                 webhost.UseStartup<Startup>()
@@ -67,6 +75,7 @@ public class Program
         return new LoggerConfiguration()
             .ReadFrom.Configuration(configuration)
             .Enrich.WithProperty("AppName", applicationName)
+            .Enrich.With<ActivityEnricher>()
             .Enrich.WithSensitiveDataMasking(o =>
             {
                 // TODO config Sensitive filter rules
