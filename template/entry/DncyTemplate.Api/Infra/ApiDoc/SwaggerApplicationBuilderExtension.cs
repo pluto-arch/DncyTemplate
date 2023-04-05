@@ -11,16 +11,19 @@ public static class SwaggerApplicationBuilderExtension
     /// <returns></returns>
     public static IApplicationBuilder UseCustomSwagger(this IApplicationBuilder app)
     {
-
-        app.UseSwagger();
-        var versionProvider = app.ApplicationServices.GetRequiredService<IApiVersionDescriptionProvider>();
-        app.UseSwaggerUI(options =>
+        var env = app.ApplicationServices.GetRequiredService<IWebHostEnvironment>();
+        if (env.IsEnvironment(Constants.AppConstant.EnvironmentName.DEV))
         {
-            foreach (var description in versionProvider.ApiVersionDescriptions)
+            app.UseSwagger();
+            var versionProvider = app.ApplicationServices.GetRequiredService<IApiVersionDescriptionProvider>();
+            app.UseSwaggerUI(options =>
             {
-                options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", $"{AppConstant.SERVICE_NAME} - {description.GroupName}");
-            }
-        });
+                foreach (var description in versionProvider.ApiVersionDescriptions)
+                {
+                    options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", $"{AppConstant.SERVICE_NAME} - {description.GroupName}");
+                }
+            });
+        }
         return app;
     }
 }

@@ -17,22 +17,9 @@ public class SwaggerHostingStartup : IHostingStartup
             {
                 return;
             }
-
+            services.ConfigureOptions<ConfigureSwaggerOptions>();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = AppConstant.SERVICE_NAME, Version = "v1" });
-
-                c.AddServer(new OpenApiServer()
-                {
-                    Url = "",
-                    Description = AppConstant.SERVICE_NAME
-                });
-                c.CustomOperationIds(apiDesc =>
-                {
-                    var controllerAction = apiDesc.ActionDescriptor as ControllerActionDescriptor;
-                    return controllerAction?.ControllerName + "-" + controllerAction?.ActionName;
-                });
-
                 c.SupportNonNullableReferenceTypes();
 
                 c.UseAllOfToExtendReferenceSchemas();
@@ -65,9 +52,6 @@ public class SwaggerHostingStartup : IHostingStartup
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
-
-            services.ConfigureOptions<ConfigureSwaggerOptions>();
-
         });
     }
 }

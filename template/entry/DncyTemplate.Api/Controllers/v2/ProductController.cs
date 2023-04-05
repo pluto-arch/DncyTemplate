@@ -11,6 +11,7 @@ namespace DncyTemplate.Api.Controllers.v2
     [ApiController]
     [Route("api/v{version:apiVersion}/products")]
     [ApiVersion("2.0")]
+    [ApiVersion("3.0")]
     [Authorize]
     [AutoResolveDependency]
     public partial class ProductController : ControllerBase, IApiResultWapper
@@ -26,14 +27,14 @@ namespace DncyTemplate.Api.Controllers.v2
         /// GET {PATH}?PageNo=1&pageSize=20&keyword=hahah&sorter={‘id’:'desc'}
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet(Name = "ProductList")]
+        [MapToApiVersion("1.0")]
         [Produces(typeof(IPagedList<ProductListItemDto>))]
         public async Task<ApiResult> ListAsync([FromQuery] ProductPagedRequest request)
         {
             var res = await _productAppService.GetListAsync(request);
             return this.Success(res);
         }
-
 
         /// <summary>
         /// 获取产品信息
