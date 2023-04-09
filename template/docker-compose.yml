@@ -1,14 +1,13 @@
 version: "3.4"
 
 services:
-  #if (ProjectType == "API")
+#if (ProjectType == "API")
   dncytemplate.api:
     image: ${DOCKER_REGISTRY-}dncytemplateapi
     build:
       context: .
       dockerfile: ./entry/DncyTemplate.Api/Dockerfile
-  #endif
-  #if (ProjectType == "MVC")
+#else (ProjectType == "MVC")
   dncytemplate.mvc:
     image: ${DOCKER_REGISTRY-}dncytemplatemvc
     build:
