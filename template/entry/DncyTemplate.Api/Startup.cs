@@ -1,6 +1,7 @@
 ﻿using Dncy.Tools;
 using DncyTemplate.Api.BackgroundServices;
 using DncyTemplate.Api.Infra.ApiDoc;
+using DncyTemplate.Api.Infra.LogSetup;
 using DncyTemplate.Api.Infra.Tenancy;
 using DncyTemplate.Application;
 using DncyTemplate.Domain;
@@ -9,7 +10,6 @@ using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.Extensions.Primitives;
 using System.Diagnostics;
 using System.Threading.RateLimiting;
-using DncyTemplate.Api.Infra.LogSetup;
 
 namespace DncyTemplate.Api;
 public class Startup

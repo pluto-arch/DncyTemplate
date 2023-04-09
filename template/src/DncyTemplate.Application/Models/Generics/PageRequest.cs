@@ -1,5 +1,4 @@
-﻿using DncyTemplate.Application.AppServices.Generics;
-using DncyTemplate.Application.Constants;
+﻿using DncyTemplate.Application.Constants;
 using System.ComponentModel.DataAnnotations;
 
 namespace DncyTemplate.Application.Models.Generics;

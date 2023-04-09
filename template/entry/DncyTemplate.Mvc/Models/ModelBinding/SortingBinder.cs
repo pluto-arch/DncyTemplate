@@ -1,4 +1,4 @@
-﻿using DncyTemplate.Application.AppServices.Generics;
+﻿using DncyTemplate.Application.Models;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 using Newtonsoft.Json;

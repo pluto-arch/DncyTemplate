@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace DncyTemplate.Application.AppServices.Generics;
+namespace DncyTemplate.Application.Models;
 
 public enum SortingOrder { Ascending, Descending }
 
