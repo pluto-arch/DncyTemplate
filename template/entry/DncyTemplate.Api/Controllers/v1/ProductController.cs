@@ -12,7 +12,7 @@ namespace DncyTemplate.Api.Controllers.v1
     [ApiVersion("1.0")]
     [AutoResolveDependency]
     [Authorize]
-    public partial class ProductController : ControllerBase, IApiResultWapper
+    public partial class ProductController : ControllerBase, IResultWraps
     {
         [AutoInject]
         private readonly IProductAppService _productsRepository;

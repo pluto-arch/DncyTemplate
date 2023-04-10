@@ -8,7 +8,7 @@ namespace DncyTemplate.Api.Controllers;
 
 [Route("api/[Controller]")]
 [ApiController]
-public class AccountController : ControllerBase, IApiResultWapper
+public class AccountController : ControllerBase, IResultWraps
 {
     private static readonly List<dynamic> Users = new()
     {

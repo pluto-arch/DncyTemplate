@@ -4,7 +4,7 @@
 /// <summary>
 /// api 结果包装空接口
 /// </summary>
-public interface IApiResultWapper { }
+public interface IResultWraps { }
 
 
 /// <summary>
@@ -122,42 +122,42 @@ public record ApiResult<T> : ApiResult
 /// </summary>
 public static class ApiResultWapper
 {
-    public static ApiResult<TData> Success<TData>(this IApiResultWapper _, TData result)
+    public static ApiResult<TData> Success<TData>(this IResultWraps _, TData result)
     {
         return ApiResult<TData>.Success(result);
     }
 
-    public static ApiResult<TData> Success<TData>(this IApiResultWapper _, TData result, string message)
+    public static ApiResult<TData> Success<TData>(this IResultWraps _, TData result, string message)
     {
         return ApiResult<TData>.Success(result, message);
     }
 
-    public static ApiResult<TData> Fail<TData>(this IApiResultWapper _, string message = "服务异常", TData data = default)
+    public static ApiResult<TData> Fail<TData>(this IResultWraps _, string message = "服务异常", TData data = default)
     {
         return ApiResult<TData>.Fatal(message, data);
     }
-    public static ApiResult<TData> Error<TData>(this IApiResultWapper _, string message = "处理请求出现错误", TData data = default)
+    public static ApiResult<TData> Error<TData>(this IResultWraps _, string message = "处理请求出现错误", TData data = default)
     {
         return ApiResult<TData>.Error(message, data);
     }
-    public static ApiResult<TData> ErrorRequest<TData>(this IApiResultWapper _, string message = "无效的请求", TData data = default)
+    public static ApiResult<TData> ErrorRequest<TData>(this IResultWraps _, string message = "无效的请求", TData data = default)
     {
         return ApiResult<TData>.ErrorRequest(message, data);
     }
 
-    public static ApiResult Success(this IApiResultWapper _)
+    public static ApiResult Success(this IResultWraps _)
     {
         return ApiResult.Success();
     }
-    public static ApiResult ErrorRequest(this IApiResultWapper _, string message = "无效的请求")
+    public static ApiResult ErrorRequest(this IResultWraps _, string message = "无效的请求")
     {
         return ApiResult.ErrorRequest(message);
     }
-    public static ApiResult Error(this IApiResultWapper _, string message = "处理请求出现错误")
+    public static ApiResult Error(this IResultWraps _, string message = "处理请求出现错误")
     {
         return ApiResult.Error(message);
     }
-    public static ApiResult Fail(this IApiResultWapper _, string message = "服务异常")
+    public static ApiResult Fail(this IResultWraps _, string message = "服务异常")
     {
         return ApiResult.Fatal(message);
     }

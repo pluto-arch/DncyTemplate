@@ -14,7 +14,7 @@ namespace DncyTemplate.Api.Controllers
     [AutoResolveDependency]
     [ApiController]
     [AllowAnonymous]
-    public partial class HomeController : ControllerBase, IApiResultWapper
+    public partial class HomeController : ControllerBase, IResultWraps
     {
         [AutoInject]
         private readonly IStringLocalizer<SharedResource> _stringLocalizer;
