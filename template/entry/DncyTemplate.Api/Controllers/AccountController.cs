@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using DncyTemplate.Application.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
@@ -8,7 +9,7 @@ namespace DncyTemplate.Api.Controllers;
 
 [Route("api/[Controller]")]
 [ApiController]
-public class AccountController : ControllerBase, IResultWraps
+public class AccountController : ControllerBase, IResponseWraps
 {
     private static readonly List<dynamic> Users = new()
     {
@@ -47,7 +48,7 @@ public class AccountController : ControllerBase, IResultWraps
     /// <returns></returns>
     [HttpPost]
     [AllowAnonymous]
-    public ApiResult Token([Required, FromForm(Name = "userName")] string user, [Required, FromForm(Name = "password")] string pwd)
+    public ResultDto Token([Required, FromForm(Name = "userName")] string user, [Required, FromForm(Name = "password")] string pwd)
     {
         var u = Users.FirstOrDefault(x => x.UserName == user && x.Password == pwd);
         if (u == null)

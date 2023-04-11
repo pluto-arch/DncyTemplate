@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
+﻿using DncyTemplate.Application.Models;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.Extensions.Logging.Abstractions;
 
 namespace DncyTemplate.Api.Infra.ExceptionHandlers;
@@ -9,7 +10,7 @@ public class HttpPipelineExceptionHandler
     {
         context.Response.StatusCode = StatusCodes.Status500InternalServerError;
         context.Response.ContentType = AppConstant.DEFAULT_CONTENT_TYPE;
-        var res = ApiResult.Fatal();
+        var res = ResultDto.Fatal();
         var log = context.RequestServices.GetService<ILogger<HttpPipelineExceptionHandler>>() ?? NullLogger<HttpPipelineExceptionHandler>.Instance;
         var options = context.RequestServices.GetRequiredService<IOptions<MvcNewtonsoftJsonOptions>>();
         var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();

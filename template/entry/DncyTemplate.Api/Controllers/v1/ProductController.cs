@@ -1,5 +1,6 @@
 ﻿using Dncy.MultiTenancy;
 using DncyTemplate.Application.AppServices.Product;
+using DncyTemplate.Application.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.ComponentModel.DataAnnotations;
 using AppModelAlias = DncyTemplate.Application.Models;
@@ -12,7 +13,7 @@ namespace DncyTemplate.Api.Controllers.v1
     [ApiVersion("1.0")]
     [AutoResolveDependency]
     [Authorize]
-    public partial class ProductController : ControllerBase, IResultWraps
+    public partial class ProductController : ControllerBase, IResponseWraps
     {
         [AutoInject]
         private readonly IProductAppService _productsRepository;
@@ -26,7 +27,7 @@ namespace DncyTemplate.Api.Controllers.v1
         /// <returns></returns>
         [HttpGet]
         [Produces(typeof(IPagedList<AppModelAlias.Product.ProductListItemDto>))]
-        public async Task<ApiResult> GetAsync(int pageNo = 1, [Range(minimum: 1, maximum: 255, ErrorMessage = "PageSizeMessage")] byte pageSize = 20)
+        public async Task<ResultDto> GetAsync(int pageNo = 1, [Range(minimum: 1, maximum: 255, ErrorMessage = "PageSizeMessage")] byte pageSize = 20)
         {
             if (pageSize <= 0)
             {
@@ -51,7 +52,7 @@ namespace DncyTemplate.Api.Controllers.v1
         /// <returns></returns>
         [HttpPost]
         [Produces(typeof(AppModelAlias.Product.ProductDto))]
-        public async Task<ApiResult> PostAsync([FromForm] string name)
+        public async Task<ResultDto> PostAsync([FromForm] string name)
         {
             var productDto = await _productsRepository.CreateAsync(new Application.Models.Product.ProductCreateRequest
             {

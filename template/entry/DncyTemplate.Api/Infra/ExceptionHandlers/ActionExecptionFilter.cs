@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http.Extensions;
+﻿using DncyTemplate.Application.Models;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -21,7 +22,7 @@ public class ActionExecptionFilter : IAsyncExceptionFilter
             var log = context.HttpContext.RequestServices.GetService<ILogger<ActionExecptionFilter>>() ?? NullLogger<ActionExecptionFilter>.Instance;
             var msg = context.Exception.Message;
             log.LogError(context.Exception, "处理{method} {path}. 出现错误: {msg}", context.HttpContext.Request.Method, context.HttpContext.Request.GetEncodedPathAndQuery(), msg);
-            context.Result = new ObjectResult(ApiResult.Error("处理请求失败"))
+            context.Result = new ObjectResult(ResultDto.Error("处理请求失败"))
             {
                 ContentTypes = mediaType,
                 StatusCode = StatusCodes.Status200OK

@@ -1,4 +1,5 @@
-﻿using DncyTemplate.Domain.Aggregates.Product;
+﻿using DncyTemplate.Application.Models;
+using DncyTemplate.Domain.Aggregates.Product;
 using DncyTemplate.Infra.EntityFrameworkCore;
 using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 using DncyTemplate.Infra.EntityFrameworkCore.Repository;
@@ -14,7 +15,7 @@ namespace DncyTemplate.Api.Controllers
     [AutoResolveDependency]
     [ApiController]
     [AllowAnonymous]
-    public partial class HomeController : ControllerBase, IResultWraps
+    public partial class HomeController : ControllerBase, IResponseWraps
     {
         [AutoInject]
         private readonly IStringLocalizer<SharedResource> _stringLocalizer;
@@ -29,7 +30,7 @@ namespace DncyTemplate.Api.Controllers
         private readonly ILogger<HomeController> _logger;
 
         [HttpGet]
-        public ApiResult TestLocalize([EmailAddress] string name)
+        public ResultDto TestLocalize([EmailAddress] string name)
         {
             var text = _stringLocalizer[SharedResource.Hello];
             return this.Success<string>(text);
@@ -37,7 +38,7 @@ namespace DncyTemplate.Api.Controllers
 
 
         [HttpGet("/uow")]
-        public async Task<ApiResult> RateLimit([FromServices] IEfRepository<Product> _repository, [EmailAddress] string name)
+        public async Task<ResultDto> RateLimit([FromServices] IEfRepository<Product> _repository, [EmailAddress] string name)
         {
             var a = _efUow.Repository<Product>();
             var aa = a.GetHashCode();
@@ -72,7 +73,7 @@ namespace DncyTemplate.Api.Controllers
 
         [HttpGet("loc")]
         [AllowAnonymous]
-        public async Task<ApiResult> RpcCall()
+        public async Task<ResultDto> RpcCall()
         {
             var client = _httpClientFactory.CreateClient("mvc");
             _logger.LogInformation("开始请求");
@@ -88,7 +89,7 @@ namespace DncyTemplate.Api.Controllers
         /// <returns></returns>
         [HttpGet("/rate_limit")]
         [EnableRateLimiting("home.RateLimit_action")]
-        public ApiResult RateLimit([EmailAddress] string name)
+        public ResultDto RateLimit([EmailAddress] string name)
         {
             var text = _stringLocalizer[SharedResource.Hello];
             return this.Success<string>(text);

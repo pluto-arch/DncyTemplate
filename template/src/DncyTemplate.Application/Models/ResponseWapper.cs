@@ -1,16 +1,17 @@
-﻿namespace DncyTemplate.Api.Infra;
+﻿
+namespace DncyTemplate.Application.Models;
 
 
 /// <summary>
 /// api 结果包装空接口
 /// </summary>
-public interface IResultWraps { }
+public interface IResponseWraps { }
 
 
 /// <summary>
 /// api返回包装结构
 /// </summary>
-public record ApiResult
+public record ResultDto
 {
     public int Code { get; set; }
 
@@ -21,7 +22,7 @@ public record ApiResult
     ///     成功 - 空返回值
     /// </summary>
     /// <returns></returns>
-    public static ApiResult Success()
+    public static ResultDto Success()
     {
         return new() { Code = 200, Message = "执行成功" };
     }
@@ -31,7 +32,7 @@ public record ApiResult
     /// </summary>
     /// <param name="message"></param>
     /// <returns></returns>
-    public static ApiResult Error(string message)
+    public static ResultDto Error(string message)
     {
         return new() { Code = -100, Message = message };
     }
@@ -41,7 +42,7 @@ public record ApiResult
     /// </summary>
     /// <param name="message"></param>
     /// <returns></returns>
-    public static ApiResult ErrorRequest(string message = "无效的请求")
+    public static ResultDto ErrorRequest(string message = "无效的请求")
     {
         return new() { Code = 400, Message = message };
     }
@@ -51,7 +52,7 @@ public record ApiResult
     /// </summary>
     /// <param name="message"></param>
     /// <returns></returns>
-    public static ApiResult Fatal(string message = "内部服务器异常")
+    public static ResultDto Fatal(string message = "内部服务器异常")
     {
         return new() { Code = 500, Message = message ?? "内部服务器异常" };
     }
@@ -60,7 +61,7 @@ public record ApiResult
 /// <summary>
 /// api返回包装结构 - 泛型
 /// </summary>
-public record ApiResult<T> : ApiResult
+public record ResultDto<T> : ResultDto
 {
     public T Data { get; set; }
 
@@ -69,7 +70,7 @@ public record ApiResult<T> : ApiResult
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static ApiResult<T> Success(T data)
+    public static ResultDto<T> Success(T data)
     {
         return new() { Code = 200, Message = "执行成功", Data = data };
     }
@@ -79,7 +80,7 @@ public record ApiResult<T> : ApiResult
     ///     执行成功
     /// </summary>
     /// <returns></returns>
-    public static ApiResult<T> Success(T data, string message)
+    public static ResultDto<T> Success(T data, string message)
     {
         return new() { Code = 200, Message = message, Data = data };
     }
@@ -90,7 +91,7 @@ public record ApiResult<T> : ApiResult
     /// <param name="message"></param>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static ApiResult<T> Error(string message, T data = default)
+    public static ResultDto<T> Error(string message, T data = default)
     {
         return new() { Code = -100, Message = message, Data = data };
     }
@@ -101,7 +102,7 @@ public record ApiResult<T> : ApiResult
     /// <param name="message"></param>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static ApiResult<T> Fatal(string message, T data = default)
+    public static ResultDto<T> Fatal(string message, T data = default)
     {
         return new() { Code = 500, Message = message, Data = data };
     }
@@ -110,7 +111,7 @@ public record ApiResult<T> : ApiResult
     ///     数据验证错误
     /// </summary>
     /// <returns></returns>
-    public static ApiResult<T> ErrorRequest(string message = "无效的请求", T data = default)
+    public static ResultDto<T> ErrorRequest(string message = "无效的请求", T data = default)
     {
         return new() { Code = 400, Message = message, Data = data };
     }
@@ -120,45 +121,45 @@ public record ApiResult<T> : ApiResult
 /// <summary>
 /// api结果包装扩展
 /// </summary>
-public static class ApiResultWapper
+public static class ResponseWapper
 {
-    public static ApiResult<TData> Success<TData>(this IResultWraps _, TData result)
+    public static ResultDto<TData> Success<TData>(this IResponseWraps _, TData result)
     {
-        return ApiResult<TData>.Success(result);
+        return ResultDto<TData>.Success(result);
     }
 
-    public static ApiResult<TData> Success<TData>(this IResultWraps _, TData result, string message)
+    public static ResultDto<TData> Success<TData>(this IResponseWraps _, TData result, string message)
     {
-        return ApiResult<TData>.Success(result, message);
+        return ResultDto<TData>.Success(result, message);
     }
 
-    public static ApiResult<TData> Fail<TData>(this IResultWraps _, string message = "服务异常", TData data = default)
+    public static ResultDto<TData> Fail<TData>(this IResponseWraps _, string message = "服务异常", TData data = default)
     {
-        return ApiResult<TData>.Fatal(message, data);
+        return ResultDto<TData>.Fatal(message, data);
     }
-    public static ApiResult<TData> Error<TData>(this IResultWraps _, string message = "处理请求出现错误", TData data = default)
+    public static ResultDto<TData> Error<TData>(this IResponseWraps _, string message = "处理请求出现错误", TData data = default)
     {
-        return ApiResult<TData>.Error(message, data);
+        return ResultDto<TData>.Error(message, data);
     }
-    public static ApiResult<TData> ErrorRequest<TData>(this IResultWraps _, string message = "无效的请求", TData data = default)
+    public static ResultDto<TData> ErrorRequest<TData>(this IResponseWraps _, string message = "无效的请求", TData data = default)
     {
-        return ApiResult<TData>.ErrorRequest(message, data);
+        return ResultDto<TData>.ErrorRequest(message, data);
     }
 
-    public static ApiResult Success(this IResultWraps _)
+    public static ResultDto Success(this IResponseWraps _)
     {
-        return ApiResult.Success();
+        return ResultDto.Success();
     }
-    public static ApiResult ErrorRequest(this IResultWraps _, string message = "无效的请求")
+    public static ResultDto ErrorRequest(this IResponseWraps _, string message = "无效的请求")
     {
-        return ApiResult.ErrorRequest(message);
+        return ResultDto.ErrorRequest(message);
     }
-    public static ApiResult Error(this IResultWraps _, string message = "处理请求出现错误")
+    public static ResultDto Error(this IResponseWraps _, string message = "处理请求出现错误")
     {
-        return ApiResult.Error(message);
+        return ResultDto.Error(message);
     }
-    public static ApiResult Fail(this IResultWraps _, string message = "服务异常")
+    public static ResultDto Fail(this IResponseWraps _, string message = "服务异常")
     {
-        return ApiResult.Fatal(message);
+        return ResultDto.Fatal(message);
     }
 }

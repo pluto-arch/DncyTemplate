@@ -1,11 +1,12 @@
 ﻿using Dncy.Permission;
+using DncyTemplate.Application.Models;
 
 namespace DncyTemplate.Api.Controllers
 {
     [Route("api/[controller]")]
     [AutoResolveDependency]
     [ApiController]
-    public partial class PermissionController : ControllerBase, IResultWraps
+    public partial class PermissionController : ControllerBase, IResponseWraps
     {
         [AutoInject]
         private readonly IPermissionGrantStore _permissionGrantStore;
@@ -21,7 +22,7 @@ namespace DncyTemplate.Api.Controllers
         /// <param name="providerKey">提供者值 eg. admin</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ApiResult> GetAsync(string providerName, string providerKey)
+        public async Task<ResultDto> GetAsync(string providerName, string providerKey)
         {
             await Task.Yield();
             var res = new List<dynamic>();
@@ -78,7 +79,7 @@ namespace DncyTemplate.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("getList")]
-        public async Task<ApiResult> GetListAsync()
+        public async Task<ResultDto> GetListAsync()
         {
             await Task.Yield();
             return this.Success(_permissionDefinitionManager.GetGroups());

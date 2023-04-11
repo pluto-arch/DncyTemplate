@@ -1,5 +1,6 @@
 ﻿using DncyTemplate.Application.AppServices.Product;
 using DncyTemplate.Application.Command.Product;
+using DncyTemplate.Application.Models;
 using DncyTemplate.Application.Models.Product;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -14,7 +15,7 @@ namespace DncyTemplate.Api.Controllers.v2
     [ApiVersion("3.0")]
     [Authorize]
     [AutoResolveDependency]
-    public partial class ProductController : ControllerBase, IResultWraps
+    public partial class ProductController : ControllerBase, IResponseWraps
     {
         [AutoInject]
         private readonly IProductAppService _productAppService;
@@ -30,7 +31,7 @@ namespace DncyTemplate.Api.Controllers.v2
         [HttpGet(Name = "ProductList")]
         [MapToApiVersion("1.0")]
         [Produces(typeof(IPagedList<ProductListItemDto>))]
-        public async Task<ApiResult> ListAsync([FromQuery] ProductPagedRequest request)
+        public async Task<ResultDto> ListAsync([FromQuery] ProductPagedRequest request)
         {
             var res = await _productAppService.GetListAsync(request);
             return this.Success(res);
@@ -42,7 +43,7 @@ namespace DncyTemplate.Api.Controllers.v2
         /// <returns></returns>
         [HttpGet("{id:required}")]
         [Produces(typeof(ProductDto))]
-        public async Task<ApiResult> GetByIdAsync(string id)
+        public async Task<ResultDto> GetByIdAsync(string id)
         {
             var res = await _productAppService.GetAsync(id);
             return this.Success(res);
@@ -55,7 +56,7 @@ namespace DncyTemplate.Api.Controllers.v2
         /// <returns></returns>
         [HttpPost]
         [Produces(typeof(ProductDto))]
-        public async Task<ApiResult> CreateAsync([FromBody] CreateProductCommand request)
+        public async Task<ResultDto> CreateAsync([FromBody] CreateProductCommand request)
         {
             var productDto = await _mediator.Send(request);
             return this.Success(productDto);
@@ -68,7 +69,7 @@ namespace DncyTemplate.Api.Controllers.v2
         /// <returns></returns>
         [HttpPut("{id:required}")]
         [Produces(typeof(ProductDto))]
-        public async Task<ApiResult> UpdateAsync([Required] string id, [FromForm] ProductUpdateRequest request)
+        public async Task<ResultDto> UpdateAsync([Required] string id, [FromForm] ProductUpdateRequest request)
         {
             var productDto = await _productAppService.UpdateAsync(id, request);
             return this.Success(productDto);
@@ -81,7 +82,7 @@ namespace DncyTemplate.Api.Controllers.v2
         /// <returns></returns>
         [HttpDelete("{id:required}")]
         [Produces(typeof(ProductDto))]
-        public async Task<ApiResult> DeleteAsync([Required] string id)
+        public async Task<ResultDto> DeleteAsync([Required] string id)
         {
             await _productAppService.DeleteAsync(id);
             return this.Success();
