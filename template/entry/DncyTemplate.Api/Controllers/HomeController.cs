@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Localization;
 using System.ComponentModel.DataAnnotations;
+using DncyTemplate.Domain.Infra.Repository;
 
 namespace DncyTemplate.Api.Controllers
 {
@@ -38,37 +39,65 @@ namespace DncyTemplate.Api.Controllers
 
 
         [HttpGet("/uow")]
-        public async Task<ResultDto> RateLimit([FromServices] IEfRepository<Product> _repository, [EmailAddress] string name)
+        public async Task<ResultDto> UnitOfWork2Test([FromServices] IEfRepository<Product> _repository, string name)
         {
-            var a = _efUow.Repository<Product>();
-            var aa = a.GetHashCode();
-            var dd = _repository.GetHashCode();
-
-            using (_efUow.NewScope())
+            var id1 = SnowFlakeId.Generator.GetUniqueId();
+            await using (_efUow.NewScopeAsync())
             {
-                await a.InsertAsync(new Product
+                await _repository.InsertAsync(new Product
                 {
-                    Id = SnowFlakeId.Generator.GetUniqueId(),
-                    Name = "change111",
+                    Id = id1,
+                    Name = "2",
                     Remark = "sdasdasdad",
                     CreationTime = DateTimeOffset.Now,
                 });
+
+                await using (_efUow.NewScopeAsync())
+                {
+                    await _repository.InsertAsync(new Product
+                    {
+                        Id = SnowFlakeId.Generator.GetUniqueId(),
+                        Name = "3",
+                        Remark = "sdasdasdad",
+                        CreationTime = DateTimeOffset.Now,
+                    });
+                    await _efUow.CompleteAsync();
+                }
+
+                await using (_efUow.NewScopeAsync())
+                {
+                    await _repository.InsertAsync(new Product
+                    {
+                        Id = SnowFlakeId.Generator.GetUniqueId(),
+                        Name = "3-1",
+                        Remark = "sdasdasdad",
+                        CreationTime = DateTimeOffset.Now,
+                    });
+                    await _efUow.CompleteAsync();
+                }
+
+
                 await _efUow.CompleteAsync();
+            }
+
+            var res = await _repository.FirstOrDefaultAsync(x => x.Id == id1);
+
+            if (res != null)
+            {
+                res.Remark = "xxxxxxxxx";
             }
 
             await _repository.InsertAsync(new Product
             {
                 Id = SnowFlakeId.Generator.GetUniqueId(),
-                Name = "outof change",
+                Name = "1",
                 Remark = "sdasdasdad",
                 CreationTime = DateTimeOffset.Now,
             });
-
-
+            await _efUow.CompleteAsync();
             var text = _stringLocalizer[SharedResource.Hello];
             return this.Success<string>(text);
         }
-
 
 
         [HttpGet("loc")]

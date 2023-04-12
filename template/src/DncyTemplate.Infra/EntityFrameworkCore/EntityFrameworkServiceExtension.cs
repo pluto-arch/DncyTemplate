@@ -1,6 +1,7 @@
 ﻿using Dncy.Specifications.EntityFrameworkCore;
 using DncyTemplate.Domain.Aggregates.Product;
 using DncyTemplate.Domain.Infra;
+using DncyTemplate.Domain.Infra.Repository;
 using DncyTemplate.Infra.Constants;
 using DncyTemplate.Infra.EntityFrameworkCore.ConnectionStringResolve;
 using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;

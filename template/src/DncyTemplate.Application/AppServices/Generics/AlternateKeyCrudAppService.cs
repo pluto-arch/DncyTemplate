@@ -3,6 +3,7 @@ using DncyTemplate.Application.Models;
 using DncyTemplate.Application.Models.Generics;
 using DncyTemplate.Domain.Collections;
 using DncyTemplate.Domain.Infra;
+using DncyTemplate.Domain.Infra.Repository;
 using DncyTemplate.Infra.EntityFrameworkCore;
 using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 using DncyTemplate.Infra.EntityFrameworkCore.Repository;
@@ -18,7 +19,7 @@ namespace DncyTemplate.Application.AppServices.Generics
 
         protected AlternateKeyCrudAppService(EfUnitOfWork<DncyTemplateDbContext> uow, IMapper mapper)
         {
-            _repository = uow.Repository<TEntity, TKey>();
+            _repository = uow.EfRepository<TEntity, TKey>();
             _mapper = mapper;
         }
 
@@ -57,7 +58,7 @@ namespace DncyTemplate.Application.AppServices.Generics
 
         protected abstract Task<TEntity> GetEntityByIdAsync(TKey id);
 
-        protected virtual IQueryable<TEntity> CreateFilteredQuery(TGetListRequest requestModel) => _repository.DbSet;
+        protected virtual IQueryable<TEntity> CreateFilteredQuery(TGetListRequest requestModel) => _repository.QuerySet;
 
         protected virtual IQueryable<TEntity> ApplySorting(IQueryable<TEntity> query, TGetListRequest requestModel)
         {

@@ -22,7 +22,7 @@ namespace DncyTemplate.Application.Command.Product
 
         public async Task<ProductDto> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
-            var repository = efUow.Repository<DncyTemplate.Domain.Aggregates.Product.Product>();
+            var repository = efUow.EfRepository<DncyTemplate.Domain.Aggregates.Product.Product>();
             var entity = _mapper.Map<ProductAgg.Product>(request);
             entity.Id = SnowFlakeId.Generator.GetUniqueId();
             entity.CreationTime = DateTimeOffset.Now;

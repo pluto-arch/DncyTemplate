@@ -9,12 +9,14 @@ using DncyTemplate.Domain.Infra;
 using DncyTemplate.Infra.EntityFrameworkCore.Extension;
 using System.Collections;
 using System.Linq.Expressions;
+using DncyTemplate.Domain.Infra.Repository;
+using DncyTemplate.Domain.Infra.UnitOfWork;
 
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
 {
     public class EfRepository<TContext, TEntity> : IEfRepository<TEntity>
-         where TContext : DbContext
+         where TContext : DbContext,IDataContext
          where TEntity : class, IEntity
     {
         private readonly ISpecificationEvaluator _specification = EfCoreSpecificationEvaluator.Default;
@@ -25,22 +27,21 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
             _unitOfWork = unitOfWork;
         }
 
-        private TContext _dbContext => _unitOfWork.DbContext;
+        private TContext _dbContext => _unitOfWork.DbContext();
+        protected DbSet<TEntity> _entitySet => _dbContext.Set<TEntity>();
 
-        public virtual DbSet<TEntity> DbSet => _dbContext.Set<TEntity>();
+        public virtual IQueryable<TEntity> QuerySet => _dbContext.Set<TEntity>();
 
-        private IQueryable<TEntity> _query => DbSet.AsQueryable();
-
-        public IEnumerator<TEntity> GetEnumerator() => _query.GetEnumerator();
+        public IEnumerator<TEntity> GetEnumerator() => QuerySet.GetEnumerator();
 
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public Type ElementType => _query.ElementType;
+        public Type ElementType => QuerySet.ElementType;
 
-        public Expression Expression => _query.Expression;
+        public Expression Expression => QuerySet.Expression;
 
-        public IQueryProvider Provider => _query.Provider;
+        public IQueryProvider Provider => QuerySet.Provider;
 
         public TContext Uow => _dbContext;
 
@@ -48,7 +49,7 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
 
         public virtual async Task<TEntity> InsertAsync(TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default)
         {
-            TEntity savedEntity = DbSet.Add(entity).Entity;
+            TEntity savedEntity = _entitySet.Add(entity).Entity;
             if (autoSave)
                 await _dbContext.SaveChangesAsync(cancellationToken);
             return savedEntity;
@@ -56,14 +57,14 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
 
         public virtual async Task InsertAsync(IEnumerable<TEntity> entities, bool autoSave = false, CancellationToken cancellationToken = default)
         {
-            await DbSet.AddRangeAsync(entities, cancellationToken);
+            await _entitySet.AddRangeAsync(entities, cancellationToken);
             if (autoSave)
                 await _dbContext.SaveChangesAsync(cancellationToken);
         }
 
         public virtual async Task DeleteAsync(TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default)
         {
-            DbSet.Remove(entity);
+            _entitySet.Remove(entity);
             if (autoSave)
                 await _dbContext.SaveChangesAsync(cancellationToken);
         }
@@ -71,8 +72,8 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
         public virtual async Task DeleteAsync(Expression<Func<TEntity, bool>> predicate, bool autoSave = false,
         CancellationToken cancellationToken = default)
         {
-            var entities = DbSet.Where(predicate);
-            DbSet.RemoveRange(entities);
+            var entities = QuerySet.Where(predicate);
+            _entitySet.RemoveRange(entities);
             if (autoSave)
             {
                 await _dbContext.SaveChangesAsync(cancellationToken);
@@ -82,7 +83,7 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
         public virtual async Task DeleteAsync(IEnumerable<TEntity> entities, bool autoSave = false,
             CancellationToken cancellationToken = default)
         {
-            DbSet.RemoveRange(entities);
+            _entitySet.RemoveRange(entities);
 
             if (autoSave)
             {
@@ -108,7 +109,7 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
         public virtual async Task UpdateAsync(IEnumerable<TEntity> entities, bool autoSave = false,
             CancellationToken cancellationToken = default)
         {
-            DbSet.UpdateRange(entities);
+            _entitySet.UpdateRange(entities);
 
             if (autoSave)
             {
@@ -118,13 +119,13 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
 
         public virtual async Task<int> GetCountAsync(CancellationToken cancellationToken = default)
         {
-            return await DbSet.CountAsync(cancellationToken);
+            return await QuerySet.CountAsync(cancellationToken);
         }
 
         public virtual async Task<int> GetCountAsync(Expression<Func<TEntity, bool>> predicate,
             CancellationToken cancellationToken = default)
         {
-            return await DbSet.CountAsync(predicate, cancellationToken);
+            return await QuerySet.CountAsync(predicate, cancellationToken);
         }
 
         public virtual async Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> predicate,
@@ -132,19 +133,19 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
         {
             return includeDetails
                 ? await ( await IncludeRelatedAsync() ).Where(predicate).SingleOrDefaultAsync(cancellationToken)
-                : await DbSet.Where(predicate).SingleOrDefaultAsync(cancellationToken);
+                : await QuerySet.Where(predicate).SingleOrDefaultAsync(cancellationToken);
         }
 
         public virtual async Task<List<TEntity>> GetListAsync(CancellationToken cancellationToken = default)
         {
-            return await DbSet.ToListAsync(cancellationToken);
+            return await QuerySet.ToListAsync(cancellationToken);
         }
 
         public virtual async Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> predicate,
             Expression<Func<TEntity, object>> sorting, bool includeDetails = false,
             CancellationToken cancellationToken = default)
         {
-            IQueryable<TEntity> queryable = includeDetails ? await IncludeRelatedAsync() : DbSet;
+            IQueryable<TEntity> queryable = includeDetails ? await IncludeRelatedAsync() : QuerySet;
             return await queryable.OrderBy(sorting).Where(predicate).ToListAsync(cancellationToken);
         }
 
@@ -153,7 +154,7 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
             bool includeDetails = false,
             CancellationToken cancellationToken = default)
         {
-            IQueryable<TEntity> queryable = includeDetails ? await IncludeRelatedAsync() : DbSet;
+            IQueryable<TEntity> queryable = includeDetails ? await IncludeRelatedAsync() : QuerySet;
             return await queryable.OrderBy(sorting).Where(predicate)
                 .ToPagedListAsync(pageNo, pageSize, cancellationToken);
         }
@@ -212,7 +213,7 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
         {
             var includes = _dbContext.GetService<IOptions<IncludeRelatedPropertiesOptions>>().Value;
 
-            IQueryable<TEntity> query = DbSet;
+            IQueryable<TEntity> query = QuerySet;
 
             if (propertySelectors is not null)
             {
@@ -246,7 +247,7 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
 
         protected IQueryable<TEntity> ApplySpecification(ISpecification<TEntity> specification)
         {
-            return _specification.GetQuery(DbSet, specification);
+            return _specification.GetQuery(QuerySet, specification);
         }
 
         protected IQueryable<TResult> ApplySpecification<TResult>(ISpecification<TEntity, TResult> specification)
@@ -257,13 +258,13 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
             if (specification.Selector is null)
                 throw new SelectorNotFoundException();
 
-            return _specification.GetQuery(DbSet, specification);
+            return _specification.GetQuery(QuerySet, specification);
         }
     }
 
 
     public class EfRepository<TDbContext, TEntity, TKey> : EfRepository<TDbContext, TEntity>, IEfRepository<TEntity, TKey>
-            where TDbContext : DbContext
+            where TDbContext : DbContext, IDataContext
             where TEntity : class, IEntity
     {
         public EfRepository(EfUnitOfWork<TDbContext> unitOfWork) : base(unitOfWork) { }
@@ -293,7 +294,7 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
 
         public async Task<TEntity> FindAsync(TKey id, CancellationToken cancellationToken = default)
         {
-            return await DbSet.FindAsync(new object[] { id! }, cancellationToken);
+            return await _entitySet.FindAsync(new object[] { id! }, cancellationToken);
         }
     }
 }

@@ -1,15 +1,13 @@
 ﻿using Dncy.Specifications;
 using DncyTemplate.Domain.Collections;
-using DncyTemplate.Domain.Infra;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq.Expressions;
 
-namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
+namespace DncyTemplate.Domain.Infra.Repository
 {
     public interface IEfRepository<TEntity> : IQueryable<TEntity>
         where TEntity : class, IEntity
     {
-        DbSet<TEntity> DbSet { get; }
+        IQueryable<TEntity> QuerySet { get; }
 
         IAsyncQueryableProvider AsyncExecuter { get; }
 

@@ -1,5 +1,6 @@
 ﻿using Dncy.Permission;
 using DncyTemplate.Domain.Aggregates.System;
+using DncyTemplate.Domain.Infra.Repository;
 using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
@@ -10,7 +11,7 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
 
         public EfCorePermissionGrantStore(EfUnitOfWork<DncyTemplateDbContext> uow)
         {
-            _permissionGrants = uow.Repository<PermissionGrant>();
+            _permissionGrants = uow.EfRepository<PermissionGrant>();
         }
         public async Task GrantAsync(string name, string providerName, string providerKey)
         {

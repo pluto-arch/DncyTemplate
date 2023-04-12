@@ -1,6 +1,7 @@
 ﻿using DncyTemplate.Domain.Infra;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
+using DncyTemplate.Domain.Infra.Repository;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
 {
@@ -11,7 +12,7 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
         public static Task<bool> ContainsAsync<T>([NotNull] this IEfRepository<T> repository, [NotNull] T item,
             CancellationToken cancellationToken = default) where T : BaseEntity
         {
-            return repository.AsyncExecuter.ContainsAsync(repository.DbSet, item, cancellationToken);
+            return repository.AsyncExecuter.ContainsAsync(repository.QuerySet, item, cancellationToken);
         }
 
         #endregion
@@ -22,14 +23,14 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
             [NotNull] Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
             where T : BaseEntity
         {
-            return repository.AsyncExecuter.AnyAsync(repository.DbSet, predicate, cancellationToken);
+            return repository.AsyncExecuter.AnyAsync(repository.QuerySet, predicate, cancellationToken);
         }
 
         public static Task<bool> AllAsync<T>([NotNull] this IEfRepository<T> repository,
             [NotNull] Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
             where T : BaseEntity
         {
-            return repository.AsyncExecuter.AllAsync(repository.DbSet, predicate, cancellationToken);
+            return repository.AsyncExecuter.AllAsync(repository.QuerySet, predicate, cancellationToken);
         }
 
         #endregion
@@ -39,27 +40,27 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
         public static Task<int> CountAsync<T>([NotNull] this IEfRepository<T> repository,
             CancellationToken cancellationToken = default) where T : BaseEntity
         {
-            return repository.AsyncExecuter.CountAsync(repository.DbSet, cancellationToken);
+            return repository.AsyncExecuter.CountAsync(repository.QuerySet, cancellationToken);
         }
 
         public static Task<int> CountAsync<T>([NotNull] this IEfRepository<T> repository,
             [NotNull] Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
             where T : BaseEntity
         {
-            return repository.AsyncExecuter.CountAsync(repository.DbSet, predicate, cancellationToken);
+            return repository.AsyncExecuter.CountAsync(repository.QuerySet, predicate, cancellationToken);
         }
 
         public static Task<long> LongCountAsync<T>([NotNull] this IEfRepository<T> repository,
             CancellationToken cancellationToken = default) where T : BaseEntity
         {
-            return repository.AsyncExecuter.LongCountAsync(repository.DbSet, cancellationToken);
+            return repository.AsyncExecuter.LongCountAsync(repository.QuerySet, cancellationToken);
         }
 
         public static Task<long> LongCountAsync<T>([NotNull] this IEfRepository<T> repository,
             [NotNull] Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
             where T : BaseEntity
         {
-            return repository.AsyncExecuter.LongCountAsync(repository.DbSet, predicate, cancellationToken);
+            return repository.AsyncExecuter.LongCountAsync(repository.QuerySet, predicate, cancellationToken);
         }
 
         #endregion
@@ -69,27 +70,27 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
         public static Task<T> FirstAsync<T>([NotNull] this IEfRepository<T> repository,
             CancellationToken cancellationToken = default) where T : BaseEntity
         {
-            return repository.AsyncExecuter.FirstAsync(repository.DbSet, cancellationToken);
+            return repository.AsyncExecuter.FirstAsync(repository.QuerySet, cancellationToken);
         }
 
         public static Task<T> FirstAsync<T>([NotNull] this IEfRepository<T> repository,
             [NotNull] Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
             where T : BaseEntity
         {
-            return repository.AsyncExecuter.FirstAsync(repository.DbSet, predicate, cancellationToken);
+            return repository.AsyncExecuter.FirstAsync(repository.QuerySet, predicate, cancellationToken);
         }
 
         public static Task<T> FirstOrDefaultAsync<T>([NotNull] this IEfRepository<T> repository,
             CancellationToken cancellationToken = default) where T : BaseEntity
         {
-            return repository.AsyncExecuter.FirstOrDefaultAsync(repository.DbSet, cancellationToken);
+            return repository.AsyncExecuter.FirstOrDefaultAsync(repository.QuerySet, cancellationToken);
         }
 
         public static Task<T> FirstOrDefaultAsync<T>([NotNull] this IEfRepository<T> repository,
             [NotNull] Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
             where T : BaseEntity
         {
-            return repository.AsyncExecuter.FirstOrDefaultAsync(repository.DbSet, predicate, cancellationToken);
+            return repository.AsyncExecuter.FirstOrDefaultAsync(repository.QuerySet, predicate, cancellationToken);
         }
 
         #endregion
@@ -99,27 +100,27 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
         public static Task<T> LastAsync<T>([NotNull] this IEfRepository<T> repository,
             CancellationToken cancellationToken = default) where T : BaseEntity
         {
-            return repository.AsyncExecuter.LastAsync(repository.DbSet, cancellationToken);
+            return repository.AsyncExecuter.LastAsync(repository.QuerySet, cancellationToken);
         }
 
         public static Task<T> LastAsync<T>([NotNull] this IEfRepository<T> repository,
             [NotNull] Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
             where T : BaseEntity
         {
-            return repository.AsyncExecuter.LastAsync(repository.DbSet, predicate, cancellationToken);
+            return repository.AsyncExecuter.LastAsync(repository.QuerySet, predicate, cancellationToken);
         }
 
         public static Task<T> LastOrDefaultAsync<T>([NotNull] this IEfRepository<T> repository,
             CancellationToken cancellationToken = default) where T : BaseEntity
         {
-            return repository.AsyncExecuter.LastOrDefaultAsync(repository.DbSet, cancellationToken);
+            return repository.AsyncExecuter.LastOrDefaultAsync(repository.QuerySet, cancellationToken);
         }
 
         public static Task<T> LastOrDefaultAsync<T>([NotNull] this IEfRepository<T> repository,
             [NotNull] Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
             where T : BaseEntity
         {
-            return repository.AsyncExecuter.LastOrDefaultAsync(repository.DbSet, predicate, cancellationToken);
+            return repository.AsyncExecuter.LastOrDefaultAsync(repository.QuerySet, predicate, cancellationToken);
         }
 
         #endregion
@@ -129,27 +130,27 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
         public static Task<T> SingleAsync<T>([NotNull] this IEfRepository<T> repository,
             CancellationToken cancellationToken = default) where T : BaseEntity
         {
-            return repository.AsyncExecuter.SingleAsync(repository.DbSet, cancellationToken);
+            return repository.AsyncExecuter.SingleAsync(repository.QuerySet, cancellationToken);
         }
 
         public static Task<T> SingleAsync<T>([NotNull] this IEfRepository<T> repository,
             [NotNull] Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
             where T : BaseEntity
         {
-            return repository.AsyncExecuter.SingleAsync(repository.DbSet, predicate, cancellationToken);
+            return repository.AsyncExecuter.SingleAsync(repository.QuerySet, predicate, cancellationToken);
         }
 
         public static Task<T> SingleOrDefaultAsync<T>([NotNull] this IEfRepository<T> repository,
             CancellationToken cancellationToken = default) where T : BaseEntity
         {
-            return repository.AsyncExecuter.SingleOrDefaultAsync(repository.DbSet, cancellationToken);
+            return repository.AsyncExecuter.SingleOrDefaultAsync(repository.QuerySet, cancellationToken);
         }
 
         public static Task<T> SingleOrDefaultAsync<T>([NotNull] this IEfRepository<T> repository,
             [NotNull] Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
             where T : BaseEntity
         {
-            return repository.AsyncExecuter.SingleOrDefaultAsync(repository.DbSet, predicate, cancellationToken);
+            return repository.AsyncExecuter.SingleOrDefaultAsync(repository.QuerySet, predicate, cancellationToken);
         }
 
         #endregion
@@ -159,14 +160,14 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
         public static Task<T> MinAsync<T>([NotNull] this IEfRepository<T> repository,
             CancellationToken cancellationToken = default) where T : BaseEntity
         {
-            return repository.AsyncExecuter.MinAsync(repository.DbSet, cancellationToken);
+            return repository.AsyncExecuter.MinAsync(repository.QuerySet, cancellationToken);
         }
 
         public static Task<TResult> MinAsync<T, TResult>([NotNull] this IEfRepository<T> repository,
             [NotNull] Expression<Func<T, TResult>> selector, CancellationToken cancellationToken = default)
             where T : BaseEntity
         {
-            return repository.AsyncExecuter.MinAsync(repository.DbSet, selector, cancellationToken);
+            return repository.AsyncExecuter.MinAsync(repository.QuerySet, selector, cancellationToken);
         }
 
         #endregion
@@ -176,14 +177,14 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
         public static Task<T> MaxAsync<T>([NotNull] this IEfRepository<T> repository,
             CancellationToken cancellationToken = default) where T : BaseEntity
         {
-            return repository.AsyncExecuter.MaxAsync(repository.DbSet, cancellationToken);
+            return repository.AsyncExecuter.MaxAsync(repository.QuerySet, cancellationToken);
         }
 
         public static Task<TResult> MaxAsync<T, TResult>([NotNull] this IEfRepository<T> repository,
             [NotNull] Expression<Func<T, TResult>> selector, CancellationToken cancellationToken = default)
             where T : BaseEntity
         {
-            return repository.AsyncExecuter.MaxAsync(repository.DbSet, selector, cancellationToken);
+            return repository.AsyncExecuter.MaxAsync(repository.QuerySet, selector, cancellationToken);
         }
 
         #endregion
@@ -194,70 +195,70 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
             [NotNull] Expression<Func<T, decimal>> selector, CancellationToken cancellationToken = default)
             where T : BaseEntity
         {
-            return repository.AsyncExecuter.SumAsync(repository.DbSet, selector, cancellationToken);
+            return repository.AsyncExecuter.SumAsync(repository.QuerySet, selector, cancellationToken);
         }
 
         public static Task<decimal?> SumAsync<T>([NotNull] this IEfRepository<T> repository,
             [NotNull] Expression<Func<T, decimal?>> selector, CancellationToken cancellationToken = default)
             where T : BaseEntity
         {
-            return repository.AsyncExecuter.SumAsync(repository.DbSet, selector, cancellationToken);
+            return repository.AsyncExecuter.SumAsync(repository.QuerySet, selector, cancellationToken);
         }
 
         public static Task<int> SumAsync<T>([NotNull] this IEfRepository<T> repository,
             [NotNull] Expression<Func<T, int>> selector, CancellationToken cancellationToken = default)
             where T : BaseEntity
         {
-            return repository.AsyncExecuter.SumAsync(repository.DbSet, selector, cancellationToken);
+            return repository.AsyncExecuter.SumAsync(repository.QuerySet, selector, cancellationToken);
         }
 
         public static Task<int?> SumAsync<T>([NotNull] this IEfRepository<T> repository,
             [NotNull] Expression<Func<T, int?>> selector, CancellationToken cancellationToken = default)
             where T : BaseEntity
         {
-            return repository.AsyncExecuter.SumAsync(repository.DbSet, selector, cancellationToken);
+            return repository.AsyncExecuter.SumAsync(repository.QuerySet, selector, cancellationToken);
         }
 
         public static Task<long> SumAsync<T>([NotNull] this IEfRepository<T> repository,
             [NotNull] Expression<Func<T, long>> selector, CancellationToken cancellationToken = default)
             where T : BaseEntity
         {
-            return repository.AsyncExecuter.SumAsync(repository.DbSet, selector, cancellationToken);
+            return repository.AsyncExecuter.SumAsync(repository.QuerySet, selector, cancellationToken);
         }
 
         public static Task<long?> SumAsync<T>([NotNull] this IEfRepository<T> repository,
             [NotNull] Expression<Func<T, long?>> selector, CancellationToken cancellationToken = default)
             where T : BaseEntity
         {
-            return repository.AsyncExecuter.SumAsync(repository.DbSet, selector, cancellationToken);
+            return repository.AsyncExecuter.SumAsync(repository.QuerySet, selector, cancellationToken);
         }
 
         public static Task<double> SumAsync<T>([NotNull] this IEfRepository<T> repository,
             [NotNull] Expression<Func<T, double>> selector, CancellationToken cancellationToken = default)
             where T : BaseEntity
         {
-            return repository.AsyncExecuter.SumAsync(repository.DbSet, selector, cancellationToken);
+            return repository.AsyncExecuter.SumAsync(repository.QuerySet, selector, cancellationToken);
         }
 
         public static Task<double?> SumAsync<T>([NotNull] this IEfRepository<T> repository,
             [NotNull] Expression<Func<T, double?>> selector, CancellationToken cancellationToken = default)
             where T : BaseEntity
         {
-            return repository.AsyncExecuter.SumAsync(repository.DbSet, selector, cancellationToken);
+            return repository.AsyncExecuter.SumAsync(repository.QuerySet, selector, cancellationToken);
         }
 
         public static Task<float> SumAsync<T>([NotNull] this IEfRepository<T> repository,
             [NotNull] Expression<Func<T, float>> selector, CancellationToken cancellationToken = default)
             where T : BaseEntity
         {
-            return repository.AsyncExecuter.SumAsync(repository.DbSet, selector, cancellationToken);
+            return repository.AsyncExecuter.SumAsync(repository.QuerySet, selector, cancellationToken);
         }
 
         public static Task<float?> SumAsync<T>([NotNull] this IEfRepository<T> repository,
             [NotNull] Expression<Func<T, float?>> selector, CancellationToken cancellationToken = default)
             where T : BaseEntity
         {
-            return repository.AsyncExecuter.SumAsync(repository.DbSet, selector, cancellationToken);
+            return repository.AsyncExecuter.SumAsync(repository.QuerySet, selector, cancellationToken);
         }
 
         #endregion
@@ -268,63 +269,63 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
             [NotNull] Expression<Func<T, decimal>> selector, CancellationToken cancellationToken = default)
             where T : BaseEntity
         {
-            return repository.AsyncExecuter.AverageAsync(repository.DbSet, selector, cancellationToken);
+            return repository.AsyncExecuter.AverageAsync(repository.QuerySet, selector, cancellationToken);
         }
 
         public static Task<decimal?> AverageAsync<T>([NotNull] this IEfRepository<T> repository,
             [NotNull] Expression<Func<T, decimal?>> selector, CancellationToken cancellationToken = default)
             where T : BaseEntity
         {
-            return repository.AsyncExecuter.AverageAsync(repository.DbSet, selector, cancellationToken);
+            return repository.AsyncExecuter.AverageAsync(repository.QuerySet, selector, cancellationToken);
         }
 
         public static Task<double> AverageAsync<T>([NotNull] this IEfRepository<T> repository,
             [NotNull] Expression<Func<T, int>> selector, CancellationToken cancellationToken = default)
             where T : BaseEntity
         {
-            return repository.AsyncExecuter.AverageAsync(repository.DbSet, selector, cancellationToken);
+            return repository.AsyncExecuter.AverageAsync(repository.QuerySet, selector, cancellationToken);
         }
 
         public static Task<double?> AverageAsync<T>([NotNull] this IEfRepository<T> repository,
             [NotNull] Expression<Func<T, int?>> selector, CancellationToken cancellationToken = default)
             where T : BaseEntity
         {
-            return repository.AsyncExecuter.AverageAsync(repository.DbSet, selector, cancellationToken);
+            return repository.AsyncExecuter.AverageAsync(repository.QuerySet, selector, cancellationToken);
         }
 
         public static Task<double> AverageAsync<T>([NotNull] this IEfRepository<T> repository,
             [NotNull] Expression<Func<T, long>> selector, CancellationToken cancellationToken = default)
             where T : BaseEntity
         {
-            return repository.AsyncExecuter.AverageAsync(repository.DbSet, selector, cancellationToken);
+            return repository.AsyncExecuter.AverageAsync(repository.QuerySet, selector, cancellationToken);
         }
 
         public static Task<double?> AverageAsync<T>([NotNull] this IEfRepository<T> repository,
             [NotNull] Expression<Func<T, long?>> selector, CancellationToken cancellationToken = default)
             where T : BaseEntity
         {
-            return repository.AsyncExecuter.AverageAsync(repository.DbSet, selector, cancellationToken);
+            return repository.AsyncExecuter.AverageAsync(repository.QuerySet, selector, cancellationToken);
         }
 
         public static Task<double> AverageAsync<T>([NotNull] this IEfRepository<T> repository,
             [NotNull] Expression<Func<T, double>> selector, CancellationToken cancellationToken = default)
             where T : BaseEntity
         {
-            return repository.AsyncExecuter.AverageAsync(repository.DbSet, selector, cancellationToken);
+            return repository.AsyncExecuter.AverageAsync(repository.QuerySet, selector, cancellationToken);
         }
 
         public static Task<double?> AverageAsync<T>([NotNull] this IEfRepository<T> repository,
             [NotNull] Expression<Func<T, double?>> selector, CancellationToken cancellationToken = default)
             where T : BaseEntity
         {
-            return repository.AsyncExecuter.AverageAsync(repository.DbSet, selector, cancellationToken);
+            return repository.AsyncExecuter.AverageAsync(repository.QuerySet, selector, cancellationToken);
         }
 
         public static Task<float?> AverageAsync<T>([NotNull] this IEfRepository<T> repository,
             [NotNull] Expression<Func<T, float?>> selector, CancellationToken cancellationToken = default)
             where T : BaseEntity
         {
-            return repository.AsyncExecuter.AverageAsync(repository.DbSet, selector, cancellationToken);
+            return repository.AsyncExecuter.AverageAsync(repository.QuerySet, selector, cancellationToken);
         }
 
         #endregion
@@ -334,13 +335,13 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
         public static Task<List<T>> ToListAsync<T>([NotNull] this IEfRepository<T> repository,
             CancellationToken cancellationToken = default) where T : BaseEntity
         {
-            return repository.AsyncExecuter.ToListAsync(repository.DbSet, cancellationToken);
+            return repository.AsyncExecuter.ToListAsync(repository.QuerySet, cancellationToken);
         }
 
         public static Task<T[]> ToArrayAsync<T>([NotNull] this IEfRepository<T> repository,
             CancellationToken cancellationToken = default) where T : BaseEntity
         {
-            return repository.AsyncExecuter.ToArrayAsync(repository.DbSet, cancellationToken);
+            return repository.AsyncExecuter.ToArrayAsync(repository.QuerySet, cancellationToken);
         }
 
         #endregion

@@ -1,64 +1,56 @@
 ﻿using DncyTemplate.Domain.Infra;
-using DncyTemplate.Infra.EntityFrameworkCore.Repository;
+using DncyTemplate.Domain.Infra.Repository;
+using DncyTemplate.Domain.Infra.UnitOfWork;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore
 {
 
-    public class EfUnitOfWork<TContext> : IDisposable, IAsyncDisposable
-        where TContext : DbContext
+    public class EfUnitOfWork<TContext> : IUnitOfWork<TContext>
+        where TContext : DbContext, IDataContext
     {
         private bool disposedValue;
         private IServiceProvider _serviceProvider;
+        private TContext _context;
 
 
         public EfUnitOfWork(IServiceProvider serviceProvider, TContext rootDbContext)
         {
             _serviceProvider = serviceProvider;
-            DbContext = rootDbContext;
+            _context = rootDbContext;
         }
 
-        /// <summary>
-        /// 新作用域
-        /// </summary>
-        /// <returns></returns>
+
         public IDisposable NewScope()
         {
-            var previousDbContext = DbContext;
-            var previousProvider = _serviceProvider;
-
-            var scoped = _serviceProvider.CreateScope();
-            _serviceProvider = scoped.ServiceProvider;
-            var context = _serviceProvider.GetRequiredService<TContext>();
-            DbContext = context;
-            return new DisposeAction(() =>
-            {
-                DbContext = previousDbContext;
-                _serviceProvider = previousProvider;
-                scoped?.Dispose();
-                context?.Dispose();
-            });
+            return SetDisposable();
         }
 
-        public IEfRepository<T> Repository<T>() where T : class, IEntity
+        public IAsyncDisposable NewScopeAsync()
+        {
+            return SetAsyncDisposable();
+        }
+
+        public TContext DbContext() => _context;
+
+
+        public IEfRepository<T> EfRepository<T>() where T : class, IEntity
         {
             return _serviceProvider.GetRequiredService<IEfRepository<T>>();
         }
 
-        public IEfRepository<T, TKey> Repository<T, TKey>() where T : class, IEntity
+        public IEfRepository<T, TKey> EfRepository<T, TKey>() where T : class, IEntity
         {
             return _serviceProvider.GetRequiredService<IEfRepository<T, TKey>>();
         }
 
         public int Complete()
         {
-            return DbContext.SaveChanges();
+            return _context.SaveChanges();
         }
         public Task<int> CompleteAsync(CancellationToken cancellationToken = default)
         {
-            return DbContext.SaveChangesAsync(cancellationToken);
+            return _context.SaveChangesAsync(cancellationToken);
         }
-
-        public TContext DbContext { get; private set; }
 
 
         protected virtual void Dispose(bool disposing)
@@ -67,7 +59,7 @@ namespace DncyTemplate.Infra.EntityFrameworkCore
             {
                 if (disposing)
                 {
-                    DbContext?.Dispose();
+                    _context?.Dispose();
                 }
                 disposedValue = true;
             }
@@ -81,7 +73,43 @@ namespace DncyTemplate.Infra.EntityFrameworkCore
 
         public ValueTask DisposeAsync()
         {
-            Dispose(true); return ValueTask.CompletedTask;
+            Dispose(true);
+            return ValueTask.CompletedTask;
+        }
+
+
+        private IAsyncDisposable SetAsyncDisposable()
+        {
+            var previousDbContext = _context;
+            var previousProvider = _serviceProvider;
+            var scoped = _serviceProvider.CreateScope();
+            _serviceProvider = scoped.ServiceProvider;
+            var context = _serviceProvider.GetRequiredService<TContext>();
+            _context = context;
+            return new AsyncDisposeAction(() =>
+            {
+                _context = previousDbContext;
+                _serviceProvider = previousProvider;
+                scoped.Dispose();
+                context?.Dispose();
+                return Task.CompletedTask;
+            });
+        }
+        private IDisposable SetDisposable()
+        {
+            var previousDbContext = _context;
+            var previousProvider = _serviceProvider;
+            var scoped = _serviceProvider.CreateScope();
+            _serviceProvider = scoped.ServiceProvider;
+            var context = _serviceProvider.GetRequiredService<TContext>();
+            _context = context;
+            return new DisposeAction(() =>
+            {
+                _context = previousDbContext;
+                _serviceProvider = previousProvider;
+                scoped.Dispose();
+                context?.Dispose();
+            });
         }
     }
 }
