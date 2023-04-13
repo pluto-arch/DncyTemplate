@@ -25,7 +25,7 @@
 		<PackageReference Include="Serilog.Enrichers.Process" Version="2.0.2" />
 		<PackageReference Include="Serilog.Enrichers.Sensitive" Version="1.7.2" />
 		<PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
-		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+		<PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 	</ItemGroup>
 
@@ -35,7 +35,6 @@
 		<Folder Include="Infra\ApiDoc\" />
 		<Folder Include="Infra\Authorization\" />
 		<Folder Include="Infra\LocalizerSetup\" />
-		<Folder Include="Models\ModelBinding\" />
 		<Folder Include="BackgroundServices\" />
 	</ItemGroup>
 

@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Localization;
 using System.IO.Compression;
+using Dncy.Tools;
+using Newtonsoft.Json.Converters;
 
 [assembly: HostingStartup(typeof(InfraHostingStartup))]
 namespace DncyTemplate.Api.Infra;
@@ -16,7 +18,6 @@ public class InfraHostingStartup : IHostingStartup
     {
         builder.ConfigureServices((_, services) =>
         {
-
             #region 本地化
             services.AddAppLocalization();
             #endregion
@@ -52,7 +53,12 @@ public class InfraHostingStartup : IHostingStartup
                     options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+                    //options.SerializerSettings.Converters.RemoveWhere(x=>x.GetType()==typeof(StringEnumConverter));
+
+                    //options.SerializerSettings.Converters.Add(new MyStringEnumConvert());
                 });
+
             #endregion
 
             #region response Compression
@@ -105,7 +111,6 @@ public class InfraHostingStartup : IHostingStartup
 
             #endregion
 
-
             #region cors
             services.AddCors(options =>
             {
@@ -118,5 +123,24 @@ public class InfraHostingStartup : IHostingStartup
             });
             #endregion
         });
+    }
+}
+
+
+
+public class MyStringEnumConvert : StringEnumConverter
+{
+    /// <inheritdoc />
+    public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+    {
+        try
+        {
+            return base.ReadJson(reader, objectType, existingValue, serializer);
+        }
+        catch (Exception e)
+        {
+            // TODO localization message
+            throw new JsonSerializationException("dadad");
+        }
     }
 }

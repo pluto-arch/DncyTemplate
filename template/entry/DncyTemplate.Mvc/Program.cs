@@ -11,7 +11,7 @@ public class Program
     public static void Main(string[] args)
     {
         var logConfig = SerilogConfig();
-        Log.Logger = CreateSerilogLogger(logConfig, AppName);
+        Log.Logger = CreateSerilogLogger(logConfig);
         try
         {
             Log.Information("准备启动{ApplicationContext}...", AppName);
@@ -54,33 +54,17 @@ public class Program
 
 
     #region serilog
-    /// <summary>
-    /// 日志配置
-    /// </summary>
-    /// <returns></returns>
     private static IConfiguration SerilogConfig()
     {
         var builder = new ConfigurationBuilder()
             .AddJsonFile("serilogsetting.json", false, true);
         return builder.Build();
     }
-    /// <summary>
-    /// 从配置创建serilog
-    /// </summary>
-    /// <param name="configuration"></param>
-    /// <param name="applicationName"></param>
-    /// <returns></returns>
-    private static ILogger CreateSerilogLogger(IConfiguration configuration, string applicationName)
+    private static ILogger CreateSerilogLogger(IConfiguration configuration)
     {
         return new LoggerConfiguration()
             .ReadFrom.Configuration(configuration)
-            .Enrich.WithProperty("AppName", applicationName)
             .Enrich.With<ActivityEnricher>()
-            .Enrich.WithSensitiveDataMasking(o =>
-            {
-                // TODO config Sensitive filter rules
-                // https://github.com/serilog-contrib/Serilog.Enrichers.Sensitive
-            })
             .CreateLogger();
     }
     #endregion

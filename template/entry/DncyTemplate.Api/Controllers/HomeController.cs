@@ -9,6 +9,15 @@ using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Localization;
 using System.ComponentModel.DataAnnotations;
 using DncyTemplate.Domain.Infra.Repository;
+using System;
+using System.ComponentModel;
+using System.Globalization;
+using System.Runtime.Serialization;
+using CommunityToolkit.Diagnostics;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Linq;
 
 namespace DncyTemplate.Api.Controllers
 {
@@ -41,6 +50,7 @@ namespace DncyTemplate.Api.Controllers
         [HttpGet("/uow")]
         public async Task<ResultDto> UnitOfWork2Test([FromServices] IEfRepository<Product> _repository, string name)
         {
+            _logger.LogInformation("email is {email}", "aaaaa@qq.com");
             var id1 = SnowFlakeId.Generator.GetUniqueId();
             await using (_efUow.NewScopeAsync())
             {
@@ -100,6 +110,27 @@ namespace DncyTemplate.Api.Controllers
         }
 
 
+
+        [HttpPost("/string-enum")]
+        public ResultDto EnumBindTest(MyClass name)
+        {
+            return this.Success<string>(name.Type.ToString());
+        }
+
+        public enum Demo
+        {
+            周一,
+            周二,
+            周三,
+            周六
+        }
+
+        public class MyClass
+        {
+            public Demo Type { get; set; }
+        }
+
+
         [HttpGet("loc")]
         [AllowAnonymous]
         public async Task<ResultDto> RpcCall()
@@ -124,4 +155,6 @@ namespace DncyTemplate.Api.Controllers
             return this.Success<string>(text);
         }
     }
+
 }
+
