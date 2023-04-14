@@ -75,7 +75,9 @@ public class Startup
         var address = serverAddressesFeature?.Addresses;
         Log.Logger.Information("应用程序运行地址: {@Address}. net version:{version}", address, Environment.Version);
 
-        app.UseRequestLocalization();
+
+        var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+        app.UseRequestLocalization(options.Value);
 
         app.UseResponseCompression();
         app.UseForwardedHeaders()

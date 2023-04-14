@@ -6,17 +6,17 @@ using Dncy.Specifications.Exceptions;
 using DncyTemplate.Domain.Collections;
 using DncyTemplate.Domain.Exceptions;
 using DncyTemplate.Domain.Infra;
+using DncyTemplate.Domain.Infra.Repository;
+using DncyTemplate.Domain.Infra.UnitOfWork;
 using DncyTemplate.Infra.EntityFrameworkCore.Extension;
 using System.Collections;
 using System.Linq.Expressions;
-using DncyTemplate.Domain.Infra.Repository;
-using DncyTemplate.Domain.Infra.UnitOfWork;
 
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
 {
     public class EfRepository<TContext, TEntity> : IEfRepository<TEntity>
-         where TContext : DbContext,IDataContext
+         where TContext : DbContext, IDataContext
          where TEntity : class, IEntity
     {
         private readonly ISpecificationEvaluator _specification = EfCoreSpecificationEvaluator.Default;

@@ -25,11 +25,11 @@ namespace DncyTemplate.Api.Controllers.v2
 
         /// <summary>
         /// 获取产品列表
-        /// GET {PATH}?PageNo=1&pageSize=20&keyword=hahah&sorter={‘id’:'desc'}
         /// </summary>
+        /// <example>GET {PATH}?PageNo=1&pageSize=20&keyword=hahah&sorter={"id":"desc"}</example>
         /// <returns></returns>
         [HttpGet(Name = "ProductList")]
-        [MapToApiVersion("1.0")]
+        [MapToApiVersion("2.0")]
         [Produces(typeof(IPagedList<ProductListItemDto>))]
         public async Task<ResultDto> ListAsync([FromQuery] ProductPagedRequest request)
         {

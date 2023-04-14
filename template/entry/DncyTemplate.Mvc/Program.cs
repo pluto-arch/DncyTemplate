@@ -1,5 +1,4 @@
 using DncyTemplate.Mvc.Infra.LogSetup;
-using Serilog.Enrichers.Sensitive;
 using ILogger = Serilog.ILogger;
 
 namespace DncyTemplate.Mvc;

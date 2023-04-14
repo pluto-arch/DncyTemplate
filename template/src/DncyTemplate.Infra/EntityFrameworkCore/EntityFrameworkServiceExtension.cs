@@ -6,7 +6,6 @@ using DncyTemplate.Infra.Constants;
 using DncyTemplate.Infra.EntityFrameworkCore.ConnectionStringResolve;
 using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 using DncyTemplate.Infra.EntityFrameworkCore.Interceptor;
-using DncyTemplate.Infra.EntityFrameworkCore.Repository;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore;
 

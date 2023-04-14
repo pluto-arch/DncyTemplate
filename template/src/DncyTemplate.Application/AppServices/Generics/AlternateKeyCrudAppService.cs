@@ -6,7 +6,6 @@ using DncyTemplate.Domain.Infra;
 using DncyTemplate.Domain.Infra.Repository;
 using DncyTemplate.Infra.EntityFrameworkCore;
 using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
-using DncyTemplate.Infra.EntityFrameworkCore.Repository;
 
 namespace DncyTemplate.Application.AppServices.Generics
 {

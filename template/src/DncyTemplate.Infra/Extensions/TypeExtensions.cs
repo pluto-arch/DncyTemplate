@@ -47,7 +47,7 @@ public static class TypeExtensions
             if (memberAttribute is null)
                 continue;
 
-            if (memberAttribute.Value?.Equals(value, StringComparison.OrdinalIgnoreCase)??false)
+            if (memberAttribute.Value?.Equals(value, StringComparison.OrdinalIgnoreCase) ?? false)
             {
                 result = Enum.Parse<TEnum>(name);
                 return true;

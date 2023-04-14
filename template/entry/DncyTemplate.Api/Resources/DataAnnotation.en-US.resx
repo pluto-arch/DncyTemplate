@@ -120,6 +120,9 @@
   <data name="LengthLimit" xml:space="preserve">
     <value>The field {0} must be a string with a minimum length of {2} and a maximum length of {1}.</value>
   </data>
+  <data name="MaxLengthValidate" xml:space="preserve">
+    <value>The field {0} must be a string or array type with a maximum length of '{1}'.</value>
+  </data>
   <data name="PageIndexVerifyMessage" xml:space="preserve">
     <value>{0} value bust between {1} and {2}.</value>
   </data>

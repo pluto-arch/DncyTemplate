@@ -2,7 +2,12 @@
 {
     public class DataAnnotation
     {
-        public const string PageSizeMessage = nameof(PageSizeMessage);
+        public const string PageSizeVerifyMessage = nameof(PageSizeVerifyMessage);
+        public const string ProductName = nameof(ProductName);
+        public const string PageIndexVerifyMessage = nameof(PageIndexVerifyMessage);
+        public const string ValueIsRequired = nameof(ValueIsRequired);
+        public const string LengthLimit = nameof(LengthLimit);
+        public const string MaxLengthValidate = nameof(MaxLengthValidate);
     }
     public class DefaultDataAnnotation
     {
@@ -21,6 +26,7 @@
     public class SharedResource
     {
         public const string Menu_Home = "Menu.Home";
+        public const string ProductRequired = nameof(ProductRequired);
         public const string User_Name = "User.Name";
         public const string Menu_Product = "Menu.Product";
         public const string Welcome = nameof(Welcome);

@@ -1,5 +1,6 @@
 ﻿using DncyTemplate.Application.Models;
 using DncyTemplate.Domain.Aggregates.Product;
+using DncyTemplate.Domain.Infra.Repository;
 using DncyTemplate.Infra.EntityFrameworkCore;
 using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 using DncyTemplate.Infra.EntityFrameworkCore.Repository;
@@ -8,16 +9,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Localization;
 using System.ComponentModel.DataAnnotations;
-using DncyTemplate.Domain.Infra.Repository;
-using System;
-using System.ComponentModel;
-using System.Globalization;
-using System.Runtime.Serialization;
-using CommunityToolkit.Diagnostics;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
 
 namespace DncyTemplate.Api.Controllers
 {
@@ -38,6 +29,7 @@ namespace DncyTemplate.Api.Controllers
 
         [AutoInject]
         private readonly ILogger<HomeController> _logger;
+
 
         [HttpGet]
         public ResultDto TestLocalize([EmailAddress] string name)

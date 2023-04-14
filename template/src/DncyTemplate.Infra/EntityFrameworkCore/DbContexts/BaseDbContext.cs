@@ -6,7 +6,7 @@ using DncyTemplate.Infra.EntityFrameworkCore.Extension;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 
-public class BaseDbContext<TContext> : DbContext 
+public class BaseDbContext<TContext> : DbContext
     where TContext : DbContext, IDataContext
 {
     public BaseDbContext(DbContextOptions<TContext> options)

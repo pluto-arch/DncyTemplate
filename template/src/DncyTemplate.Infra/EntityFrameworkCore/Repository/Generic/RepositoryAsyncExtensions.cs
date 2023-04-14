@@ -1,7 +1,7 @@
 ﻿using DncyTemplate.Domain.Infra;
+using DncyTemplate.Domain.Infra.Repository;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
-using DncyTemplate.Domain.Infra.Repository;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
 {

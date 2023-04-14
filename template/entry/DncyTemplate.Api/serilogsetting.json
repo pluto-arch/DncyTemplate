@@ -39,7 +39,7 @@
             {
               "Name": "Console",
               "Args": {
-                "outputTemplate": "==> {Timestamp:yy/MM/dd HH:mm:ss.fff} [{Level:u3}]{Message:j}{NewLine}{Properties:j}{NewLine}{Exception}{NewLine}"
+                "outputTemplate": "==> {Timestamp:yy/MM/dd HH:mm:ss.fff} [{Level:u3}]{Message:j}{NewLine}{Properties:j}{NewLine}{Exception}"
               }
             }
           ]

@@ -18,6 +18,8 @@ public static class LocalizerExtension
             options.SupportedCultures = supportedCultures;
             options.SupportedUICultures = supportedCultures;
             options.ApplyCurrentCultureToResponseHeaders = true;
+            options.FallBackToParentCultures = true;
+            options.FallBackToParentUICultures = true;
         });
         return services;
     }
