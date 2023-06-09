@@ -78,25 +78,30 @@ public static class EntityFrameworkServiceExtension
             return;
         }
 
-
         Parallel.ForEach(context, item =>
         {
-            var entitTypies = from property in item.GetTypeInfo().GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                              where IsAssignableToGenericType(property.PropertyType, typeof(DbSet<>)) && typeof(IEntity).IsAssignableFrom(property.PropertyType.GenericTypeArguments[0])
-                              select property.PropertyType.GenericTypeArguments[0];
+            var entitTypies =
+                from property in item.GetTypeInfo().GetProperties(BindingFlags.Instance | BindingFlags.Public)
+                where IsAssignableToGenericType(property.PropertyType, typeof(DbSet<>)) &&
+                      typeof(IEntity).IsAssignableFrom(property.PropertyType.GenericTypeArguments[0])
+                select property.PropertyType.GenericTypeArguments[0];
 
 
             foreach (var entityType in entitTypies)
             {
                 var defType = typeof(IEfRepository<>).MakeGenericType(entityType);
+                var defType2 = typeof(IEfContextRepository<,>).MakeGenericType(item, entityType);
                 var implementingType = EfRepositoryHelper.GetRepositoryType(item, entityType);
                 services.RegisterType(defType, implementingType);
+                services.RegisterType(defType2, implementingType);
 
                 Type keyType = EntityHelper.FindPrimaryKeyType(entityType);
                 if (keyType != null)
                 {
-                    services.RegisterType(typeof(IEfRepository<,>).MakeGenericType(entityType, keyType),
-                        EfRepositoryHelper.GetRepositoryType(item, entityType, keyType));
+                    var impl = EfRepositoryHelper.GetRepositoryType(item, entityType, keyType);
+                    services.RegisterType(typeof(IEfRepository<,>).MakeGenericType(entityType, keyType), impl);
+                    services.RegisterType(typeof(IEfContextRepository<,,>).MakeGenericType(item, entityType, keyType),
+                        impl);
                 }
             }
         });

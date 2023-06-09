@@ -111,7 +111,6 @@ public class AuditLogActionFilter : IAsyncActionFilter
         {
             return false;
         }
-
         //if (methodInfo.GetCustomAttribute<AuditedAttribute>() != null)
         //{
         //    return true;

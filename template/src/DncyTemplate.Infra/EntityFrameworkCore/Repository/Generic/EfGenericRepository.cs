@@ -15,7 +15,7 @@ using System.Linq.Expressions;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
 {
-    public class EfRepository<TContext, TEntity> : IEfRepository<TEntity>
+    public class EfRepository<TContext, TEntity> : IEfContextRepository<TContext,TEntity>
          where TContext : DbContext, IDataContext
          where TEntity : class, IEntity
     {
@@ -263,7 +263,7 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
     }
 
 
-    public class EfRepository<TDbContext, TEntity, TKey> : EfRepository<TDbContext, TEntity>, IEfRepository<TEntity, TKey>
+    public class EfRepository<TDbContext, TEntity, TKey> : EfRepository<TDbContext, TEntity>, IEfContextRepository<TDbContext,TEntity, TKey>
             where TDbContext : DbContext, IDataContext
             where TEntity : class, IEntity
     {
