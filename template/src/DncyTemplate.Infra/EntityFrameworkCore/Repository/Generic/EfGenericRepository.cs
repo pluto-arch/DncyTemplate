@@ -166,7 +166,7 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
 
             if (entity == null)
             {
-                throw new EntityNotFoundException(typeof(TEntity));
+                ThrowHelper.ThrowInvalidDataException($"There is no such an entity given condition. Entity type: {typeof(TEntity).FullName}");
             }
 
             return entity;
@@ -286,7 +286,7 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
 
             if (entity == null)
             {
-                throw new EntityNotFoundException(typeof(TEntity));
+                ThrowHelper.ThrowInvalidDataException($"There is no such an entity given condition. Entity type: {typeof(TEntity).FullName}");
             }
 
             return entity;
