@@ -1,4 +1,7 @@
-﻿using Dncy.MultiTenancy;
+﻿
+#if Tenant
+using Dncy.MultiTenancy;
+#endif
 using DncyTemplate.Application.AppServices.Product;
 using DncyTemplate.Application.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -18,8 +21,10 @@ namespace DncyTemplate.Api.Controllers.v1
         [AutoInject]
         private readonly IProductAppService _productsRepository;
 
+        #if Tenant
         [AutoInject]
         private readonly ICurrentTenant _currentTenant;
+        #endif
 
         /// <summary>
         /// 获取产品列表
@@ -40,7 +45,9 @@ namespace DncyTemplate.Api.Controllers.v1
             })!;
             return this.Success(new
             {
+#if Tenant
                 tenant = _currentTenant.Id,
+#endif
                 products = res
             });
         }

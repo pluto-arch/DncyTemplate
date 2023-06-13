@@ -4,6 +4,7 @@ using System.Data.Common;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.Interceptor;
 
+
 public class TenantDbConnectionInterceptor : DbConnectionInterceptor
 {
     private readonly string _connectionStringName;

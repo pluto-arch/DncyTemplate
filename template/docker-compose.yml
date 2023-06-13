@@ -7,7 +7,8 @@ services:
     build:
       context: .
       dockerfile: ./entry/DncyTemplate.Api/Dockerfile
-#else (ProjectType == "MVC")
+#else
+
   dncytemplate.mvc:
     image: ${DOCKER_REGISTRY-}dncytemplatemvc
     build:

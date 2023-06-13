@@ -2,6 +2,7 @@
 
 namespace DncyTemplate.Api.Infra.Tenancy;
 
+#if Tenant
 public class UserTenantIdentityParse : HttpTenantIdentityParseBase
 {
     /// <inheritdoc />
@@ -14,3 +15,4 @@ public class UserTenantIdentityParse : HttpTenantIdentityParseBase
     /// <inheritdoc />
     public override string Name => "HttpContextUserTenantIdentityParse";
 }
+#endif

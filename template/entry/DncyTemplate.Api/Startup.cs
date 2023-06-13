@@ -2,7 +2,10 @@
 using DncyTemplate.Api.BackgroundServices;
 using DncyTemplate.Api.Infra.ApiDoc;
 using DncyTemplate.Api.Infra.LogSetup;
+
+#if Tenant
 using DncyTemplate.Api.Infra.Tenancy;
+#endif
 using DncyTemplate.Application;
 using DncyTemplate.Domain;
 using DncyTemplate.Infra;
@@ -114,7 +117,9 @@ public class Startup
 
         app.UseHttpsRedirection();
         app.UseAuthentication();
+#if Tenant
         app.UseMultiTenancy();
+#endif
         app.UseRouting();
         app.UseRateLimiter();
         app.UseAuthorization();

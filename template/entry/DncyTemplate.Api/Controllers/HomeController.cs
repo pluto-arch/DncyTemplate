@@ -101,28 +101,6 @@ namespace DncyTemplate.Api.Controllers
             return this.Success<string>(text);
         }
 
-
-
-        [HttpPost("/string-enum")]
-        public ResultDto EnumBindTest(MyClass name)
-        {
-            return this.Success<string>(name.Type.ToString());
-        }
-
-        public enum Demo
-        {
-            周一,
-            周二,
-            周三,
-            周六
-        }
-
-        public class MyClass
-        {
-            public Demo Type { get; set; }
-        }
-
-
         [HttpGet("loc")]
         [AllowAnonymous]
         public async Task<ResultDto> RpcCall()

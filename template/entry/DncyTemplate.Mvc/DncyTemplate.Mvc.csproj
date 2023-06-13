@@ -16,7 +16,9 @@
 
 
 	<ItemGroup>
+		<!--#if (Tenant) -->
 		<PackageReference Include="Dncy.MultiTenancy.AspNetCore" Version="1.1.2" />
+		<!--#endif -->
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.5" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.5" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.5" />
@@ -78,6 +80,9 @@
 	  <Folder Include="Models\Account\" />
 	  <Folder Include="Models\Permission\" />
 	  <Folder Include="BackgroundServices\" />
+	  <!--#if (Tenant) -->
+	  <Folder Include="Infra\Tenancy\" />
+	  <!--#endif -->
 	</ItemGroup>
 
 	<ItemGroup>

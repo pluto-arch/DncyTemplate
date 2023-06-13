@@ -1,4 +1,6 @@
-﻿using Dncy.MultiTenancy;
+﻿#if Tenant
+using Dncy.MultiTenancy;
+#endif
 
 using DncyTemplate.Domain.Infra;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -20,7 +22,9 @@ public class DataChangeSaveChangesInterceptor : SaveChangesInterceptor
     {
         if (eventData.Context is not null)
         {
+#if Tenant
             MultiTenancyTracking(eventData.Context);
+#endif
             SoftDeleteTracking(eventData.Context);
             DispatchDomainEventsAsync(eventData.Context).Wait();
         }
@@ -32,7 +36,9 @@ public class DataChangeSaveChangesInterceptor : SaveChangesInterceptor
     {
         if (eventData.Context is not null)
         {
+#if Tenant
             MultiTenancyTracking(eventData.Context);
+#endif
             SoftDeleteTracking(eventData.Context);
             await DispatchDomainEventsAsync(eventData.Context, cancellationToken);
         }
@@ -51,6 +57,7 @@ public class DataChangeSaveChangesInterceptor : SaveChangesInterceptor
         });
     }
 
+#if Tenant
     private static void MultiTenancyTracking(DbContext dbContext)
     {
         var tenantedEntries = dbContext.ChangeTracker.Entries<IMultiTenant>()
@@ -61,6 +68,8 @@ public class DataChangeSaveChangesInterceptor : SaveChangesInterceptor
             entityEntry.Entity.TenantId ??= currentTenant.Id;
         });
     }
+#endif
+    
 
     private async Task DispatchDomainEventsAsync(DbContext dbContext, CancellationToken cancellationToken = default)
     {

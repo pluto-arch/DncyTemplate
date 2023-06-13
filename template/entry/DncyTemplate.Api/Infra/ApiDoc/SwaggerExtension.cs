@@ -11,6 +11,7 @@ public class AddRequiredHeaderParameter : IOperationFilter
     {
         operation.Parameters ??= new List<OpenApiParameter>();
 
+#if Tenant
         // swagger 请求头上添加tenant 用来解析租户
         operation.Parameters.Add(new OpenApiParameter
         {
@@ -18,5 +19,6 @@ public class AddRequiredHeaderParameter : IOperationFilter
             In = ParameterLocation.Header,
             Required = false
         });
+#endif
     }
 }

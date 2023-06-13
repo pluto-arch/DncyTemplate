@@ -99,6 +99,7 @@ public class SideBarMenuViewComponent : ViewComponent
             IsVisible = true,
             Items = new List<MenuItemModel>
             {
+#if Tenant
                 new MenuItemModel
                 {
                     Name = "app.menu.accescontrol.tenants",
@@ -109,6 +110,7 @@ public class SideBarMenuViewComponent : ViewComponent
                     IsVisible = true,
                     Permission=new MenuPermission(true)
                 },
+#endif
                 new MenuItemModel
                 {
                     Name = "app.menu.accescontrol.roles",

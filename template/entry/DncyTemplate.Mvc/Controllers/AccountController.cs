@@ -73,7 +73,9 @@ namespace DncyTemplate.Mvc.Controllers
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
                 new Claim(ClaimTypes.Name, user.Name),
+#if Tenant
                 new Claim(AppConstant.TENANT_KEY, user.Tenant)
+#endif
             };
             if (user.Roles.Any())
             {
@@ -83,7 +85,7 @@ namespace DncyTemplate.Mvc.Controllers
                 }
             }
 
-
+#if Tenant
             // init permission already granted
             using (_currentTenant.Change(new TenantInfo(user.Tenant)))
             {
@@ -96,7 +98,7 @@ namespace DncyTemplate.Mvc.Controllers
                 grantList.AddRange(await _permissionGrantStore.GetListAsync("user", user.Id));
                 claims.Add(new Claim(UserClaimConstants.CLAIM_PERMISSION, string.Join("|", grantList.Select(x => x.Name).Distinct())));
             }
-
+#endif
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
             var authProperties = new AuthenticationProperties

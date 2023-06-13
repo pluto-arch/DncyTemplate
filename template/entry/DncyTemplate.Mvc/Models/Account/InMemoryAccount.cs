@@ -10,7 +10,9 @@ namespace DncyTemplate.Mvc.Models.Account
             {
                 Id = "U0001",
                 Name = "超级管理员",
+                #if Tenant
                 Tenant="T20210602000003",
+#endif
                 Account="sa",
                 Roles = new RoleEnum[]
                 {
@@ -21,7 +23,9 @@ namespace DncyTemplate.Mvc.Models.Account
             {
                 Id = "U0002",
                 Name = "管理员",
+#if Tenant
                 Tenant="T20210602000001",
+#endif
                 Account="admin",
                 Roles = new RoleEnum[]
                 {
@@ -32,7 +36,9 @@ namespace DncyTemplate.Mvc.Models.Account
             {
                 Id = "U0003",
                 Name = "普通用户",
+#if Tenant
                 Tenant="T20210602000002",
+#endif
                 Account="user",
                 Roles = new RoleEnum[]
                 {
@@ -53,7 +59,9 @@ namespace DncyTemplate.Mvc.Models.Account
 
         public RoleEnum[] Roles { get; set; }
 
+#if Tenant
         public string Tenant { get; set; }
+#endif
     }
 
     public enum RoleEnum : byte

@@ -1,29 +1,38 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<TargetFramework>net70</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
-	</PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net70</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
 
-	<ItemGroup>		
-		<PackageReference Include="CommunityToolkit.Diagnostics" Version="8.2.0" />		
-		<PackageReference Include="Dncy.DependencyInjection.Generator" Version="1.1.0" />
-		<PackageReference Include="Dncy.MultiTenancy" Version="1.1.2" />
-		<PackageReference Include="Dncy.Permission" Version="2.1.1" />
-		<PackageReference Include="Dncy.Specifications" Version="1.0.1" />
-		<PackageReference Include="Dncy.Tools.Core" Version="2.0.1" />
-		<PackageReference Include="Dncy.Tools.SnowFlake" Version="1.0.5" />
-		<PackageReference Include="MediatR" Version="12.0.1" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
-	</ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="CommunityToolkit.Diagnostics" Version="8.2.0"/>
+        <PackageReference Include="Dncy.DependencyInjection.Generator" Version="1.1.0"/>
+        <!--#if (Tenant) -->
+        <PackageReference Include="Dncy.MultiTenancy" Version="1.1.2"/>
+        <!--#endif -->
+        <PackageReference Include="Dncy.Permission" Version="2.1.1"/>
+        <PackageReference Include="Dncy.Specifications" Version="1.0.1"/>
+        <PackageReference Include="Dncy.Tools.Core" Version="2.0.1"/>
+        <PackageReference Include="Dncy.Tools.SnowFlake" Version="1.0.5"/>
+        <PackageReference Include="MediatR" Version="12.0.1"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0"/>
+    </ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Aggregates\Product\" />
-	  <Folder Include="Aggregates\Tenancy\" />
-	  <Folder Include="Aggregates\System\" />
-	  <Folder Include="DomainEvents\Product\" />
-	  <Folder Include="Exceptions\" />
-	  <Folder Include="Collections\" />
-	  <Folder Include="Services\" />
-	</ItemGroup>
+    <ItemGroup>
+        <Folder Include="Aggregates\Product\"/>
+        <!--#if (Tenant) -->
+        <Folder Include="Aggregates\Tenancy\"/>
+        <!--#endif -->
+        <Folder Include="Aggregates\System\"/>
+        <Folder Include="DomainEvents\Product\"/>
+        <Folder Include="Exceptions\"/>
+        <Folder Include="Collections\"/>
+        <Folder Include="Services\"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Remove="DncyTemplate.Api.xml" />
+    </ItemGroup>
+    
 </Project>

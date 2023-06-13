@@ -87,11 +87,13 @@ namespace DncyTemplate.Mvc.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+#if Tenant
         [HttpPost]
         public IActionResult SwitchTenant([FromForm] string tenantId, string returnUrl)
         {
             Response.Cookies.Append(AppConstant.TENANT_KEY, tenantId, new CookieOptions { Expires = DateTimeOffset.UtcNow.AddHours(1) });
             return LocalRedirect(returnUrl);
         }
+#endif
     }
 }

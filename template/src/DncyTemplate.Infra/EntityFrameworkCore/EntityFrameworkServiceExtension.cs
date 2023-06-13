@@ -32,9 +32,13 @@ public static class EntityFrameworkServiceExtension
 
             var mediator = serviceProvider.GetService<IDomainEventDispatcher>() ?? NullDomainEventDispatcher.Instance;
             optionsBuilder.AddInterceptors(new DataChangeSaveChangesInterceptor(mediator));
+
+#if Tenant
             //多租户模式下解析租户连接字符串使用
             var connectionStringResolve = serviceProvider.GetRequiredService<IConnectionStringResolve>();
             optionsBuilder.AddInterceptors(new TenantDbConnectionInterceptor(connectionStringResolve, DbConstants.DEFAULT_CONNECTIONSTRING_NAME));
+#endif
+            
 
 #if DEBUG
             optionsBuilder.EnableSensitiveDataLogging();

@@ -4,17 +4,18 @@ public class AppConstant
 
     public const string SERVICE_NAME = "DncyTemplate.Api";
 
-
+#if Tenant
     /// <summary>
     /// 租户解析的key
     /// </summary>
     public const string TENANT_KEY = "tenant_id";
+#endif
 
 
     /// <summary>
     /// 默认跨域名称
     /// </summary>
-    public const string DEFAULT_CORS_NAME = "full";
+    public const string DEFAULT_CORS_NAME = "all";
 
     /// <summary>
     /// 默认的http： context type 格式

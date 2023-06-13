@@ -4,7 +4,10 @@ using DncyTemplate.Domain.Infra;
 
 namespace DncyTemplate.Domain.Aggregates.System;
 
-public class PermissionGrant : BaseEntity<int>, IPermissionGrant, IMultiTenant
+public class PermissionGrant : BaseEntity<int>, IPermissionGrant
+#if Tenant
+    , IMultiTenant
+#endif
 {
 
     public PermissionGrant()
@@ -28,8 +31,10 @@ public class PermissionGrant : BaseEntity<int>, IPermissionGrant, IMultiTenant
     /// <inheritdoc />
     public string ProviderKey { get; set; }
 
+#if Tenant
     /// <inheritdoc />
     public string TenantId { get; set; }
+#endif
 
     public DateTimeOffset CreateTime { get; set; }
 }

@@ -9,8 +9,8 @@ services:
     ports:
       - "80"
       - "443"
-  #endif
-  #if (ProjectType == "MVC")
+
+  #else
   dncytemplate.mvc:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development

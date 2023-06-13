@@ -5,16 +5,19 @@ namespace DncyTemplate.Domain.Infra;
 
 public static partial class EntityHelper
 {
+#if Tenant
     public static bool IsMultiTenant<TEntity>()
         where TEntity : IEntity
     {
         return IsMultiTenant(typeof(TEntity));
     }
 
-    public static bool IsMultiTenant(Type type)
+
+     public static bool IsMultiTenant(Type type)
     {
         return typeof(IMultiTenant).IsAssignableFrom(type);
     }
+#endif
 
 
     public static bool EntityEquals(IEntity entity1, IEntity entity2)
@@ -38,6 +41,8 @@ public static partial class EntityHelper
             return false;
         }
 
+
+#if Tenant
         //Different tenants may have an entity with same Id.
         if (entity1 is IMultiTenant tenant1 && entity2 is IMultiTenant tenant2)
         {
@@ -57,7 +62,7 @@ public static partial class EntityHelper
                 }
             }
         }
-
+#endif
         //Transient objects are not considered as equal
         if (HasDefaultKeys(entity1) && HasDefaultKeys(entity2))
         {

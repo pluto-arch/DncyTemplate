@@ -2,7 +2,10 @@
 
 namespace DncyTemplate.Domain.Aggregates.Product;
 
-public class Device : BaseEntity<int>, IMultiTenant
+public class Device : BaseEntity<int>
+#if Tenant
+    , IMultiTenant
+#endif
 {
     /// <summary>
     ///     设备名称
@@ -43,6 +46,8 @@ public class Device : BaseEntity<int>, IMultiTenant
     /// </summary>
     public Product Product { get; set; }
 
-
+#if Tenant
     public string TenantId { get; set; }
+#endif
+    
 }

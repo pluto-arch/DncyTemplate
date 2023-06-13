@@ -20,7 +20,9 @@ public class AccountController : ControllerBase, IResponseWraps
             UserName = "admin3",
             Password = "admin",
             Role = "admin",
+#if Tenant
             TenantId = "T20210602000003"
+#endif
         },
         new
         {
@@ -29,7 +31,9 @@ public class AccountController : ControllerBase, IResponseWraps
             UserName = "admin2",
             Password = "admin",
             Role = "admin",
+            #if Tenant
             TenantId = "T20210602000002"
+            #endif
         },
         new
         {
@@ -38,7 +42,9 @@ public class AccountController : ControllerBase, IResponseWraps
             UserName = "sa",
             Password = "admin",
             Role = "SystemAdmin",
+#if Tenant
             TenantId = "T20210602000001"
+#endif
         }
     };
 
@@ -60,7 +66,9 @@ public class AccountController : ControllerBase, IResponseWraps
             new Claim(ClaimTypes.Name, u.UserName),
             new Claim(ClaimTypes.NameIdentifier, u.Id.ToString()),
             new Claim(ClaimTypes.Role, u.Role),
+#if Tenant
             new Claim(AppConstant.TENANT_KEY, u.TenantId)
+#endif
         };
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("715B59F3CDB1CF8BC3E7C8F13794CEA9"));
         var token = new JwtSecurityToken(
@@ -73,7 +81,9 @@ public class AccountController : ControllerBase, IResponseWraps
         );
         return this.Success(new
         {
+#if Tenant
             tenant = u.TenantId,
+#endif
             token = new JwtSecurityTokenHandler().WriteToken(token)
         }, $"{user} 登录成功");
     }

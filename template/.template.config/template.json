@@ -33,6 +33,13 @@
           "description": "MVC"
         }
       ]
+    },
+    "Tenant": {
+      "type": "parameter",
+      "dataType": "bool",
+      "description": "是否包含多租户功能",
+      "isRequired": false,
+      "defaultValue": "true"
     }
   },
   "sources": [
@@ -53,6 +60,18 @@
         {
           "exclude": [
             "template.sln"
+          ]
+        },
+        {
+          "condition": "(!Tenant)",
+          "exclude": [
+            "entry/DncyTemplate.Mvc/Infra/Tenancy/**/*",
+            "entry/DncyTemplate.Api/Infra/Tenancy/**/*",
+            "entry/DncyTemplate.Mvc/Controllers/TenantController.cs",
+            "entry/DncyTemplate.Mvc/Views/Tenant/**/*",
+            "src/DncyTemplate.Domain/Aggregates/Tenancy/**/*",
+            "src/DncyTemplate.Domain/Infra/Entity/IMultiTenant.cs",
+            "src/DncyTemplate.Infra/Infra/EntityFrameworkCore/Interceptor/DbConnectionInterceptor.cs"
           ]
         }
       ]

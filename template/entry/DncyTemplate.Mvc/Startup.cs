@@ -1,4 +1,6 @@
-﻿using Dncy.MultiTenancy.AspNetCore;
+﻿#if Tenant
+using Dncy.MultiTenancy.AspNetCore;
+#endif
 using DncyTemplate.Application;
 using DncyTemplate.Domain;
 using DncyTemplate.Infra;
@@ -73,7 +75,9 @@ public class Startup
         app.UseStaticFiles();
         app.UseHttpRequestLogging();
         app.UseAuthentication();
+#if Tenant
         app.UseMiddleware<MultiTenancyMiddleware>();
+#endif
         app.UseRouting();
         app.UseAuthorization();
         app.UseEndpoints(endpoints =>

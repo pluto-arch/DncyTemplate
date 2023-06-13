@@ -3,6 +3,7 @@ using Dncy.MultiTenancy.AspNetCore;
 using Dncy.MultiTenancy.ConnectionStrings;
 using Dncy.MultiTenancy.Store;
 
+#if Tenant
 [assembly: HostingStartup(typeof(DncyTemplate.Api.Infra.Tenancy.TenancyHostingStartup))]
 namespace DncyTemplate.Api.Infra.Tenancy;
 
@@ -24,3 +25,4 @@ public class TenancyHostingStartup : IHostingStartup
         });
     }
 }
+#endif
