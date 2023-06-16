@@ -1,6 +1,7 @@
 ﻿
 using AutoMapper;
 using DncyTemplate.Application.AppServices.Generics;
+using DncyTemplate.Application.Models;
 using DncyTemplate.Application.Models.Product;
 using DncyTemplate.Infra.EntityFrameworkCore;
 using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
@@ -25,5 +26,16 @@ public class ProductAppService
             q = q.Where(x => EF.Functions.Like(x.Name, $"%{requestModel.Keyword}%"));
         }
         return q;
+    }
+
+
+    public async Task<Return<ProductDto,string>> GetByName(string productName)
+    {
+        var res = await _repository.FirstOrDefaultAsync(x=>x.Name==productName);
+        if (res == null)
+        {
+            return "entity not found";
+        }
+        return _mapper.Map<ProductDto>(res);
     }
 }

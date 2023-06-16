@@ -43,10 +43,10 @@ namespace DncyTemplate.Api.Controllers.v2
         /// <returns></returns>
         [HttpGet("{id:required}")]
         [Produces(typeof(ProductDto))]
-        public async Task<ResultDto> GetByIdAsync(string id)
+        public async Task<ResultDto<ProductDto>> GetByIdAsync(string id)
         {
             var res = await _productAppService.GetAsync(id);
-            return this.Success(res);
+            return res;
         }
 
 
@@ -87,5 +87,23 @@ namespace DncyTemplate.Api.Controllers.v2
             await _productAppService.DeleteAsync(id);
             return this.Success();
         }
+
+
+        /// <summary>
+        /// 删除产品
+        /// </summary>
+        /// <returns></returns>
+        [HttpDelete("getByName")]
+        [Produces(typeof(ProductDto))]
+        public async Task<ResultDto> GetByNameAsync([Required] string name)
+        {
+            var res= await _productAppService.GetByName(name);
+            return res.Match<ResultDto>(
+                this.Success,
+                this.Error
+                );
+        }
+
+        
     }
 }

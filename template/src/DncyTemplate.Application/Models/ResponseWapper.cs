@@ -1,4 +1,5 @@
 ﻿
+
 namespace DncyTemplate.Application.Models;
 
 
@@ -115,6 +116,12 @@ public record ResultDto<T> : ResultDto
     {
         return new() { Code = 400, Message = message, Data = data };
     }
+
+
+    public static implicit operator ResultDto<T>(T v) => ResultDto<T>.Success(v);
+
+    public static implicit operator ResultDto<T>(string error) => ResultDto<T>.Error(error);
+
 }
 
 
