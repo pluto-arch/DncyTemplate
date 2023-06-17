@@ -1,4 +1,6 @@
-﻿using Dncy.MultiTenancy.ConnectionStrings;
+﻿#if Tenant
+
+using Dncy.MultiTenancy.ConnectionStrings;
 using DncyTemplate.Mvc.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
@@ -12,17 +14,14 @@ namespace DncyTemplate.Mvc.Controllers;
 [Authorize(Roles = "SA")]
 public partial class TenantController : Controller
 {
-#if Tenant
     [AutoInject]
     protected readonly IOptions<TenantConfigurationOptions> _tenantConfigurationOptions;
-#endif
 
     public IActionResult Index()
     {
         return View();
     }
 
-#if Tenant
     [HttpGet]
     public IActionResult List()
     {
@@ -45,7 +44,7 @@ public partial class TenantController : Controller
             data = tenantVm
         });
     }
-#endif
+
     [HttpGet]
     public IActionResult Detail(string tenantId)
     {
@@ -68,3 +67,4 @@ public partial class TenantController : Controller
         });
     }
 }
+#endif

@@ -2,6 +2,7 @@
 using DncyTemplate.Domain.Aggregates.System;
 using DncyTemplate.Domain.Infra.Repository;
 using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
+using DncyTemplate.Uow;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
 {
@@ -9,9 +10,9 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
     {
         private readonly IEfRepository<PermissionGrant> _permissionGrants;
 
-        public EfCorePermissionGrantStore(EfUnitOfWork<DncyTemplateDbContext> uow)
+        public EfCorePermissionGrantStore(IUnitOfWork<DncyTemplateDbContext> uow)
         {
-            _permissionGrants = uow.EfRepository<PermissionGrant>();
+            _permissionGrants = uow.GetEfRepository<PermissionGrant>();
         }
         public async Task GrantAsync(string name, string providerName, string providerKey)
         {

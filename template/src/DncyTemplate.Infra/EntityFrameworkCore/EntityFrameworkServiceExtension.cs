@@ -6,6 +6,8 @@ using DncyTemplate.Infra.Constants;
 using DncyTemplate.Infra.EntityFrameworkCore.ConnectionStringResolve;
 using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 using DncyTemplate.Infra.EntityFrameworkCore.Interceptor;
+using DncyTemplate.Uow;
+using DncyTemplate.Uow.EntityFrameworkCore;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore;
 
@@ -66,17 +68,39 @@ public static class EntityFrameworkServiceExtension
 
 
 
-    private static void AddUnitofWork(this IServiceCollection service)
+    private static void AddUnitofWork(this IServiceCollection services)
     {
-        service.AddScoped(typeof(EfUnitOfWork<>));
+        var context = GetDbContextTypes();
+        if (context is null or { Count: <= 0 })
+        {
+            return;
+        }
+
+        if (context.Count==1)
+        {
+            var defType = typeof(IUnitOfWork);
+            var defType2 = typeof(EfUnitOfWork<>).MakeGenericType(context[0]);
+            services.RegisterType(defType, defType2);
+        }
+
+        Parallel.ForEach(context, item =>
+        {
+            var defType = typeof(IUnitOfWork<>).MakeGenericType(item);
+            var defType2 = typeof(EfUnitOfWork<>).MakeGenericType(item);
+            services.RegisterType(defType, defType2);
+        });
     }
 
+
+    private static List<Type> GetDbContextTypes()
+    {
+        return Assembly.GetExecutingAssembly().GetTypes().Where(x => x.IsAssignableTo(typeof(DbContext)) && !x.IsAbstract && !x.Name.Contains("Migration")).ToList();
+    }
 
 
     private static void AddDefaultRepository(this IServiceCollection services, Assembly assembly = null, List<Type> context = null)
     {
-        assembly ??= Assembly.GetExecutingAssembly();
-        context ??= assembly.GetTypes().Where(x => x.IsAssignableTo(typeof(DbContext)) && !x.Name.Contains("Migration")).ToList();
+        context ??= GetDbContextTypes();
         if (context is null or { Count: <= 0 })
         {
             return;

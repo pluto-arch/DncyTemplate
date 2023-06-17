@@ -1,10 +1,10 @@
 ﻿using DncyTemplate.Application.Models;
 using DncyTemplate.Domain.Aggregates.Product;
 using DncyTemplate.Domain.Infra.Repository;
-using DncyTemplate.Infra.EntityFrameworkCore;
 using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 using DncyTemplate.Infra.EntityFrameworkCore.Repository;
 using DncyTemplate.Infra.Utils;
+using DncyTemplate.Uow;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Localization;
@@ -22,7 +22,7 @@ namespace DncyTemplate.Api.Controllers
         private readonly IStringLocalizer<SharedResource> _stringLocalizer;
 
         [AutoInject]
-        private readonly EfUnitOfWork<DncyTemplateDbContext> _efUow;
+        private readonly IUnitOfWork<DncyTemplateDbContext> _efUow;
 
         [AutoInject]
         private readonly IHttpClientFactory _httpClientFactory;

@@ -1,10 +1,9 @@
 ﻿
 using AutoMapper;
 using DncyTemplate.Application.AppServices.Generics;
-using DncyTemplate.Application.Models;
 using DncyTemplate.Application.Models.Product;
-using DncyTemplate.Infra.EntityFrameworkCore;
-using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
+using DncyTemplate.Infra.EntityFrameworkCore.Repository;
+using DncyTemplate.Uow;
 using Microsoft.EntityFrameworkCore;
 
 namespace DncyTemplate.Application.AppServices.Product;
@@ -14,7 +13,7 @@ public class ProductAppService
     : EntityKeyCrudAppService<Domain.Aggregates.Product.Product, string, ProductDto, ProductPagedRequest, ProductListItemDto, ProductUpdateRequest, ProductCreateRequest>, IProductAppService
 {
     /// <inheritdoc />
-    public ProductAppService(EfUnitOfWork<DncyTemplateDbContext> uow, IMapper mapper) : base(uow, mapper)
+    public ProductAppService(IUnitOfWork uow, IMapper mapper) : base(uow, mapper)
     {
     }
 
@@ -38,4 +37,18 @@ public class ProductAppService
         }
         return _mapper.Map<ProductDto>(res);
     }
+
+
+
+    public async Task<Return<ProductDto,string>> GetByNameWithDapper(string productName)
+    {
+        const string sql = $@"SELECT Id,Name,CreationTime,Remark FROM Products WHERE Name=@name";
+        var res= await _uow.Context.DapperQuerySingleOrDefaultAsync<ProductDto>(sql,new Dapper.DynamicParameters(new {name=productName}));
+        if (res == null)
+        {
+            return "entity not found";
+        }
+        return _mapper.Map<ProductDto>(res);
+    }
+
 }

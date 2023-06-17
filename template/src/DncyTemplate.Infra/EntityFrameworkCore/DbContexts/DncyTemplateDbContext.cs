@@ -1,7 +1,8 @@
-﻿using DncyTemplate.Domain.Aggregates.Product;
+﻿using System.Data;
+using DncyTemplate.Domain.Aggregates.Product;
 using DncyTemplate.Domain.Aggregates.System;
-using DncyTemplate.Domain.Infra.UnitOfWork;
 using DncyTemplate.Infra.EntityFrameworkCore.EntityTypeConfig;
+using DncyTemplate.Uow;
 
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
@@ -34,4 +35,5 @@ public class DncyTemplateDbContext : BaseDbContext<DncyTemplateDbContext>, IData
             .ApplyConfiguration(new ProductEntityTypeConfiguration())
             .ApplyConfiguration(new PermissionEntityTypeConfiguration());
     }
+
 }

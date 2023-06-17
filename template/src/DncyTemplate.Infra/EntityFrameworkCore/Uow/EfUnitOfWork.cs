@@ -1,8 +1,7 @@
 ﻿using DncyTemplate.Domain.Infra;
 using DncyTemplate.Domain.Infra.Repository;
-using DncyTemplate.Domain.Infra.UnitOfWork;
 
-namespace DncyTemplate.Infra.EntityFrameworkCore
+namespace DncyTemplate.Uow.EntityFrameworkCore
 {
 
     public class EfUnitOfWork<TContext> : IUnitOfWork<TContext>
@@ -20,25 +19,31 @@ namespace DncyTemplate.Infra.EntityFrameworkCore
         }
 
 
+        /// <inheritdoc />
+        public IDataContext Context => DbContext();
+
+        /// <inheritdoc />
         public IDisposable NewScope()
         {
             return SetDisposable();
         }
 
+        /// <inheritdoc />
         public IAsyncDisposable NewScopeAsync()
         {
             return SetAsyncDisposable();
         }
 
+        /// <inheritdoc />
         public TContext DbContext() => _context;
 
 
-        public IEfRepository<T> EfRepository<T>() where T : class, IEntity
+        public IEfRepository<T> GetEfRepository<T>() where T : class, IEntity
         {
             return _serviceProvider.GetRequiredService<IEfContextRepository<TContext,T>>();
         }
 
-        public IEfRepository<T, TKey> EfRepository<T, TKey>() where T : class, IEntity
+        public IEfRepository<T, TKey> GetEfRepository<T, TKey>() where T : class, IEntity
         {
             return _serviceProvider.GetRequiredService<IEfContextRepository<TContext,T, TKey>>();
         }
@@ -51,7 +56,6 @@ namespace DncyTemplate.Infra.EntityFrameworkCore
         {
             return _context.SaveChangesAsync(cancellationToken);
         }
-
 
         protected virtual void Dispose(bool disposing)
         {

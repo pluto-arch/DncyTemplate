@@ -1,19 +1,38 @@
 ﻿#if Tenant
 using Dncy.MultiTenancy;
 #endif
+using System.Data;
 using DncyTemplate.Domain.Infra;
-using DncyTemplate.Domain.Infra.UnitOfWork;
 using DncyTemplate.Infra.EntityFrameworkCore.Extension;
+using DncyTemplate.Uow;
+using Microsoft.EntityFrameworkCore.Storage;
 
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 
-public class BaseDbContext<TContext> : DbContext
-    where TContext : DbContext, IDataContext
+public abstract class BaseDbContext<TContext> : DbContext where TContext : DbContext, IDataContext
 {
-    public BaseDbContext(DbContextOptions<TContext> options)
+    protected BaseDbContext(DbContextOptions<TContext> options)
         : base(options)
     {
+    }
+
+
+
+    public IDbConnection DbConnection =>this.Database.GetDbConnection();
+
+    public IDbTransaction DbTransaction =>this.Database.CurrentTransaction?.GetDbTransaction();
+
+    public int? CommandTimeOut
+    {
+        get => this.Database.GetCommandTimeout();
+        set => this.Database.SetCommandTimeout(value);
+    }
+
+
+    public ILogger GetLogger<TSourceContext>()
+    {
+        return this.GetService<ILogger<TSourceContext>>();
     }
 
 

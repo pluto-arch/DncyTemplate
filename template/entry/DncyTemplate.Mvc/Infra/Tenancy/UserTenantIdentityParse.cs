@@ -1,4 +1,5 @@
-﻿using Dncy.MultiTenancy.AspNetCore;
+﻿#if Tenant
+using Dncy.MultiTenancy.AspNetCore;
 
 using DncyTemplate.Mvc.Constants;
 
@@ -16,3 +17,4 @@ public class UserTenantIdentityParse : HttpTenantIdentityParseBase
     /// <inheritdoc />
     public override string Name => "HttpContextUserTenantIdentityParse";
 }
+#endif

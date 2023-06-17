@@ -90,10 +90,10 @@ namespace DncyTemplate.Api.Controllers.v2
 
 
         /// <summary>
-        /// 删除产品
+        /// 按照名称查询 - efcore
         /// </summary>
         /// <returns></returns>
-        [HttpDelete("getByName")]
+        [HttpGet("getByName")]
         [Produces(typeof(ProductDto))]
         public async Task<ResultDto> GetByNameAsync([Required] string name)
         {
@@ -104,6 +104,19 @@ namespace DncyTemplate.Api.Controllers.v2
                 );
         }
 
-        
+        /// <summary>
+        /// 按照名称查询 - dapper
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("getByNameWithDapper")]
+        [Produces(typeof(ProductDto))]
+        public async Task<ResultDto> GetByNameWithDapperAsync([Required] string name)
+        {
+            var res= await _productAppService.GetByNameWithDapper(name);
+            return res.Match<ResultDto>(
+                this.Success,
+                this.Error
+            );
+        }
     }
 }

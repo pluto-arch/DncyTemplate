@@ -1,4 +1,5 @@
 ﻿
+#if Tenant
 using Dncy.MultiTenancy;
 using Dncy.MultiTenancy.AspNetCore;
 using Dncy.MultiTenancy.ConnectionStrings;
@@ -26,3 +27,4 @@ public class TenancyHostingStartup : IHostingStartup
         });
     }
 }
+#endif

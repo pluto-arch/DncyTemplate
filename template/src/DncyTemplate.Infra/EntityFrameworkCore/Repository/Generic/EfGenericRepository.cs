@@ -4,13 +4,13 @@ using Dncy.Specifications.EntityFrameworkCore.Evaluatiors;
 using Dncy.Specifications.Evaluators;
 using Dncy.Specifications.Exceptions;
 using DncyTemplate.Domain.Collections;
-using DncyTemplate.Domain.Exceptions;
 using DncyTemplate.Domain.Infra;
 using DncyTemplate.Domain.Infra.Repository;
-using DncyTemplate.Domain.Infra.UnitOfWork;
 using DncyTemplate.Infra.EntityFrameworkCore.Extension;
 using System.Collections;
 using System.Linq.Expressions;
+using DncyTemplate.Uow;
+using DncyTemplate.Uow.EntityFrameworkCore;
 
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
@@ -20,9 +20,9 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
          where TEntity : class, IEntity
     {
         private readonly ISpecificationEvaluator _specification = EfCoreSpecificationEvaluator.Default;
-        private readonly EfUnitOfWork<TContext> _unitOfWork;
+        private readonly IUnitOfWork<TContext> _unitOfWork;
 
-        public EfRepository(EfUnitOfWork<TContext> unitOfWork)
+        public EfRepository(IUnitOfWork<TContext> unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -267,7 +267,7 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
             where TDbContext : DbContext, IDataContext
             where TEntity : class, IEntity
     {
-        public EfRepository(EfUnitOfWork<TDbContext> unitOfWork) : base(unitOfWork) { }
+        public EfRepository(IUnitOfWork<TDbContext> unitOfWork) : base(unitOfWork) { }
 
         public async Task DeleteAsync(TKey id, bool autoSave = false, CancellationToken cancellationToken = default)
         {

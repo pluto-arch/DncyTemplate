@@ -4,8 +4,7 @@ using DncyTemplate.Application.Models.Generics;
 using DncyTemplate.Domain.Collections;
 using DncyTemplate.Domain.Infra;
 using DncyTemplate.Domain.Infra.Repository;
-using DncyTemplate.Infra.EntityFrameworkCore;
-using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
+using DncyTemplate.Uow;
 
 namespace DncyTemplate.Application.AppServices.Generics
 {
@@ -14,11 +13,13 @@ namespace DncyTemplate.Application.AppServices.Generics
     where TGetListRequest : PageRequest
     {
         protected readonly IEfRepository<TEntity, TKey> _repository;
+        protected readonly IUnitOfWork _uow;
         protected readonly IMapper _mapper;
 
-        protected AlternateKeyCrudAppService(EfUnitOfWork<DncyTemplateDbContext> uow, IMapper mapper)
+        protected AlternateKeyCrudAppService(IUnitOfWork uow, IMapper mapper)
         {
-            _repository = uow.EfRepository<TEntity, TKey>();
+            _repository = uow.GetEfRepository<TEntity, TKey>();
+            _uow = uow;
             _mapper = mapper;
         }
 

@@ -1,38 +1,58 @@
-﻿using DncyTemplate.Domain.Infra.Repository;
+﻿using DncyTemplate.Domain.Infra;
+using DncyTemplate.Domain.Infra.Repository;
 
-namespace DncyTemplate.Domain.Infra.UnitOfWork
+namespace DncyTemplate.Uow
 {
-    public interface IUnitOfWork<TContext> : IDisposable, IAsyncDisposable
-        where TContext : IDataContext
+
+
+    public interface IUnitOfWork:IDisposable, IAsyncDisposable
     {
 
-        TContext DbContext();
-
-
-        IDisposable NewScope();
-
-
-        IAsyncDisposable NewScopeAsync();
+        IDataContext Context { get; }
 
         /// <summary>
-        /// 获取仓储
+        /// 新的范围作用域
+        /// </summary>
+        /// <returns></returns>
+        IDisposable NewScope();
+
+        /// <summary>
+        /// 新的异步范围作用域
+        /// </summary>
+        /// <returns></returns>
+        IAsyncDisposable NewScopeAsync();
+
+        int Complete();
+
+        /// <summary>
+        /// 完成uow
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<int> CompleteAsync(CancellationToken cancellationToken = default);
+
+
+        /// <summary>
+        /// 获取Efcore仓储
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        IEfRepository<T> EfRepository<T>() where T : class, IEntity;
+        IEfRepository<T> GetEfRepository<T>() where T : class, IEntity;
+
 
         /// <summary>
-        /// 获取仓储
+        /// 获取Efcore仓储
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <typeparam name="TKey">实体主键</typeparam>
         /// <returns></returns>
-        IEfRepository<T, TKey> EfRepository<T, TKey>() where T : class, IEntity;
+        IEfRepository<T, TKey> GetEfRepository<T, TKey>() where T : class, IEntity;
+    }
 
 
-        int Complete();
-
-
-        Task<int> CompleteAsync(CancellationToken cancellationToken = default);
+    public interface IUnitOfWork<TContext> : IUnitOfWork
+        where TContext : IDataContext
+    {
+        TContext DbContext();
     }
 }
