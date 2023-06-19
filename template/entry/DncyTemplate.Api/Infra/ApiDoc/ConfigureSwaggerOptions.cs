@@ -3,50 +3,51 @@ using Microsoft.OpenApi.Models;
 
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace DncyTemplate.Api.Infra.ApiDoc;
-
-public class ConfigureSwaggerOptions : IConfigureNamedOptions<SwaggerGenOptions>
+namespace DncyTemplate.Api.Infra.ApiDoc
 {
-
-    private readonly IApiVersionDescriptionProvider provider;
-
-
-    public ConfigureSwaggerOptions(
-        IApiVersionDescriptionProvider provider)
+    public class ConfigureSwaggerOptions : IConfigureNamedOptions<SwaggerGenOptions>
     {
-        this.provider = provider;
-    }
 
-    public void Configure(SwaggerGenOptions options)
-    {
-        foreach (var description in provider.ApiVersionDescriptions)
+        private readonly IApiVersionDescriptionProvider provider;
+
+
+        public ConfigureSwaggerOptions(
+            IApiVersionDescriptionProvider provider)
         {
-            if (!options.SwaggerGeneratorOptions.SwaggerDocs.ContainsKey(description.GroupName))
+            this.provider = provider;
+        }
+
+        public void Configure(SwaggerGenOptions options)
+        {
+            foreach (var description in provider.ApiVersionDescriptions)
             {
-                options.SwaggerDoc(description.GroupName, CreateVersionInfo(description));
+                if (!options.SwaggerGeneratorOptions.SwaggerDocs.ContainsKey(description.GroupName))
+                {
+                    options.SwaggerDoc(description.GroupName, CreateVersionInfo(description));
+                }
+
+            }
+        }
+
+        public void Configure(string name, SwaggerGenOptions options)
+        {
+            Configure(options);
+        }
+
+        private static OpenApiInfo CreateVersionInfo(ApiVersionDescription description)
+        {
+            var info = new OpenApiInfo()
+            {
+                Title = AppConstant.SERVICE_NAME,
+                Version = description.ApiVersion.ToString()
+            };
+
+            if (description.IsDeprecated)
+            {
+                info.Description += " This API version has been deprecated.";
             }
 
+            return info;
         }
-    }
-
-    public void Configure(string name, SwaggerGenOptions options)
-    {
-        Configure(options);
-    }
-
-    private static OpenApiInfo CreateVersionInfo(ApiVersionDescription description)
-    {
-        var info = new OpenApiInfo()
-        {
-            Title = AppConstant.SERVICE_NAME,
-            Version = description.ApiVersion.ToString()
-        };
-
-        if (description.IsDeprecated)
-        {
-            info.Description += " This API version has been deprecated.";
-        }
-
-        return info;
     }
 }

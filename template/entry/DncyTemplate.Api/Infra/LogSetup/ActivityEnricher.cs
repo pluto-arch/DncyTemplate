@@ -2,50 +2,51 @@
 using Serilog.Events;
 using System.Diagnostics;
 
-namespace DncyTemplate.Api.Infra.LogSetup;
-
-public class ActivityEnricher : ILogEventEnricher
+namespace DncyTemplate.Api.Infra.LogSetup
 {
-    public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
+    public class ActivityEnricher : ILogEventEnricher
     {
-        var activity = Activity.Current;
-        if (activity != null)
+        public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
         {
-            logEvent.AddPropertyIfAbsent(new LogEventProperty("SpanId", new ScalarValue(activity.GetSpanId())));
-            logEvent.AddPropertyIfAbsent(new LogEventProperty("TraceId", new ScalarValue(activity.GetTraceId())));
-            logEvent.AddPropertyIfAbsent(new LogEventProperty("ParentId", new ScalarValue(activity.GetParentId())));
+            var activity = Activity.Current;
+            if (activity != null)
+            {
+                logEvent.AddPropertyIfAbsent(new LogEventProperty("SpanId", new ScalarValue(activity.GetSpanId())));
+                logEvent.AddPropertyIfAbsent(new LogEventProperty("TraceId", new ScalarValue(activity.GetTraceId())));
+                logEvent.AddPropertyIfAbsent(new LogEventProperty("ParentId", new ScalarValue(activity.GetParentId())));
+            }
         }
     }
-}
-internal static class ActivityExtensions
-{
-    public static string GetSpanId(this Activity activity)
+    internal static class ActivityExtensions
     {
-        return activity.IdFormat switch
+        public static string GetSpanId(this Activity activity)
         {
-            ActivityIdFormat.Hierarchical => activity.Id,
-            ActivityIdFormat.W3C => activity.SpanId.ToHexString(),
-            _ => null,
-        } ?? string.Empty;
-    }
+            return activity.IdFormat switch
+            {
+                ActivityIdFormat.Hierarchical => activity.Id,
+                ActivityIdFormat.W3C => activity.SpanId.ToHexString(),
+                _ => null,
+            } ?? string.Empty;
+        }
 
-    public static string GetTraceId(this Activity activity)
-    {
-        return activity.IdFormat switch
+        public static string GetTraceId(this Activity activity)
         {
-            ActivityIdFormat.Hierarchical => activity.RootId,
-            ActivityIdFormat.W3C => activity.TraceId.ToHexString(),
-            _ => null,
-        } ?? string.Empty;
-    }
+            return activity.IdFormat switch
+            {
+                ActivityIdFormat.Hierarchical => activity.RootId,
+                ActivityIdFormat.W3C => activity.TraceId.ToHexString(),
+                _ => null,
+            } ?? string.Empty;
+        }
 
-    public static string GetParentId(this Activity activity)
-    {
-        return activity.IdFormat switch
+        public static string GetParentId(this Activity activity)
         {
-            ActivityIdFormat.Hierarchical => activity.ParentId,
-            ActivityIdFormat.W3C => activity.ParentSpanId.ToHexString(),
-            _ => null,
-        } ?? string.Empty;
+            return activity.IdFormat switch
+            {
+                ActivityIdFormat.Hierarchical => activity.ParentId,
+                ActivityIdFormat.W3C => activity.ParentSpanId.ToHexString(),
+                _ => null,
+            } ?? string.Empty;
+        }
     }
 }

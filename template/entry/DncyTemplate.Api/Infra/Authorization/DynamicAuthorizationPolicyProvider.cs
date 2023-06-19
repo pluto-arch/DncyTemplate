@@ -3,39 +3,40 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 
-namespace DncyTemplate.Api.Infra.Authorization;
-
-public class DynamicAuthorizationPolicyProvider : DefaultAuthorizationPolicyProvider
+namespace DncyTemplate.Api.Infra.Authorization
 {
-    private readonly IPermissionDefinitionManager _permissionDefinitionManager;
-
-    /// <inheritdoc />
-    public DynamicAuthorizationPolicyProvider(IOptions<AuthorizationOptions> options,
-        IPermissionDefinitionManager permissionDefinitionManager) : base(options)
+    public class DynamicAuthorizationPolicyProvider : DefaultAuthorizationPolicyProvider
     {
-        _permissionDefinitionManager = permissionDefinitionManager;
-    }
+        private readonly IPermissionDefinitionManager _permissionDefinitionManager;
 
-
-    /// <inheritdoc />
-    public override async Task<AuthorizationPolicy> GetPolicyAsync(string policyName)
-    {
-        AuthorizationPolicy policy = await base.GetPolicyAsync(policyName);
-
-        if (policy != null)
+        /// <inheritdoc />
+        public DynamicAuthorizationPolicyProvider(IOptions<AuthorizationOptions> options,
+            IPermissionDefinitionManager permissionDefinitionManager) : base(options)
         {
-            return policy;
+            _permissionDefinitionManager = permissionDefinitionManager;
         }
 
-        var permission = _permissionDefinitionManager.GetOrNull(policyName);
 
-        if (permission != null)
+        /// <inheritdoc />
+        public override async Task<AuthorizationPolicy> GetPolicyAsync(string policyName)
         {
-            var policyBuilder = new AuthorizationPolicyBuilder(Array.Empty<string>());
-            policyBuilder.Requirements.Add(new OperationAuthorizationRequirement { Name = policyName });
-            return policyBuilder.Build();
-        }
+            AuthorizationPolicy policy = await base.GetPolicyAsync(policyName);
 
-        return null;
+            if (policy != null)
+            {
+                return policy;
+            }
+
+            var permission = _permissionDefinitionManager.GetOrNull(policyName);
+
+            if (permission != null)
+            {
+                var policyBuilder = new AuthorizationPolicyBuilder(Array.Empty<string>());
+                policyBuilder.Requirements.Add(new OperationAuthorizationRequirement { Name = policyName });
+                return policyBuilder.Build();
+            }
+
+            return null;
+        }
     }
 }

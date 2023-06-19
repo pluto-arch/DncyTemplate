@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace DncyTemplate.Api
+﻿namespace DncyTemplate.Api
 {
-    public class DataAnnotation 
+    public class DataAnnotation
     {
         public const string PageSizeVerifyMessage = nameof(PageSizeVerifyMessage);
         public const string ProductName = nameof(ProductName);
@@ -14,7 +9,7 @@ namespace DncyTemplate.Api
         public const string LengthLimit = nameof(LengthLimit);
         public const string MaxLengthValidate = nameof(MaxLengthValidate);
     }
-		    public class DefaultDataAnnotation 
+    public class DefaultDataAnnotation
     {
         public const string AttemptedValueIsInvalidAccessor = nameof(AttemptedValueIsInvalidAccessor);
         public const string NonPropertyAttemptedValueIsInvalidAccessor = nameof(NonPropertyAttemptedValueIsInvalidAccessor);
@@ -28,7 +23,7 @@ namespace DncyTemplate.Api
         public const string MissingRequestBodyRequiredValueAccessor = nameof(MissingRequestBodyRequiredValueAccessor);
         public const string ValueMustBeANumberAccessor = nameof(ValueMustBeANumberAccessor);
     }
-		    public class SharedResource 
+    public class SharedResource
     {
         public const string Menu_Home = "Menu.Home";
         public const string ProductRequired = nameof(ProductRequired);
@@ -38,5 +33,5 @@ namespace DncyTemplate.Api
         public const string WebSite_Name = "WebSite.Name";
         public const string Hello = nameof(Hello);
     }
-		    
+
 }

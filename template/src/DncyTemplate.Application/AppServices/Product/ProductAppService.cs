@@ -28,9 +28,9 @@ public class ProductAppService
     }
 
 
-    public async Task<Return<ProductDto,string>> GetByName(string productName)
+    public async Task<Return<ProductDto, string>> GetByName(string productName)
     {
-        var res = await _repository.FirstOrDefaultAsync(x=>x.Name==productName);
+        var res = await _repository.FirstOrDefaultAsync(x => x.Name == productName);
         if (res == null)
         {
             return "entity not found";
@@ -40,10 +40,10 @@ public class ProductAppService
 
 
 
-    public async Task<Return<ProductDto,string>> GetByNameWithDapper(string productName)
+    public async Task<Return<ProductDto, string>> GetByNameWithDapper(string productName)
     {
         const string sql = $@"SELECT Id,Name,CreationTime,Remark FROM Products WHERE Name=@name";
-        var res= await _uow.Context.DapperQuerySingleOrDefaultAsync<ProductDto>(sql,new Dapper.DynamicParameters(new {name=productName}));
+        var res = await _uow.Context.SingleOrDefaultFromSqlAsync<ProductDto>(sql, new Dapper.DynamicParameters(new { name = productName }));
         if (res == null)
         {
             return "entity not found";

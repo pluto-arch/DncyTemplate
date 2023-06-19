@@ -1,29 +1,30 @@
 ﻿using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
-namespace DncyTemplate.Api.Infra.ApiDoc;
-
-public static class SwaggerApplicationBuilderExtension
+namespace DncyTemplate.Api.Infra.ApiDoc
 {
-    /// <summary>
-    /// Swagger
-    /// </summary>
-    /// <param name="app"></param>
-    /// <returns></returns>
-    public static IApplicationBuilder UseCustomSwagger(this IApplicationBuilder app)
+    public static class SwaggerApplicationBuilderExtension
     {
-        var env = app.ApplicationServices.GetRequiredService<IWebHostEnvironment>();
-        if (env.IsEnvironment(Constants.AppConstant.EnvironmentName.DEV))
+        /// <summary>
+        /// Swagger
+        /// </summary>
+        /// <param name="app"></param>
+        /// <returns></returns>
+        public static IApplicationBuilder UseCustomSwagger(this IApplicationBuilder app)
         {
-            app.UseSwagger();
-            var versionProvider = app.ApplicationServices.GetRequiredService<IApiVersionDescriptionProvider>();
-            app.UseSwaggerUI(options =>
+            var env = app.ApplicationServices.GetRequiredService<IWebHostEnvironment>();
+            if (env.IsEnvironment(Constants.AppConstant.EnvironmentName.DEV))
             {
-                foreach (var description in versionProvider.ApiVersionDescriptions)
+                app.UseSwagger();
+                var versionProvider = app.ApplicationServices.GetRequiredService<IApiVersionDescriptionProvider>();
+                app.UseSwaggerUI(options =>
                 {
-                    options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", $"{AppConstant.SERVICE_NAME} - {description.GroupName}");
-                }
-            });
+                    foreach (var description in versionProvider.ApiVersionDescriptions)
+                    {
+                        options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", $"{AppConstant.SERVICE_NAME} - {description.GroupName}");
+                    }
+                });
+            }
+            return app;
         }
-        return app;
     }
 }

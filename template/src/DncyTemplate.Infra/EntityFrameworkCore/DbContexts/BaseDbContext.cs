@@ -19,9 +19,9 @@ public abstract class BaseDbContext<TContext> : DbContext where TContext : DbCon
 
 
 
-    public IDbConnection DbConnection =>this.Database.GetDbConnection();
+    public IDbConnection DbConnection => this.Database.GetDbConnection();
 
-    public IDbTransaction DbTransaction =>this.Database.CurrentTransaction?.GetDbTransaction();
+    public IDbTransaction DbTransaction => this.Database.CurrentTransaction?.GetDbTransaction();
 
     public int? CommandTimeOut
     {

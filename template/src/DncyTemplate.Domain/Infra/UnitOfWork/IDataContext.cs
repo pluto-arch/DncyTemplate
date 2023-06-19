@@ -6,7 +6,7 @@ namespace DncyTemplate.Uow
     public interface IDataContext
     {
         int SaveChanges();
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken=default);
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 
         IDbConnection DbConnection { get; }
 

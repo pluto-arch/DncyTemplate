@@ -2,11 +2,11 @@
 
 namespace DncyTemplate.Domain.Aggregates.Product;
 
-public class Product : BaseAggregateRoot<string>,ISoftDelete
+public class Product : BaseAggregateRoot<string>, ISoftDelete
 #if Tenant
     , IMultiTenant
 #endif
-   
+
 {
     public Product()
     {

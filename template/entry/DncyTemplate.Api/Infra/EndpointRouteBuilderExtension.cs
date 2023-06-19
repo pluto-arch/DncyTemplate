@@ -1,20 +1,21 @@
 ﻿using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
-namespace DncyTemplate.Api.Infra;
-
-public static class EndpointRouteBuilderExtension
+namespace DncyTemplate.Api.Infra
 {
-    public static IEndpointRouteBuilder MapSystemHealthChecks(this IEndpointRouteBuilder builer)
+    public static class EndpointRouteBuilderExtension
     {
-        builer.MapHealthChecks("/health", new HealthCheckOptions
+        public static IEndpointRouteBuilder MapSystemHealthChecks(this IEndpointRouteBuilder builer)
         {
-            ResponseWriter = async (c, r) =>
+            builer.MapHealthChecks("/health", new HealthCheckOptions
             {
-                c.Response.ContentType = "application/json";
-                var result = JsonConvert.SerializeObject(r.Entries);
-                await c.Response.WriteAsync(result);
-            }
-        });
-        return builer;
+                ResponseWriter = async (c, r) =>
+                {
+                    c.Response.ContentType = "application/json";
+                    var result = JsonConvert.SerializeObject(r.Entries);
+                    await c.Response.WriteAsync(result);
+                }
+            });
+            return builer;
+        }
     }
 }

@@ -49,5 +49,5 @@ public class Device : BaseEntity<int>
 #if Tenant
     public string TenantId { get; set; }
 #endif
-    
+
 }

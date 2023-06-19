@@ -4,31 +4,32 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Logging.Abstractions;
 
-namespace DncyTemplate.Api.Infra.ExceptionHandlers;
-
-public class ActionExecptionFilter : IAsyncExceptionFilter
+namespace DncyTemplate.Api.Infra.ExceptionHandlers
 {
-
-    private static readonly MediaTypeCollection mediaType = new()
+    public class ActionExecptionFilter : IAsyncExceptionFilter
     {
-        AppConstant.DEFAULT_CONTENT_TYPE
-    };
 
-    /// <inheritdoc />
-    public Task OnExceptionAsync(ExceptionContext context)
-    {
-        if (context.ExceptionHandled == false)
+        private static readonly MediaTypeCollection mediaType = new()
         {
-            var log = context.HttpContext.RequestServices.GetService<ILogger<ActionExecptionFilter>>() ?? NullLogger<ActionExecptionFilter>.Instance;
-            var msg = context.Exception.Message;
-            log.LogError(context.Exception, "处理{method} {path}. 出现错误: {msg}", context.HttpContext.Request.Method, context.HttpContext.Request.GetEncodedPathAndQuery(), msg);
-            context.Result = new ObjectResult(ResultDto.Error("处理请求失败"))
+            AppConstant.DEFAULT_CONTENT_TYPE
+        };
+
+        /// <inheritdoc />
+        public Task OnExceptionAsync(ExceptionContext context)
+        {
+            if (context.ExceptionHandled == false)
             {
-                ContentTypes = mediaType,
-                StatusCode = StatusCodes.Status200OK
-            };
+                var log = context.HttpContext.RequestServices.GetService<ILogger<ActionExecptionFilter>>() ?? NullLogger<ActionExecptionFilter>.Instance;
+                var msg = context.Exception.Message;
+                log.LogError(context.Exception, "处理{method} {path}. 出现错误: {msg}", context.HttpContext.Request.Method, context.HttpContext.Request.GetEncodedPathAndQuery(), msg);
+                context.Result = new ObjectResult(ResultDto.Error("处理请求失败"))
+                {
+                    ContentTypes = mediaType,
+                    StatusCode = StatusCodes.Status200OK
+                };
+            }
+            context.ExceptionHandled = true;
+            return Task.CompletedTask;
         }
-        context.ExceptionHandled = true;
-        return Task.CompletedTask;
     }
 }

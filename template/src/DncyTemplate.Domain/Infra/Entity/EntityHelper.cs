@@ -13,7 +13,7 @@ public static partial class EntityHelper
     }
 
 
-     public static bool IsMultiTenant(Type type)
+    public static bool IsMultiTenant(Type type)
     {
         return typeof(IMultiTenant).IsAssignableFrom(type);
     }

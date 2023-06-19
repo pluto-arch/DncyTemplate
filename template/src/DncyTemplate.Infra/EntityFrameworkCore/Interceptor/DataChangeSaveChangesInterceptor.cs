@@ -69,7 +69,7 @@ public class DataChangeSaveChangesInterceptor : SaveChangesInterceptor
         });
     }
 #endif
-    
+
 
     private async Task DispatchDomainEventsAsync(DbContext dbContext, CancellationToken cancellationToken = default)
     {

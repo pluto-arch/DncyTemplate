@@ -1,14 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace DncyTemplate.Api.Infra;
-
-[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-public class AllowAccessFirewallAttribute : Attribute, IFilterFactory, IOrderedFilter
+namespace DncyTemplate.Api.Infra
 {
-    public IFilterMetadata CreateInstance(IServiceProvider serviceProvider)
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+    public class AllowAccessFirewallAttribute : Attribute, IFilterFactory, IOrderedFilter
     {
-        return new AllowAccessFirewallAttribute();
+        public IFilterMetadata CreateInstance(IServiceProvider serviceProvider)
+        {
+            return new AllowAccessFirewallAttribute();
+        }
+        public bool IsReusable => true;
+        public int Order { get; }
     }
-    public bool IsReusable => true;
-    public int Order { get; }
 }

@@ -21,10 +21,10 @@ namespace DncyTemplate.Api.Controllers.v1
         [AutoInject]
         private readonly IProductAppService _productsRepository;
 
-        #if Tenant
+#if Tenant
         [AutoInject]
         private readonly ICurrentTenant _currentTenant;
-        #endif
+#endif
 
         /// <summary>
         /// 获取产品列表

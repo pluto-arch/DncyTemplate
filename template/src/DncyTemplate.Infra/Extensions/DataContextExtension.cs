@@ -1,6 +1,6 @@
 ﻿using Dapper;
-using System.Data;
 using DncyTemplate.Infra;
+using System.Data;
 
 namespace DncyTemplate.Uow;
 
@@ -18,7 +18,7 @@ public static class DbContextExtension
     /// <param name="commandType"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public static async Task<IEnumerable<T>> DapperQueryAsync<T>(
+    public static async Task<IEnumerable<T>> QueryFromSqlAsync<T>(
         this IDataContext context,
         string sql,
         DynamicParameters parameters,
@@ -31,8 +31,6 @@ public static class DbContextExtension
         var connection = context.GetDbConnection();
         return await connection.QueryAsync<T>(cmd);
     }
-
-
 
     /// <summary>
     /// dapper查询，返回第一行
@@ -47,7 +45,7 @@ public static class DbContextExtension
     /// <see href="https://www.learndapper.com/dapper-query/selecting-single-rowsv"/>
     /// <exception cref="InvalidOperationException"/> , 当查询返回多个元素时
     /// <returns></returns>
-    public static async Task<T> DapperQuerySingleOrDefaultAsync<T>(
+    public static async Task<T> SingleOrDefaultFromSqlAsync<T>(
         this IDataContext context,
         string sql,
         DynamicParameters parameters,
@@ -74,7 +72,7 @@ public static class DbContextExtension
     /// <param name="cancellationToken"></param>
     /// <see href="https://www.learndapper.com/dapper-query/selecting-single-rowsv"/>
     /// <returns></returns>
-    public static async Task<T> DapperQueryFirstOrDefaultAsync<T>(
+    public static async Task<T> FirstOrDefaultFromSqlAsync<T>(
         this IDataContext context,
         string sql,
         DynamicParameters parameters,
@@ -101,7 +99,7 @@ public static class DbContextExtension
     /// <param name="cancellationToken"></param>
     /// <remarks>建议配合dbcontext begin transaction来调用</remarks>
     /// <returns></returns>
-    public static async Task<int> DapperExecuteAsync(
+    public static async Task<int> ExecuteFromSqlAsync(
         this IDataContext context,
         string sql,
         DynamicParameters parameters,
@@ -128,7 +126,7 @@ public static class DbContextExtension
     /// <param name="cancellationToken"></param>
     /// <remarks>建议配合dbcontext begin transaction来调用</remarks>
     /// <returns></returns>
-    public static async Task<T> DapperExecuteScalarAsync<T>(
+    public static async Task<T> ExecuteScalarFromSqlAsync<T>(
         this IDataContext context,
         string sql,
         DynamicParameters parameters,
@@ -142,6 +140,64 @@ public static class DbContextExtension
     }
 
 
+    /// <summary>
+    /// dapper插入实体
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
+    /// <param name="context"></param>
+    /// <param name="entity"></param>
+    /// <param name="timeout"></param>
+    /// <returns></returns>
+    public static async Task<int?> DapperInsertAsync<TEntity>(
+        this IDataContext context,
+        TEntity entity,
+        int? timeout = null)
+    {
+        var connection = context.GetDbConnection();
+        var tran = context.GetDbTransaction();
+        var commandTimeout = timeout ?? context.GetCommandTimeout() ?? 30;
+        return await connection.InsertAsync(entity, tran, commandTimeout);
+    }
+
+
+    /// <summary>
+    /// dapper插入实体
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
+    /// <param name="context"></param>
+    /// <param name="entity"></param>
+    /// <param name="timeout"></param>
+    /// <returns></returns>
+    public static async Task<int?> DapperUpdateAsync<TEntity>(
+        this IDataContext context,
+        TEntity entity,
+        int? timeout = null)
+    {
+        var connection = context.GetDbConnection();
+        var tran = context.GetDbTransaction();
+        var commandTimeout = timeout ?? context.GetCommandTimeout() ?? 30;
+        return await connection.UpdateAsync(entity, tran, commandTimeout);
+    }
+
+
+    /// <summary>
+    /// dapper插入实体
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
+    /// <param name="context"></param>
+    /// <param name="entity"></param>
+    /// <param name="timeout"></param>
+    /// <returns></returns>
+    public static async Task<int?> DapperDeleteAsync<TEntity>(
+        this IDataContext context,
+        TEntity entity,
+        int? timeout = null)
+    {
+        var connection = context.GetDbConnection();
+        var tran = context.GetDbTransaction();
+        var commandTimeout = timeout ?? context.GetCommandTimeout() ?? 30;
+        return await connection.DeleteAsync(entity, tran, commandTimeout);
+    }
 
     private static CommandDefinition CreateCommandDefinition(
         IDataContext context,
@@ -153,7 +209,7 @@ public static class DbContextExtension
     {
         var transaction = context.GetDbTransaction();
         var commandTimeout = timeout ?? context.GetCommandTimeout() ?? 30;
-        var _logger = context.GetLogger<Dapper.CommandDefinition>();
+        var _logger = context.GetLogger<CommandDefinition>();
         var cmd = new CommandDefinition(
             sql,
             parameters,

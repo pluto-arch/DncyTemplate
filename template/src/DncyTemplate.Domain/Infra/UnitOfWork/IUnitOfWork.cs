@@ -5,7 +5,7 @@ namespace DncyTemplate.Uow
 {
 
 
-    public interface IUnitOfWork:IDisposable, IAsyncDisposable
+    public interface IUnitOfWork : IDisposable, IAsyncDisposable
     {
 
         IDataContext Context { get; }

@@ -7,15 +7,14 @@ using DncyTemplate.Domain.Collections;
 using DncyTemplate.Domain.Infra;
 using DncyTemplate.Domain.Infra.Repository;
 using DncyTemplate.Infra.EntityFrameworkCore.Extension;
+using DncyTemplate.Uow;
 using System.Collections;
 using System.Linq.Expressions;
-using DncyTemplate.Uow;
-using DncyTemplate.Uow.EntityFrameworkCore;
 
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
 {
-    public class EfRepository<TContext, TEntity> : IEfContextRepository<TContext,TEntity>
+    public class EfRepository<TContext, TEntity> : IEfContextRepository<TContext, TEntity>
          where TContext : DbContext, IDataContext
          where TEntity : class, IEntity
     {
@@ -263,7 +262,7 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
     }
 
 
-    public class EfRepository<TDbContext, TEntity, TKey> : EfRepository<TDbContext, TEntity>, IEfContextRepository<TDbContext,TEntity, TKey>
+    public class EfRepository<TDbContext, TEntity, TKey> : EfRepository<TDbContext, TEntity>, IEfContextRepository<TDbContext, TEntity, TKey>
             where TDbContext : DbContext, IDataContext
             where TEntity : class, IEntity
     {

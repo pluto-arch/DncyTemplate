@@ -1,7 +1,7 @@
-﻿using System.Transactions;
-using DncyTemplate.Application.Command;
+﻿using DncyTemplate.Application.Command;
 using DncyTemplate.Infra.Extensions;
 using Microsoft.Extensions.Logging.Abstractions;
+using System.Transactions;
 
 namespace DncyTemplate.Application.Behaviors
 {
@@ -21,7 +21,7 @@ namespace DncyTemplate.Application.Behaviors
             TResponse response = default;
             try
             {
-                bool isTran=false;
+                bool isTran = false;
                 if (request is ICommand cmd)
                 {
                     isTran = cmd.Transactional;
@@ -29,11 +29,11 @@ namespace DncyTemplate.Application.Behaviors
 
                 if (isTran)
                 {
-                    response = await ExecuteTransactional(request,next, cancellationToken);
+                    response = await ExecuteTransactional(next);
                 }
                 else
                 {
-                    response = await ExecuteTransactional(request,next, cancellationToken);
+                    response = await Execute(next);
                 }
             }
             catch (Exception ex)
@@ -46,23 +46,22 @@ namespace DncyTemplate.Application.Behaviors
         }
 
 
-        private async Task<TResponse> ExecuteTransactional(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+        private static async Task<TResponse> ExecuteTransactional(RequestHandlerDelegate<TResponse> next)
         {
-            TResponse response = default;
             using var scope = new TransactionScope(
-                TransactionScopeOption.Required, 
-                new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted }, 
+                TransactionScopeOption.Required,
+                new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted },
                 TransactionScopeAsyncFlowOption.Enabled);
-            response = await next();
+            var response = await next();
             scope.Complete();
             return response;
         }
 
 
-       
-        private async Task<TResponse> Execute(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+
+        private static async Task<TResponse> Execute(RequestHandlerDelegate<TResponse> next)
         {
-            return  await next();
+            return await next();
         }
     }
 }

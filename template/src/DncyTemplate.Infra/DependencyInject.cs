@@ -1,7 +1,6 @@
 ﻿using DncyTemplate.Domain.Infra;
 using DncyTemplate.Infra.EntityFrameworkCore;
 using DncyTemplate.Infra.Providers;
-using DncyTemplate.Uow;
 
 namespace DncyTemplate.Infra
 {
@@ -14,7 +13,7 @@ namespace DncyTemplate.Infra
 
 
             service.AddTransient<IDomainEventDispatcher, MediatrDomainEventDispatcher>();
-            service.AddEfCoreInfraComponent(configuration,ctxs);
+            service.AddEfCoreInfraComponent(configuration, ctxs);
             service.AddEfUnitofWork(ctxs);
             DataContextTypeCache.AddDataContext(ctxs);
             return service;

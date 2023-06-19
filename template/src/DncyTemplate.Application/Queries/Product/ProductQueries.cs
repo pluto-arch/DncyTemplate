@@ -1,6 +1,5 @@
 ﻿#if Tenant
 using Dncy.MultiTenancy.ConnectionStrings;
-using DncyTemplate.Infra.EntityFrameworkCore.ConnectionStringResolve;
 #endif
 using DncyTemplate.Application.AppServices.Queries.ConnectionFactory;
 using DncyTemplate.Application.Models.Product;
@@ -19,11 +18,11 @@ namespace DncyTemplate.Application.Queries.Product
 #if Tenant
 
         private readonly IConnectionStringResolver _connectionStringResolver;
-        #endif
+#endif
 
-        public ProductQueries(IDbConnectionFactory factory,IConfiguration configuration
+        public ProductQueries(IDbConnectionFactory factory, IConfiguration configuration
 #if Tenant
-            ,IConnectionStringResolver connectionStringResolver
+            , IConnectionStringResolver connectionStringResolver
 #endif
             )
         {

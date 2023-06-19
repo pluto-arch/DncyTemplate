@@ -40,12 +40,12 @@ namespace DncyTemplate.Uow.EntityFrameworkCore
 
         public IEfRepository<T> GetEfRepository<T>() where T : class, IEntity
         {
-            return _serviceProvider.GetRequiredService<IEfContextRepository<TContext,T>>();
+            return _serviceProvider.GetRequiredService<IEfContextRepository<TContext, T>>();
         }
 
         public IEfRepository<T, TKey> GetEfRepository<T, TKey>() where T : class, IEntity
         {
-            return _serviceProvider.GetRequiredService<IEfContextRepository<TContext,T, TKey>>();
+            return _serviceProvider.GetRequiredService<IEfContextRepository<TContext, T, TKey>>();
         }
 
         public int Complete()

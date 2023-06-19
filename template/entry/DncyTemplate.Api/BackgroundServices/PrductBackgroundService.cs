@@ -37,7 +37,7 @@ public class PrductBackgroundService : BackgroundService
                 // TODO set ev publishing
                 // TODO eventBus.Publlish();
                 // TODO set ev published
-                _logger.LogInformation($"[信箱] 发布：{ev}");
+                _logger.LogInformation("[信箱] 发布：{ev}",ev);
             }
         }
         catch (Exception ex)

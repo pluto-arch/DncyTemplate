@@ -8,5 +8,5 @@ internal static partial class Log
         EventId = 0,
         Level = LogLevel.Debug,
         Message = "Dapper DbCommand [CommandType='{commandType}', CommandTimeout='{commandTimeout}']{commandText}")]
-    internal static partial void LogDapperDbCommand(this ILogger logger, CommandType? commandType,int? commandTimeout,string commandText);
+    internal static partial void LogDapperDbCommand(this ILogger logger, CommandType? commandType, int? commandTimeout, string commandText);
 }

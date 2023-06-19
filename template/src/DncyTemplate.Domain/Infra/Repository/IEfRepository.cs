@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace DncyTemplate.Domain.Infra.Repository
 {
-    
+
     public interface IEfRepository<TEntity> : IQueryable<TEntity>
         where TEntity : class, IEntity
     {
@@ -194,8 +194,8 @@ namespace DncyTemplate.Domain.Infra.Repository
 
         Task<TEntity> FindAsync(TKey id, CancellationToken cancellationToken = default);
     }
-    
-    
+
+
     /// <summary>
     /// 空接口
     /// </summary>
@@ -203,14 +203,14 @@ namespace DncyTemplate.Domain.Infra.Repository
     /// <typeparam name="TEntity"></typeparam>
     public interface IEfContextRepository<TDbContext, TEntity> : IEfRepository<TEntity>
         where TEntity : class, IEntity
-        where TDbContext:class
+        where TDbContext : class
     {
-        
+
     }
-    
-    public interface IEfContextRepository<TDbContext, TEntity,TKey> : IEfRepository<TEntity, TKey> 
+
+    public interface IEfContextRepository<TDbContext, TEntity, TKey> : IEfRepository<TEntity, TKey>
         where TEntity : class, IEntity
-        where TDbContext:class
+        where TDbContext : class
     {
     }
 }

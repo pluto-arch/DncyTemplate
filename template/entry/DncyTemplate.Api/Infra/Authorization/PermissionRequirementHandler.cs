@@ -3,24 +3,25 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 
-namespace DncyTemplate.Api.Infra.Authorization;
-
-public class PermissionRequirementHandler : AuthorizationHandler<OperationAuthorizationRequirement>
+namespace DncyTemplate.Api.Infra.Authorization
 {
-    private readonly IPermissionChecker _permissionChecker;
-
-    public PermissionRequirementHandler(IPermissionChecker permissionChecker)
+    public class PermissionRequirementHandler : AuthorizationHandler<OperationAuthorizationRequirement>
     {
-        _permissionChecker = permissionChecker;
-    }
+        private readonly IPermissionChecker _permissionChecker;
 
-
-    /// <inheritdoc />
-    protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, OperationAuthorizationRequirement requirement)
-    {
-        if (await _permissionChecker.IsGrantedAsync(context.User, requirement.Name))
+        public PermissionRequirementHandler(IPermissionChecker permissionChecker)
         {
-            context.Succeed(requirement);
+            _permissionChecker = permissionChecker;
+        }
+
+
+        /// <inheritdoc />
+        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, OperationAuthorizationRequirement requirement)
+        {
+            if (await _permissionChecker.IsGrantedAsync(context.User, requirement.Name))
+            {
+                context.Succeed(requirement);
+            }
         }
     }
 }

@@ -18,7 +18,7 @@ public static class EntityFrameworkServiceExtension
     /// 添加efcore 组件
     /// </summary>
     /// <returns></returns>
-    internal static IServiceCollection AddEfCoreInfraComponent(this IServiceCollection service, IConfiguration configuration,List<Type> contextTypes)
+    internal static IServiceCollection AddEfCoreInfraComponent(this IServiceCollection service, IConfiguration configuration, List<Type> contextTypes)
     {
         service.AddSingleton<IConnectionStringResolve, DefaultConnectionStringResolve>();
         service.AddDbContextPool<DncyTemplateDbContext>((serviceProvider, optionsBuilder) =>
@@ -38,7 +38,7 @@ public static class EntityFrameworkServiceExtension
             var connectionStringResolve = serviceProvider.GetRequiredService<IConnectionStringResolve>();
             optionsBuilder.AddInterceptors(new TenantDbConnectionInterceptor(connectionStringResolve, DbConstants.DEFAULT_CONNECTIONSTRING_NAME));
 #endif
-            
+
 
 #if DEBUG
             optionsBuilder.EnableSensitiveDataLogging();
@@ -51,14 +51,14 @@ public static class EntityFrameworkServiceExtension
     }
 
 
-    public static void AddEfUnitofWork(this IServiceCollection services,List<Type> context = null)
+    public static void AddEfUnitofWork(this IServiceCollection services, List<Type> context = null)
     {
         if (context is null or { Count: <= 0 })
         {
             return;
         }
 
-        if (context.Count==1)
+        if (context.Count == 1)
         {
             var defType = typeof(IUnitOfWork);
             var defType2 = typeof(EfUnitOfWork<>).MakeGenericType(context[0]);

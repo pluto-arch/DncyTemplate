@@ -1,22 +1,23 @@
 ﻿using DncyTemplate.Uow;
 
-namespace DncyTemplate.Api.Infra.UnitOfWork;
-
-public class UnitOfWorkMiddleware : IMiddleware 
+namespace DncyTemplate.Api.Infra.UnitOfWork
 {
-    /// <inheritdoc />
-    public async Task InvokeAsync(HttpContext context, RequestDelegate next)
+    public class UnitOfWorkMiddleware : IMiddleware
     {
-
-        await next(context);
-
-        var contexts=DataContextTypeCache.GetApplicationDataContextList();
-        foreach (var item in contexts)
+        /// <inheritdoc />
+        public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
-            var ctx = context.RequestServices.GetService(item);
-            if (ctx is IDataContext c && c.HasChanges())
+
+            await next(context);
+
+            var contexts = DataContextTypeCache.GetApplicationDataContextList();
+            foreach (var item in contexts)
             {
-                await c.SaveChangesAsync(context.RequestAborted);
+                var ctx = context.RequestServices.GetService(item);
+                if (ctx is IDataContext c && c.HasChanges())
+                {
+                    await c.SaveChangesAsync(context.RequestAborted);
+                }
             }
         }
     }

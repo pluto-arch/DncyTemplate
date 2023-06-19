@@ -1,5 +1,4 @@
-﻿using System.Data;
-using DncyTemplate.Domain.Aggregates.Product;
+﻿using DncyTemplate.Domain.Aggregates.Product;
 using DncyTemplate.Domain.Aggregates.System;
 using DncyTemplate.Infra.EntityFrameworkCore.EntityTypeConfig;
 using DncyTemplate.Uow;

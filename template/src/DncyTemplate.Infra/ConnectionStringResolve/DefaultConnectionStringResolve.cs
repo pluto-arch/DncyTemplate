@@ -13,13 +13,13 @@ public class DefaultConnectionStringResolve : IConnectionStringResolve
 #if Tenant
     private readonly ICurrentTenant _currentTenant;
 
-    
+
     protected readonly TenantConfigurationOptions _tenantConfigurationOptions;
 #endif
     public DefaultConnectionStringResolve(
         IConfiguration configuration
 #if Tenant
-        ,ICurrentTenant currentTenant,
+        , ICurrentTenant currentTenant,
         IOptions<TenantConfigurationOptions> options
 #endif
         )
@@ -29,7 +29,7 @@ public class DefaultConnectionStringResolve : IConnectionStringResolve
         _currentTenant = currentTenant;
         _tenantConfigurationOptions = options?.Value;
 #endif
-        
+
     }
 
     public virtual Task<string> GetAsync(string connectionStringName = null)
@@ -49,7 +49,7 @@ public class DefaultConnectionStringResolve : IConnectionStringResolve
         if (t == null)
             return Task.FromResult(defaultConnectionString);
         var connStr = t.ConnectionStrings?.FirstOrDefault(x => x.Key == connectionStringName).Value;
-         return Task.FromResult(connStr ?? defaultConnectionString);
+        return Task.FromResult(connStr ?? defaultConnectionString);
 #else
         return Task.FromResult(defaultConnectionString);
 #endif

@@ -26,7 +26,6 @@ namespace DncyTemplate.Api.Controllers.v2
         /// <summary>
         /// 获取产品列表
         /// </summary>
-        /// <example>GET {PATH}?PageNo=1&pageSize=20&keyword=hahah&sorter={"id":"desc"}</example>
         /// <returns></returns>
         [HttpGet(Name = "ProductList")]
         [MapToApiVersion("2.0")]
@@ -97,7 +96,7 @@ namespace DncyTemplate.Api.Controllers.v2
         [Produces(typeof(ProductDto))]
         public async Task<ResultDto> GetByNameAsync([Required] string name)
         {
-            var res= await _productAppService.GetByName(name);
+            var res = await _productAppService.GetByName(name);
             return res.Match<ResultDto>(
                 this.Success,
                 this.Error
@@ -112,7 +111,7 @@ namespace DncyTemplate.Api.Controllers.v2
         [Produces(typeof(ProductDto))]
         public async Task<ResultDto> GetByNameWithDapperAsync([Required] string name)
         {
-            var res= await _productAppService.GetByNameWithDapper(name);
+            var res = await _productAppService.GetByNameWithDapper(name);
             return res.Match<ResultDto>(
                 this.Success,
                 this.Error
