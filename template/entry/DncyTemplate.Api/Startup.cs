@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.Extensions.Primitives;
 using System.Diagnostics;
 using System.Threading.RateLimiting;
+using DncyTemplate.Api.Infra.UnitOfWork;
 
 namespace DncyTemplate.Api;
 public class Startup
@@ -37,7 +38,7 @@ public class Startup
         services.AddApplicationModule(Configuration);
         services.AddInfraModule(Configuration);
         services.AddDomainModule();
-
+        services.AddUnitOfWork();
         #region background service
         services.AddHostedService<PrductBackgroundService>();
         #endregion
@@ -120,6 +121,7 @@ public class Startup
 #if Tenant
         app.UseMultiTenancy();
 #endif
+        app.UseUnitOfWork();
         app.UseRouting();
         app.UseRateLimiter();
         app.UseAuthorization();

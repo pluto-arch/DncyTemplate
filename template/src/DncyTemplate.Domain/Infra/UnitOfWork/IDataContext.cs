@@ -6,7 +6,7 @@ namespace DncyTemplate.Uow
     public interface IDataContext
     {
         int SaveChanges();
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken=default);
 
         IDbConnection DbConnection { get; }
 
@@ -15,5 +15,8 @@ namespace DncyTemplate.Uow
         int? CommandTimeOut { get; set; }
 
         ILogger GetLogger<TSourceContext>();
+
+
+        bool HasChanges();
     }
 }

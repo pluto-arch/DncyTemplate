@@ -35,5 +35,4 @@ public class DncyTemplateDbContext : BaseDbContext<DncyTemplateDbContext>, IData
             .ApplyConfiguration(new ProductEntityTypeConfiguration())
             .ApplyConfiguration(new PermissionEntityTypeConfiguration());
     }
-
 }

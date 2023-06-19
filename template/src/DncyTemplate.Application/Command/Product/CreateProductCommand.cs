@@ -3,8 +3,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DncyTemplate.Application.Command.Product
 {
-    public class CreateProductCommand : IRequest<ProductDto>
+    public class CreateProductCommand : ICommand<ProductDto>
     {
+        public CreateProductCommand()
+        {
+            Transactional = false;
+        }
+
+
         [Required(ErrorMessage = "ValueIsRequired")]
         [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessage = "LengthLimit")]
         [Display(Name = "ProductName")]
@@ -13,5 +19,8 @@ namespace DncyTemplate.Application.Command.Product
         [Required(ErrorMessage = "ValueIsRequired")]
         [StringLength(maximumLength: 200, MinimumLength = 3)]
         public string Remark { get; set; }
+
+        /// <inheritdoc />
+        public bool Transactional { get; }
     }
 }

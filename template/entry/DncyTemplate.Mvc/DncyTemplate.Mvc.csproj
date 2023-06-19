@@ -15,6 +15,11 @@
 	</ItemGroup>
 
 
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DefineConstants>Tenant</DefineConstants>
+	</PropertyGroup>
+
+
 	<ItemGroup>
 		<!--#if (Tenant) -->
 		<PackageReference Include="Dncy.MultiTenancy.AspNetCore" Version="1.1.2" />

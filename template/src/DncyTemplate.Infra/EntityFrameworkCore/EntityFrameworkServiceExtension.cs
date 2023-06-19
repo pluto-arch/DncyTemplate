@@ -17,10 +17,8 @@ public static class EntityFrameworkServiceExtension
     /// <summary>
     /// 添加efcore 组件
     /// </summary>
-    /// <param name="service"></param>
-    /// <param name="configuration"></param>
     /// <returns></returns>
-    internal static IServiceCollection AddEfCoreInfraComponent(this IServiceCollection service, IConfiguration configuration)
+    internal static IServiceCollection AddEfCoreInfraComponent(this IServiceCollection service, IConfiguration configuration,List<Type> contextTypes)
     {
         service.AddSingleton<IConnectionStringResolve, DefaultConnectionStringResolve>();
         service.AddDbContextPool<DncyTemplateDbContext>((serviceProvider, optionsBuilder) =>
@@ -47,30 +45,14 @@ public static class EntityFrameworkServiceExtension
 #endif
         });
 
-        service.AddUnitofWork();
-        service.AddDefaultRepository();
+        service.AddDefaultRepository(contextTypes);
         service.ApplyEntityDefaultNavicationProperty();
         return service;
     }
 
 
-
-    #region private
-
-    private static void ApplyEntityDefaultNavicationProperty(this IServiceCollection service)
+    public static void AddEfUnitofWork(this IServiceCollection services,List<Type> context = null)
     {
-        // 设置实体默认显示加载的导航属性
-        service.Configure<IncludeRelatedPropertiesOptions>(options =>
-        {
-            options.ConfigIncludes<Product>(e => e.Include(d => d.Devices).ThenInclude(f => f.Address));
-        });
-    }
-
-
-
-    private static void AddUnitofWork(this IServiceCollection services)
-    {
-        var context = GetDbContextTypes();
         if (context is null or { Count: <= 0 })
         {
             return;
@@ -92,15 +74,21 @@ public static class EntityFrameworkServiceExtension
     }
 
 
-    private static List<Type> GetDbContextTypes()
+    #region private
+
+    private static void ApplyEntityDefaultNavicationProperty(this IServiceCollection service)
     {
-        return Assembly.GetExecutingAssembly().GetTypes().Where(x => x.IsAssignableTo(typeof(DbContext)) && !x.IsAbstract && !x.Name.Contains("Migration")).ToList();
+        // 设置实体默认显示加载的导航属性
+        service.Configure<IncludeRelatedPropertiesOptions>(options =>
+        {
+            options.ConfigIncludes<Product>(e => e.Include(d => d.Devices).ThenInclude(f => f.Address));
+        });
     }
 
 
-    private static void AddDefaultRepository(this IServiceCollection services, Assembly assembly = null, List<Type> context = null)
+
+    private static void AddDefaultRepository(this IServiceCollection services, List<Type> context = null)
     {
-        context ??= GetDbContextTypes();
         if (context is null or { Count: <= 0 })
         {
             return;
@@ -170,5 +158,4 @@ public static class EntityFrameworkServiceExtension
         return IsAssignableToGenericType(typeInfo.BaseType, genericType);
     }
     #endregion
-
 }

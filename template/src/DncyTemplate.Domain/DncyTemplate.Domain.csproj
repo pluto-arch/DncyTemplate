@@ -5,7 +5,11 @@
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
-    <ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DefineConstants>Tenant</DefineConstants>
+	</PropertyGroup>
+
+	<ItemGroup>
         <PackageReference Include="CommunityToolkit.Diagnostics" Version="8.2.0"/>
         <PackageReference Include="Dncy.DependencyInjection.Generator" Version="1.1.0"/>
         <!--#if (Tenant) -->

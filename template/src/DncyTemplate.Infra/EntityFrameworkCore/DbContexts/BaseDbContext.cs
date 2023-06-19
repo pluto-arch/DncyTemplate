@@ -35,6 +35,10 @@ public abstract class BaseDbContext<TContext> : DbContext where TContext : DbCon
         return this.GetService<ILogger<TSourceContext>>();
     }
 
+    public bool HasChanges()
+    {
+        return this.ChangeTracker.HasChanges();
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

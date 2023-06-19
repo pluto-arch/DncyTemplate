@@ -1,4 +1,6 @@
-﻿using DncyTemplate.Infra.Extensions;
+﻿using System.Transactions;
+using DncyTemplate.Application.Command;
+using DncyTemplate.Infra.Extensions;
 using Microsoft.Extensions.Logging.Abstractions;
 
 namespace DncyTemplate.Application.Behaviors
@@ -17,19 +19,50 @@ namespace DncyTemplate.Application.Behaviors
         {
             string typeName = request?.GetGenericTypeName();
             TResponse response = default;
-            //using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             try
             {
-                response = await next();
-                //scope.Complete();
+                bool isTran=false;
+                if (request is ICommand cmd)
+                {
+                    isTran = cmd.Transactional;
+                }
+
+                if (isTran)
+                {
+                    response = await ExecuteTransactional(request,next, cancellationToken);
+                }
+                else
+                {
+                    response = await ExecuteTransactional(request,next, cancellationToken);
+                }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "ERROR Handling transaction for {CommandName} ({@Command})", typeName, request);
+                _logger.LogError(ex, "ERROR Handling [{CommandName}] ({@Command})", typeName, request);
                 throw;
             }
 
             return response;
+        }
+
+
+        private async Task<TResponse> ExecuteTransactional(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+        {
+            TResponse response = default;
+            using var scope = new TransactionScope(
+                TransactionScopeOption.Required, 
+                new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted }, 
+                TransactionScopeAsyncFlowOption.Enabled);
+            response = await next();
+            scope.Complete();
+            return response;
+        }
+
+
+       
+        private async Task<TResponse> Execute(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+        {
+            return  await next();
         }
     }
 }
