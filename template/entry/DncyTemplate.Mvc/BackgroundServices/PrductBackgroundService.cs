@@ -31,7 +31,7 @@ public class PrductBackgroundService : BackgroundService
         {
             await Task.Yield();
             using var scope = _scopeFactory.CreateScope();
-            var box = scope.ServiceProvider.GetService<ProductIntegrationEventBoxService>();
+            var box = scope.ServiceProvider.GetService<IntegrationEventBoxService>();
             while (box.MemoryBox.TryTake(out string ev))
             {
                 // TODO 发送到事件总线 rabbitmq或者其他消息队列 并更新包裹邮递状态

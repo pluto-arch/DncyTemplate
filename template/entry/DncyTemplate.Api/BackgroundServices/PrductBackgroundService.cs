@@ -15,10 +15,15 @@ public class PrductBackgroundService : BackgroundService
     }
 
 
+    private readonly TimeSpan _period = TimeSpan.FromSeconds(1);
+
     /// <inheritdoc />
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        while (!stoppingToken.IsCancellationRequested)
+        using PeriodicTimer timer = new PeriodicTimer(_period);
+
+        while (!stoppingToken.IsCancellationRequested
+               && await timer.WaitForNextTickAsync(stoppingToken))
         {
             await PublishOutstandingIntegrationEvents(stoppingToken);
         }
@@ -28,22 +33,21 @@ public class PrductBackgroundService : BackgroundService
     {
         try
         {
-            await Task.Yield();
             using var scope = _scopeFactory.CreateScope();
-            var box = scope.ServiceProvider.GetService<ProductIntegrationEventBoxService>();
+            var box = scope.ServiceProvider.GetService<IntegrationEventBoxService>();
             while (box.MemoryBox.TryTake(out string ev))
             {
-                // TODO 发送到事件总线 rabbitmq或者其他消息队列 并更新包裹邮递状态
-                // TODO set ev publishing
-                // TODO eventBus.Publlish();
-                // TODO set ev published
                 _logger.LogInformation("[信箱] 发布：{ev}",ev);
+                // TODO 发送到事件总线 rabbitmq或者其他消息队列 并更新包裹邮递状态
+                await box.SetEventPublishing();
+                // TODO eventBus.Publlish();
+                await box.SetEventPublished();
+
             }
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "产品发件箱失败：{mesg}", ex.Message);
-            throw;
         }
     }
 }
