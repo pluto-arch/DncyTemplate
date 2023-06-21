@@ -1,5 +1,8 @@
-﻿using Dncy.MultiTenancy;
+﻿
+#if Tenant
+using Dncy.MultiTenancy;
 using Dncy.MultiTenancy.Model;
+#endif
 using Dncy.Permission;
 using DncyTemplate.Application.Constants;
 using DncyTemplate.Mvc.Constants;
@@ -24,9 +27,10 @@ namespace DncyTemplate.Mvc.Controllers
         [AutoInject]
         private readonly IPermissionGrantStore _permissionGrantStore;
 
-
+        #if Tenant
         [AutoInject]
         private readonly ICurrentTenant _currentTenant;
+        #endif
 
         [HttpGet]
         [AllowAnonymous]
