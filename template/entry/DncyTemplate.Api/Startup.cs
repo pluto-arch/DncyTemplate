@@ -13,8 +13,6 @@ using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.Extensions.Primitives;
 using System.Diagnostics;
 using System.Threading.RateLimiting;
-using DncyTemplate.Api.Infra.UnitOfWork;
-using DncyTemplate.Infra.Global;
 
 namespace DncyTemplate.Api
 {
