@@ -1,5 +1,6 @@
 ﻿
 using AutoMapper;
+using Dncy.Tools.Core;
 using DncyTemplate.Application.AppServices.Generics;
 using DncyTemplate.Application.Models.Product;
 using DncyTemplate.Infra.EntityFrameworkCore.Repository;

@@ -1,4 +1,5 @@
 ﻿using DncyTemplate.Domain.Infra;
+using DncyTemplate.Infra.Global;
 using DncyTemplate.Mvc.Infra.ExceptionHandlers;
 
 namespace DncyTemplate.Mvc.Infra;
@@ -36,6 +37,26 @@ public static class ApplicationBuilderExtension
         app.UseExceptionHandler(exceptionHandlerApp =>
         {
             exceptionHandlerApp.Run(InternalServerErrorHandler.Handler);
+        });
+        return app;
+    }
+
+
+    /// <summary>
+    /// 用户访问器
+    /// </summary>
+    /// <param name="app"></param>
+    /// <returns></returns>
+    public static IApplicationBuilder UseCurrentUserAccessor(this IApplicationBuilder app)
+    {
+        // 用户访问器
+        app.Use((context, next) =>
+        {
+            var currentToken = context.RequestServices.GetService<GlobalAccessor.CurrentUser>();
+            using (currentToken?.Change(context.User))
+            {
+                return next();
+            }
         });
         return app;
     }

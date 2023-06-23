@@ -1,4 +1,5 @@
-﻿using DncyTemplate.Application.AppServices.Generics;
+﻿using Dncy.Tools.Core;
+using DncyTemplate.Application.AppServices.Generics;
 using DncyTemplate.Application.Models.Product;
 
 namespace DncyTemplate.Application.AppServices.Product;

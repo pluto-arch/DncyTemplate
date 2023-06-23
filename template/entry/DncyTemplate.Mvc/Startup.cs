@@ -78,6 +78,7 @@ public class Startup
 #if Tenant
         app.UseMiddleware<MultiTenancyMiddleware>();
 #endif
+        app.UseCurrentUserAccessor();
         app.UseRouting();
         app.UseAuthorization();
         app.UseEndpoints(endpoints =>

@@ -1,5 +1,6 @@
 ﻿using DncyTemplate.Api.Infra.ExceptionHandlers;
 using DncyTemplate.Domain.Infra;
+using DncyTemplate.Infra.Global;
 
 namespace DncyTemplate.Api.Infra
 {
@@ -36,6 +37,27 @@ namespace DncyTemplate.Api.Infra
             app.UseExceptionHandler(exceptionHandlerApp =>
             {
                 exceptionHandlerApp.Run(HttpPipelineExceptionHandler.Handler);
+            });
+            return app;
+        }
+
+
+
+        /// <summary>
+        /// 用户访问器
+        /// </summary>
+        /// <param name="app"></param>
+        /// <returns></returns>
+        public static IApplicationBuilder UseCurrentUserAccessor(this IApplicationBuilder app)
+        {
+            // 用户访问器
+            app.Use((context, next) =>
+            {
+                var currentToken = context.RequestServices.GetService<GlobalAccessor.CurrentUser>();
+                using (currentToken?.Change(context.User))
+                {
+                    return next();
+                }
             });
             return app;
         }

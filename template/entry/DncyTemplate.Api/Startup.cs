@@ -14,6 +14,7 @@ using Microsoft.Extensions.Primitives;
 using System.Diagnostics;
 using System.Threading.RateLimiting;
 using DncyTemplate.Api.Infra.UnitOfWork;
+using DncyTemplate.Infra.Global;
 
 namespace DncyTemplate.Api
 {
@@ -122,6 +123,10 @@ namespace DncyTemplate.Api
 #if Tenant
             app.UseMultiTenancy();
 #endif
+
+            // 用户访问器
+            app.UseCurrentUserAccessor();
+
             app.UseUnitOfWork();
             app.UseRouting();
             app.UseRateLimiter();
