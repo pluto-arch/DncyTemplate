@@ -27,6 +27,7 @@ namespace DncyTemplate.Application.AppServices.Generics
         {
             var entity = _mapper.Map<TEntity>(requestModel);
             await _repository.InsertAsync(entity, true);
+            await _uow.CompleteAsync();
             return _mapper.Map<TDto>(entity);
         }
 
@@ -35,6 +36,7 @@ namespace DncyTemplate.Application.AppServices.Generics
             TEntity entity = await GetEntityByIdAsync(id);
             _mapper.Map(requestModel, entity);
             await _repository.UpdateAsync(entity, true);
+            await _uow.CompleteAsync();
             return _mapper.Map<TDto>(entity);
         }
 

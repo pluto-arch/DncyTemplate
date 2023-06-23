@@ -40,7 +40,6 @@ namespace DncyTemplate.Api
             services.AddApplicationModule(Configuration);
             services.AddInfraModule(Configuration);
             services.AddDomainModule();
-            services.AddUnitOfWork();
             #region background service
             services.AddHostedService<PrductBackgroundService>();
             #endregion
@@ -127,7 +126,6 @@ namespace DncyTemplate.Api
             // 用户访问器
             app.UseCurrentUserAccessor();
 
-            app.UseUnitOfWork();
             app.UseRouting();
             app.UseRateLimiter();
             app.UseAuthorization();
