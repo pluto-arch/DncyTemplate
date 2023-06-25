@@ -17,7 +17,7 @@ dotnet new -i PlutoNetCoreTemplate.1.3.2.nupkg
 
 3. 查看模板是否安装成功
 ```
-dotnet new plutoapi -h
+dotnet new dncy -h
 ```
 
 
