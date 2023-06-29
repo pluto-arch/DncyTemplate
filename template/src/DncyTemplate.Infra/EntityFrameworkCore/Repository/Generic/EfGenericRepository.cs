@@ -9,7 +9,6 @@ using DncyTemplate.Domain.Infra.Repository;
 using DncyTemplate.Infra.EntityFrameworkCore.Extension;
 using DncyTemplate.Uow;
 using System.Collections;
-using System.Linq.Expressions;
 
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.Repository

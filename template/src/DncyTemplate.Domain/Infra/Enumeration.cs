@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-
-namespace DncyTemplate.Domain.Infra;
+﻿namespace DncyTemplate.Domain.Infra;
 
 /// <summary>
 ///     枚举类

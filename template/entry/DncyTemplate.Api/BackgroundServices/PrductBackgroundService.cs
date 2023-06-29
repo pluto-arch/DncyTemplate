@@ -37,7 +37,7 @@ public class PrductBackgroundService : BackgroundService
             var box = scope.ServiceProvider.GetService<IntegrationEventBoxService>();
             while (box.MemoryBox.TryTake(out string ev))
             {
-                _logger.LogInformation("[信箱] 发布：{ev}",ev);
+                _logger.LogInformation("[信箱] 发布：{ev}", ev);
                 // TODO 发送到事件总线 rabbitmq或者其他消息队列 并更新包裹邮递状态
                 await box.SetEventPublishing();
                 // TODO eventBus.Publlish();

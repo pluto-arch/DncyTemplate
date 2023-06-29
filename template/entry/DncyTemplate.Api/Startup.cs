@@ -11,7 +11,6 @@ using DncyTemplate.Domain;
 using DncyTemplate.Infra;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.Extensions.Primitives;
-using System.Diagnostics;
 using System.Threading.RateLimiting;
 
 namespace DncyTemplate.Api

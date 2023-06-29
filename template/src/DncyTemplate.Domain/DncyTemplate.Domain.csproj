@@ -5,22 +5,18 @@
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-		<DefineConstants>Tenant</DefineConstants>
-	</PropertyGroup>
-
 	<ItemGroup>
-        <PackageReference Include="CommunityToolkit.Diagnostics" Version="8.2.0" />
-        <PackageReference Include="Dncy.DependencyInjection.Generator" Version="1.1.0" />
+        <PackageReference Include="CommunityToolkit.Diagnostics"/>
+        <PackageReference Include="Dncy.DependencyInjection.Generator" />
         <!--#if (Tenant) -->
-        <PackageReference Include="Dncy.MultiTenancy" Version="1.1.2" />
+        <PackageReference Include="Dncy.MultiTenancy" />
         <!--#endif -->
-        <PackageReference Include="Dncy.Permission" Version="2.1.1" />
-        <PackageReference Include="Dncy.Specifications" Version="1.0.1" />
-        <PackageReference Include="Dncy.Tools.Core" Version="2.0.4" />
-        <PackageReference Include="Dncy.Tools.SnowFlake" Version="1.0.5" />
-        <PackageReference Include="MediatR" Version="12.0.1" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+        <PackageReference Include="Dncy.Permission"/>
+        <PackageReference Include="Dncy.Specifications" />
+        <PackageReference Include="Dncy.Tools.Core"/>
+        <PackageReference Include="Dncy.Tools.SnowFlake"/>
+        <PackageReference Include="MediatR"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
     </ItemGroup>
 
     <ItemGroup>

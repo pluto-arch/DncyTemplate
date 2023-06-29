@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Newtonsoft.Json;
-using System.Diagnostics;
 
 namespace DncyTemplate.Mvc.Infra.LogSetup;
 

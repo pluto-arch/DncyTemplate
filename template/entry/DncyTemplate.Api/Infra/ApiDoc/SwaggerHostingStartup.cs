@@ -1,5 +1,4 @@
 ﻿using Microsoft.OpenApi.Models;
-using System.Reflection;
 
 [assembly: HostingStartup(typeof(DncyTemplate.Api.Infra.ApiDoc.SwaggerHostingStartup))]
 namespace DncyTemplate.Api.Infra.ApiDoc

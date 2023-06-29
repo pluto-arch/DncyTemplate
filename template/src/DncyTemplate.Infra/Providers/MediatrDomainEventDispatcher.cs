@@ -1,5 +1,4 @@
 ﻿using DncyTemplate.Domain.Infra;
-using MediatR;
 
 namespace DncyTemplate.Infra.Providers;
 

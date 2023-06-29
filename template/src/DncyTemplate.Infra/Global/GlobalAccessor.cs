@@ -22,7 +22,7 @@ public class GlobalAccessor
         }
     }
 
-    
+
 
     public class CurrentUser
     {
@@ -39,7 +39,7 @@ public class GlobalAccessor
         /// <summary>
         /// 用户Id
         /// </summary>
-        public virtual string UserId => _currentAccessor.CurrentUser?.Claims?.FirstOrDefault(x=>x.Type==ClaimTypes.NameIdentifier)?.Value;
+        public virtual string UserId => _currentAccessor.CurrentUser?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
 
 
         /// <summary>
@@ -58,7 +58,7 @@ public class GlobalAccessor
         public IDisposable Change(ClaimsPrincipal user)
         {
             var parentScope = _currentAccessor.CurrentUser;
-            _currentAccessor.CurrentUser=user;
+            _currentAccessor.CurrentUser = user;
             return new DisposeAction(() =>
             {
                 _currentAccessor.CurrentUser = parentScope;

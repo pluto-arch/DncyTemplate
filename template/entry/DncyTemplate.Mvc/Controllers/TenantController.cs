@@ -3,7 +3,6 @@
 using Dncy.MultiTenancy.ConnectionStrings;
 using DncyTemplate.Mvc.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Options;
 
 namespace DncyTemplate.Mvc.Controllers;
 

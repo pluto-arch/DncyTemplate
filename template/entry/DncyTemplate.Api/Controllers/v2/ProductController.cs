@@ -2,7 +2,6 @@
 using DncyTemplate.Application.Command.Product;
 using DncyTemplate.Application.Models;
 using DncyTemplate.Application.Models.Product;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using System.ComponentModel.DataAnnotations;
 

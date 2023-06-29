@@ -1,8 +1,6 @@
 ﻿using DncyTemplate.Application.Models;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-using Newtonsoft.Json;
-
 namespace DncyTemplate.Mvc.Models.ModelBinding
 {
     public class SortingBinderProvider : IModelBinderProvider

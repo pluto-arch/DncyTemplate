@@ -2,7 +2,6 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
-using Microsoft.Extensions.Options;
 
 namespace DncyTemplate.Mvc.Infra.Authorization;
 

@@ -27,10 +27,10 @@ namespace DncyTemplate.Mvc.Controllers
         [AutoInject]
         private readonly IPermissionGrantStore _permissionGrantStore;
 
-        #if Tenant
+#if Tenant
         [AutoInject]
         private readonly ICurrentTenant _currentTenant;
-        #endif
+#endif
 
         [HttpGet]
         [AllowAnonymous]
