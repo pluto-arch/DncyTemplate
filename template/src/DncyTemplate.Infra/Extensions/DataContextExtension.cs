@@ -140,65 +140,6 @@ public static class DbContextExtension
     }
 
 
-    /// <summary>
-    /// dapper插入实体
-    /// </summary>
-    /// <typeparam name="TEntity"></typeparam>
-    /// <param name="context"></param>
-    /// <param name="entity"></param>
-    /// <param name="timeout"></param>
-    /// <returns></returns>
-    public static async Task<int?> DapperInsertAsync<TEntity>(
-        this IDataContext context,
-        TEntity entity,
-        int? timeout = null)
-    {
-        var connection = context.GetDbConnection();
-        var tran = context.GetDbTransaction();
-        var commandTimeout = timeout ?? context.GetCommandTimeout() ?? 30;
-        return await connection.InsertAsync(entity, tran, commandTimeout);
-    }
-
-
-    /// <summary>
-    /// dapper插入实体
-    /// </summary>
-    /// <typeparam name="TEntity"></typeparam>
-    /// <param name="context"></param>
-    /// <param name="entity"></param>
-    /// <param name="timeout"></param>
-    /// <returns></returns>
-    public static async Task<int?> DapperUpdateAsync<TEntity>(
-        this IDataContext context,
-        TEntity entity,
-        int? timeout = null)
-    {
-        var connection = context.GetDbConnection();
-        var tran = context.GetDbTransaction();
-        var commandTimeout = timeout ?? context.GetCommandTimeout() ?? 30;
-        return await connection.UpdateAsync(entity, tran, commandTimeout);
-    }
-
-
-    /// <summary>
-    /// dapper插入实体
-    /// </summary>
-    /// <typeparam name="TEntity"></typeparam>
-    /// <param name="context"></param>
-    /// <param name="entity"></param>
-    /// <param name="timeout"></param>
-    /// <returns></returns>
-    public static async Task<int?> DapperDeleteAsync<TEntity>(
-        this IDataContext context,
-        TEntity entity,
-        int? timeout = null)
-    {
-        var connection = context.GetDbConnection();
-        var tran = context.GetDbTransaction();
-        var commandTimeout = timeout ?? context.GetCommandTimeout() ?? 30;
-        return await connection.DeleteAsync(entity, tran, commandTimeout);
-    }
-
     private static CommandDefinition CreateCommandDefinition(
         IDataContext context,
         string sql,
