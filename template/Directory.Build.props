@@ -4,6 +4,7 @@
 		<VersionPrefix>1.0.0</VersionPrefix>
 		<LangVersion>preview</LangVersion>
 		<AnalysisLevel>latest</AnalysisLevel>
+		<EnableNETAnalyzers>true</EnableNETAnalyzers>
 	</PropertyGroup>
 
 	<!--#if (Tenant) -->

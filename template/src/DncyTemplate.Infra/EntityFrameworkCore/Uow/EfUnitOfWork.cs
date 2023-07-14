@@ -78,6 +78,7 @@ namespace DncyTemplate.Uow.EntityFrameworkCore
         public ValueTask DisposeAsync()
         {
             Dispose(true);
+            GC.SuppressFinalize(this);
             return ValueTask.CompletedTask;
         }
 

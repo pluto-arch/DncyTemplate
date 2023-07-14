@@ -33,18 +33,18 @@ public partial class PermissionAppService : IPermissionAppService
             };
             var grantModel = item.GetPermissionsWithChildren();
             var grantResult = await _permissionManager.IsGrantedAsync(grantModel.Select(x => x.Name).ToArray(), providerName, providerValue);
-            foreach (var permission in item.GetPermissionsWithChildren())
+            foreach (var permissionItem in item.GetPermissionsWithChildren())
             {
-                _ = grantResult.Result.TryGetValue(permission.Name, out var isGranted);
-                var permiss = new PermissionDto
+                _ = grantResult.Result.TryGetValue(permissionItem.Name, out var isGranted);
+                var permission = new PermissionDto
                 {
-                    Name = permission.Name,
-                    DisplayName = permission.DisplayName,
-                    ParentName = permission.Parent!,
+                    Name = permissionItem.Name,
+                    DisplayName = permissionItem.DisplayName,
+                    ParentName = permissionItem.Parent!,
                     IsGrant = isGranted == Dncy.Permission.Models.PermissionGrantResult.Granted,
-                    AllowProviders = permission.AllowedProviders.ToArray(),
+                    AllowProviders = permissionItem.AllowedProviders.ToArray(),
                 };
-                group.Permissions.Add(permiss);
+                group.Permissions.Add(permission);
             }
             res.Add(group);
         }
@@ -55,9 +55,11 @@ public partial class PermissionAppService : IPermissionAppService
     /// <inheritdoc />
     public async Task GrantAsync(string[] permissions, string providerName, string providerValue)
     {
-        TransactionOptions transactionOption = new TransactionOptions();
-        transactionOption.IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted;
-        transactionOption.Timeout = new TimeSpan(0, 0, 120);
+        TransactionOptions transactionOption = new ()
+        {
+            IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted,
+            Timeout = new TimeSpan(0, 0, 120)
+        };
 
         using var scoped = new TransactionScope(TransactionScopeOption.Required, transactionOption);
         var old = await _permissionGrantStore.GetListAsync(providerName, providerValue);
@@ -67,7 +69,7 @@ public partial class PermissionAppService : IPermissionAppService
             await _permissionGrantStore.CancleGrantAsync(names, providerName, providerValue);
             names.AsParallel().ForAll(x =>
             {
-                PermissionGrantCache.Cache.AddOrUpdate(string.Format(CacheKeyFormatConstants.Permission_Grant_CacheKey_Format, providerName, providerValue, x), false.ToString(), (k, oldv) => false.ToString());
+                PermissionGrantCache.Cache.AddOrUpdate(string.Format(CacheKeyFormatConstants.Permission_Grant_CacheKey_Format, providerName, providerValue, x), false.ToString(), (k, _) => false.ToString());
             });
             return;
         }
@@ -78,7 +80,7 @@ public partial class PermissionAppService : IPermissionAppService
             await _permissionGrantStore.CancleGrantAsync(exp.ToArray(), providerName, providerValue);
             exp.AsParallel().ForAll(x =>
             {
-                PermissionGrantCache.Cache.AddOrUpdate(string.Format(CacheKeyFormatConstants.Permission_Grant_CacheKey_Format, providerName, providerValue, x), false.ToString(), (k, oldv) => false.ToString());
+                PermissionGrantCache.Cache.AddOrUpdate(string.Format(CacheKeyFormatConstants.Permission_Grant_CacheKey_Format, providerName, providerValue, x), false.ToString(), (k, _) => false.ToString());
             });
         }
 

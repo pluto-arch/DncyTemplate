@@ -1,6 +1,7 @@
 ﻿using DncyTemplate.Domain.Aggregates.Product;
 using DncyTemplate.Domain.Aggregates.System;
 using DncyTemplate.Infra.Providers;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 

@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using DncyTemplate.Infra;
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DncyTemplate.Uow;
 
@@ -20,13 +21,13 @@ public static class DbContextExtension
     /// <returns></returns>
     public static async Task<IEnumerable<T>> QueryFromSqlAsync<T>(
         this IDataContext context,
-        string sql,
+        [NotNull]string sql,
         DynamicParameters parameters,
         int? timeout = null,
         CommandType commandType = CommandType.Text,
         CancellationToken cancellationToken = default)
     {
-
+        Guard.IsNotNullOrEmpty(sql);
         var cmd = CreateCommandDefinition(context, sql, parameters, timeout, commandType, cancellationToken);
         var connection = context.GetDbConnection();
         return await connection.QueryAsync<T>(cmd);
@@ -47,13 +48,13 @@ public static class DbContextExtension
     /// <returns></returns>
     public static async Task<T> SingleOrDefaultFromSqlAsync<T>(
         this IDataContext context,
-        string sql,
+        [NotNull]string sql,
         DynamicParameters parameters,
         int? timeout = null,
         CommandType commandType = CommandType.Text,
         CancellationToken cancellationToken = default)
     {
-
+        Guard.IsNotNullOrEmpty(sql);
         var cmd = CreateCommandDefinition(context, sql, parameters, timeout, commandType, cancellationToken);
         var connection = context.GetDbConnection();
         return await connection.QuerySingleOrDefaultAsync<T>(cmd);
@@ -74,12 +75,13 @@ public static class DbContextExtension
     /// <returns></returns>
     public static async Task<T> FirstOrDefaultFromSqlAsync<T>(
         this IDataContext context,
-        string sql,
+        [NotNull]string sql,
         DynamicParameters parameters,
         int? timeout = null,
         CommandType commandType = CommandType.Text,
         CancellationToken cancellationToken = default)
     {
+        Guard.IsNotNullOrEmpty(sql);
         var cmd = CreateCommandDefinition(context, sql, parameters, timeout, commandType, cancellationToken);
         var connection = context.GetDbConnection();
         return await connection.QueryFirstOrDefaultAsync<T>(cmd);
@@ -101,12 +103,13 @@ public static class DbContextExtension
     /// <returns></returns>
     public static async Task<int> ExecuteFromSqlAsync(
         this IDataContext context,
-        string sql,
+        [NotNull]string sql,
         DynamicParameters parameters,
         int? timeout = null,
         CommandType commandType = CommandType.Text,
         CancellationToken cancellationToken = default)
     {
+        Guard.IsNotNullOrEmpty(sql);
         var cmd = CreateCommandDefinition(context, sql, parameters, timeout, commandType, cancellationToken);
         var connection = context.GetDbConnection();
         return await connection.ExecuteAsync(cmd);
@@ -128,12 +131,13 @@ public static class DbContextExtension
     /// <returns></returns>
     public static async Task<T> ExecuteScalarFromSqlAsync<T>(
         this IDataContext context,
-        string sql,
+        [NotNull]string sql,
         DynamicParameters parameters,
         int? timeout = null,
         CommandType commandType = CommandType.Text,
         CancellationToken cancellationToken = default)
     {
+        Guard.IsNotNullOrEmpty(sql);
         var cmd = CreateCommandDefinition(context, sql, parameters, timeout, commandType, cancellationToken);
         var connection = context.GetDbConnection();
         return await connection.ExecuteScalarAsync<T>(cmd);
