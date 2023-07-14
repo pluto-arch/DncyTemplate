@@ -28,4 +28,7 @@
 		<Using Include="Microsoft.Extensions.Logging"/>
 	</ItemGroup>
 
+	<ItemGroup>
+		<PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" />
+	</ItemGroup>
 </Project>
