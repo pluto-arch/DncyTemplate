@@ -23,8 +23,6 @@
 		<Using Include="System.Reflection" />
 		<Using Include="Microsoft.Extensions.DependencyInjection" />
 		<Using Include="Microsoft.Extensions.DependencyInjection.Extensions"/>
-		<Using Include="MediatR" />
-		<Using Include="CommunityToolkit.Diagnostics"/>
 		<Using Include="Microsoft.Extensions.Logging"/>
 	</ItemGroup>
 

@@ -28,6 +28,7 @@
 		<PackageReference Include="Serilog.Enrichers.Thread" />
 		<PackageReference Include="Serilog.Sinks.Async" />
 		<PackageReference Include="Swashbuckle.AspNetCore"/>
+		<PackageReference Include="CommunityToolkit.Diagnostics"/>
 	</ItemGroup>
 
 	<ItemGroup>

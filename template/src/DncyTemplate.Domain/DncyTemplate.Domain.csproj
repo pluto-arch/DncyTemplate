@@ -6,7 +6,6 @@
     </PropertyGroup>
 
 	<ItemGroup>
-        <PackageReference Include="CommunityToolkit.Diagnostics"/>
         <PackageReference Include="Dncy.DependencyInjection.Generator" />
         <!--#if (Tenant) -->
         <PackageReference Include="Dncy.MultiTenancy" />
@@ -17,6 +16,7 @@
         <PackageReference Include="Dncy.Tools.SnowFlake"/>
         <PackageReference Include="MediatR"/>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+		<PackageReference Include="CommunityToolkit.Diagnostics"/>
     </ItemGroup>
 
     <ItemGroup>

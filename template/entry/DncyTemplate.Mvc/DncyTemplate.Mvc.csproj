@@ -29,6 +29,7 @@
 		<PackageReference Include="Serilog.Enrichers.Sensitive" />
 		<PackageReference Include="Serilog.Enrichers.Thread"/>
 		<PackageReference Include="Serilog.Sinks.Async"/>
+		<PackageReference Include="CommunityToolkit.Diagnostics"/>
 	</ItemGroup>
 
 

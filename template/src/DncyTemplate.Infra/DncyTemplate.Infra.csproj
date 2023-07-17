@@ -20,6 +20,7 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" />
 		<PackageReference Include="Serilog.Extensions.Logging" />
 		<PackageReference Include="Polly" />
+		<PackageReference Include="CommunityToolkit.Diagnostics"/>
 	</ItemGroup>
 
 	<ItemGroup>
