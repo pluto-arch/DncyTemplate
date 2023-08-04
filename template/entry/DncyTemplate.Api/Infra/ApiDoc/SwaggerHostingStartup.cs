@@ -10,7 +10,6 @@ namespace DncyTemplate.Api.Infra.ApiDoc
         {
             builder.ConfigureServices((context, services) =>
             {
-
                 if (!context.HostingEnvironment.IsEnvironment(Constants.AppConstant.EnvironmentName.DEV))
                 {
                     return;

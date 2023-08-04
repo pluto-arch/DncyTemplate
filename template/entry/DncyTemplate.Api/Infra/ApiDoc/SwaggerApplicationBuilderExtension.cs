@@ -11,19 +11,15 @@ namespace DncyTemplate.Api.Infra.ApiDoc
         /// <returns></returns>
         public static IApplicationBuilder UseCustomSwagger(this IApplicationBuilder app)
         {
-            var env = app.ApplicationServices.GetRequiredService<IWebHostEnvironment>();
-            if (env.IsEnvironment(Constants.AppConstant.EnvironmentName.DEV))
+            app.UseSwagger();
+            var versionProvider = app.ApplicationServices.GetRequiredService<IApiVersionDescriptionProvider>();
+            app.UseSwaggerUI(options =>
             {
-                app.UseSwagger();
-                var versionProvider = app.ApplicationServices.GetRequiredService<IApiVersionDescriptionProvider>();
-                app.UseSwaggerUI(options =>
+                foreach (var description in versionProvider.ApiVersionDescriptions)
                 {
-                    foreach (var description in versionProvider.ApiVersionDescriptions)
-                    {
-                        options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", $"{AppConstant.SERVICE_NAME} - {description.GroupName}");
-                    }
-                });
-            }
+                    options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", $"{AppConstant.SERVICE_NAME} - {description.GroupName}");
+                }
+            });
             return app;
         }
     }
