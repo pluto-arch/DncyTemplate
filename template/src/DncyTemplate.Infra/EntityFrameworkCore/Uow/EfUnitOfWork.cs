@@ -9,13 +9,13 @@ namespace DncyTemplate.Uow.EntityFrameworkCore
     {
         private bool _disposedValue;
         private IServiceProvider _serviceProvider;
-        private TContext _context;
+        private AsyncLocal<TContext> _context=new AsyncLocal<TContext>();
 
 
         public EfUnitOfWork(IServiceProvider serviceProvider, TContext rootDbContext)
         {
             _serviceProvider = serviceProvider;
-            _context = rootDbContext;
+            _context.Value = rootDbContext;
         }
 
 
@@ -25,17 +25,49 @@ namespace DncyTemplate.Uow.EntityFrameworkCore
         /// <inheritdoc />
         public IDisposable NewScope()
         {
-            return SetDisposable();
+            var previousDbContext = _context.Value;
+            var previousProvider = _serviceProvider;
+            var scoped = _serviceProvider.CreateScope();
+            _serviceProvider = scoped.ServiceProvider;
+            var newContext = _serviceProvider.GetRequiredService<TContext>();
+            _context.Value = newContext;
+            return new DisposeAction(() =>
+            {
+                _context.Value = previousDbContext;
+                _serviceProvider = previousProvider;
+                scoped.Dispose();
+                if (newContext!=null)
+                {
+                    newContext.Dispose();
+                    newContext = null;
+                }
+            });
         }
 
         /// <inheritdoc />
         public IAsyncDisposable NewScopeAsync()
         {
-            return SetAsyncDisposable();
+            var previousDbContext = _context.Value;
+            var previousProvider = _serviceProvider;
+            var scoped = _serviceProvider.CreateScope();
+            _serviceProvider = scoped.ServiceProvider;
+            var newContext = _serviceProvider.GetRequiredService<TContext>();
+            _context.Value = newContext;
+            return new AsyncDisposeAction(async () =>
+            {
+                _context.Value = previousDbContext;
+                _serviceProvider = previousProvider;
+                scoped.Dispose();
+                if (newContext!=null)
+                {
+                    await newContext.DisposeAsync();
+                    newContext = null;
+                }
+            });
         }
 
         /// <inheritdoc />
-        public TContext DbContext() => _context;
+        public TContext DbContext() => _context.Value;
 
 
         public IEfRepository<T> GetEfRepository<T>() where T : class, IEntity
@@ -50,11 +82,11 @@ namespace DncyTemplate.Uow.EntityFrameworkCore
 
         public int Complete()
         {
-            return _context.SaveChanges();
+            return _context.Value.SaveChanges();
         }
         public Task<int> CompleteAsync(CancellationToken cancellationToken = default)
         {
-            return _context.SaveChangesAsync(cancellationToken);
+            return _context.Value.SaveChangesAsync(cancellationToken);
         }
 
         protected virtual void Dispose(bool disposing)
@@ -63,7 +95,7 @@ namespace DncyTemplate.Uow.EntityFrameworkCore
             {
                 if (disposing)
                 {
-                    _context?.Dispose();
+                    _context?.Value?.Dispose();
                 }
                 _disposedValue = true;
             }
@@ -82,39 +114,5 @@ namespace DncyTemplate.Uow.EntityFrameworkCore
             return ValueTask.CompletedTask;
         }
 
-
-        private IAsyncDisposable SetAsyncDisposable()
-        {
-            var previousDbContext = _context;
-            var previousProvider = _serviceProvider;
-            var scoped = _serviceProvider.CreateScope();
-            _serviceProvider = scoped.ServiceProvider;
-            var context = _serviceProvider.GetRequiredService<TContext>();
-            _context = context;
-            return new AsyncDisposeAction(() =>
-            {
-                _context = previousDbContext;
-                _serviceProvider = previousProvider;
-                scoped.Dispose();
-                context?.Dispose();
-                return Task.CompletedTask;
-            });
-        }
-        private IDisposable SetDisposable()
-        {
-            var previousDbContext = _context;
-            var previousProvider = _serviceProvider;
-            var scoped = _serviceProvider.CreateScope();
-            _serviceProvider = scoped.ServiceProvider;
-            var context = _serviceProvider.GetRequiredService<TContext>();
-            _context = context;
-            return new DisposeAction(() =>
-            {
-                _context = previousDbContext;
-                _serviceProvider = previousProvider;
-                scoped.Dispose();
-                context?.Dispose();
-            });
-        }
     }
 }
