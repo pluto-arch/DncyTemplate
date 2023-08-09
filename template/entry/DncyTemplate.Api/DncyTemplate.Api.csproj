@@ -75,6 +75,12 @@
 	<ItemGroup>
 	  <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
 	</ItemGroup>
+
+
+	<ItemGroup>
+	  <None Remove="Infra\ApiDoc\index.html" />
+	  <EmbeddedResource Include="Infra\ApiDoc\index.html" />
+	</ItemGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<DocumentationFile>DncyTemplate.Api.xml</DocumentationFile>
 		<WarningsAsErrors>NU1605</WarningsAsErrors>

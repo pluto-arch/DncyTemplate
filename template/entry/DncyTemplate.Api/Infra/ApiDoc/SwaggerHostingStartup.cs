@@ -21,7 +21,6 @@ namespace DncyTemplate.Api.Infra.ApiDoc
 
                     c.UseAllOfToExtendReferenceSchemas();
 
-
                     c.AddSecurityDefinition("Bearer", //Name the security scheme
                         new OpenApiSecurityScheme
                         {
