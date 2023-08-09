@@ -100,6 +100,39 @@ namespace DncyTemplate.Api.Controllers
             var text = _stringLocalizer[SharedResource.Hello];
             return this.Success<string>(text);
         }
+        
+        
+         [HttpGet("/uow_threads")]
+        public async Task<ResultDto> UnitOfWork3Test([FromServices] IEfRepository<Product> _repository, string name)
+        {
+            _logger.LogInformation("email is {email}", "aaaaa@qq.com");
+            var id1 = SnowFlakeId.Generator.GetUniqueId();
+            await _repository.InsertAsync(new Product
+            {
+                Id = id1,
+                Name = "A2",
+                Remark = "sdasdasdad",
+                CreationTime = DateTimeOffset.Now,
+            });
+                
+            await using (_efUow.NewScopeAsync())
+            {
+                await _repository.InsertAsync(new Product
+                {
+                    Id = SnowFlakeId.Generator.GetUniqueId(),
+                    Name = "A3",
+                    Remark = "sdasdasdad",
+                    CreationTime = DateTimeOffset.Now,
+                });
+                await _efUow.CompleteAsync();
+            }
+            await _efUow.CompleteAsync();
+            var text = _stringLocalizer[SharedResource.Hello];
+            return this.Success<string>(text);
+        }
+        
+        
+        
 
         [HttpGet("loc")]
         [AllowAnonymous]

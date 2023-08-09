@@ -62,14 +62,14 @@ public static class EntityFrameworkServiceExtension
         {
             var defType = typeof(IUnitOfWork);
             var defType2 = typeof(EfUnitOfWork<>).MakeGenericType(context[0]);
-            services.RegisterType(defType, defType2);
+            services.RegisterScopedType(defType, defType2);
         }
 
         Parallel.ForEach(context, item =>
         {
             var defType = typeof(IUnitOfWork<>).MakeGenericType(item);
             var defType2 = typeof(EfUnitOfWork<>).MakeGenericType(item);
-            services.RegisterType(defType, defType2);
+            services.RegisterScopedType(defType, defType2);
         });
     }
 
@@ -132,6 +132,15 @@ public static class EntityFrameworkServiceExtension
         return services;
     }
 
+    
+    private static IServiceCollection RegisterScopedType(this IServiceCollection services, Type type, Type implementationType)
+    {
+        if (type.IsAssignableFrom(implementationType))
+        {
+            services.TryAddScoped(type, implementationType);
+        }
+        return services;
+    }
 
     public static bool IsAssignableToGenericType(Type givenType, Type genericType)
     {

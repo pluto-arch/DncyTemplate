@@ -7,7 +7,7 @@ namespace DncyTemplate.Uow.EntityFrameworkCore
     public class EfUnitOfWork<TContext> : IUnitOfWork<TContext>
         where TContext : DbContext, IDataContext
     {
-        private bool disposedValue;
+        private bool _disposedValue;
         private IServiceProvider _serviceProvider;
         private TContext _context;
 
@@ -59,13 +59,13 @@ namespace DncyTemplate.Uow.EntityFrameworkCore
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!_disposedValue)
             {
                 if (disposing)
                 {
                     _context?.Dispose();
                 }
-                disposedValue = true;
+                _disposedValue = true;
             }
         }
 
