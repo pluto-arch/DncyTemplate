@@ -138,4 +138,16 @@
   <data name="Welcome" xml:space="preserve">
     <value>欢迎</value>
   </data>
+  <data name="Successed" xml:space="preserve">
+    <value>成功</value>
+  </data>
+  <data name="ServiceUnavailable" xml:space="preserve">
+    <value>服务暂不可用</value>
+  </data>
+  <data name="InvalidRequest" xml:space="preserve">
+    <value>无效的请求</value>
+  </data>
+  <data name="ErrorHandleRequest" xml:space="preserve">
+    <value>处理请求时发生错误</value>
+  </data>
 </root>

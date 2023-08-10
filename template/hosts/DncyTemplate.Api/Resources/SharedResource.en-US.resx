@@ -138,4 +138,16 @@
   <data name="Welcome" xml:space="preserve">
     <value>Welcome</value>
   </data>
+  <data name="Successed" xml:space="preserve">
+    <value>Successed</value>
+  </data>
+  <data name="ServiceUnavailable" xml:space="preserve">
+    <value>service unavailable</value>
+  </data>
+  <data name="InvalidRequest" xml:space="preserve">
+    <value>invalid request</value>
+  </data>
+  <data name="ErrorHandleRequest" xml:space="preserve">
+    <value>error processing request</value>
+  </data>
 </root>

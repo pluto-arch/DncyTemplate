@@ -12,6 +12,7 @@ using DncyTemplate.Infra;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.Extensions.Primitives;
 using System.Threading.RateLimiting;
+using DncyTemplate.Api.Infra.LocalizerSetup;
 
 namespace DncyTemplate.Api
 {
@@ -77,9 +78,7 @@ namespace DncyTemplate.Api
             var address = serverAddressesFeature?.Addresses;
             Log.Logger.Information("应用程序运行地址: {@Address}. net version:{version}", address, Environment.Version);
 
-
-            var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
-            app.UseRequestLocalization(options.Value);
+            app.UseAppLocalization();
 
             app.UseResponseCompression();
             app.UseForwardedHeaders()

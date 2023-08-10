@@ -25,7 +25,7 @@ public record ResultDto
     /// <returns></returns>
     public static ResultDto Success()
     {
-        return new() { Code = 200, Message = "执行成功" };
+        return new() { Code = 200, Message = "Successed" };
     }
 
     /// <summary>
@@ -43,7 +43,7 @@ public record ResultDto
     /// </summary>
     /// <param name="message"></param>
     /// <returns></returns>
-    public static ResultDto ErrorRequest(string message = "无效的请求")
+    public static ResultDto ErrorRequest(string message = "InvalidRequest")
     {
         return new() { Code = 400, Message = message };
     }
@@ -53,9 +53,9 @@ public record ResultDto
     /// </summary>
     /// <param name="message"></param>
     /// <returns></returns>
-    public static ResultDto Fatal(string message = "内部服务器异常")
+    public static ResultDto Fatal(string message = "ServiceUnavailable")
     {
-        return new() { Code = 500, Message = message ?? "内部服务器异常" };
+        return new() { Code = 500, Message = message ?? "ServiceUnavailable" };
     }
 }
 
@@ -73,7 +73,7 @@ public record ResultDto<T> : ResultDto
     /// <returns></returns>
     public static ResultDto<T> Success(T data)
     {
-        return new() { Code = 200, Message = "执行成功", Data = data };
+        return new() { Code = 200, Message = "Successed", Data = data };
     }
 
 
@@ -81,7 +81,7 @@ public record ResultDto<T> : ResultDto
     ///     执行成功
     /// </summary>
     /// <returns></returns>
-    public static ResultDto<T> Success(T data, string message)
+    public static ResultDto<T> Success(T data, string message="Successed")
     {
         return new() { Code = 200, Message = message, Data = data };
     }
@@ -92,27 +92,27 @@ public record ResultDto<T> : ResultDto
     /// <param name="message"></param>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static ResultDto<T> Error(string message, T data = default)
+    public static ResultDto<T> Error(string message="ErrorHandleRequest", T data = default)
     {
         return new() { Code = -100, Message = message, Data = data };
     }
 
     /// <summary>
-    ///     程序错误
+    /// 程序错误
     /// </summary>
     /// <param name="message"></param>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static ResultDto<T> Fatal(string message, T data = default)
+    public static ResultDto<T> Fatal(string message="ServiceUnavailable", T data = default)
     {
         return new() { Code = 500, Message = message, Data = data };
     }
 
     /// <summary>
-    ///     数据验证错误
+    /// 数据验证错误 无效的请求
     /// </summary>
     /// <returns></returns>
-    public static ResultDto<T> ErrorRequest(string message = "无效的请求", T data = default)
+    public static ResultDto<T> ErrorRequest(string message = "InvalidRequest", T data = default)
     {
         return new() { Code = 400, Message = message, Data = data };
     }
@@ -135,20 +135,20 @@ public static class ResponseWapper
         return ResultDto<TData>.Success(result);
     }
 
-    public static ResultDto<TData> Success<TData>(this IResponseWraps _, TData result, string message)
+    public static ResultDto<TData> Success<TData>(this IResponseWraps _, TData result, string message="Successed")
     {
         return ResultDto<TData>.Success(result, message);
     }
 
-    public static ResultDto<TData> Fail<TData>(this IResponseWraps _, string message = "服务异常", TData data = default)
+    public static ResultDto<TData> Fail<TData>(this IResponseWraps _, string message = "ServiceUnavailable", TData data = default)
     {
         return ResultDto<TData>.Fatal(message, data);
     }
-    public static ResultDto<TData> Error<TData>(this IResponseWraps _, string message = "处理请求出现错误", TData data = default)
+    public static ResultDto<TData> Error<TData>(this IResponseWraps _, string message = "ErrorHandleRequest", TData data = default)
     {
         return ResultDto<TData>.Error(message, data);
     }
-    public static ResultDto<TData> ErrorRequest<TData>(this IResponseWraps _, string message = "无效的请求", TData data = default)
+    public static ResultDto<TData> ErrorRequest<TData>(this IResponseWraps _, string message = "InvalidRequest", TData data = default)
     {
         return ResultDto<TData>.ErrorRequest(message, data);
     }
@@ -157,15 +157,15 @@ public static class ResponseWapper
     {
         return ResultDto.Success();
     }
-    public static ResultDto ErrorRequest(this IResponseWraps _, string message = "无效的请求")
+    public static ResultDto ErrorRequest(this IResponseWraps _, string message = "InvalidRequest")
     {
         return ResultDto.ErrorRequest(message);
     }
-    public static ResultDto Error(this IResponseWraps _, string message = "处理请求出现错误")
+    public static ResultDto Error(this IResponseWraps _, string message = "ErrorHandleRequest")
     {
         return ResultDto.Error(message);
     }
-    public static ResultDto Fail(this IResponseWraps _, string message = "服务异常")
+    public static ResultDto Fail(this IResponseWraps _, string message = "ServiceUnavailable")
     {
         return ResultDto.Fatal(message);
     }

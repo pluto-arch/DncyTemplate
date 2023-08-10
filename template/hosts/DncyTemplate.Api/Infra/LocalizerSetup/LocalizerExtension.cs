@@ -23,6 +23,14 @@ namespace DncyTemplate.Api.Infra.LocalizerSetup
             });
             return services;
         }
+        
+        
+        public static IApplicationBuilder UseAppLocalization(this IApplicationBuilder app)
+        {
+            var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(options.Value);
+            return app;
+        }
 
 
 

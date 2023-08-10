@@ -12,7 +12,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DncyTemplate.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [AutoResolveDependency]
     [ApiController]
     [AllowAnonymous]
@@ -32,121 +32,20 @@ namespace DncyTemplate.Api.Controllers
 
 
         [HttpGet]
-        public ResultDto TestLocalize([EmailAddress] string name)
+        public ResultDto TestLocalize(int name)
         {
             var text = _stringLocalizer[SharedResource.Hello];
             return this.Success<string>(text);
         }
-
-
-        [HttpGet("/uow")]
-        public async Task<ResultDto> UnitOfWork2Test([FromServices] IEfRepository<Product> _repository, string name)
+        
+        [HttpGet]
+        public ResultDto TestActionException(string name)
         {
-            _logger.LogInformation("email is {email}", "aaaaa@qq.com");
-
-            await _repository.InsertAsync(new Product
-            {
-                Id = SnowFlakeId.Generator.GetUniqueId(),
-                Name = "主",
-                Remark = "sdasdasdad",
-                CreationTime = DateTimeOffset.Now,
-            });
-            var t1 = Task.Run(async () =>
-            {
-                await _repository.InsertAsync(new Product
-                {
-                    Id = SnowFlakeId.Generator.GetUniqueId(),
-                    Name = "T1",
-                    Remark = "sdasdasdad",
-                    CreationTime = DateTimeOffset.Now,
-                });
-                
-                await using (_efUow.NewScopeAsync())
-                {
-                    await _repository.InsertAsync(new Product
-                    {
-                        Id = SnowFlakeId.Generator.GetUniqueId(),
-                        Name = "T2-SUB",
-                        Remark = "sdasdasdad",
-                        CreationTime = DateTimeOffset.Now,
-                    });
-                    await _efUow.CompleteAsync();
-                }
-            });
-            
-            var t2 = Task.Run(async () =>
-            {
-                await _repository.InsertAsync(new Product
-                {
-                    Id = SnowFlakeId.Generator.GetUniqueId(),
-                    Name = "T2",
-                    Remark = "sdasdasdad",
-                    CreationTime = DateTimeOffset.Now,
-                });
-                
-                await using (_efUow.NewScopeAsync())
-                {
-                    await _repository.InsertAsync(new Product
-                    {
-                        Id = SnowFlakeId.Generator.GetUniqueId(),
-                        Name = "T2-SUB",
-                        Remark = "sdasdasdad",
-                        CreationTime = DateTimeOffset.Now,
-                    });
-                    await _efUow.CompleteAsync();
-                }
-            });
-
-            await Task.WhenAll(t1, t2);
-            
-            await _efUow.CompleteAsync();
+            ThrowHelper.ThrowArgumentException(nameof(name),"name 不能 为空");
             var text = _stringLocalizer[SharedResource.Hello];
             return this.Success<string>(text);
         }
         
-        
-         [HttpGet("/uow_threads")]
-        public async Task<ResultDto> UnitOfWork3Test([FromServices] IEfRepository<Product> _repository, string name)
-        {
-            _logger.LogInformation("email is {email}", "aaaaa@qq.com");
-            var id1 = SnowFlakeId.Generator.GetUniqueId();
-            await _repository.InsertAsync(new Product
-            {
-                Id = id1,
-                Name = "A2",
-                Remark = "sdasdasdad",
-                CreationTime = DateTimeOffset.Now,
-            });
-                
-            await using (_efUow.NewScopeAsync())
-            {
-                await _repository.InsertAsync(new Product
-                {
-                    Id = SnowFlakeId.Generator.GetUniqueId(),
-                    Name = "A3",
-                    Remark = "sdasdasdad",
-                    CreationTime = DateTimeOffset.Now,
-                });
-                await _efUow.CompleteAsync();
-            }
-            await _efUow.CompleteAsync();
-            var text = _stringLocalizer[SharedResource.Hello];
-            return this.Success<string>(text);
-        }
-        
-        
-        
-
-        [HttpGet("loc")]
-        [AllowAnonymous]
-        public async Task<ResultDto> RpcCall()
-        {
-            var client = _httpClientFactory.CreateClient("mvc");
-            _logger.LogInformation("开始请求");
-            var response = await client.GetStringAsync("http://localhost:6000/home/users");
-            return this.Success(response);
-        }
-
 
         /// <summary>
         /// 限流测试

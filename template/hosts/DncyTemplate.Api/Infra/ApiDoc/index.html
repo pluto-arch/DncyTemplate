@@ -32,6 +32,12 @@
             text-align: center;
             background: #3b4151;
             color: white;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px 0 20px;
+            flex-wrap: nowrap;
+            align-items: center;
+            flex-direction: row-reverse;
         }
         .authForms input[type='submit']{
             margin: 5px 0;
@@ -55,6 +61,9 @@
         .swagger-ui .authorization__btn{
             display: none;
         }
+        .lang{
+            cursor: pointer;
+        }
     </style>
     %(HeadContent)
 </head>
@@ -70,6 +79,11 @@
             <span id="hello"></span>
             <input type="submit" value="signout"/>
         </form>
+        <div class="lang">
+            <span id="zh" onclick="switchLang('zh')" hidden>中文(zh-CN)</span>
+            <span id="en" onclick="switchLang('en')" >英文(en-US)</span>
+            <input id="langValue" type="hidden" value="culture=zh-CN&ui-culture=zh-CN"/>
+        </div>
     </div>
     <div id="swagger-ui"></div>
 
@@ -113,15 +127,46 @@
             return new Fn();
         }
 
+        const zh=document.getElementById('zh');
+        const en=document.getElementById('en');
+        const langValue=document.getElementById('langValue');
+        
+        function switchLang(lang){
+            localStorage.setItem('lang',lang);
+            if (lang==='zh'){
+                langValue.value='culture=zh-CN&ui-culture=zh-CN'
+                en.hidden=false
+                zh.hidden=true;
+            }else{
+                langValue.value='culture=en-US&ui-culture=en-US'
+                en.hidden=true
+                zh.hidden=false;
+            }
+        }
+        
         window.onload = function () {
             var configObject = JSON.parse('%(ConfigObject)');
             var oauthConfigObject = JSON.parse('%(OAuthConfigObject)');
 
             const signin = document.getElementById('signin')
             const signout = document.getElementById('signout')
+            
+            const lang=document.getElementsByClassName('select')
 
             configObject.requestInterceptor = (request) => {
                 const token = localStorage.getItem('token')
+                const lang = localStorage.getItem('lang')
+                console.log(request)
+                if (lang) {
+                    if (lang==="zh")
+                    {
+                        request.headers['Accept-Language']='zh-CN'; // 设置Accept-Language请求头
+                    }
+                    else{
+                        request.headers['Accept-Language']='en-US'; // 设置Accept-Language请求头
+                    }
+                }
+                
                 if (token) {
                     request.headers.authorization = `Bearer ${token}`
                     return request
@@ -142,6 +187,12 @@
                     signout.hidden = true
                 }
             }
+
+            const defaultLang = localStorage.getItem('lang')
+            if (defaultLang){
+                switchLang(defaultLang);
+            }
+            
             signin.addEventListener('submit', (event) => {
                 event.preventDefault()
                 const formData = new FormData();
