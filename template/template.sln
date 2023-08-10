@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DncyTemplate.Api", "entry\DncyTemplate.Api\DncyTemplate.Api.csproj", "{993B8845-33DE-4660-9092-EC3E4DD962D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DncyTemplate.Api", "hosts\DncyTemplate.Api\DncyTemplate.Api.csproj", "{993B8845-33DE-4660-9092-EC3E4DD962D8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DncyTemplate.Mvc", "entry\DncyTemplate.Mvc\DncyTemplate.Mvc.csproj", "{AC53DAD2-FFC9-4100-B5C9-1224104A3BF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DncyTemplate.Mvc", "hosts\DncyTemplate.Mvc\DncyTemplate.Mvc.csproj", "{AC53DAD2-FFC9-4100-B5C9-1224104A3BF8}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{351A8F51-54E8-45B4-8CEF-893DD387C615}"
 EndProject
@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5A2AD551-D74
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{C7EF86BE-FE86-4F28-9901-4B47B25EE032}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "entry", "entry", "{FC6D2445-EAD4-4831-8267-8E113AB85AD2}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hosts", "hosts", "{FC6D2445-EAD4-4831-8267-8E113AB85AD2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DncyTemplate.Application", "src\DncyTemplate.Application\DncyTemplate.Application.csproj", "{A449BC68-7BF3-4306-B73F-9045D0D20777}"
 EndProject

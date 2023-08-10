@@ -28,6 +28,7 @@ namespace DncyTemplate.Application.Command.Product
             entity.CreationTime = DateTimeOffset.Now;
             entity.AddDomainEvent(new NewProductCreateDomainEvent(entity));
             entity = await repository.InsertAsync(entity, cancellationToken: cancellationToken);
+            await efUow.CompleteAsync(cancellationToken);
             return _mapper.Map<ProductDto>(entity);
         }
     }

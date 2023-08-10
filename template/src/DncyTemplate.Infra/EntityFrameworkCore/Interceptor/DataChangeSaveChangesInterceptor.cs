@@ -48,12 +48,12 @@ public class DataChangeSaveChangesInterceptor : SaveChangesInterceptor
     private static void SoftDeleteTracking(DbContext dbContext)
     {
         var deletedEntries = dbContext.ChangeTracker.Entries()
-            .Where(entry => entry.State == EntityState.Deleted && entry.Entity is ISoftDelete);
+            .Where(hosts => hosts.State == EntityState.Deleted && hosts.Entity is ISoftDelete);
         deletedEntries?.ToList().ForEach(entityEntry =>
         {
             entityEntry.Reload();
             entityEntry.State = EntityState.Modified;
-            ( (ISoftDelete)entityEntry.Entity ).Deleted = true;
+            ((ISoftDelete)entityEntry.Entity).Deleted = true;
         });
     }
 
@@ -61,7 +61,7 @@ public class DataChangeSaveChangesInterceptor : SaveChangesInterceptor
     private static void MultiTenancyTracking(DbContext dbContext)
     {
         var tenantedEntries = dbContext.ChangeTracker.Entries<IMultiTenant>()
-            .Where(entry => entry.State == EntityState.Added);
+            .Where(hosts => hosts.State == EntityState.Added);
         var currentTenant = dbContext.GetService<ICurrentTenant>();
         tenantedEntries?.ToList().ForEach(entityEntry =>
         {

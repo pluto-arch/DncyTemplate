@@ -9,7 +9,7 @@ public class StringIdGenerator : ValueGenerator<string>
 
     public override bool GeneratesTemporaryValues => false;
 
-    public override string Next(EntityEntry entry)
+    public override string Next(EntityEntry hosts)
     {
         lock (_lock)
         {

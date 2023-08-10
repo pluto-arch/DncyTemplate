@@ -48,13 +48,13 @@
         {
           "condition": "(ProjectType==\"MVC\")",
           "exclude": [
-            "entry/DncyTemplate.Api/**/*"
+            "hosts/DncyTemplate.Api/**/*"
           ]
         },
         {
           "condition": "(ProjectType==\"API\")",
           "exclude": [
-            "entry/DncyTemplate.Mvc/**/*"
+            "hosts/DncyTemplate.Mvc/**/*"
           ]
         },
         {
@@ -65,10 +65,10 @@
         {
           "condition": "(!Tenant)",
           "exclude": [
-            "entry/DncyTemplate.Mvc/Infra/Tenancy/**/*",
-            "entry/DncyTemplate.Api/Infra/Tenancy/**/*",
-            "entry/DncyTemplate.Mvc/Controllers/TenantController.cs",
-            "entry/DncyTemplate.Mvc/Views/Tenant/**/*",
+            "hosts/DncyTemplate.Mvc/Infra/Tenancy/**/*",
+            "hosts/DncyTemplate.Api/Infra/Tenancy/**/*",
+            "hosts/DncyTemplate.Mvc/Controllers/TenantController.cs",
+            "hosts/DncyTemplate.Mvc/Views/Tenant/**/*",
             "src/DncyTemplate.Domain/Aggregates/Tenancy/**/*",
             "src/DncyTemplate.Domain/Infra/Entity/IMultiTenant.cs",
             "src/DncyTemplate.Infra/Infra/EntityFrameworkCore/Interceptor/DbConnectionInterceptor.cs"
@@ -79,11 +79,11 @@
   ],
   "primaryOutputs": [
     {
-      "path": "entry/DncyTemplate.Api/DncyTemplate.Api.csproj",
+      "path": "hosts/DncyTemplate.Api/DncyTemplate.Api.csproj",
       "condition": "(ProjectType==\"API\")"
     },
     {
-      "path": "entry/DncyTemplate.Mvc/DncyTemplate.Mvc.csproj",
+      "path": "hosts/DncyTemplate.Mvc/DncyTemplate.Mvc.csproj",
       "condition": "(ProjectType==\"MVC\")"
     }
   ],
