@@ -55,7 +55,17 @@ public record ResultDto
     /// <returns></returns>
     public static ResultDto Fatal(string message = "ServiceUnavailable")
     {
-        return new() { Code = 500, Message = message ?? "ServiceUnavailable" };
+        return new() { Code = 500, Message = message };
+    }
+
+    /// <summary>
+    /// 程序错误
+    /// </summary>
+    /// <param name="message"></param>
+    /// <returns></returns>
+    public static ResultDto TooManyRequest(string message = "TooManyRequest")
+    {
+        return new() { Code = 429, Message = message };
     }
 }
 

@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.Extensions.Primitives;
 using System.Threading.RateLimiting;
 using DncyTemplate.Api.Infra.LocalizerSetup;
+using DncyTemplate.Application.Models;
+using Microsoft.Extensions.Localization;
 
 namespace DncyTemplate.Api
 {
@@ -46,6 +48,16 @@ namespace DncyTemplate.Api
             #region 速率限制
             services.AddRateLimiter(options =>
             {
+                options.OnRejected = async (context, message) =>
+                {
+                    var L = context.HttpContext.RequestServices.GetService<IStringLocalizer<SharedResource>>();
+                    context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
+                    context.HttpContext.Response.Headers.Add("Retry-After", new StringValues("1")); // TODO 根据具体情况返回
+                    context.HttpContext.Response.ContentType = AppConstant.DEFAULT_CONTENT_TYPE;
+                    var res =  ResultDto.TooManyRequest();
+                    res.Message=L[res.Message];
+                    await context.HttpContext.Response.WriteAsJsonAsync(res);
+                };
                 //options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
                 //    RateLimitPartition.GetFixedWindowLimiter(
                 //        partitionKey: httpContext.Connection.RemoteIpAddress?.ToNumber().ToString(),

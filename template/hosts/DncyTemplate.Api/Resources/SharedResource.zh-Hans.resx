@@ -117,23 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Hello" xml:space="preserve">
-    <value>你好</value>
-  </data>
-  <data name="Menu.Home" xml:space="preserve">
-    <value>首页</value>
-  </data>
-  <data name="Menu.Product" xml:space="preserve">
-    <value>产品</value>
-  </data>
-  <data name="ProductRequired" xml:space="preserve">
-    <value>222222222222</value>
-  </data>
-  <data name="User.Name" xml:space="preserve">
-    <value>用户名称</value>
-  </data>
-  <data name="WebSite.Name" xml:space="preserve">
-    <value>网站名称</value>
+  <data name="ValueIsRequired" xml:space="preserve">
+    <value>参数 "{0}" 不能为空</value>
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>欢迎</value>
@@ -149,5 +134,11 @@
   </data>
   <data name="ErrorHandleRequest" xml:space="preserve">
     <value>处理请求时发生错误</value>
+  </data>
+  <data name="TooManyRequest" xml:space="preserve">
+    <value>请求繁忙</value>
+  </data>
+  <data name="LengthLimit" xml:space="preserve">
+    <value>参数“{0}”必须包含 {0} 到 {1} 个字符</value>
   </data>
 </root>

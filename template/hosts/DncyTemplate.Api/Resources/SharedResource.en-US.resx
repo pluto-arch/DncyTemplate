@@ -117,23 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Hello" xml:space="preserve">
-    <value>Hello</value>
-  </data>
-  <data name="Menu.Home" xml:space="preserve">
-    <value>Home</value>
-  </data>
-  <data name="Menu.Product" xml:space="preserve">
-    <value>Product</value>
-  </data>
-  <data name="ProductRequired" xml:space="preserve">
-    <value>1111111111111</value>
-  </data>
-  <data name="User.Name" xml:space="preserve">
-    <value>UserName</value>
-  </data>
-  <data name="WebSite.Name" xml:space="preserve">
-    <value>WebSiteName</value>
+  <data name="ValueIsRequired" xml:space="preserve">
+    <value>parameter '{0}' is required</value>
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>Welcome</value>
@@ -149,5 +134,11 @@
   </data>
   <data name="ErrorHandleRequest" xml:space="preserve">
     <value>error processing request</value>
+  </data>
+  <data name="TooManyRequest" xml:space="preserve">
+    <value>too many request</value>
+  </data>
+  <data name="LengthLimit" xml:space="preserve">
+    <value>parameter '{0}' must in {0} to {1} characters</value>
   </data>
 </root>
