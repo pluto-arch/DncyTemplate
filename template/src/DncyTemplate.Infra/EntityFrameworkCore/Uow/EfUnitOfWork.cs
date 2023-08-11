@@ -10,11 +10,12 @@ namespace DncyTemplate.Uow.EntityFrameworkCore
         private bool _disposedValue;
         private IServiceProvider _serviceProvider;
         private AsyncLocal<TContext> _context=new AsyncLocal<TContext>();
-
+        private readonly TContext _rootDbContext;
 
         public EfUnitOfWork(IServiceProvider serviceProvider, TContext rootDbContext)
         {
             _serviceProvider = serviceProvider;
+            _rootDbContext = rootDbContext;
             _context.Value = rootDbContext;
         }
 
@@ -67,7 +68,14 @@ namespace DncyTemplate.Uow.EntityFrameworkCore
         }
 
         /// <inheritdoc />
-        public TContext DbContext() => _context.Value;
+        public TContext DbContext()
+        {
+            if (_context.Value==null)
+            {
+                _context.Value = _rootDbContext;
+            }
+            return _context.Value;
+        }
 
 
         public IEfRepository<T> GetEfRepository<T>() where T : class, IEntity

@@ -45,7 +45,6 @@ namespace DncyTemplate.Api.Controllers
             var text = _stringLocalizer[SharedResource.Hello];
             return this.Success<string>(text);
         }
-        
 
         /// <summary>
         /// 限流测试
