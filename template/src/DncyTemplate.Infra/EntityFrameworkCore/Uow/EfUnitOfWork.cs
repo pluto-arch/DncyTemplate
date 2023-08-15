@@ -3,41 +3,41 @@ using DncyTemplate.Domain.Infra.Repository;
 
 namespace DncyTemplate.Uow.EntityFrameworkCore
 {
-
     public class EfUnitOfWork<TContext> : IUnitOfWork<TContext>
         where TContext : DbContext, IDataContext
     {
-        private bool _disposedValue;
-        private IServiceProvider _serviceProvider;
-        private AsyncLocal<TContext> _context=new AsyncLocal<TContext>();
-        private readonly TContext _rootDbContext;
+        private AsyncLocal<bool> _disposedValue = new AsyncLocal<bool>();
+        private AsyncLocal<IServiceProvider> _serviceProvider = new AsyncLocal<IServiceProvider>();
+        private AsyncLocal<TContext> _context = new AsyncLocal<TContext>();
 
-        public EfUnitOfWork(IServiceProvider serviceProvider, TContext rootDbContext)
+        public EfUnitOfWork(IServiceProvider serviceProvider)
         {
-            _serviceProvider = serviceProvider;
-            _rootDbContext = rootDbContext;
-            _context.Value = rootDbContext;
+            _serviceProvider.Value = serviceProvider;
+            _context.Value = serviceProvider.GetService<TContext>();
         }
 
+        public IServiceProvider ServiceProvider => _serviceProvider.Value;
 
         /// <inheritdoc />
-        public IDataContext Context => DbContext();
+        public IDataContext Context => _context.Value;
 
         /// <inheritdoc />
-        public IDisposable NewScope()
+        public IDisposable Change()
         {
             var previousDbContext = _context.Value;
-            var previousProvider = _serviceProvider;
-            var scoped = _serviceProvider.CreateScope();
-            _serviceProvider = scoped.ServiceProvider;
-            var newContext = _serviceProvider.GetRequiredService<TContext>();
+            var previousProvider = _serviceProvider.Value;
+
+            var scope = _serviceProvider.Value.CreateScope();
+            _serviceProvider.Value = scope.ServiceProvider;
+            var newContext = _serviceProvider.Value.GetRequiredService<TContext>();
             _context.Value = newContext;
+
             return new DisposeAction(() =>
             {
                 _context.Value = previousDbContext;
-                _serviceProvider = previousProvider;
-                scoped.Dispose();
-                if (newContext!=null)
+                _serviceProvider.Value = previousProvider;
+                scope.Dispose();
+                if (newContext != null)
                 {
                     newContext.Dispose();
                     newContext = null;
@@ -45,53 +45,40 @@ namespace DncyTemplate.Uow.EntityFrameworkCore
             });
         }
 
-        /// <inheritdoc />
-        public IAsyncDisposable NewScopeAsync()
+        public IUnitOfWork BeginNew()
         {
-            var previousDbContext = _context.Value;
-            var previousProvider = _serviceProvider;
-            var scoped = _serviceProvider.CreateScope();
-            _serviceProvider = scoped.ServiceProvider;
-            var newContext = _serviceProvider.GetRequiredService<TContext>();
-            _context.Value = newContext;
-            return new AsyncDisposeAction(async () =>
+            var scope = _serviceProvider.Value.CreateScope();
+            var newUow = scope.ServiceProvider.GetRequiredService<IUnitOfWork<TContext>>();
+            newUow.OnDisposed += () =>
             {
-                _context.Value = previousDbContext;
-                _serviceProvider = previousProvider;
-                scoped.Dispose();
-                if (newContext!=null)
-                {
-                    await newContext.DisposeAsync();
-                    newContext = null;
-                }
-            });
+                scope.Dispose();
+                newUow = null;
+            };
+            return newUow;
         }
 
+        
         /// <inheritdoc />
-        public TContext DbContext()
-        {
-            if (_context.Value==null)
-            {
-                _context.Value = _rootDbContext;
-            }
-            return _context.Value;
-        }
+        public TContext DbContext() => _context.Value;
+
+        public event Action OnDisposed;
 
 
         public IEfRepository<T> GetEfRepository<T>() where T : class, IEntity
         {
-            return _serviceProvider.GetRequiredService<IEfContextRepository<TContext, T>>();
+            return _serviceProvider.Value.GetRequiredService<IEfContextRepository<TContext, T>>();
         }
 
         public IEfRepository<T, TKey> GetEfRepository<T, TKey>() where T : class, IEntity
         {
-            return _serviceProvider.GetRequiredService<IEfContextRepository<TContext, T, TKey>>();
+            return _serviceProvider.Value.GetRequiredService<IEfContextRepository<TContext, T, TKey>>();
         }
 
         public int Complete()
         {
             return _context.Value.SaveChanges();
         }
+
         public Task<int> CompleteAsync(CancellationToken cancellationToken = default)
         {
             return _context.Value.SaveChangesAsync(cancellationToken);
@@ -99,13 +86,15 @@ namespace DncyTemplate.Uow.EntityFrameworkCore
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!_disposedValue)
+            if (!_disposedValue.Value)
             {
                 if (disposing)
                 {
                     _context?.Value?.Dispose();
+                    OnDisposed?.Invoke();
                 }
-                _disposedValue = true;
+
+                _disposedValue.Value = true;
             }
         }
 
@@ -121,6 +110,5 @@ namespace DncyTemplate.Uow.EntityFrameworkCore
             GC.SuppressFinalize(this);
             return ValueTask.CompletedTask;
         }
-
     }
 }

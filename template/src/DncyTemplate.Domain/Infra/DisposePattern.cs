@@ -19,20 +19,3 @@ public class DisposeAction : IDisposable
         GC.SuppressFinalize(this);
     }
 }
-
-
-public class AsyncDisposeAction : IAsyncDisposable
-{
-    private readonly Func<Task> _action;
-
-    public AsyncDisposeAction(Func<Task> action)
-    {
-        _action = action;
-    }
-
-    public async ValueTask DisposeAsync()
-    {
-        await _action();
-        GC.SuppressFinalize(this);
-    }
-}

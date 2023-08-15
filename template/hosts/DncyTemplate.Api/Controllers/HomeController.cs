@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Localization;
 using System.ComponentModel.DataAnnotations;
+using DncyTemplate.Application.AppServices.Product;
+using DncyTemplate.Application.Models.Product;
 
 namespace DncyTemplate.Api.Controllers
 {
@@ -22,15 +24,12 @@ namespace DncyTemplate.Api.Controllers
         private readonly IStringLocalizer<SharedResource> _stringLocalizer;
 
         [AutoInject]
-        private readonly IUnitOfWork<DncyTemplateDbContext> _efUow;
-
-        [AutoInject]
         private readonly IHttpClientFactory _httpClientFactory;
 
         [AutoInject]
         private readonly ILogger<HomeController> _logger;
 
-
+        
         [HttpGet]
         public ResultDto TestLocalize(int name)
         {
