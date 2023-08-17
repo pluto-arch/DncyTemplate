@@ -8,9 +8,7 @@ public class DbContextDesignTimeFactory : IDesignTimeDbContextFactory<DncyTempla
 {
     public DncyTemplateMigrationDbContext CreateDbContext(string[] args)
     {
-        DbContextOptionsBuilder<DncyTemplateMigrationDbContext> optionsBuilder = new();
-        optionsBuilder.UseSqlServer(@"Server=localhost,1433;Database=Pnct_Default;User Id=sa;Password=970307lBx;Trusted_Connection = False;TrustServerCertificate=true");
-        return new DncyTemplateMigrationDbContext(optionsBuilder.Options);
+        return new DncyTemplateMigrationDbContext();
     }
 }
 
@@ -20,9 +18,11 @@ public class DbContextDesignTimeFactory : IDesignTimeDbContextFactory<DncyTempla
 /// </summary>
 public class DncyTemplateMigrationDbContext : DbContext
 {
-    public DncyTemplateMigrationDbContext(DbContextOptions<DncyTemplateMigrationDbContext> options)
-        : base(options)
+    /// <inheritdoc />
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+        base.OnConfiguring(optionsBuilder);
+        optionsBuilder.UseSqlServer(@"Server=localhost,1433;Database=Pnct_Default;User Id=sa;Password=970307lBx;Trusted_Connection = False;TrustServerCertificate=true");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

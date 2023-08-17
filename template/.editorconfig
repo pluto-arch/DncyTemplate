@@ -6,6 +6,10 @@ dotnet_diagnostic.IDE1006.severity = none
 # CS1591: 缺少对公共可见类型或成员的 XML 注释
 dotnet_diagnostic.CS1591.severity = silent
 
+# IDE0290 缺少主构造函数
+dotnet_diagnostic.IDE0290.severity = none
+
+
 [*.cs]
 #### 命名样式 ####
 
@@ -99,6 +103,12 @@ csharp_style_inlined_variable_declaration = true:suggestion
 csharp_style_deconstructed_variable_declaration = true:suggestion
 csharp_style_unused_value_assignment_preference = discard_variable:suggestion
 csharp_style_unused_value_expression_statement_preference = discard_variable:silent
+csharp_style_prefer_primary_constructors = true:suggestion
+csharp_indent_labels = one_less_than_current
+dotnet_diagnostic.NUnit2005.severity = silent
+dotnet_diagnostic.NUnit2045.severity = silent
+dotnet_diagnostic.NUnit2010.severity = silent
+csharp_style_prefer_readonly_struct_member = true:suggestion
 
 [*.vb]
 #### 命名样式 ####
@@ -180,3 +190,6 @@ dotnet_style_prefer_inferred_anonymous_type_member_names = true:suggestion
 dotnet_style_prefer_compound_assignment = true:suggestion
 dotnet_style_prefer_simplified_interpolation = true:suggestion
 dotnet_style_namespace_match_folder = true:suggestion
+dotnet_style_operator_placement_when_wrapping = beginning_of_line
+dotnet_style_predefined_type_for_locals_parameters_members = true:silent
+dotnet_style_predefined_type_for_member_access = true:silent

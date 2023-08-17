@@ -5,6 +5,7 @@
 		<LangVersion>preview</LangVersion>
 		<AnalysisLevel>latest</AnalysisLevel>
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
+		<_SkipUpgradeNetAnalyzersNuGetWarning>true</_SkipUpgradeNetAnalyzersNuGetWarning>
 	</PropertyGroup>
 
 	<!--#if (Tenant) -->

@@ -15,7 +15,7 @@ Update-Database -Context DncyTemplateMigrationDbContext -Project DncyTemplate.In
 
 
 -- 使用链接字符串应用迁移
-Update-Database -Context DncyTemplateMigrationDbContext -Project DncyTemplate.Infra -StartupProject DncyTemplate.Infra -Connection "Server=localhost,1433;Database=Pnct_T20210602000002;User Id=sa;Password=970307lBx;Trusted_Connection = False;"
+Update-Database -Context DncyTemplateMigrationDbContext -Project DncyTemplate.Infra -StartupProject DncyTemplate.Infra -Connection "Server=localhost,1433;Database=Pnct_T20210602000002;User Id=sa;Password=970307lBx;Trusted_Connection = False;TrustServerCertificate=true"
 
 
 ```

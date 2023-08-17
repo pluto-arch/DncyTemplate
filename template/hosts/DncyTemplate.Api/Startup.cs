@@ -48,7 +48,7 @@ namespace DncyTemplate.Api
             #region 速率限制
             services.AddRateLimiter(options =>
             {
-                options.OnRejected = async (context, message) =>
+                options.OnRejected = async (context, cancelToken) =>
                 {
                     var L = context.HttpContext.RequestServices.GetService<IStringLocalizer<SharedResource>>();
                     context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
@@ -56,7 +56,7 @@ namespace DncyTemplate.Api
                     context.HttpContext.Response.ContentType = AppConstant.DEFAULT_CONTENT_TYPE;
                     var res =  ResultDto.TooManyRequest();
                     res.Message=L[res.Message];
-                    await context.HttpContext.Response.WriteAsJsonAsync(res);
+                    await context.HttpContext.Response.WriteAsJsonAsync(res, cancellationToken: cancelToken);
                 };
                 //options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
                 //    RateLimitPartition.GetFixedWindowLimiter(

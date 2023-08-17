@@ -31,6 +31,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		nuget.config = nuget.config
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DncyTemplate.UnitTest", "test\DncyTemplate.UnitTest\DncyTemplate.UnitTest.csproj", "{AC492C90-90A5-47D5-A20E-F172D48ECF90}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{C84EBBAF-F2D3-458F-84BD-4D373A7A2715}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C84EBBAF-F2D3-458F-84BD-4D373A7A2715}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C84EBBAF-F2D3-458F-84BD-4D373A7A2715}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC492C90-90A5-47D5-A20E-F172D48ECF90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC492C90-90A5-47D5-A20E-F172D48ECF90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC492C90-90A5-47D5-A20E-F172D48ECF90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC492C90-90A5-47D5-A20E-F172D48ECF90}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -71,6 +77,7 @@ Global
 		{A449BC68-7BF3-4306-B73F-9045D0D20777} = {5A2AD551-D740-4141-9AF3-2F0F009807C0}
 		{0139B8F5-7C59-49A2-BA1A-E11CAC4A7571} = {5A2AD551-D740-4141-9AF3-2F0F009807C0}
 		{C84EBBAF-F2D3-458F-84BD-4D373A7A2715} = {5A2AD551-D740-4141-9AF3-2F0F009807C0}
+		{AC492C90-90A5-47D5-A20E-F172D48ECF90} = {C7EF86BE-FE86-4F28-9901-4B47B25EE032}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CC9D0D11-325F-4971-B20A-7ABB3058DA5E}
