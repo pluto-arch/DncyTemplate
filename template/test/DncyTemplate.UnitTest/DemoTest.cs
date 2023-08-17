@@ -1,6 +1,8 @@
 ﻿using Bogus;
+#if Tenant
 using Dncy.MultiTenancy.Model;
 using Dncy.MultiTenancy;
+#endif
 using DncyTemplate.Application.AppServices.Product;
 using DncyTemplate.Application.Models.Product;
 using DncyTemplate.Domain.Aggregates.Product;
@@ -18,9 +20,8 @@ namespace DncyTemplate.UnitTest
         [Test]
         public async Task Test()
         {
-            var tenant = ServiceProvider.GetService<ICurrentTenant>();
-
 #if Tenant
+            var tenant = ServiceProvider.GetService<ICurrentTenant>();
             using (tenant.Change(new TenantInfo("T20210602000003", "")))
             {
 #endif
