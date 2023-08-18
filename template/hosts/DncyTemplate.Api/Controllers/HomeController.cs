@@ -52,7 +52,7 @@ namespace DncyTemplate.Api.Controllers
         /// <returns></returns>
         [HttpGet("/rate_limit")]
         [EnableRateLimiting("home.RateLimit_action")]
-        public ResultDto RateLimit([EmailAddress] string name)
+        public ResultDto RateLimit()
         {
             var text = _stringLocalizer[SharedResource.Welcome];
             return this.Success<string>(text);

@@ -10,6 +10,7 @@
     <PackageVersion Include="CommunityToolkit.Diagnostics" Version="8.2.1" />
     <PackageVersion Include="FastExpressionCompiler" Version="3.3.4" />
     <PackageVersion Include="FluentValidation" Version="11.7.1" />
+    <PackageVersion Include="FluentValidation.AspNetCore" Version="11.3.0" />
     <PackageVersion Include="Dapper" Version="2.0.143" />
     <PackageVersion Include="Dncy.Specifications.EntityFrameworkCore" Version="1.0.2" />
     <PackageVersion Include="Dncy.DependencyInjection.Generator" Version="1.1.0" />

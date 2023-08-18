@@ -10,10 +10,10 @@ namespace DncyTemplate.Application
 {
     public static class DependencyInject
     {
-        public static IServiceCollection AddApplicationModule(this IServiceCollection services, IConfiguration _)
+        public static IServiceCollection AddApplicationModule(this IServiceCollection services,IConfiguration configuration, IEnumerable<Assembly> assemblies=null)
         {
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies()
-                .Where(x => !string.IsNullOrEmpty(x.FullName) && ( !x.FullName.Contains("Microsoft", StringComparison.OrdinalIgnoreCase) || !x.FullName.Contains("System", StringComparison.OrdinalIgnoreCase) ));
+            assemblies ??= AppDomain.CurrentDomain.GetAssemblies()
+                .Where(x => !string.IsNullOrEmpty(x.FullName) && x.FullName.Contains("DncyTemplate", StringComparison.OrdinalIgnoreCase));
             services.AddMapster(assemblies.ToArray());
 
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(TransactionBehavior<,>).Assembly));

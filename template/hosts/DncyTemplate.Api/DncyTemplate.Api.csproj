@@ -29,6 +29,7 @@
 		<PackageReference Include="Serilog.Sinks.Async" />
 		<PackageReference Include="Swashbuckle.AspNetCore"/>
 		<PackageReference Include="CommunityToolkit.Diagnostics"/>
+		<PackageReference Include="FluentValidation.AspNetCore"/>
 	</ItemGroup>
 
 	<ItemGroup>

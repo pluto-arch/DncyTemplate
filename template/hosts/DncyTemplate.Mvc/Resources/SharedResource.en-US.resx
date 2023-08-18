@@ -117,37 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BtnText.GoBack" xml:space="preserve">
-    <value>go back</value>
-  </data>
-  <data name="Culture.en-US" xml:space="preserve">
-    <value>English</value>
-  </data>
-  <data name="Culture.zh-CN" xml:space="preserve">
-    <value>Chinese</value>
-  </data>
-  <data name="ErrorController.Error.DefaultMessage" xml:space="preserve">
-    <value>Failed to process the request</value>
-  </data>
-  <data name="ErrorController.Error.DefaultMessageWithMessage" xml:space="preserve">
-    <value>Failed to process the request. Message: {0}</value>
-  </data>
-  <data name="ErrorController.Error.DefaultMessageWithPath" xml:space="preserve">
-    <value>Failed to process the request. Path: {0}</value>
-  </data>
-  <data name="ErrorView.TraceId" xml:space="preserve">
-    <value>TraceId</value>
-  </data>
-  <data name="Menu.Home" xml:space="preserve">
-    <value>Home</value>
-  </data>
-  <data name="Menu.Product" xml:space="preserve">
-    <value>Product</value>
-  </data>
-  <data name="WebSite.Name" xml:space="preserve">
-    <value>WebSiteName</value>
+  <data name="ValueIsRequired" xml:space="preserve">
+    <value>parameter '{0}' is required</value>
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>Welcome</value>
+  </data>
+  <data name="Successed" xml:space="preserve">
+    <value>Successed</value>
+  </data>
+  <data name="ServiceUnavailable" xml:space="preserve">
+    <value>service unavailable</value>
+  </data>
+  <data name="InvalidRequest" xml:space="preserve">
+    <value>invalid request</value>
+  </data>
+  <data name="ErrorHandleRequest" xml:space="preserve">
+    <value>error processing request</value>
+  </data>
+  <data name="TooManyRequest" xml:space="preserve">
+    <value>too many request</value>
+  </data>
+  <data name="LengthLimit" xml:space="preserve">
+    <value>parameter '{0}' must in {0} to {1} characters</value>
   </data>
 </root>

@@ -24,7 +24,7 @@ namespace DncyTemplate.Mvc.Controllers
         public IActionResult Error(int code, string error = null)
         {
             ViewData["ErrorCode"] = $"{code}";
-            ViewData["ErrorMessage"] = _localizedizer[SharedResource.ErrorController_Error_DefaultMessage];
+            ViewData["ErrorMessage"] = _localizedizer[SharedResource.ServiceUnavailable];
             var statusCodeReExecuteFeature = HttpContext.Features.Get<IStatusCodeReExecuteFeature>();
 
             if (statusCodeReExecuteFeature is not null)
@@ -33,13 +33,13 @@ namespace DncyTemplate.Mvc.Controllers
                     statusCodeReExecuteFeature.OriginalPathBase,
                     statusCodeReExecuteFeature.OriginalPath,
                     statusCodeReExecuteFeature.OriginalQueryString);
-                ViewData["ErrorMessage"] = $"{_localizedizer[SharedResource.ErrorController_Error_DefaultMessageWithPath, originalPathAndQuery]}";
+                ViewData["ErrorMessage"] = $"{_localizedizer[SharedResource.ServiceUnavailable, originalPathAndQuery]}";
             }
             else
             {
                 if (!string.IsNullOrEmpty(error))
                 {
-                    ViewData["ErrorMessage"] = $"{_localizedizer[SharedResource.ErrorController_Error_DefaultMessageWithMessage, HttpUtility.UrlDecode(error)]}";
+                    ViewData["ErrorMessage"] = $"{_localizedizer[SharedResource.ServiceUnavailable, HttpUtility.UrlDecode(error)]}";
                 }
             }
 

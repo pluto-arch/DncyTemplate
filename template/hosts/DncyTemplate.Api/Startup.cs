@@ -14,6 +14,8 @@ using Microsoft.Extensions.Primitives;
 using System.Threading.RateLimiting;
 using DncyTemplate.Api.Infra.LocalizerSetup;
 using DncyTemplate.Application.Models;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.Extensions.Localization;
 
 namespace DncyTemplate.Api
@@ -35,27 +37,36 @@ namespace DncyTemplate.Api
                 options.SizeLimit = 10240;
             });
             #endregion
-
+            
             services.AddHttpClient();
-            services.AddApplicationModule(Configuration);
+            
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies()
+                .Where(x => !string.IsNullOrEmpty(x.FullName) && x.FullName.Contains("DncyTemplate", StringComparison.OrdinalIgnoreCase));
+            
+            services.AddApplicationModule(Configuration,assemblies);
             services.AddInfraModule(Configuration);
             services.AddDomainModule();
             #region background service
             services.AddHostedService<PrductBackgroundService>();
             #endregion
 
-
+            #region FluentValidation
+            services.AddFluentValidationAutoValidation(configs =>
+            {
+            }).AddValidatorsFromAssemblies(assemblies);
+            #endregion
+            
             #region 速率限制
             services.AddRateLimiter(options =>
             {
                 options.OnRejected = async (context, cancelToken) =>
                 {
-                    var L = context.HttpContext.RequestServices.GetService<IStringLocalizer<SharedResource>>();
+                    var l = context.HttpContext.RequestServices.GetService<IStringLocalizer<SharedResource>>();
                     context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
                     context.HttpContext.Response.Headers.Add("Retry-After", new StringValues("1")); // TODO 根据具体情况返回
                     context.HttpContext.Response.ContentType = AppConstant.DEFAULT_CONTENT_TYPE;
                     var res = ResultDto.TooManyRequest();
-                    res.Message = L[res.Message];
+                    res.Message = l[res.Message];
                     await context.HttpContext.Response.WriteAsJsonAsync(res, cancellationToken: cancelToken);
                 };
                 //options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
@@ -96,15 +107,6 @@ namespace DncyTemplate.Api
             app.UseForwardedHeaders()
                 .UseCertificateForwarding();
 
-
-            app.Use((context, next) =>
-            {
-                var activity = Activity.Current;
-                context.Request.Headers.TryGetValue("Cko-Correlation-Id", out StringValues correlationId);
-                var traceId = activity.GetTraceId() ?? context.TraceIdentifier;
-                context.Response.Headers.TryAdd("trace_id", traceId ?? correlationId);
-                return next();
-            });
 
             app.UseHttpRequestLogging();
 

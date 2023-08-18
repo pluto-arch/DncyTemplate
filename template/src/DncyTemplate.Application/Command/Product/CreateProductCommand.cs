@@ -1,5 +1,6 @@
 ﻿using DncyTemplate.Application.Models.Product;
 using System.ComponentModel.DataAnnotations;
+using FluentValidation;
 
 namespace DncyTemplate.Application.Command.Product
 {
@@ -22,5 +23,14 @@ namespace DncyTemplate.Application.Command.Product
 
         /// <inheritdoc />
         public bool Transactional { get; }
+    }
+    
+    
+    public class MyModelValidator : AbstractValidator<CreateProductCommand>
+    {
+        public MyModelValidator()
+        {
+            RuleFor(x => x.Name).MinimumLength(3).WithMessage("名称不能低于3个字符");
+        }
     }
 }

@@ -27,8 +27,8 @@ public class InfraHostingStartup : IHostingStartup
 
                     options.Filters.Add<AuditLogActionFilter>();
 
-                    var F = services.BuildServiceProvider().GetService<IStringLocalizerFactory>();
-                    options.SetUpDefaultDataAnnotation(F);
+                    var l = services.BuildServiceProvider().GetService<IStringLocalizerFactory>();
+                    options.SetUpDefaultDataAnnotation(l);
                 })
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .AddDataAnnotationsLocalization(options =>
@@ -64,9 +64,6 @@ public class InfraHostingStartup : IHostingStartup
 
             services.AddHttpContextAccessor();
             services.AddRouting(options => options.LowercaseUrls = true);
-
-
-            #region httpForwardedHeaders
             services.Configure<ForwardedHeadersOptions>(options =>
             {
                 options.ForwardLimit = null;// 限制所处理的标头中的条目数
@@ -74,7 +71,6 @@ public class InfraHostingStartup : IHostingStartup
                 options.KnownNetworks.Clear(); // 从中接受转接头的已知网络的地址范围。 使用无类别域际路由选择 (CIDR) 表示法提供 IP 范围。使用CDN时应清空
                 options.KnownProxies.Clear(); // 从中接受转接头的已知代理的地址。 使用 KnownProxies 指定精确的 IP 地址匹配。使用CDN时应清空
             });
-            #endregion
         });
     }
 }

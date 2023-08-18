@@ -117,37 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BtnText.GoBack" xml:space="preserve">
-    <value>返回</value>
-  </data>
-  <data name="Culture.en-US" xml:space="preserve">
-    <value>英文</value>
-  </data>
-  <data name="Culture.zh-CN" xml:space="preserve">
-    <value>中文</value>
-  </data>
-  <data name="ErrorController.Error.DefaultMessage" xml:space="preserve">
-    <value>处理请求失败</value>
-  </data>
-  <data name="ErrorController.Error.DefaultMessageWithMessage" xml:space="preserve">
-    <value>处理请求失败。错误信息：{0}</value>
-  </data>
-  <data name="ErrorController.Error.DefaultMessageWithPath" xml:space="preserve">
-    <value>处理请求失败。路径：{0}</value>
-  </data>
-  <data name="ErrorView.TraceId" xml:space="preserve">
-    <value>追踪标识</value>
-  </data>
-  <data name="Menu.Home" xml:space="preserve">
-    <value>首页</value>
-  </data>
-  <data name="Menu.Product" xml:space="preserve">
-    <value>产品</value>
-  </data>
-  <data name="WebSite.Name" xml:space="preserve">
-    <value>网站名称</value>
+  <data name="ValueIsRequired" xml:space="preserve">
+    <value>参数 "{0}" 不能为空</value>
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>欢迎</value>
+  </data>
+  <data name="Successed" xml:space="preserve">
+    <value>成功</value>
+  </data>
+  <data name="ServiceUnavailable" xml:space="preserve">
+    <value>服务暂不可用</value>
+  </data>
+  <data name="InvalidRequest" xml:space="preserve">
+    <value>无效的请求</value>
+  </data>
+  <data name="ErrorHandleRequest" xml:space="preserve">
+    <value>处理请求时发生错误</value>
+  </data>
+  <data name="TooManyRequest" xml:space="preserve">
+    <value>请求繁忙</value>
+  </data>
+  <data name="LengthLimit" xml:space="preserve">
+    <value>参数“{0}”必须包含 {0} 到 {1} 个字符</value>
   </data>
 </root>

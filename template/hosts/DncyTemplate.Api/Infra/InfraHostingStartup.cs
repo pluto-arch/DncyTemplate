@@ -31,9 +31,9 @@ namespace DncyTemplate.Api.Infra
                         //options.Filters.Add<AuditLogActionFilter>();
 
                         // 本地化 默认的模型验证信息
-                        var F = services.BuildServiceProvider().GetService<IStringLocalizerFactory>();
+                        var l = services.BuildServiceProvider().GetService<IStringLocalizerFactory>();
                         // 默认的数据验证本地化
-                        options.SetUpDefaultDataAnnotation(F);
+                        options.SetUpDefaultDataAnnotation(l);
                     })
                     .AddDataAnnotationsLocalization(options =>
                     {

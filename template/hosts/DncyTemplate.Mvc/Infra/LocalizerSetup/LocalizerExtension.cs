@@ -15,7 +15,7 @@ public static class LocalizerExtension
         services.AddRequestLocalization(options =>
         {
             var supportedCultures = new[] { new CultureInfo(Culture.EN_US.key), new CultureInfo(Culture.ZN_CH.key) };
-            options.DefaultRequestCulture = new RequestCulture(Culture.ZN_CH.key, Culture.EN_US.key);
+            options.DefaultRequestCulture = new RequestCulture(Culture.ZN_CH.key, Culture.ZN_CH.key);
             options.SupportedCultures = supportedCultures;
             options.SupportedUICultures = supportedCultures;
             options.ApplyCurrentCultureToResponseHeaders = true;
@@ -50,5 +50,12 @@ public static class LocalizerExtension
     {
         options.DataAnnotationLocalizerProvider = (_, factory) => factory.Create("DataAnnotation", AppConstant.SERVICE_NAME);
         return options;
+    }
+    
+    public static IApplicationBuilder UseAppLocalization(this IApplicationBuilder app)
+    {
+        var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+        app.UseRequestLocalization(options.Value);
+        return app;
     }
 }

@@ -13,8 +13,8 @@ namespace DncyTemplate.Api.Infra.LocalizerSetup
             services.AddLocalization(options => { options.ResourcesPath = "Resources"; });
             services.AddRequestLocalization(options =>
             {
-                var supportedCultures = new[] { new CultureInfo("en-US"), new CultureInfo("zh-CN") };
-                options.DefaultRequestCulture = new RequestCulture("zh-CN", "zh-CN");
+                var supportedCultures = new[] { new CultureInfo(AppConstant.Culture.EN_US.key), new CultureInfo(AppConstant.Culture.ZN_CH.key) };
+                options.DefaultRequestCulture = new RequestCulture(AppConstant.Culture.ZN_CH.key, AppConstant.Culture.ZN_CH.key);
                 options.SupportedCultures = supportedCultures;
                 options.SupportedUICultures = supportedCultures;
                 options.ApplyCurrentCultureToResponseHeaders = true;

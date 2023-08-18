@@ -4,9 +4,11 @@
 		<TargetFramework>net70</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<UserSecretsId>3c883659-e7a3-4875-a0cb-c7cbc1528352</UserSecretsId>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 		<DockerfileContext>..\..</DockerfileContext>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
-		<SatelliteResourceLanguages>zh-Hans;en-US</SatelliteResourceLanguages>
+		<SatelliteResourceLanguages>zh-Hans;zh-CN</SatelliteResourceLanguages>
 		<RuntimeIdentifiers>linux-x64;win-x64</RuntimeIdentifiers>
 	</PropertyGroup>
 
@@ -30,6 +32,7 @@
 		<PackageReference Include="Serilog.Enrichers.Thread"/>
 		<PackageReference Include="Serilog.Sinks.Async"/>
 		<PackageReference Include="CommunityToolkit.Diagnostics"/>
+		<PackageReference Include="FluentValidation.AspNetCore"/>
 	</ItemGroup>
 
 
