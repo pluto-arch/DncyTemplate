@@ -18,7 +18,7 @@ namespace DncyTemplate.Mvc
 {
 <#
     var path = Path.GetDirectoryName(Host.TemplateFile);
-    var fileNames = Directory.EnumerateFiles(path, $"*.resx", SearchOption.TopDirectoryOnly).ToList();
+    var fileNames = Directory.GetFiles(path, $"*.resx", SearchOption.AllDirectories).ToList();
     var localizationKeys = new Dictionary<string,HashSet<string>>();
 	if(fileNames!=null&&fileNames.Any())
 	{
@@ -38,16 +38,23 @@ namespace DncyTemplate.Mvc
 	foreach(var item in localizationKeys)
     {
         #>
-    public class <#=item.Key#> 
+    public class <#=(item.Key.Contains("Resource")?item.Key:$"{item.Key}Resource")#> 
     {
 <#
 		    foreach(var key in item.Value)
 			{
-			   
+			    if(key.Contains(".")) 
+                {
 #>
-                    public const string <#=key.Replace(".", "_").Replace("-", "_")#> = "<#=key#>";
+        public const string <#=key.Replace(".", "_")#> = "<#=key#>";
 <#              
-
+                } 
+                else 
+                { 
+#>
+        public const string <#=key#> = nameof(<#=key#>);
+<#              
+                }
 			}
 		#>
     }

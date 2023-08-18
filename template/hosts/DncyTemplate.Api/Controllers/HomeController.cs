@@ -31,10 +31,10 @@ namespace DncyTemplate.Api.Controllers
 
 
         [HttpGet]
-        public ResultDto TestLocalize(int name)
+        public IActionResult TestLocalize(int name)
         {
             var text = _stringLocalizer[HomeControllerResource.Welcome];
-            return this.Success<string>(text);
+            return Ok(text);
         }
 
         [HttpGet]

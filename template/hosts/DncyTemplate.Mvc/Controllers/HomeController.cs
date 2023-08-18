@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Diagnostics;
+using DncyTemplate.Application.Command.Product;
 using DncyTemplate.Mvc.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Localization;
@@ -12,9 +13,9 @@ namespace DncyTemplate.Mvc.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IStringLocalizer<SharedResource> _stringLocalizer;
+        private readonly IStringLocalizer<HomeController> _stringLocalizer;
 
-        public HomeController(ILogger<HomeController> logger, IStringLocalizer<SharedResource> stringLocalizer)
+        public HomeController(ILogger<HomeController> logger, IStringLocalizer<HomeController> stringLocalizer)
         {
             _logger = logger;
             _stringLocalizer = stringLocalizer;
@@ -72,7 +73,13 @@ namespace DncyTemplate.Mvc.Controllers
         //     return RedirectToAction(nameof(Product));
         // }
 
-
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult TestLocalization()
+        {
+            var text = _stringLocalizer[HomeControllerResource.HelloWorld];
+            return Ok(text);
+        }
 
         [HttpGet]
         [AllowAnonymous]

@@ -100,6 +100,21 @@
 	    <AutoGen>True</AutoGen>
 	    <DependentUpon>ResourceNameGenerator.tt</DependentUpon>
 	  </Compile>
+	  <Compile Update="Resources\Controllers\HomeController.en-US.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>HomeController.en-US.resx</DependentUpon>
+	  </Compile>
+	  <Compile Update="Resources\Controllers\HomeController.en-US.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>HomeController.en-US.resx</DependentUpon>
+	  </Compile>
+	  <Compile Update="Resources\Controllers\HomeController.zh-CN.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>HomeController.zh-CN.resx</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -108,6 +123,18 @@
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\DataAnnotation.zh-Hans.resx">
 	    <Generator></Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Controllers\HomeController.en-US.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>HomeController.en-US.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Controllers\HomeController.en-US.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>HomeController.en-US.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Controllers\HomeController.zh-CN.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>HomeController.zh-CN.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
 	</ItemGroup>
 

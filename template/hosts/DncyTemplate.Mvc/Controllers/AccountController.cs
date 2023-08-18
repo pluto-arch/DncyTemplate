@@ -19,9 +19,6 @@ namespace DncyTemplate.Mvc.Controllers
     public partial class AccountController : Controller
     {
         [AutoInject]
-        private readonly IStringLocalizer<DataAnnotation> _stringLocalizer;
-
-        [AutoInject]
         private readonly ILogger<AccountController> _logger;
 
         [AutoInject]
