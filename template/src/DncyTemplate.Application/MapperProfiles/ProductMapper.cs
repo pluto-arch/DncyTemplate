@@ -1,5 +1,4 @@
-﻿using Dncy.MultiTenancy;
-using DncyTemplate.Application.Command.Product;
+﻿using DncyTemplate.Application.Command.Product;
 using DncyTemplate.Application.Models.Product;
 using DncyTemplate.Domain.Aggregates.Product;
 using Mapster;
@@ -30,8 +29,7 @@ public class ProductMapper : IRegister
 
     string MapFormatedName(string originName)
     {
-        // customer formet value
-        var config = MapContext.Current.GetService<ICurrentTenant>();
-        return $"{originName}_{config.Id}";
+        // 可以使用MapContext.Current.GetService<T>() 从IOC中获取服务
+        return $"{originName}_aaaa";
     }
 }
