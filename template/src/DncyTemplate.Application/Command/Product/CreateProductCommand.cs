@@ -1,6 +1,7 @@
 ﻿using DncyTemplate.Application.Models.Product;
 using System.ComponentModel.DataAnnotations;
 using FluentValidation;
+using Microsoft.Extensions.Localization;
 
 namespace DncyTemplate.Application.Command.Product
 {
@@ -11,14 +12,12 @@ namespace DncyTemplate.Application.Command.Product
             Transactional = false;
         }
 
-
-        [Required(ErrorMessage = "ValueIsRequired")]
-        [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessage = "LengthLimit")]
+        [Required]
         [Display(Name = "ProductName")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "ValueIsRequired")]
-        [StringLength(maximumLength: 200, MinimumLength = 3, ErrorMessage = "LengthLimit")]
+        [Required]
+        [StringLength(maximumLength: 100, MinimumLength = 3,ErrorMessage = "LengthLimit")]
         public string Remark { get; set; }
 
         /// <inheritdoc />
@@ -28,9 +27,9 @@ namespace DncyTemplate.Application.Command.Product
     
     public class MyModelValidator : AbstractValidator<CreateProductCommand>
     {
-        public MyModelValidator()
+        public MyModelValidator(IStringLocalizer<CreateProductCommand> localizer)
         {
-            RuleFor(x => x.Name).MinimumLength(3).WithMessage("名称不能低于3个字符");
+            RuleFor(x => x.Name).MinimumLength(3).WithMessage(localizer.GetString("FluentLengthLimit"));
         }
     }
 }

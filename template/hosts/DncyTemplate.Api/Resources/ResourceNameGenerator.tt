@@ -18,7 +18,7 @@ namespace DncyTemplate.Api
 {
 <#
     var path = Path.GetDirectoryName(Host.TemplateFile);
-    var fileNames = Directory.EnumerateFiles(path, $"*.resx", SearchOption.TopDirectoryOnly).ToList();
+    var fileNames = Directory.GetFiles(path, $"*.resx", SearchOption.AllDirectories).ToList();
     var localizationKeys = new Dictionary<string,HashSet<string>>();
 	if(fileNames!=null&&fileNames.Any())
 	{
@@ -38,7 +38,7 @@ namespace DncyTemplate.Api
 	foreach(var item in localizationKeys)
     {
         #>
-    public class <#=item.Key#> 
+    public class <#=(item.Key.Contains("Resource")?item.Key:$"{item.Key}Resource")#> 
     {
 <#
 		    foreach(var key in item.Value)

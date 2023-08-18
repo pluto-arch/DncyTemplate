@@ -36,20 +36,20 @@ namespace DncyTemplate.Api.Infra.LocalizerSetup
 
         public static MvcOptions SetUpDefaultDataAnnotation(this MvcOptions options, IStringLocalizerFactory localizerFactory)
         {
-            var L = localizerFactory?.Create("DefaultDataAnnotation", AppConstant.SERVICE_NAME);
-            if (L != null)
+            var l = localizerFactory?.Create("DefaultDataAnnotation", AppConstant.SERVICE_NAME);
+            if (l != null)
             {
-                options.ModelBindingMessageProvider.SetValueIsInvalidAccessor(x => L[DefaultDataAnnotation.ValueIsInvalidAccessor, x]);
-                options.ModelBindingMessageProvider.SetValueMustBeANumberAccessor(x => L[DefaultDataAnnotation.ValueMustBeANumberAccessor, x]);
-                options.ModelBindingMessageProvider.SetMissingBindRequiredValueAccessor(x => L[DefaultDataAnnotation.MissingBindRequiredValueAccessor, x]);
-                options.ModelBindingMessageProvider.SetAttemptedValueIsInvalidAccessor((x, y) => L.GetString(DefaultDataAnnotation.AttemptedValueIsInvalidAccessor, x, y));
-                options.ModelBindingMessageProvider.SetMissingKeyOrValueAccessor(() => L[DefaultDataAnnotation.MissingKeyOrValueAccessor]);
-                options.ModelBindingMessageProvider.SetUnknownValueIsInvalidAccessor(x => L[DefaultDataAnnotation.UnknownValueIsInvalidAccessor, x]);
-                options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(x => L[DefaultDataAnnotation.ValueMustNotBeNullAccessor, x]);
-                options.ModelBindingMessageProvider.SetNonPropertyAttemptedValueIsInvalidAccessor(x => L[DefaultDataAnnotation.NonPropertyAttemptedValueIsInvalidAccessor, x]);
-                options.ModelBindingMessageProvider.SetNonPropertyUnknownValueIsInvalidAccessor(() => L[DefaultDataAnnotation.UnknownValueIsInvalidAccessor]);
-                options.ModelBindingMessageProvider.SetNonPropertyValueMustBeANumberAccessor(() => L[DefaultDataAnnotation.NonPropertyValueMustBeANumberAccessor]);
-                options.ModelBindingMessageProvider.SetMissingRequestBodyRequiredValueAccessor(() => L[DefaultDataAnnotation.MissingRequestBodyRequiredValueAccessor]);
+                options.ModelBindingMessageProvider.SetValueIsInvalidAccessor(x => l[DefaultDataAnnotationResource.ValueIsInvalidAccessor, x]);
+                options.ModelBindingMessageProvider.SetValueMustBeANumberAccessor(x => l[DefaultDataAnnotationResource.ValueMustBeANumberAccessor, x]);
+                options.ModelBindingMessageProvider.SetMissingBindRequiredValueAccessor(x => l[DefaultDataAnnotationResource.MissingBindRequiredValueAccessor, x]);
+                options.ModelBindingMessageProvider.SetAttemptedValueIsInvalidAccessor((x, y) => l.GetString(DefaultDataAnnotationResource.AttemptedValueIsInvalidAccessor, x, y));
+                options.ModelBindingMessageProvider.SetMissingKeyOrValueAccessor(() => l[DefaultDataAnnotationResource.MissingKeyOrValueAccessor]);
+                options.ModelBindingMessageProvider.SetUnknownValueIsInvalidAccessor(x => l[DefaultDataAnnotationResource.UnknownValueIsInvalidAccessor, x]);
+                options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(x => l[DefaultDataAnnotationResource.ValueMustNotBeNullAccessor, x]);
+                options.ModelBindingMessageProvider.SetNonPropertyAttemptedValueIsInvalidAccessor(x => l[DefaultDataAnnotationResource.NonPropertyAttemptedValueIsInvalidAccessor, x]);
+                options.ModelBindingMessageProvider.SetNonPropertyUnknownValueIsInvalidAccessor(() => l[DefaultDataAnnotationResource.UnknownValueIsInvalidAccessor]);
+                options.ModelBindingMessageProvider.SetNonPropertyValueMustBeANumberAccessor(() => l[DefaultDataAnnotationResource.NonPropertyValueMustBeANumberAccessor]);
+                options.ModelBindingMessageProvider.SetMissingRequestBodyRequiredValueAccessor(() => l[DefaultDataAnnotationResource.MissingRequestBodyRequiredValueAccessor]);
             }
             return options;
         }

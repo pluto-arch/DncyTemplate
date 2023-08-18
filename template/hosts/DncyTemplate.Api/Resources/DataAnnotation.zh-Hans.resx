@@ -118,19 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="LengthLimit" xml:space="preserve">
-    <value>大大大</value>
+    <value>字段 '{0}' 必须是最小长度为 '{2}'、最大长度为 '{1}' 的字符串。</value>
   </data>
   <data name="MaxLengthValidate" xml:space="preserve">
-    <value>字段 {0} 必须是长度为 '{1}' 的字符串.</value>
+    <value>字段 '{0}' 必须是长度为 '{1}' 的字符串.</value>
   </data>
   <data name="PageIndexVerifyMessage" xml:space="preserve">
     <value>页大小必须在{1}~{2}之间</value>
   </data>
   <data name="PageSizeVerifyMessage" xml:space="preserve">
     <value>页码必须在{1}~{2}之间</value>
-  </data>
-  <data name="ProductName" xml:space="preserve">
-    <value>1111</value>
   </data>
   <data name="ValueIsRequired" xml:space="preserve">
     <value>{0} 必须的</value>

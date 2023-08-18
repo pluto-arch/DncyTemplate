@@ -117,12 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ValueIsRequired" xml:space="preserve">
-    <value>参数 "{0}" 不能为空</value>
-  </data>
-  <data name="Welcome" xml:space="preserve">
-    <value>欢迎</value>
-  </data>
   <data name="Successed" xml:space="preserve">
     <value>成功</value>
   </data>
@@ -137,8 +131,5 @@
   </data>
   <data name="TooManyRequest" xml:space="preserve">
     <value>请求繁忙</value>
-  </data>
-  <data name="LengthLimit" xml:space="preserve">
-    <value>参数“{0}”必须包含 {0} 到 {1} 个字符</value>
   </data>
 </root>

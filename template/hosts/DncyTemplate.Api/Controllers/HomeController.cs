@@ -18,7 +18,7 @@ namespace DncyTemplate.Api.Controllers
     public partial class HomeController : ControllerBase, IResponseWraps
     {
         [AutoInject]
-        private readonly IStringLocalizer<SharedResource> _stringLocalizer;
+        private readonly IStringLocalizer<HomeController> _stringLocalizer;
 
         [AutoInject]
         private readonly IHttpClientFactory _httpClientFactory;
@@ -33,7 +33,7 @@ namespace DncyTemplate.Api.Controllers
         [HttpGet]
         public ResultDto TestLocalize(int name)
         {
-            var text = _stringLocalizer[SharedResource.Welcome];
+            var text = _stringLocalizer[HomeControllerResource.Welcome];
             return this.Success<string>(text);
         }
 
@@ -41,7 +41,7 @@ namespace DncyTemplate.Api.Controllers
         public ResultDto TestActionException(string name)
         {
             ThrowHelper.ThrowArgumentException(nameof(name), "name 不能 为空");
-            var text = _stringLocalizer[SharedResource.Welcome];
+            var text = _stringLocalizer[HomeControllerResource.Welcome];
             return this.Success<string>(text);
         }
 
@@ -54,7 +54,7 @@ namespace DncyTemplate.Api.Controllers
         [EnableRateLimiting("home.RateLimit_action")]
         public ResultDto RateLimit()
         {
-            var text = _stringLocalizer[SharedResource.Welcome];
+            var text =  _stringLocalizer[HomeControllerResource.Welcome];
             return this.Success<string>(text);
         }
     }
