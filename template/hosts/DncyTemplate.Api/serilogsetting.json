@@ -29,7 +29,7 @@
         "Microsoft.AspNetCore": "Error",
         "Microsoft.EntityFrameworkCore": "Warning",
         "Microsoft.EntityFrameworkCore.Database.Command": "Warning",
-        "Dapper.CommandDefinition": "Debug"
+        "Dapper.CommandDefinition": "Error"
       }
     },
     "WriteTo": [

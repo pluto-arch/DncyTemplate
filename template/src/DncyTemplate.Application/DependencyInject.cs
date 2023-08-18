@@ -2,6 +2,9 @@
 using DncyTemplate.Application.Behaviors;
 using DncyTemplate.Application.Permission;
 using DncyTemplate.Infra.EntityFrameworkCore.Repository;
+using FastExpressionCompiler;
+using Mapster;
+using MapsterMapper;
 
 namespace DncyTemplate.Application
 {
@@ -11,7 +14,7 @@ namespace DncyTemplate.Application
         {
             var assemblies = AppDomain.CurrentDomain.GetAssemblies()
                 .Where(x => !string.IsNullOrEmpty(x.FullName) && ( !x.FullName.Contains("Microsoft", StringComparison.OrdinalIgnoreCase) || !x.FullName.Contains("System", StringComparison.OrdinalIgnoreCase) ));
-            services.AddAutoMapper(assemblies.ToArray());
+            services.AddMapster(assemblies.ToArray());
 
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(TransactionBehavior<,>).Assembly));
 
@@ -36,5 +39,14 @@ namespace DncyTemplate.Application
             return services;
         }
 
+
+        public static void AddMapster(this IServiceCollection services,params Assembly[] assemblies)
+        {
+            var config=TypeAdapterConfig.GlobalSettings;
+            TypeAdapterConfig.GlobalSettings.Compiler = exp => exp.CompileFast();
+            config.Scan(assemblies);
+            services.AddSingleton(config);
+            services.AddScoped<IMapper, ServiceMapper>();
+        }
     }
 }

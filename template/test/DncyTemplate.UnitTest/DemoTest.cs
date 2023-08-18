@@ -10,7 +10,6 @@ using DncyTemplate.Domain.Infra.Repository;
 using DncyTemplate.Infra.EntityFrameworkCore.Repository;
 using Moq;
 using DncyTemplate.Domain.Infra;
-using System.Linq.Expressions;
 
 namespace DncyTemplate.UnitTest
 {
@@ -60,7 +59,7 @@ namespace DncyTemplate.UnitTest
                 .ReturnsAsync(first);
 
 
-            var mockRepository= new Mock<IEfRepository<Product,string>>();
+            var mockRepository = new Mock<IEfRepository<Product, string>>();
             mockRepository.Setup(r => r.AsyncExecuter).Returns(mockAsyncExecuter.Object);
             mockRepository.Setup(r => r.QuerySet).Returns(productQuerable);
 

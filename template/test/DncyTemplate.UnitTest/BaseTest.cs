@@ -2,11 +2,8 @@
 using Dncy.MultiTenancy.ConnectionStrings;
 using Dncy.MultiTenancy.Store;
 using Dncy.MultiTenancy;
-using Dncy.MultiTenancy.Model;
 #endif
 using DncyTemplate.Application;
-using DncyTemplate.Application.AppServices.Product;
-using DncyTemplate.Application.Models.Product;
 using DncyTemplate.Domain;
 using DncyTemplate.Infra;
 using Microsoft.Extensions.Configuration;

@@ -57,7 +57,7 @@ namespace DncyTemplate.Uow.EntityFrameworkCore
             return newUow;
         }
 
-        
+
         /// <inheritdoc />
         public TContext DbContext() => _context.Value;
 

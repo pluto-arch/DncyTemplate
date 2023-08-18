@@ -132,7 +132,7 @@ public static class EntityFrameworkServiceExtension
         return services;
     }
 
-    
+
     private static IServiceCollection RegisterScopedType(this IServiceCollection services, Type type, Type implementationType)
     {
         if (type.IsAssignableFrom(implementationType))

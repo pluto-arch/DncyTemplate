@@ -17,6 +17,7 @@
         <PackageReference Include="MediatR"/>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
 		<PackageReference Include="CommunityToolkit.Diagnostics"/>
+        <PackageReference Include="Bogus" />
     </ItemGroup>
 
     <ItemGroup>

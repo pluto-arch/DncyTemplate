@@ -26,7 +26,7 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
         }
 
         private TContext _dbContext => _unitOfWork.DbContext();
-        
+
         protected DbSet<TEntity> _entitySet => _dbContext.Set<TEntity>();
 
         public virtual IQueryable<TEntity> QuerySet => _dbContext.Set<TEntity>();

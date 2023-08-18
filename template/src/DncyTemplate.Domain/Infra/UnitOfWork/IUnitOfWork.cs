@@ -9,8 +9,8 @@ namespace DncyTemplate.Uow
     {
 
         IServiceProvider ServiceProvider { get; }
-        
-        
+
+
         IDataContext Context { get; }
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace DncyTemplate.Uow
         /// <returns></returns>
         IUnitOfWork BeginNew();
 
-        
+
         /// <summary>
         /// 完成unitofwork
         /// </summary>
@@ -55,7 +55,7 @@ namespace DncyTemplate.Uow
         /// <typeparam name="TKey">实体主键</typeparam>
         /// <returns></returns>
         IEfRepository<T, TKey> GetEfRepository<T, TKey>() where T : class, IEntity;
-        
+
         event Action OnDisposed;
     }
 

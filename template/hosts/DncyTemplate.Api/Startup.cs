@@ -54,8 +54,8 @@ namespace DncyTemplate.Api
                     context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
                     context.HttpContext.Response.Headers.Add("Retry-After", new StringValues("1")); // TODO 根据具体情况返回
                     context.HttpContext.Response.ContentType = AppConstant.DEFAULT_CONTENT_TYPE;
-                    var res =  ResultDto.TooManyRequest();
-                    res.Message=L[res.Message];
+                    var res = ResultDto.TooManyRequest();
+                    res.Message = L[res.Message];
                     await context.HttpContext.Response.WriteAsJsonAsync(res, cancellationToken: cancelToken);
                 };
                 //options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>

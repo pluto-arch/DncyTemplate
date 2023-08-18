@@ -55,7 +55,7 @@ public partial class PermissionAppService : IPermissionAppService
     /// <inheritdoc />
     public async Task GrantAsync(string[] permissions, string providerName, string providerValue)
     {
-        TransactionOptions transactionOption = new ()
+        TransactionOptions transactionOption = new()
         {
             IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted,
             Timeout = new TimeSpan(0, 0, 120)

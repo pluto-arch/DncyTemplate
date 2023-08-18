@@ -1,16 +1,13 @@
 ﻿using DncyTemplate.Application.Models;
-using DncyTemplate.Domain.Aggregates.Product;
-using DncyTemplate.Domain.Infra.Repository;
-using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
-using DncyTemplate.Infra.EntityFrameworkCore.Repository;
-using DncyTemplate.Infra.Utils;
-using DncyTemplate.Uow;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Localization;
 using System.ComponentModel.DataAnnotations;
-using DncyTemplate.Application.AppServices.Product;
+using Bogus;
 using DncyTemplate.Application.Models.Product;
+using DncyTemplate.Domain.Aggregates.Product;
+using MapsterMapper;
+using Microsoft.CodeAnalysis.Elfie.Serialization;
 
 namespace DncyTemplate.Api.Controllers
 {
@@ -29,18 +26,21 @@ namespace DncyTemplate.Api.Controllers
         [AutoInject]
         private readonly ILogger<HomeController> _logger;
 
-        
+        [AutoInject]
+        private readonly IMapper _mapper;
+
+
         [HttpGet]
         public ResultDto TestLocalize(int name)
         {
             var text = _stringLocalizer[SharedResource.Welcome];
             return this.Success<string>(text);
         }
-        
+
         [HttpGet]
         public ResultDto TestActionException(string name)
         {
-            ThrowHelper.ThrowArgumentException(nameof(name),"name 不能 为空");
+            ThrowHelper.ThrowArgumentException(nameof(name), "name 不能 为空");
             var text = _stringLocalizer[SharedResource.Welcome];
             return this.Success<string>(text);
         }

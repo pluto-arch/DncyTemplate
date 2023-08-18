@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using DncyTemplate.Application.Models;
+﻿using DncyTemplate.Application.Models;
 using DncyTemplate.Application.Models.Generics;
 using DncyTemplate.Domain.Collections;
 using DncyTemplate.Domain.Infra;

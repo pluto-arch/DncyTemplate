@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using DncyTemplate.Application.Models.Product;
+﻿using DncyTemplate.Application.Models.Product;
 using DncyTemplate.Domain.DomainEvents.Product;
 using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 using DncyTemplate.Infra.Utils;

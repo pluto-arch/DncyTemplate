@@ -21,7 +21,7 @@ public static class DbContextExtension
     /// <returns></returns>
     public static async Task<IEnumerable<T>> QueryFromSqlAsync<T>(
         this IDataContext context,
-        [NotNull]string sql,
+        [NotNull] string sql,
         DynamicParameters parameters,
         int? timeout = null,
         CommandType commandType = CommandType.Text,
@@ -48,7 +48,7 @@ public static class DbContextExtension
     /// <returns></returns>
     public static async Task<T> SingleOrDefaultFromSqlAsync<T>(
         this IDataContext context,
-        [NotNull]string sql,
+        [NotNull] string sql,
         DynamicParameters parameters,
         int? timeout = null,
         CommandType commandType = CommandType.Text,
@@ -75,7 +75,7 @@ public static class DbContextExtension
     /// <returns></returns>
     public static async Task<T> FirstOrDefaultFromSqlAsync<T>(
         this IDataContext context,
-        [NotNull]string sql,
+        [NotNull] string sql,
         DynamicParameters parameters,
         int? timeout = null,
         CommandType commandType = CommandType.Text,
@@ -103,7 +103,7 @@ public static class DbContextExtension
     /// <returns></returns>
     public static async Task<int> ExecuteFromSqlAsync(
         this IDataContext context,
-        [NotNull]string sql,
+        [NotNull] string sql,
         DynamicParameters parameters,
         int? timeout = null,
         CommandType commandType = CommandType.Text,
@@ -131,7 +131,7 @@ public static class DbContextExtension
     /// <returns></returns>
     public static async Task<T> ExecuteScalarFromSqlAsync<T>(
         this IDataContext context,
-        [NotNull]string sql,
+        [NotNull] string sql,
         DynamicParameters parameters,
         int? timeout = null,
         CommandType commandType = CommandType.Text,

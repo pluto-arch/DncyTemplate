@@ -91,7 +91,7 @@ public record ResultDto<T> : ResultDto
     ///     执行成功
     /// </summary>
     /// <returns></returns>
-    public static ResultDto<T> Success(T data, string message="Successed")
+    public static ResultDto<T> Success(T data, string message = "Successed")
     {
         return new() { Code = 200, Message = message, Data = data };
     }
@@ -102,7 +102,7 @@ public record ResultDto<T> : ResultDto
     /// <param name="message"></param>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static ResultDto<T> Error(string message="ErrorHandleRequest", T data = default)
+    public static ResultDto<T> Error(string message = "ErrorHandleRequest", T data = default)
     {
         return new() { Code = -100, Message = message, Data = data };
     }
@@ -113,7 +113,7 @@ public record ResultDto<T> : ResultDto
     /// <param name="message"></param>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static ResultDto<T> Fatal(string message="ServiceUnavailable", T data = default)
+    public static ResultDto<T> Fatal(string message = "ServiceUnavailable", T data = default)
     {
         return new() { Code = 500, Message = message, Data = data };
     }
@@ -145,7 +145,7 @@ public static class ResponseWapper
         return ResultDto<TData>.Success(result);
     }
 
-    public static ResultDto<TData> Success<TData>(this IResponseWraps _, TData result, string message="Successed")
+    public static ResultDto<TData> Success<TData>(this IResponseWraps _, TData result, string message = "Successed")
     {
         return ResultDto<TData>.Success(result, message);
     }

@@ -17,7 +17,7 @@ namespace DncyTemplate.Application.Command.Product
         public string Name { get; set; }
 
         [Required(ErrorMessage = "ValueIsRequired")]
-        [StringLength(maximumLength: 200, MinimumLength = 3,ErrorMessage = "LengthLimit")]
+        [StringLength(maximumLength: 200, MinimumLength = 3, ErrorMessage = "LengthLimit")]
         public string Remark { get; set; }
 
         /// <inheritdoc />

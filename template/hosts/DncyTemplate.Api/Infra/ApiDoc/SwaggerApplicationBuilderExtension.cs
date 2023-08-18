@@ -5,7 +5,7 @@ namespace DncyTemplate.Api.Infra.ApiDoc
     public static class SwaggerApplicationBuilderExtension
     {
         private const string requestAuthorization = "(req)=>{const token = localStorage.getItem('token') ;if(token){req.headers.authorization =`Bearer ${token}`;alert(123)}return req}";
-        
+
         /// <summary>
         /// Swagger
         /// </summary>
@@ -18,9 +18,9 @@ namespace DncyTemplate.Api.Infra.ApiDoc
             app.UseSwaggerUI(options =>
             {
                 options.IndexStream = () => typeof(Program).Assembly.GetManifestResourceStream("DncyTemplate.Api.Infra.ApiDoc.index.html");
-                
+
                 // options.UseRequestInterceptor(requestAuthorization);
-                
+
                 foreach (var description in versionProvider.ApiVersionDescriptions)
                 {
                     options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", $"{AppConstant.SERVICE_NAME} - {description.GroupName}");
