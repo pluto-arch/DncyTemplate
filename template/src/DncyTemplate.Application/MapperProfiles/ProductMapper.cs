@@ -4,7 +4,7 @@ using DncyTemplate.Application.Models.Product;
 using DncyTemplate.Domain.Aggregates.Product;
 using Mapster;
 
-namespace DncyTemplate.Application.AutoMapperProfiles;
+namespace DncyTemplate.Application.MapperProfiles;
 
 public class ProductMapper : IRegister
 {
