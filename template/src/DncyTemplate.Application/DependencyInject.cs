@@ -18,7 +18,7 @@ namespace DncyTemplate.Application
 
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(TransactionBehavior<,>).Assembly));
 
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(TransactionBehavior<,>));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(TransactionBehavior<,>));
 
 
             #region permission
@@ -27,10 +27,10 @@ namespace DncyTemplate.Application
             services.AddSingleton<IPermissionDefinitionManager, DefaultPermissionDefinitionManager>();
             services.AddSingleton<IPermissionDefinitionProvider, PermissionDefinitionProvider>();
 
-            services.AddTransient<IPermissionGrantStore, EfCorePermissionGrantStore>();
-            services.AddTransient<IPermissionManager, CachedPermissionManager>();
-            services.AddTransient<IPermissionValueProvider, RolePermissionValueProvider>();
-            services.AddTransient<IPermissionValueProvider, UserPermissionValueProvider>();
+            services.AddScoped<IPermissionGrantStore, EfCorePermissionGrantStore>();
+            services.AddScoped<IPermissionManager, CachedPermissionManager>();
+            services.AddScoped<IPermissionValueProvider, RolePermissionValueProvider>();
+            services.AddScoped<IPermissionValueProvider, UserPermissionValueProvider>();
             #endregion
 
 
