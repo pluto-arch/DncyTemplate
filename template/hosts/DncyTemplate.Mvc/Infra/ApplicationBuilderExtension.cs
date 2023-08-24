@@ -1,6 +1,7 @@
 ﻿using DncyTemplate.Domain.Infra;
 using DncyTemplate.Infra.Global;
 using DncyTemplate.Mvc.Infra.ExceptionHandlers;
+using Microsoft.EntityFrameworkCore;
 
 namespace DncyTemplate.Mvc.Infra;
 
@@ -70,6 +71,17 @@ public static class ApplicationBuilderExtension
     public static async Task<IApplicationBuilder> DataSeederAsync(this IApplicationBuilder app)
     {
         using IServiceScope serviceScope = app.ApplicationServices.CreateScope();
+        
+        foreach (var dbcontext in DataContextTypeCache.GetApplicationDataContextList())
+        {
+            var db = serviceScope.ServiceProvider.GetService(dbcontext);
+            if (db is DbContext ctx)
+            {
+                await ctx.Database.MigrateAsync(); // 应用迁移
+            }
+        }
+
+        
         var seeders = serviceScope.ServiceProvider.GetServices<IDataSeedProvider>();
         if (!seeders.Any())
         {
