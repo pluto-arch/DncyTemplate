@@ -46,7 +46,7 @@ namespace DncyTemplate.Application
             TypeAdapterConfig.GlobalSettings.Compiler = exp => exp.CompileFast();
             config.Scan(assemblies);
             services.AddSingleton(config);
-            services.AddScoped<IMapper, ServiceMapper>();
+            services.AddSingleton<IMapper, ServiceMapper>();
         }
     }
 }
