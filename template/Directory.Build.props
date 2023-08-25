@@ -9,7 +9,7 @@
 	</PropertyGroup>
 
 	<!--#if (Tenant) -->
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	<PropertyGroup>
 		<DefineConstants>Tenant</DefineConstants>
 	</PropertyGroup>
 	<!--#endif -->

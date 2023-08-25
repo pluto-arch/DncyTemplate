@@ -1,15 +1,14 @@
 {
   "$schema": "http://json.schemastore.org/template",
-  "author": "zhangyulong",
+  "author": "dotnetydd.com",
   "classifications": [
-    "API",
-    "MVC",
-    "DDD",
-    "microservice"
+    "Web",
+    "Cloud",
+    "DDD"
   ],
-  "identity": "DncyTemplate",
-  "name": "AspNetCore DDD Template",
-  "shortName": "dncy",
+  "identity": "DotNetBoltTemplate",
+  "name": "dotnet web application template",
+  "shortName": "boltapp",
   "preferNameDirectory": true,
   "sourceName": "DncyTemplate",
   "tags": {

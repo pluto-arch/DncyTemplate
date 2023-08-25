@@ -11,7 +11,7 @@ namespace DncyTemplate.Infra
         {
 
             service.AddSingleton<GlobalAccessor.CurrentUserAccessor>();
-            service.AddTransient<GlobalAccessor.CurrentUser>();
+            service.AddScoped<GlobalAccessor.CurrentUser>();
 
             var ctxs = GetDbContextTypes();
 

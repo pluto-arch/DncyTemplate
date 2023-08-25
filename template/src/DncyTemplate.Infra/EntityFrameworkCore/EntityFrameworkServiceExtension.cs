@@ -108,15 +108,15 @@ public static class EntityFrameworkServiceExtension
                 var defType = typeof(IEfRepository<>).MakeGenericType(entityType);
                 var defType2 = typeof(IEfContextRepository<,>).MakeGenericType(item, entityType);
                 var implementingType = EfRepositoryHelper.GetRepositoryType(item, entityType);
-                services.RegisterType(defType, implementingType);
-                services.RegisterType(defType2, implementingType);
+                services.RegisterScopedType(defType, implementingType);
+                services.RegisterScopedType(defType2, implementingType);
 
                 Type keyType = EntityHelper.FindPrimaryKeyType(entityType);
                 if (keyType != null)
                 {
                     var impl = EfRepositoryHelper.GetRepositoryType(item, entityType, keyType);
-                    services.RegisterType(typeof(IEfRepository<,>).MakeGenericType(entityType, keyType), impl);
-                    services.RegisterType(typeof(IEfContextRepository<,,>).MakeGenericType(item, entityType, keyType),
+                    services.RegisterScopedType(typeof(IEfRepository<,>).MakeGenericType(entityType, keyType), impl);
+                    services.RegisterScopedType(typeof(IEfContextRepository<,,>).MakeGenericType(item, entityType, keyType),
                         impl);
                 }
             }
