@@ -14,6 +14,7 @@ using Microsoft.Extensions.Primitives;
 using System.Threading.RateLimiting;
 using DncyTemplate.Api.Infra.LocalizerSetup;
 using DncyTemplate.Application.Models;
+using DncyTemplate.Uow;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.Localization;
@@ -126,6 +127,14 @@ namespace DncyTemplate.Api
                 // TODO Notice: UseHsts, UseHttpsRedirection are not necessary if using reverse proxy with ssl, like nginx with ssl proxy
                 app.UseHsts();
             }
+
+            // app.Use(async (ctx,next) =>
+            // {
+            //     var unitofworkAccessor = ctx.RequestServices.GetRequiredService<IUnitOfWorkAccessor>();
+            //     var uow = ctx.RequestServices.GetRequiredService<IUnitOfWork>();
+            //     unitofworkAccessor.SetUnitOfWork(uow);
+            //     await next(ctx);
+            // });
 
             app.UseHttpsRedirection();
             app.UseAuthentication();

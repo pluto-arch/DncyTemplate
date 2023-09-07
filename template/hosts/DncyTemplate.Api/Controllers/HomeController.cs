@@ -58,12 +58,14 @@ namespace DncyTemplate.Api.Controllers
             var text =  _stringLocalizer[HomeControllerResource.Welcome];
             return this.Success<string>(text);
         }
-        
+
+        [AutoInject]
+        private readonly IUnitOfWork _unitOfWork;
         
         [HttpGet]
-        public async Task<IActionResult> UowThreadSelf([FromServices]IUnitOfWork unitOfWork)
+        public async Task<IActionResult> UowThreadSelf()
         {
-            var rep = unitOfWork.GetEfRepository<Product>();
+            var rep = _unitOfWork.GetEfRepository<Product>();
             await rep.InsertAsync(new Product
             {
                 Id = "A",
@@ -73,9 +75,8 @@ namespace DncyTemplate.Api.Controllers
 
             var t1 = Task.Run(async () =>
             {
-                using (var newuow=unitOfWork.BeginNew())
+                using (var newuow=_unitOfWork.BeginNew())
                 {
-                    var rep = newuow.GetEfRepository<Product>();
                     await rep.InsertAsync(new Product
                     {
                         Id = "B",
@@ -87,9 +88,8 @@ namespace DncyTemplate.Api.Controllers
             
             var t2 = Task.Run(async () =>
             {
-                using (var newuow=unitOfWork.BeginNew())
+                using (var newuow=_unitOfWork.BeginNew())
                 {
-                    var rep = newuow.GetEfRepository<Product>();
                     await rep.InsertAsync(new Product
                     {
                         Id = "C",
@@ -101,7 +101,7 @@ namespace DncyTemplate.Api.Controllers
 
             await Task.WhenAll(t1,t2);
             
-            await unitOfWork.CompleteAsync();
+            await _unitOfWork.CompleteAsync();
             return Ok("success");
         }
         
