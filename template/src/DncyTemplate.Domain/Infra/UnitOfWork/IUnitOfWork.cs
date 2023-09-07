@@ -13,12 +13,6 @@ namespace DncyTemplate.Uow
 
         IDataContext Context { get; }
 
-        /// <summary>
-        /// 新的范围作用域
-        /// </summary>
-        /// <returns></returns>
-        IDisposable Change();
-
 
         /// <summary>
         /// 使用新的单元

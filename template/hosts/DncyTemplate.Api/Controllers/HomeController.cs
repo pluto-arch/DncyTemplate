@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using Bogus;
 using DncyTemplate.Application.Models.Product;
 using DncyTemplate.Domain.Aggregates.Product;
+using DncyTemplate.Uow;
 using MapsterMapper;
 using Microsoft.CodeAnalysis.Elfie.Serialization;
 
@@ -57,6 +58,54 @@ namespace DncyTemplate.Api.Controllers
             var text =  _stringLocalizer[HomeControllerResource.Welcome];
             return this.Success<string>(text);
         }
+        
+        
+        [HttpGet]
+        public async Task<IActionResult> UowThreadSelf([FromServices]IUnitOfWork unitOfWork)
+        {
+            var rep = unitOfWork.GetEfRepository<Product>();
+            await rep.InsertAsync(new Product
+            {
+                Id = "A",
+                Name = "主请求作用域",
+            });
+
+
+            var t1 = Task.Run(async () =>
+            {
+                using (var newuow=unitOfWork.BeginNew())
+                {
+                    var rep = newuow.GetEfRepository<Product>();
+                    await rep.InsertAsync(new Product
+                    {
+                        Id = "B",
+                        Name = "Task1作用域",
+                    });
+                    await newuow.CompleteAsync();
+                }
+            });
+            
+            var t2 = Task.Run(async () =>
+            {
+                using (var newuow=unitOfWork.BeginNew())
+                {
+                    var rep = newuow.GetEfRepository<Product>();
+                    await rep.InsertAsync(new Product
+                    {
+                        Id = "C",
+                        Name = "Task2作用域",
+                    });
+                    await newuow.CompleteAsync();
+                }
+            });
+
+            await Task.WhenAll(t1,t2);
+            
+            await unitOfWork.CompleteAsync();
+            return Ok("success");
+        }
+        
+        
     }
 
 }
