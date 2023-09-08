@@ -7,7 +7,6 @@ namespace DncyTemplate.Domain
         public static IServiceCollection AddDomainModule(this IServiceCollection service)
         {
             service.AutoInjectDncyTemplate_Domain();
-            service.AddSingleton<IUnitOfWorkAccessor, UnitOfWorkAccessor>();
             return service;
         }
     }

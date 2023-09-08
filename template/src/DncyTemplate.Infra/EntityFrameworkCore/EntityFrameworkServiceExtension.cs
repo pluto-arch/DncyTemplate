@@ -44,6 +44,31 @@ public static class EntityFrameworkServiceExtension
             optionsBuilder.EnableSensitiveDataLogging();
 #endif
         });
+        
+        service.AddDbContextPool<DncyTemplateDb2Context>((serviceProvider, optionsBuilder) =>
+        {
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString(DbConstants.DEFAULT_CONNECTIONSTRING_NAME),
+                sqlOptions =>
+                {
+                    sqlOptions.MigrationsAssembly(Assembly.GetExecutingAssembly().GetName().Name);
+                    //sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromMilliseconds(400), null);
+                });
+
+            var mediator = serviceProvider.GetService<IDomainEventDispatcher>() ?? NullDomainEventDispatcher.Instance;
+            optionsBuilder.AddInterceptors(new DataChangeSaveChangesInterceptor(mediator));
+
+#if Tenant
+            //多租户模式下解析租户连接字符串使用
+            var connectionStringResolve = serviceProvider.GetRequiredService<IConnectionStringResolve>();
+            optionsBuilder.AddInterceptors(new TenantDbConnectionInterceptor(connectionStringResolve, DbConstants.DEFAULT_CONNECTIONSTRING_NAME));
+#endif
+
+
+#if DEBUG
+            optionsBuilder.EnableSensitiveDataLogging();
+#endif
+        });
+        
 
         service.AddDefaultRepository(contextTypes);
         service.ApplyEntityDefaultNavicationProperty();
@@ -65,12 +90,18 @@ public static class EntityFrameworkServiceExtension
             services.RegisterScopedType(defType, defType2);
         }
 
-        Parallel.ForEach(context, item =>
+        foreach (var item in context)
         {
             var defType = typeof(IUnitOfWork<>).MakeGenericType(item);
             var defType2 = typeof(EfUnitOfWork<>).MakeGenericType(item);
             services.RegisterScopedType(defType, defType2);
-        });
+            
+            var ua = typeof(IUnitOfWorkAccessor<>).MakeGenericType(item);
+            var uaImpl = typeof(UnitOfWorkAccessor<>).MakeGenericType(item);
+            services.AddSingleton(ua,uaImpl);
+
+            UnitWorkAccessorMap.Add(ua, defType);
+        }
     }
 
 

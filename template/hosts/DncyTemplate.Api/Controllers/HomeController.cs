@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using Bogus;
 using DncyTemplate.Application.Models.Product;
 using DncyTemplate.Domain.Aggregates.Product;
+using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 using DncyTemplate.Uow;
 using MapsterMapper;
 using Microsoft.CodeAnalysis.Elfie.Serialization;
@@ -59,53 +60,101 @@ namespace DncyTemplate.Api.Controllers
             return this.Success<string>(text);
         }
 
+        // [AutoInject]
+        // private readonly IUnitOfWork<DncyTemplateDbContext> _uow1;
+
         [AutoInject]
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork<DncyTemplateDb2Context> _uow2;
+        
         
         [HttpGet]
-        public async Task<IActionResult> UowThreadSelf()
+        public async Task<IActionResult> UowThreadSelf([FromServices]IUnitOfWork<DncyTemplateDbContext> uow3)
         {
-            var rep = _unitOfWork.GetEfRepository<Product>();
-            await rep.InsertAsync(new Product
-            {
-                Id = "A",
-                Name = "主请求作用域",
-            });
-
-
-            var t1 = Task.Run(async () =>
-            {
-                using (var newuow=_unitOfWork.BeginNew())
-                {
-                    await rep.InsertAsync(new Product
-                    {
-                        Id = "B",
-                        Name = "Task1作用域",
-                    });
-                    await newuow.CompleteAsync();
-                }
-            });
-            
-            var t2 = Task.Run(async () =>
-            {
-                using (var newuow=_unitOfWork.BeginNew())
-                {
-                    await rep.InsertAsync(new Product
-                    {
-                        Id = "C",
-                        Name = "Task2作用域",
-                    });
-                    await newuow.CompleteAsync();
-                }
-            });
-
-            await Task.WhenAll(t1,t2);
-            
-            await _unitOfWork.CompleteAsync();
+            // await UowA();
+            // await UowB();
             return Ok("success");
         }
-        
-        
+
+
+        // private async Task UowA()
+        // {
+        //     var rep = _uow1.GetEfRepository<Product>();
+        //     await rep.InsertAsync(new Product
+        //     {
+        //         Id = "A",
+        //         Name = "主请求作用域",
+        //     });
+        //
+        //
+        //     var t1 = Task.Run(async () =>
+        //     {
+        //         using (var newuow=_uow1.BeginNew())
+        //         {
+        //             await rep.InsertAsync(new Product
+        //             {
+        //                 Id = "A-T1",
+        //                 Name = "Task1作用域",
+        //             });
+        //             await newuow.CompleteAsync();
+        //         }
+        //     });
+        //     
+        //     var t2 = Task.Run(async () =>
+        //     {
+        //         using (var newuow=_uow1.BeginNew())
+        //         {
+        //             await rep.InsertAsync(new Product
+        //             {
+        //                 Id = "A-T2",
+        //                 Name = "Task2作用域",
+        //             });
+        //             await newuow.CompleteAsync();
+        //         }
+        //     });
+        //
+        //     await Task.WhenAll(t1,t2);
+        //     await _uow1.CompleteAsync();
+        // }
+        //
+        // private async Task UowB()
+        // {
+        //     var rep = _uow2.GetEfRepository<Product>();
+        //     await rep.InsertAsync(new Product
+        //     {
+        //         Id = "B",
+        //         Name = "主请求作用域",
+        //     });
+        //
+        //
+        //     var t1 = Task.Run(async () =>
+        //     {
+        //         using (var newuow=_uow2.BeginNew())
+        //         {
+        //             await rep.InsertAsync(new Product
+        //             {
+        //                 Id = "B-T1",
+        //                 Name = "Task1作用域",
+        //             });
+        //             await newuow.CompleteAsync();
+        //         }
+        //     });
+        //     
+        //     var t2 = Task.Run(async () =>
+        //     {
+        //         using (var newuow=_uow2.BeginNew())
+        //         {
+        //             await rep.InsertAsync(new Product
+        //             {
+        //                 Id = "B-T2",
+        //                 Name = "Task2作用域",
+        //             });
+        //             await newuow.CompleteAsync();
+        //         }
+        //     });
+        //
+        //     await Task.WhenAll(t1,t2);
+        //     await _uow2.CompleteAsync();
+        // }
     }
 
 }

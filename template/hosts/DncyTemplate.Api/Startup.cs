@@ -128,14 +128,18 @@ namespace DncyTemplate.Api
                 app.UseHsts();
             }
 
-            // app.Use(async (ctx,next) =>
-            // {
-            //     var unitofworkAccessor = ctx.RequestServices.GetRequiredService<IUnitOfWorkAccessor>();
-            //     var uow = ctx.RequestServices.GetRequiredService<IUnitOfWork>();
-            //     unitofworkAccessor.SetUnitOfWork(uow);
-            //     await next(ctx);
-            // });
-
+            foreach (var item in UnitWorkAccessorMap.UowWithAccessorMap)
+            {
+                var accessor= app.ApplicationServices.GetService(item.Key) as IUnitOfWorkAccessor;
+                app.Use(async (ctx, next) =>
+                {
+                    using var uow= ctx.RequestServices.GetService(item.Value) as IUnitOfWork; 
+                    accessor.SetUnitOfWork(uow);
+                    await next(ctx);
+                });
+            }
+            
+            
             app.UseHttpsRedirection();
             app.UseAuthentication();
 #if Tenant

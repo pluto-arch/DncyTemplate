@@ -9,7 +9,6 @@ namespace DncyTemplate.Infra
     {
         public static IServiceCollection AddInfraModule(this IServiceCollection service, IConfiguration configuration)
         {
-
             service.AddSingleton<GlobalAccessor.CurrentUserAccessor>();
             service.AddScoped<GlobalAccessor.CurrentUser>();
 

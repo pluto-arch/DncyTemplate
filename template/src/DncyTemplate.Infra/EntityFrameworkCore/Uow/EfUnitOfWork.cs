@@ -9,12 +9,12 @@ namespace DncyTemplate.Uow.EntityFrameworkCore
         private bool _disposedValue;
         private IServiceProvider _serviceProvider;
         private TContext _context;
-        private readonly IUnitOfWorkAccessor _unitOfWorkAccessor;
+        private readonly IUnitOfWorkAccessor<TContext> _unitOfWorkAccessor;
 
-        public EfUnitOfWork(IServiceProvider serviceProvider,TContext context,IUnitOfWorkAccessor unitOfWorkAccessor)
+        public EfUnitOfWork(IServiceProvider serviceProvider,IUnitOfWorkAccessor<TContext> unitOfWorkAccessor)
         {
             _serviceProvider = serviceProvider;
-            _context = context;
+            _context = serviceProvider.GetRequiredService<TContext>();
             _unitOfWorkAccessor = unitOfWorkAccessor;
             _unitOfWorkAccessor.SetUnitOfWork(this);
         }

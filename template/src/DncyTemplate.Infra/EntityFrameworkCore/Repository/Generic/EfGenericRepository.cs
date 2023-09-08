@@ -18,9 +18,9 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
          where TEntity : class, IEntity
     {
         private readonly ISpecificationEvaluator _specification = EfCoreSpecificationEvaluator.Default;
-        private readonly IUnitOfWorkAccessor _unitOfWork;
+        private readonly IUnitOfWorkAccessor<TContext> _unitOfWork;
 
-        public EfRepository(IUnitOfWorkAccessor unitOfWorkAccessor)
+        public EfRepository(IUnitOfWorkAccessor<TContext> unitOfWorkAccessor)
         {
             _unitOfWork = unitOfWorkAccessor;
         }
@@ -262,11 +262,11 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
     }
 
 
-    public class EfRepository<TDbContext, TEntity, TKey> : EfRepository<TDbContext, TEntity>, IEfContextRepository<TDbContext, TEntity, TKey>
-            where TDbContext : DbContext, IDataContext
+    public class EfRepository<TContext, TEntity, TKey> : EfRepository<TContext, TEntity>, IEfContextRepository<TContext, TEntity, TKey>
+            where TContext : DbContext, IDataContext
             where TEntity : class, IEntity
     {
-        public EfRepository(IUnitOfWorkAccessor unitOfWork) : base(unitOfWork) { }
+        public EfRepository(IUnitOfWorkAccessor<TContext> unitOfWork) : base(unitOfWork) { }
 
         public async Task DeleteAsync(TKey id, bool autoSave = false, CancellationToken cancellationToken = default)
         {
