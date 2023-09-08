@@ -1,6 +1,7 @@
 ﻿using DncyTemplate.Domain.Infra;
 using DncyTemplate.Infra.Global;
 using DncyTemplate.Mvc.Infra.ExceptionHandlers;
+using DncyTemplate.Uow;
 using Microsoft.EntityFrameworkCore;
 
 namespace DncyTemplate.Mvc.Infra;
@@ -94,5 +95,19 @@ public static class ApplicationBuilderExtension
         }
 
         return app;
+    }
+    
+    public static void UseUnitOfWorkAccessor(this IApplicationBuilder app)
+    {
+        foreach (var item in UnitWorkAccessorManager.UowAndAccessors)
+        {
+            var accessor= app.ApplicationServices.GetService(item.Key) as IUnitOfWorkAccessor;
+            app.Use(async (ctx, next) =>
+            {
+                using var uow= ctx.RequestServices.GetService(item.Value) as IUnitOfWork; 
+                accessor.SetUnitOfWork(uow);
+                await next(ctx);
+            });
+        }
     }
 }

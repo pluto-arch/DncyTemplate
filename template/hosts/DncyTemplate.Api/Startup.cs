@@ -103,16 +103,11 @@ namespace DncyTemplate.Api
             Log.Logger.Information("应用程序运行地址: {@Address}. net version:{version}", address, Environment.Version);
 
             app.UseAppLocalization();
-
             app.UseResponseCompression();
             app.UseForwardedHeaders()
                 .UseCertificateForwarding();
-
-
             app.UseHttpRequestLogging();
-
             app.UseCors(AppConstant.DEFAULT_CORS_NAME);
-
             if (env.IsEnvironment(AppConstant.EnvironmentName.DEV))
             {
                 //app.UseDeveloperExceptionPage();
@@ -128,9 +123,9 @@ namespace DncyTemplate.Api
                 app.UseHsts();
             }
 
-            app.UseUnitOfWorkAccessor();
             
-            app.UseHttpsRedirection();
+            app.UseHttpsRedirection();            
+            app.UseUnitOfWorkAccessor();
             app.UseAuthentication();
 #if Tenant
             app.UseMultiTenancy();

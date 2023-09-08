@@ -139,10 +139,9 @@ public class Startup
             // TODO Notice: UseHsts, UseHttpsRedirection are not necessary if using reverse proxy with ssl, like nginx with ssl proxy
             app.UseHsts();
         }
-
-
         app.UseHttpsRedirection();
         app.UseStaticFiles();
+        app.UseUnitOfWorkAccessor();
         app.UseHttpRequestLogging();
         app.UseAuthentication();
 #if Tenant
