@@ -13,14 +13,12 @@ namespace DncyTemplate.Infra
             service.AddScoped<GlobalAccessor.CurrentUser>();
 
             var ctxs = GetDbContextTypes();
-
+            DataContextTypeCache.AddDataContext(ctxs);
             service.AddTransient<IDomainEventDispatcher, MediatrDomainEventDispatcher>();
             service.AddEfCoreInfraComponent(configuration, ctxs);
-            service.AddEfUnitofWork(ctxs);
-            DataContextTypeCache.AddDataContext(ctxs);
+            service.AddEfUnitofWorkWithAccessor(ctxs);
             return service;
         }
-
 
         public static List<Type> GetDbContextTypes()
         {

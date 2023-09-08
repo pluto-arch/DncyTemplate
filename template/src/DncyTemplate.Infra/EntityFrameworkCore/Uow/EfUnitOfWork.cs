@@ -16,7 +16,6 @@ namespace DncyTemplate.Uow.EntityFrameworkCore
             _serviceProvider = serviceProvider;
             _context = serviceProvider.GetRequiredService<TContext>();
             _unitOfWorkAccessor = unitOfWorkAccessor;
-            _unitOfWorkAccessor.SetUnitOfWork(this);
         }
 
         public IServiceProvider ServiceProvider => _serviceProvider;

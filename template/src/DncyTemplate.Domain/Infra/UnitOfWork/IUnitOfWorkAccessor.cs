@@ -46,10 +46,10 @@ namespace DncyTemplate.Uow
     }
 
 
-    public static class UnitWorkAccessorMap
+    public static class UnitWorkAccessorManager
     {
         private static Dictionary<Type, Type> _cache = new Dictionary<Type, Type>();
-        public static ImmutableDictionary<Type, Type> UowWithAccessorMap => _cache.ToImmutableDictionary();
+        public static ImmutableDictionary<Type, Type> UowAndAccessors => _cache.ToImmutableDictionary();
 
         public static void Add(Type accessorType,Type uowType)
         {

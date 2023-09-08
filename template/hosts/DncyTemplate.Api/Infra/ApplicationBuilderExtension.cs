@@ -96,5 +96,20 @@ namespace DncyTemplate.Api.Infra
 
             return app;
         }
+
+
+        public static void UseUnitOfWorkAccessor(this IApplicationBuilder app)
+        {
+            foreach (var item in UnitWorkAccessorManager.UowAndAccessors)
+            {
+                var accessor= app.ApplicationServices.GetService(item.Key) as IUnitOfWorkAccessor;
+                app.Use(async (ctx, next) =>
+                {
+                    using var uow= ctx.RequestServices.GetService(item.Value) as IUnitOfWork; 
+                    accessor.SetUnitOfWork(uow);
+                    await next(ctx);
+                });
+            }
+        }
     }
 }

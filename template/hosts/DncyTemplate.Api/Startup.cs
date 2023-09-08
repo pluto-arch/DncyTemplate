@@ -128,17 +128,7 @@ namespace DncyTemplate.Api
                 app.UseHsts();
             }
 
-            foreach (var item in UnitWorkAccessorMap.UowWithAccessorMap)
-            {
-                var accessor= app.ApplicationServices.GetService(item.Key) as IUnitOfWorkAccessor;
-                app.Use(async (ctx, next) =>
-                {
-                    using var uow= ctx.RequestServices.GetService(item.Value) as IUnitOfWork; 
-                    accessor.SetUnitOfWork(uow);
-                    await next(ctx);
-                });
-            }
-            
+            app.UseUnitOfWorkAccessor();
             
             app.UseHttpsRedirection();
             app.UseAuthentication();
