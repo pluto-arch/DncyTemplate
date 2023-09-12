@@ -22,4 +22,6 @@ public class PermissionDto
     public bool IsGrant { get; set; }
 
     public string[] AllowProviders { get; set; }
+    
+    public List<PermissionDto> Children { get; set; }
 }

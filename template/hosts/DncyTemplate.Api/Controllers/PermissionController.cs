@@ -1,5 +1,7 @@
 ﻿using Dncy.Permission;
+using Dncy.Permission.Models;
 using DncyTemplate.Application.Models;
+using DncyTemplate.Application.Permission.Models;
 
 namespace DncyTemplate.Api.Controllers
 {
@@ -8,10 +10,10 @@ namespace DncyTemplate.Api.Controllers
     [ApiController]
     public partial class PermissionController : ControllerBase, IResponseWraps
     {
-        [AutoInject]
+        [AutoInject] 
         private readonly IPermissionGrantStore _permissionGrantStore;
 
-        [AutoInject]
+        [AutoInject] 
         private readonly IPermissionDefinitionManager _permissionDefinitionManager;
 
 
@@ -24,24 +26,25 @@ namespace DncyTemplate.Api.Controllers
         [HttpGet]
         public async Task<ResultDto> GetAsync(string providerName, string providerKey)
         {
-            await Task.Yield();
             var res = new List<dynamic>();
-
             var groups = _permissionDefinitionManager.GetGroups();
+
+            var providerPermission = await _permissionGrantStore.GetListAsync(providerName, providerKey);
+
             foreach (var item in groups)
             {
-                var group = new
+                var group = new PermissionGroupDto
                 {
-                    groupName = item.Name,
-                    displayName = item.DisplayName,
-                    permissions = new List<dynamic>()
+                    Name = item.Name,
+                    DisplayName = item.DisplayName,
+                    Permissions = new List<PermissionDto>()
                 };
-                foreach (var permission in item.GetPermissionsWithChildren())
-                {
-                    if (permission.IsEnabled && ( !permission.AllowedProviders.Any() ||
-                                                 permission.AllowedProviders.Contains(providerName) ))
-                    {
 
+                foreach (var permission in item.Permissions)
+                {
+                    if (permission.IsEnabled && (!permission.AllowedProviders.Any() ||
+                                                 permission.AllowedProviders.Contains(providerName)))
+                    {
                         if (permission.AllowedProviders.Any() && !permission.AllowedProviders.Contains(providerName))
                         {
                             throw new ApplicationException(
@@ -53,24 +56,15 @@ namespace DncyTemplate.Api.Controllers
                             throw new ApplicationException($"The permission named {permission.Name} is disabled");
                         }
 
-                        var permissionGrant = await _permissionGrantStore.GetAsync(permission.Name, providerName, providerKey);
-                        var permissionGrantModel = new
-                        {
-                            permission.Name,
-                            permission.DisplayName,
-                            ParentName = permission.Parent,
-                            permission.AllowedProviders,
-                            IsGranted = permissionGrant != null,
-                        };
-                        group.permissions.Add(permissionGrantModel);
-
+                        var permissionGrantModel = GetProviderPermissionInfo(permission, providerPermission);
+                        group.Permissions.AddRange(permissionGrantModel);
                     }
                 }
+
                 res.Add(group);
             }
 
             return this.Success(res);
-
         }
 
 
@@ -86,5 +80,33 @@ namespace DncyTemplate.Api.Controllers
         }
 
 
+        [NonAction]
+        private List<PermissionDto> GetProviderPermissionInfo(PermissionDefinition permission,
+            IEnumerable<IPermissionGrant> grantPermissionList)
+        {
+            var res = new List<PermissionDto>();
+
+            var permissionGrant = grantPermissionList.FirstOrDefault(x => x.Name == permission.Name);
+            var permissionGrantModel = new PermissionDto
+            {
+                Name = permission.Name,
+                DisplayName = permission.DisplayName,
+                ParentName = permission.Parent,
+                IsGrant = permissionGrant != null,
+                AllowProviders = permission.AllowedProviders.ToArray(),
+                Children = new List<PermissionDto>()
+            };
+
+            if (permission.Children.Any())
+            {
+                foreach (var child in permission.Children)
+                {
+                    permissionGrantModel.Children.AddRange(GetProviderPermissionInfo(child, grantPermissionList));
+                }
+            }
+
+            res.Add(permissionGrantModel);
+            return res;
+        }
     }
 }
