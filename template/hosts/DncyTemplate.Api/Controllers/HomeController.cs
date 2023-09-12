@@ -51,7 +51,6 @@ namespace DncyTemplate.Api.Controllers
         /// <summary>
         /// 限流测试
         /// </summary>
-        /// <param name="name"></param>
         /// <returns></returns>
         [HttpGet("/rate_limit")]
         [EnableRateLimiting("home.RateLimit_action")]

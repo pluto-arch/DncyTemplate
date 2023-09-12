@@ -13,7 +13,7 @@
     <PackageVersion Include="FluentValidation.AspNetCore" Version="11.3.0" />
     <PackageVersion Include="Dapper" Version="2.0.143" />
     <PackageVersion Include="Dncy.Specifications.EntityFrameworkCore" Version="1.0.2" />
-    <PackageVersion Include="Dncy.DependencyInjection.Generator" Version="1.1.0" />
+    <PackageVersion Include="Dncy.DependencyInjection.Generator" Version="1.1.2" />
     <!--#if (Tenant) -->
     <PackageVersion Include="Dncy.MultiTenancy" Version="1.1.2" />
     <PackageVersion Include="Dncy.MultiTenancy.AspNetCore" Version="1.1.2" />
