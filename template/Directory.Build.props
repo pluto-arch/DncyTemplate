@@ -6,28 +6,30 @@
 		<AnalysisLevel>latest</AnalysisLevel>
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
 		<_SkipUpgradeNetAnalyzersNuGetWarning>true</_SkipUpgradeNetAnalyzersNuGetWarning>
+		<NoWarn>1591</NoWarn>
 	</PropertyGroup>
 
-	<!--#if (Tenant) -->
+	<!--#if
+	(Tenant) -->
 	<PropertyGroup>
 		<DefineConstants>Tenant</DefineConstants>
 	</PropertyGroup>
 	<!--#endif -->
 
 	<ItemGroup>
-		<Using Include="System"/>
-		<Using Include="System.Collections.Generic"/>
-		<Using Include="System.Linq"/>
-		<Using Include="System.Threading.Tasks"/>
+		<Using Include="System" />
+		<Using Include="System.Collections.Generic" />
+		<Using Include="System.Linq" />
+		<Using Include="System.Threading.Tasks" />
 		<Using Include="System.Diagnostics" />
 		<Using Include="System.Linq.Expressions" />
 		<Using Include="System.Reflection" />
 		<Using Include="Microsoft.Extensions.DependencyInjection" />
-		<Using Include="Microsoft.Extensions.DependencyInjection.Extensions"/>
-		<Using Include="Microsoft.Extensions.Logging"/>
+		<Using Include="Microsoft.Extensions.DependencyInjection.Extensions" />
+		<Using Include="Microsoft.Extensions.Logging" />
 	</ItemGroup>
 
-	<ItemGroup>
+	<ItemGroup Condition=" '$(MSBuildProjectExtension)' != '.dcproj'">
 		<PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" />
 	</ItemGroup>
 </Project>
