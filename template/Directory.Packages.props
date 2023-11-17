@@ -1,8 +1,9 @@
 ﻿<Project>
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
-    <EFCoreVersion>7.0.10</EFCoreVersion>
-    <MicrosoftExtensionsVersion>7.0.0</MicrosoftExtensionsVersion>
+    <EFCoreVersion>8.0.0</EFCoreVersion>
+    <MicrosoftExtensionsVersion>8.0.0</MicrosoftExtensionsVersion>
+	 <DncyVersion>8.0.0-preview</DncyVersion>
   </PropertyGroup>
   <!--package info-->
   <ItemGroup>
@@ -12,16 +13,18 @@
     <PackageVersion Include="FluentValidation" Version="11.7.1" />
     <PackageVersion Include="FluentValidation.AspNetCore" Version="11.3.0" />
     <PackageVersion Include="Dapper" Version="2.0.143" />
-    <PackageVersion Include="Dncy.Specifications.EntityFrameworkCore" Version="1.0.2" />
-    <PackageVersion Include="Dncy.DependencyInjection.Generator" Version="1.1.2" />
+	  
+    <PackageVersion Include="Dncy.Specifications.EntityFrameworkCore" Version="$(DncyVersion)" />
+    <PackageVersion Include="Dncy.DependencyInjection.Generator" Version="$(DncyVersion)" />
     <!--#if (Tenant) -->
-    <PackageVersion Include="Dncy.MultiTenancy" Version="1.1.2" />
-    <PackageVersion Include="Dncy.MultiTenancy.AspNetCore" Version="1.1.2" />
+    <PackageVersion Include="Dncy.MultiTenancy" Version="$(DncyVersion)" />
+    <PackageVersion Include="Dncy.MultiTenancy.AspNetCore" Version="$(DncyVersion)" />
     <!--#endif -->
-    <PackageVersion Include="Dncy.Permission" Version="2.1.1" />
-    <PackageVersion Include="Dncy.Specifications" Version="1.0.1" />
-    <PackageVersion Include="Dncy.Tools.Core" Version="2.0.4" />
-    <PackageVersion Include="Dncy.Tools.SnowFlake" Version="1.0.5" />
+    <PackageVersion Include="Dncy.Permission" Version="$(DncyVersion)" />
+    <PackageVersion Include="Dncy.Specifications" Version="$(DncyVersion)" />
+    <PackageVersion Include="Dncy.Tools.Core" Version="$(DncyVersion)" />
+    <PackageVersion Include="Dncy.Tools.SnowFlake" Version="$(DncyVersion)" />
+	  
     <PackageVersion Include="Mapster" Version="7.3.0" />
     <PackageVersion Include="Mapster.DependencyInjection" Version="1.0.0" />
     <PackageVersion Include="MediatR" Version="12.1.1" />
@@ -29,6 +32,14 @@
     <PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.3" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="$(MicrosoftExtensionsVersion)" />
+    <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="$(MicrosoftExtensionsVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Localization" Version="$(MicrosoftExtensionsVersion)"  />
+    <PackageVersion Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="$(MicrosoftExtensionsVersion)"  />
+    <PackageVersion Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="$(MicrosoftExtensionsVersion)"  />
+    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="$(MicrosoftExtensionsVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="$(MicrosoftExtensionsVersion)" />
+    <PackageVersion Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="$(MicrosoftExtensionsVersion)" ExcludeAssets="All" />
+
     <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="$(EFCoreVersion)" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="$(EFCoreVersion)" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="$(EFCoreVersion)" />
@@ -36,14 +47,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageVersion>
+	  
     <PackageVersion Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.1.0" />
-    <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.10" />
-    <PackageVersion Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.10" />
-    <PackageVersion Include="Microsoft.Extensions.Localization" Version="7.0.10" />
-    <PackageVersion Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.9" ExcludeAssets="All" />
-    <PackageVersion Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.10" />
-    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.10" />
-    <PackageVersion Include="Microsoft.Extensions.Logging" Version="7.0.0" />
+   
+   
     <PackageVersion Include="Polly" Version="7.2.4" />
     <PackageVersion Include="Serilog.Extensions.Logging" Version="7.0.0" />
     <PackageVersion Include="Serilog.AspNetCore" Version="7.0.0" />

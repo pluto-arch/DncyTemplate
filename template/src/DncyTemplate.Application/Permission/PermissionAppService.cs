@@ -66,7 +66,7 @@ public partial class PermissionAppService : IPermissionAppService
         var names = old.Select(x => x.Name).ToArray();
         if (permissions is { Length: <= 0 })
         {
-            await _permissionGrantStore.CancleGrantAsync(names, providerName, providerValue);
+            await _permissionGrantStore.RemoveGrantAsync(names, providerName, providerValue);
             names.AsParallel().ForAll(x =>
             {
                 PermissionGrantCache.Cache.AddOrUpdate(string.Format(CacheKeyFormatConstants.Permission_Grant_CacheKey_Format, providerName, providerValue, x), false.ToString(), (k, _) => false.ToString());
@@ -77,7 +77,7 @@ public partial class PermissionAppService : IPermissionAppService
         var exp = names.Except(permissions);
         if (exp.Any())
         {
-            await _permissionGrantStore.CancleGrantAsync(exp.ToArray(), providerName, providerValue);
+            await _permissionGrantStore.RemoveGrantAsync(exp.ToArray(), providerName, providerValue);
             exp.AsParallel().ForAll(x =>
             {
                 PermissionGrantCache.Cache.AddOrUpdate(string.Format(CacheKeyFormatConstants.Permission_Grant_CacheKey_Format, providerName, providerValue, x), false.ToString(), (k, _) => false.ToString());
@@ -102,7 +102,7 @@ public partial class PermissionAppService : IPermissionAppService
                 throw new ApplicationException($"The permission named {permission.Name} is disabled");
             }
 
-            await _permissionGrantStore.GrantAsync(grantInfo, providerName, providerValue);
+            await _permissionGrantStore.SaveAsync(grantInfo, providerName, providerValue);
             string cacheKey = string.Format(CacheKeyFormatConstants.Permission_Grant_CacheKey_Format, providerName, providerValue, grantInfo);
             PermissionGrantCache.Cache.AddOrUpdate(cacheKey, true.ToString(), (k, oldv) => true.ToString());
         }
