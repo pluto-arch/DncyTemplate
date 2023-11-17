@@ -105,8 +105,8 @@ namespace DncyTemplate.Api.Infra
                 var accessor= app.ApplicationServices.GetService(item.Key) as IUnitOfWorkAccessor;
                 app.Use(async (ctx, next) =>
                 {
-                    using var uow= ctx.RequestServices.GetService(item.Value) as IUnitOfWork; 
-                    accessor.SetUnitOfWork(uow);
+                    await using var uow= ctx.RequestServices.GetService(item.Value) as IUnitOfWork; 
+                    accessor?.SetUnitOfWork(uow);
                     await next(ctx);
                 });
             }
