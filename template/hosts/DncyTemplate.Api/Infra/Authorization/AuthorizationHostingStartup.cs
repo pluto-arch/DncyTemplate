@@ -2,17 +2,14 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 
-[assembly: HostingStartup(typeof(DncyTemplate.Api.Infra.Authorization.AuthorizationHostingStartup))]
 namespace DncyTemplate.Api.Infra.Authorization
 {
-    public class AuthorizationHostingStartup : IHostingStartup
+    public static class AuthorizationHostingStartup
     {
         /// <inheritdoc />
-        public void Configure(IWebHostBuilder builder)
+        public static void ConfigureAuthorization(this IServiceCollection services)
         {
-            builder.ConfigureServices((_, services) =>
-            {
-                services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
                     {
                         options.TokenValidationParameters = new TokenValidationParameters
@@ -28,10 +25,9 @@ namespace DncyTemplate.Api.Infra.Authorization
                         };
                         options.RequireHttpsMetadata = false;
                     }); // 认证
-                services.AddAuthorization();
-                services.AddSingleton<IAuthorizationPolicyProvider, DynamicAuthorizationPolicyProvider>();
-                services.AddScoped<IAuthorizationHandler, PermissionRequirementHandler>();
-            });
+            services.AddAuthorization();
+            services.AddSingleton<IAuthorizationPolicyProvider, DynamicAuthorizationPolicyProvider>();
+            services.AddScoped<IAuthorizationHandler, PermissionRequirementHandler>();
         }
     }
 }

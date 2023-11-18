@@ -4,7 +4,7 @@ using System.Data.Common;
 
 namespace DncyTemplate.Application.AppServices.Queries.ConnectionFactory
 {
-    [Injectable(InjectLifeTime.Singleton)]
+    [Injectable(InjectLifeTime.Singleton,typeof(IDbConnectionFactory))]
     public class DbConnectionFactory : IDbConnectionFactory
     {
         static DbConnectionFactory() => DbProviderFactories.RegisterFactory("System.Data.SqlClient", SqlClientFactory.Instance);

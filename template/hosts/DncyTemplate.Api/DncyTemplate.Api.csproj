@@ -16,20 +16,20 @@
 		<!--#if (Tenant) -->
 		<PackageReference Include="Dncy.MultiTenancy.AspNetCore" />
 		<!--#endif -->
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer"/>
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson"/>
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" />
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" />
 		<PackageReference Include="Serilog.AspNetCore" />
-		<PackageReference Include="Serilog.Enrichers.Environment"/>
-		<PackageReference Include="Serilog.Enrichers.Process"/>
-		<PackageReference Include="Serilog.Enrichers.Sensitive"/>
+		<PackageReference Include="Serilog.Enrichers.Environment" />
+		<PackageReference Include="Serilog.Enrichers.Process" />
+		<PackageReference Include="Serilog.Enrichers.Sensitive" />
 		<PackageReference Include="Serilog.Enrichers.Thread" />
 		<PackageReference Include="Serilog.Sinks.Async" />
-		<PackageReference Include="Swashbuckle.AspNetCore"/>
-		<PackageReference Include="CommunityToolkit.Diagnostics"/>
-		<PackageReference Include="FluentValidation.AspNetCore"/>
+		<PackageReference Include="Swashbuckle.AspNetCore" />
+		<PackageReference Include="CommunityToolkit.Diagnostics" />
+		<PackageReference Include="FluentValidation.AspNetCore" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -51,6 +51,7 @@
 
 
 	<ItemGroup>
+	  <ProjectReference Include="..\..\DncyTemplate.ServiceDefaults\DncyTemplate.ServiceDefaults.csproj" />
 	  <ProjectReference Include="..\..\src\DncyTemplate.Application\DncyTemplate.Application.csproj" />
 	  <ProjectReference Include="..\..\src\DncyTemplate.Infra\DncyTemplate.Infra.csproj" />
 	</ItemGroup>

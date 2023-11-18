@@ -1,35 +1,32 @@
 ﻿using Microsoft.OpenApi.Models;
 
-[assembly: HostingStartup(typeof(DncyTemplate.Api.Infra.ApiDoc.SwaggerHostingStartup))]
 namespace DncyTemplate.Api.Infra.ApiDoc
 {
-    public class SwaggerHostingStartup : IHostingStartup
+    public static class SwaggerHostingStartup
     {
         /// <inheritdoc />
-        public void Configure(IWebHostBuilder builder)
+        public static void ConfigureSwagger(this IServiceCollection services, IWebHostEnvironment environment)
         {
-            builder.ConfigureServices((context, services) =>
+            if (!environment.IsEnvironment(Constants.AppConstant.EnvironmentName.DEV))
             {
-                if (!context.HostingEnvironment.IsEnvironment(Constants.AppConstant.EnvironmentName.DEV))
-                {
-                    return;
-                }
-                services.ConfigureOptions<ConfigureSwaggerOptions>();
-                services.AddSwaggerGen(c =>
-                {
-                    c.SupportNonNullableReferenceTypes();
+                return;
+            }
+            services.ConfigureOptions<ConfigureSwaggerOptions>();
+            services.AddSwaggerGen(c =>
+            {
+                c.SupportNonNullableReferenceTypes();
 
-                    c.UseAllOfToExtendReferenceSchemas();
+                c.UseAllOfToExtendReferenceSchemas();
 
-                    c.AddSecurityDefinition("Bearer", //Name the security scheme
-                        new OpenApiSecurityScheme
-                        {
-                            Description = "JWT Authorization header using the Bearer scheme.",
-                            Type = SecuritySchemeType.Http, //We set the scheme type to http since we're using bearer authentication
-                            Scheme = "Bearer" //The name of the HTTP Authorization scheme to be used in the Authorization header. In this case "bearer".
-                        });
+                c.AddSecurityDefinition("Bearer", //Name the security scheme
+                    new OpenApiSecurityScheme
+                    {
+                        Description = "JWT Authorization header using the Bearer scheme.",
+                        Type = SecuritySchemeType.Http, //We set the scheme type to http since we're using bearer authentication
+                        Scheme = "Bearer" //The name of the HTTP Authorization scheme to be used in the Authorization header. In this case "bearer".
+                    });
 
-                    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
                     {
                         {
                             new OpenApiSecurityScheme
@@ -44,10 +41,9 @@ namespace DncyTemplate.Api.Infra.ApiDoc
                         }
                     });
 
-                    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                    c.IncludeXmlComments(xmlPath);
-                });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
         }
     }

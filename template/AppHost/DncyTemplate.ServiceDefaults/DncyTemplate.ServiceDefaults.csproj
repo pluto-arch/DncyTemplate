@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsAspireSharedProject>true</IsAspireSharedProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+
+    <PackageReference Include="Microsoft.Extensions.Http.Resilience" VersionOverride="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.ServiceDiscovery" VersionOverride="8.0.0-preview.1.23557.2" />
+    <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" VersionOverride="1.7.0-alpha.1" />
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" VersionOverride="1.7.0-alpha.1" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" VersionOverride="1.6.0-beta.2" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.GrpcNetClient" VersionOverride="1.6.0-beta.2" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.Http" VersionOverride="1.6.0-beta.2" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.Runtime" VersionOverride="1.5.1" />
+  </ItemGroup>
+
+</Project>

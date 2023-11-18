@@ -1,24 +1,21 @@
 ﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Polly;
 
-[assembly: HostingStartup(typeof(DncyTemplate.Api.Infra.HealthChecks.HealthCheckHostingStartup))]
 namespace DncyTemplate.Api.Infra.HealthChecks
 {
-    public class HealthCheckHostingStartup : IHostingStartup
+    public static class HealthCheckHostingStartup
     {
         /// <inheritdoc />
-        public void Configure(IWebHostBuilder builder)
+        public static void ConfigureHealthCheck(this IServiceCollection services, IConfiguration configuration)
         {
-            builder.ConfigureServices((context, services) =>
+            services.Configure<MemoryCheckOptions>(options =>
             {
-                services.Configure<MemoryCheckOptions>(options =>
-                {
-                    options.Threshold = context.Configuration.GetValue<long>("HealthCheck:Memory:Threshold");
-                });
-                services.AddHealthChecks()
-                    .AddCheck<MemoryHealthCheck>("memory_check", failureStatus: HealthStatus.Degraded);
-
-                //.AddCheck<DatabaseHealthCheck>("database_check", failureStatus: HealthStatus.Unhealthy,tags: new string[] { "database", "sqlServer" });
+                options.Threshold = configuration.GetValue<long>("HealthCheck:Memory:Threshold");
             });
+            services.AddHealthChecks()
+                .AddCheck<MemoryHealthCheck>("memory_check", failureStatus: HealthStatus.Degraded);
+
+            //.AddCheck<DatabaseHealthCheck>("database_check", failureStatus: HealthStatus.Unhealthy,tags: new string[] { "database", "sqlServer" });
         }
     }
 }
