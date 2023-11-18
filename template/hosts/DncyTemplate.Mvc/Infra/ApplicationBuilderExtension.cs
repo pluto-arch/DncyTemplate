@@ -2,6 +2,7 @@
 using DncyTemplate.Infra.Global;
 using DncyTemplate.Mvc.Infra.ExceptionHandlers;
 using DncyTemplate.Uow;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 
 namespace DncyTemplate.Mvc.Infra;
@@ -109,5 +110,20 @@ public static class ApplicationBuilderExtension
                 await next(ctx);
             });
         }
+    }
+
+
+    public static IEndpointRouteBuilder MapSystemHealthChecks(this IEndpointRouteBuilder builer)
+    {
+        builer.MapHealthChecks("/health", new HealthCheckOptions
+        {
+            ResponseWriter = async (c, r) =>
+            {
+                c.Response.ContentType = "application/json";
+                var result = JsonConvert.SerializeObject(r.Entries);
+                await c.Response.WriteAsync(result);
+            }
+        });
+        return builer;
     }
 }

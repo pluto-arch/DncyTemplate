@@ -8,7 +8,7 @@ public static class InternalServerErrorHandler
 {
     public static readonly RequestDelegate Handler = async context =>
     {
-        var log = context.RequestServices.GetService<ILogger<Startup>>() ?? NullLogger<Startup>.Instance;
+        var log = context.RequestServices.GetService<ILogger<Program>>() ?? NullLogger<Program>.Instance;
         var code = context.Response.StatusCode;
         var originalPath = context.Request.Path;
         var originalQueryString = context.Request.QueryString;

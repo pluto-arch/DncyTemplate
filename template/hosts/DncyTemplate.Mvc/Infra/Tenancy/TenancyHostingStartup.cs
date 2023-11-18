@@ -5,26 +5,21 @@ using Dncy.MultiTenancy.AspNetCore;
 using Dncy.MultiTenancy.ConnectionStrings;
 using Dncy.MultiTenancy.Store;
 
-[assembly: HostingStartup(typeof(DncyTemplate.Mvc.Infra.Tenancy.TenancyHostingStartup))]
 namespace DncyTemplate.Mvc.Infra.Tenancy;
 
-public class TenancyHostingStartup : IHostingStartup
+public static class TenancyHostingStartup
 {
     /// <inheritdoc />
-    public void Configure(IWebHostBuilder builder)
+    public static void ConfigureTenancy(this IServiceCollection services, IConfiguration configuration)
     {
-
-        builder.ConfigureServices((context, services) =>
-        {
-            services.Configure<TenantConfigurationOptions>(context.Configuration);
-            services.AddSingleton<ICurrentTenantAccessor, CurrentTenantAccessor>();
-            services.AddTransient<ICurrentTenant, CurrentTenant>();
-            services.AddTransient<IConnectionStringResolver, DefaultConnectionStringResolver>();
-            services.AddTransient<ITenantStore, DefaultTenantStore>();
-            services.AddTransient<ITenantResolver, TenantResolver>();
-            services.AddTransient<ITenantIdentityParse, UserTenantIdentityParse>();
-            services.AddTransient<MultiTenancyMiddleware>();
-        });
+        services.Configure<TenantConfigurationOptions>(configuration);
+        services.AddSingleton<ICurrentTenantAccessor, CurrentTenantAccessor>();
+        services.AddTransient<ICurrentTenant, CurrentTenant>();
+        services.AddTransient<IConnectionStringResolver, DefaultConnectionStringResolver>();
+        services.AddTransient<ITenantStore, DefaultTenantStore>();
+        services.AddTransient<ITenantResolver, TenantResolver>();
+        services.AddTransient<ITenantIdentityParse, UserTenantIdentityParse>();
+        services.AddTransient<MultiTenancyMiddleware>();
     }
 }
 #endif

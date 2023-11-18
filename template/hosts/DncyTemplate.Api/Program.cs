@@ -1,22 +1,22 @@
-﻿using DncyTemplate.Application;
-using DncyTemplate.Infra;
-using DncyTemplate.Domain;
-using DncyTemplate.Api.BackgroundServices;
-using FluentValidation.AspNetCore;
-using FluentValidation;
-using DncyTemplate.Application.Models;
-using System.Threading.RateLimiting;
+﻿using System.Threading.RateLimiting;
 using Dncy.Tools;
 using DncyTemplate.Api;
-using Microsoft.Extensions.Localization;
-using Microsoft.Extensions.Primitives;
-using Microsoft.AspNetCore.Hosting.Server.Features;
+using DncyTemplate.Api.BackgroundServices;
 using DncyTemplate.Api.Infra.ApiDoc;
-using DncyTemplate.Api.Infra.LocalizerSetup;
-using DncyTemplate.Api.Infra.Tenancy;
 using DncyTemplate.Api.Infra.Authorization;
 using DncyTemplate.Api.Infra.HealthChecks;
+using DncyTemplate.Api.Infra.LocalizerSetup;
 using DncyTemplate.Api.Infra.LogSetup;
+using DncyTemplate.Api.Infra.Tenancy;
+using DncyTemplate.Application;
+using DncyTemplate.Application.Models;
+using DncyTemplate.Domain;
+using DncyTemplate.Infra;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Hosting.Server.Features;
+using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Primitives;
 
 
 string AppName = typeof(Program).Namespace;
@@ -103,7 +103,8 @@ Log.Information("[{AppName}]构建WebApplication成功...", AppName);
 #region 中间件注册
 var serverAddressesFeature = app.Services.GetService<IServerAddressesFeature>();
 var address = serverAddressesFeature?.Addresses;
-Log.Logger.Information("应用程序运行地址: {@Address}. net version:{version}", address, Environment.Version);
+Log.Logger.Information("运行地址: {@Address}", address);
+Log.Logger.Information("NET框架版本: {@version}", System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription);
 
 
 app.UseAppLocalization();

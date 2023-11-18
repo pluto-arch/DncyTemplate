@@ -12,8 +12,17 @@
     <PackageReference Include="Aspire.Hosting" VersionOverride="8.0.0-preview.1.23557.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\hosts\DncyTemplate.Api\DncyTemplate.Api.csproj" />
-  </ItemGroup>
+	<!--#if MVC-->
+	<ItemGroup>
+		<ProjectReference Include="..\..\hosts\DncyTemplate.Mvc\DncyTemplate.Mvc.csproj" />
+	</ItemGroup>
+	<!--#endif-->
+ 
+
+	<!--#if API-->
+	<ItemGroup>
+		<ProjectReference Include="..\..\hosts\DncyTemplate.Api\DncyTemplate.Api.csproj" />
+	</ItemGroup>
+	<!--#endif-->
 
 </Project>
