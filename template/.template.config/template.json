@@ -39,6 +39,14 @@
       "description": "是否包含多租户功能",
       "isRequired": false,
       "defaultValue": "true"
+    },
+    "IsAPI": {
+      "type": "computed",
+      "value": "(ProjectType == \"API\")"
+    },
+    "IsMVC": {
+      "type": "computed",
+      "value": "(ProjectType == \"MVC\")"
     }
   },
   "sources": [
