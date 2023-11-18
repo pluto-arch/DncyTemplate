@@ -51,7 +51,7 @@
 
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\DncyTemplate.ServiceDefaults\DncyTemplate.ServiceDefaults.csproj" />
+	  <ProjectReference Include="..\..\AppHost\DncyTemplate.ServiceDefaults\DncyTemplate.ServiceDefaults.csproj" />
 	  <ProjectReference Include="..\..\src\DncyTemplate.Application\DncyTemplate.Application.csproj" />
 	  <ProjectReference Include="..\..\src\DncyTemplate.Infra\DncyTemplate.Infra.csproj" />
 	</ItemGroup>
