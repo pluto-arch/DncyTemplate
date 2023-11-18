@@ -84,6 +84,12 @@
     {
       "path": "hosts/DncyTemplate.Mvc/DncyTemplate.Mvc.csproj",
       "condition": "(ProjectType==\"MVC\")"
+    },
+    {
+      "path": "AppHost/DncyTemplate.AppHost/DncyTemplate.AppHost.csproj"
+    },
+    {
+      "path": "AppHost/DncyTemplate.ServiceDefaults/DncyTemplate.ServiceDefaults.csproj"
     }
   ],
   "postActions": [

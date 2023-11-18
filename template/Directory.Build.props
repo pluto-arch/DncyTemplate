@@ -9,8 +9,7 @@
 		<NoWarn>1591</NoWarn>
 	</PropertyGroup>
 
-	<!--#if
-	(Tenant) -->
+	<!--#if (Tenant) -->
 	<PropertyGroup>
 		<DefineConstants>Tenant</DefineConstants>
 	</PropertyGroup>
