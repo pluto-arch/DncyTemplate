@@ -7,7 +7,9 @@ using DncyTemplate.Api.Infra.Authorization;
 using DncyTemplate.Api.Infra.HealthChecks;
 using DncyTemplate.Api.Infra.LocalizerSetup;
 using DncyTemplate.Api.Infra.LogSetup;
+#if Tenant
 using DncyTemplate.Api.Infra.Tenancy;
+#endif
 using DncyTemplate.Application;
 using DncyTemplate.Application.Models;
 using DncyTemplate.Domain;
@@ -90,8 +92,10 @@ builder.Services.ConfigureWebInfra();
 builder.Services.ConfigureSwagger(builder.Environment);
 builder.Services.ConfigureAuthorization();
 builder.Services.ConfigureHealthCheck(builder.Configuration);
-builder.Services.ConfigureTenancy(builder.Configuration);
 
+#if Tenant
+builder.Services.ConfigureTenancy(builder.Configuration);
+#endif
 
 #endregion
 Log.Information("[{AppName}]服务注册完毕...", AppName);

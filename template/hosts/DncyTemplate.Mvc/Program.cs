@@ -12,7 +12,9 @@ using DncyTemplate.Mvc.Infra;
 using DncyTemplate.Mvc.Infra.Authorization;
 using DncyTemplate.Mvc.Infra.HealthChecks;
 using DncyTemplate.Mvc.Infra.LogSetup;
+#if Tenant
 using DncyTemplate.Mvc.Infra.Tenancy;
+#endif
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Hosting.Server.Features;
@@ -103,8 +105,10 @@ builder.Services.AddRateLimiter(options =>
 
 builder.Services.Configureuthorization();
 builder.Services.ConfigureHealthCheck(builder.Configuration);
-builder.Services.ConfigureTenancy(builder.Configuration);
 builder.Services.ConfigureWebInfra();
+#if Tenant
+builder.Services.ConfigureTenancy(builder.Configuration);
+#endif
 
 #endregion
 
