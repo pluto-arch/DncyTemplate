@@ -1,8 +1,10 @@
-﻿using Dncy.MultiTenancy.AspNetCore;
+﻿
+#if Tenant
+using Dotnetydd.MultiTenancy.AspNetCore;
+using Dotnetydd.MultiTenancy.AspNetCore.TenantIdentityParse;
 
 namespace DncyTemplate.Api.Infra.Tenancy;
 
-#if Tenant
 public class UserTenantIdentityParse : HttpTenantIdentityParseBase
 {
     /// <inheritdoc />

@@ -1,6 +1,6 @@
 ﻿
 #if Tenant
-using Dncy.MultiTenancy;
+using Dotnetydd.MultiTenancy;
 #endif
 using DncyTemplate.Application.AppServices.Product;
 using DncyTemplate.Application.Models;

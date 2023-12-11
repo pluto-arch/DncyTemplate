@@ -1,15 +1,15 @@
-﻿using Dncy.MultiTenancy;
-using Dncy.MultiTenancy.AspNetCore;
-using Dncy.MultiTenancy.ConnectionStrings;
-using Dncy.MultiTenancy.Store;
-using Polly;
+﻿#if Tenant
 
-#if Tenant
+using Dotnetydd.MultiTenancy;
+using Dotnetydd.MultiTenancy.AspNetCore;
+using Dotnetydd.MultiTenancy.AspNetCore.TenantIdentityParse;
+using Dotnetydd.MultiTenancy.ConnectionStrings;
+using Dotnetydd.MultiTenancy.Store;
+
 namespace DncyTemplate.Api.Infra.Tenancy;
 
 public static class TenancyHostingStartup 
 {
-    /// <inheritdoc />
     public static void ConfigureTenancy(this IServiceCollection services,IConfiguration configuration)
     {
         services.Configure<TenantConfigurationOptions>(configuration);

@@ -1,4 +1,4 @@
-﻿using Dncy.MultiTenancy.AspNetCore;
+﻿using Dotnetydd.MultiTenancy.AspNetCore;
 
 namespace DncyTemplate.Api.Infra.Tenancy
 {

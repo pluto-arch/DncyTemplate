@@ -1,8 +1,8 @@
-﻿using Dncy.Permission;
-using DncyTemplate.Domain.Aggregates.System;
+﻿using DncyTemplate.Domain.Aggregates.System;
 using DncyTemplate.Domain.Infra.Repository;
 using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 using DncyTemplate.Uow;
+using Dotnetydd.Permission.PermissionGrant;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
 {

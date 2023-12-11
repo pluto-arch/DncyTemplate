@@ -1,6 +1,6 @@
-﻿using Dncy.Tools.Core;
-using DncyTemplate.Application.AppServices.Generics;
+﻿using DncyTemplate.Application.AppServices.Generics;
 using DncyTemplate.Application.Models.Product;
+using Dotnetydd.Tools.Core.Models;
 
 namespace DncyTemplate.Application.AppServices.Product;
 

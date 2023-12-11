@@ -1,9 +1,9 @@
-﻿using Dncy.Tools;
-using DncyTemplate.Application.Permission;
+﻿using DncyTemplate.Application.Permission;
 using DncyTemplate.Infra.Utils;
 using DncyTemplate.Mvc.Models.Account;
 using DncyTemplate.Mvc.Models.Role;
 using System.Net;
+using Dotnetydd.Tools.Core.Extension;
 
 namespace DncyTemplate.Mvc.Controllers;
 
@@ -39,10 +39,10 @@ public partial class RolesController : Controller
             {
                 Id = group.Name,
                 Title = group.DisplayName,
-                Children = new List<PermissionTreeViewModel>(),
+                Children = [],
                 CheckArr = group.Permissions.Any(x => x.IsGrant) ? "1" : "0",
             };
-            group.Permissions = group.Permissions.OrderBy(x => x.Name).ToList();
+            group.Permissions = [.. group.Permissions.OrderBy(x => x.Name)];
             foreach (var item in group.Permissions)
             {
                 if (item.ParentName.IsNullOrEmpty())
@@ -86,21 +86,21 @@ public partial class RolesController : Controller
     {
         var roles = new List<RoleViewModel>
         {
-            new RoleViewModel
+            new()
             {
                 Id = SnowFlakeId.Generator.GetUniqueShortId(),
                 RoleName = RoleEnum.SA.ToString(),
                 DisplayName=RoleEnum.SA.GetDescription(),
                 CreateTime = DateTime.Now
             },
-            new RoleViewModel
+            new()
             {
                 Id = SnowFlakeId.Generator.GetUniqueShortId(),
                 RoleName = RoleEnum.Admin.ToString(),
                 DisplayName=RoleEnum.Admin.GetDescription(),
                 CreateTime = DateTime.Now
             },
-            new RoleViewModel
+            new()
             {
                 Id = SnowFlakeId.Generator.GetUniqueShortId(),
                 RoleName = RoleEnum.Member.ToString(),

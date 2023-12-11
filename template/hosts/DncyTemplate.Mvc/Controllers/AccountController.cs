@@ -1,17 +1,16 @@
 ﻿
 #if Tenant
-using Dncy.MultiTenancy;
-using Dncy.MultiTenancy.Model;
+using Dotnetydd.MultiTenancy;
+using Dotnetydd.MultiTenancy.Model;
 #endif
-using Dncy.Permission;
 using DncyTemplate.Application.Constants;
 using DncyTemplate.Mvc.Constants;
 using DncyTemplate.Mvc.Models.Account;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Localization;
 using System.Security.Claims;
+using Dotnetydd.Permission.PermissionGrant;
 
 namespace DncyTemplate.Mvc.Controllers
 {

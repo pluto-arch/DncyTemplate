@@ -1,5 +1,5 @@
 ﻿#if Tenant
-using Dncy.MultiTenancy;
+using Dotnetydd.MultiTenancy;
 #endif
 
 using DncyTemplate.Domain.Infra;

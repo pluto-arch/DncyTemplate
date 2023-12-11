@@ -18,7 +18,7 @@
 
 	<ItemGroup>
 		<!--#if (Tenant) -->
-		<PackageReference Include="Dncy.MultiTenancy.AspNetCore" />
+		<PackageReference Include="Dotnetydd.MultiTenancy.AspNetCore" />
 		<!--#endif -->
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" />
@@ -90,8 +90,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Reference Include="Dncy.Permission">
-	    <HintPath>..\..\..\..\DncyComponent\Dncy.Permission\bin\Debug\net6.0\Dncy.Permission.dll</HintPath>
+	  <Reference Include="Dotnetydd.Permission">
+	    <HintPath>..\..\..\..\DncyComponent\Dotnetydd.Permission\bin\Debug\net6.0\Dotnetydd.Permission.dll</HintPath>
 	  </Reference>
 	</ItemGroup>
 

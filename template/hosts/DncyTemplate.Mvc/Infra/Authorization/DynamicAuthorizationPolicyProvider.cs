@@ -1,5 +1,5 @@
-﻿using Dncy.Permission;
-
+﻿using Dotnetydd.Permission;
+using Dotnetydd.Permission.Definition;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 
@@ -31,7 +31,7 @@ public class DynamicAuthorizationPolicyProvider : DefaultAuthorizationPolicyProv
 
         if (permission != null)
         {
-            var policyBuilder = new AuthorizationPolicyBuilder(Array.Empty<string>());
+            var policyBuilder = new AuthorizationPolicyBuilder([]);
             policyBuilder.Requirements.Add(new OperationAuthorizationRequirement { Name = policyName });
             return policyBuilder.Build();
         }

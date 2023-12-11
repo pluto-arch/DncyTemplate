@@ -11,7 +11,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Dapper" />
-		<PackageReference Include="Dncy.Specifications.EntityFrameworkCore" />
+		<PackageReference Include="Dotnetydd.Specifications.EntityFrameworkCore" />
 		<PackageReference Include="FluentValidation" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" />

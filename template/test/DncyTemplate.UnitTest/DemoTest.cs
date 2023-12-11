@@ -1,7 +1,7 @@
 ﻿using Bogus;
 #if Tenant
-using Dncy.MultiTenancy.Model;
-using Dncy.MultiTenancy;
+using Dotnetydd.MultiTenancy.Model;
+using Dotnetydd.MultiTenancy;
 #endif
 using DncyTemplate.Application.AppServices.Product;
 using DncyTemplate.Application.Models.Product;

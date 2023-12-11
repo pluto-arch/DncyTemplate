@@ -1,4 +1,4 @@
-﻿using Dncy.Specifications;
+﻿using Dotnetydd.Specifications;
 using DncyTemplate.Domain.Collections;
 using System.Diagnostics.CodeAnalysis;
 

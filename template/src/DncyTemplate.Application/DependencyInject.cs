@@ -1,7 +1,12 @@
-﻿using Dncy.Permission;
+﻿using Dotnetydd.Permission;
 using DncyTemplate.Application.Behaviors;
 using DncyTemplate.Application.Permission;
 using DncyTemplate.Infra.EntityFrameworkCore.Repository;
+using Dotnetydd.Permission.Checker;
+using Dotnetydd.Permission.Definition;
+using Dotnetydd.Permission.PermissionGrant;
+using Dotnetydd.Permission.PermissionManager;
+using Dotnetydd.Permission.ValueProvider;
 using FastExpressionCompiler;
 using Mapster;
 using MapsterMapper;

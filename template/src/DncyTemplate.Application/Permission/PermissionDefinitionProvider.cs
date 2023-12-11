@@ -1,4 +1,5 @@
-﻿using Dncy.Permission;
+﻿
+using Dotnetydd.Permission.Definition;
 
 namespace DncyTemplate.Application.Permission;
 

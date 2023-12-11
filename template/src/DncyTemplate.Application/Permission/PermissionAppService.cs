@@ -1,7 +1,9 @@
-using Dncy.Permission;
 using DncyTemplate.Application.Constants;
 using DncyTemplate.Application.Permission.Models;
 using System.Transactions;
+using Dotnetydd.Permission.PermissionManager;
+using Dotnetydd.Permission.PermissionGrant;
+using Dotnetydd.Permission.Definition;
 
 namespace DncyTemplate.Application.Permission;
 
@@ -41,7 +43,7 @@ public partial class PermissionAppService : IPermissionAppService
                     Name = permissionItem.Name,
                     DisplayName = permissionItem.DisplayName,
                     ParentName = permissionItem.Parent!,
-                    IsGrant = isGranted == Dncy.Permission.Models.PermissionGrantResult.Granted,
+                    IsGrant = isGranted == Dotnetydd.Permission.Models.PermissionGrantResult.Granted,
                     AllowProviders = permissionItem.AllowedProviders.ToArray(),
                 };
                 group.Permissions.Add(permission);

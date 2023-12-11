@@ -1,8 +1,8 @@
-﻿using Dncy.Specifications;
-using Dncy.Specifications.EntityFrameworkCore;
-using Dncy.Specifications.EntityFrameworkCore.Evaluatiors;
-using Dncy.Specifications.Evaluators;
-using Dncy.Specifications.Exceptions;
+﻿using Dotnetydd.Specifications;
+using Dotnetydd.Specifications.EntityFrameworkCore;
+using Dotnetydd.Specifications.EntityFrameworkCore.Evaluatiors;
+using Dotnetydd.Specifications.Evaluators;
+using Dotnetydd.Specifications.Exceptions;
 using DncyTemplate.Domain.Collections;
 using DncyTemplate.Domain.Infra;
 using DncyTemplate.Domain.Infra.Repository;

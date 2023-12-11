@@ -1,9 +1,10 @@
 ﻿
-using Dncy.Tools.Core;
+using Dotnetydd.Tools.Core;
 using DncyTemplate.Application.AppServices.Generics;
 using DncyTemplate.Application.Models.Product;
 using DncyTemplate.Infra.EntityFrameworkCore.Repository;
 using DncyTemplate.Uow;
+using Dotnetydd.Tools.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DncyTemplate.Application.AppServices.Product;

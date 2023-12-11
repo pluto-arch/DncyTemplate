@@ -1,6 +1,5 @@
-﻿using Dncy.Permission;
-
-using DncyTemplate.Domain.Infra;
+﻿using DncyTemplate.Domain.Infra;
+using Dotnetydd.Permission.PermissionGrant;
 
 namespace DncyTemplate.Domain.Aggregates.System;
 

@@ -1,7 +1,7 @@
 ﻿
 #if Tenant
-using Dncy.MultiTenancy;
-using Dncy.MultiTenancy.ConnectionStrings;
+using Dotnetydd.MultiTenancy;
+using Dotnetydd.MultiTenancy.ConnectionStrings;
 #endif
 using DncyTemplate.Infra.Constants;
 

@@ -6,14 +6,14 @@
     </PropertyGroup>
 
 	<ItemGroup>
-        <PackageReference Include="Dncy.DependencyInjection.Generator" />
+        <PackageReference Include="Dotnetydd.DependencyInjection.Generator" />
         <!--#if (Tenant) -->
-        <PackageReference Include="Dncy.MultiTenancy" />
+        <PackageReference Include="Dotnetydd.MultiTenancy" />
         <!--#endif -->
-        <PackageReference Include="Dncy.Permission"/>
-        <PackageReference Include="Dncy.Specifications" />
-        <PackageReference Include="Dncy.Tools.Core"/>
-        <PackageReference Include="Dncy.Tools.SnowFlake"/>
+        <PackageReference Include="Dotnetydd.Permission"/>
+        <PackageReference Include="Dotnetydd.Specifications" />
+        <PackageReference Include="Dotnetydd.Tools.Core"/>
+        <PackageReference Include="Dotnetydd.Tools.SnowFlake"/>
         <PackageReference Include="MediatR"/>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
 		<PackageReference Include="CommunityToolkit.Diagnostics"/>

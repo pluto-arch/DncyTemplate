@@ -1,5 +1,4 @@
 ﻿using System.Threading.RateLimiting;
-using Dncy.Tools;
 using DncyTemplate.Api;
 using DncyTemplate.Api.BackgroundServices;
 using DncyTemplate.Api.Infra.ApiDoc;
@@ -14,6 +13,7 @@ using DncyTemplate.Application;
 using DncyTemplate.Application.Models;
 using DncyTemplate.Domain;
 using DncyTemplate.Infra;
+using Dotnetydd.Tools.Core.Extension;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Hosting.Server.Features;

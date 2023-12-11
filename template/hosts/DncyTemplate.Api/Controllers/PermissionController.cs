@@ -1,7 +1,9 @@
-﻿using Dncy.Permission;
-using Dncy.Permission.Models;
+﻿using Dotnetydd.Permission;
+using Dotnetydd.Permission.Models;
 using DncyTemplate.Application.Models;
 using DncyTemplate.Application.Permission.Models;
+using Dotnetydd.Permission.Definition;
+using Dotnetydd.Permission.PermissionGrant;
 
 namespace DncyTemplate.Api.Controllers
 {

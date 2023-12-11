@@ -1,6 +1,6 @@
 using System.Threading.RateLimiting;
-using Dncy.MultiTenancy.AspNetCore;
-using Dncy.Tools;
+using Dotnetydd.MultiTenancy.AspNetCore;
+using Dotnetydd.Tools;
 using DncyTemplate.Application;
 using DncyTemplate.Application.Models;
 using DncyTemplate.Domain;
@@ -12,6 +12,7 @@ using DncyTemplate.Mvc.Infra;
 using DncyTemplate.Mvc.Infra.Authorization;
 using DncyTemplate.Mvc.Infra.HealthChecks;
 using DncyTemplate.Mvc.Infra.LogSetup;
+using Dotnetydd.Tools.Core.Extension;
 #if Tenant
 using DncyTemplate.Mvc.Infra.Tenancy;
 #endif

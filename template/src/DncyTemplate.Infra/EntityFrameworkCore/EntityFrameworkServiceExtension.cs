@@ -1,4 +1,4 @@
-﻿using Dncy.Specifications.EntityFrameworkCore;
+﻿using Dotnetydd.Specifications.EntityFrameworkCore;
 using DncyTemplate.Domain.Aggregates.Product;
 using DncyTemplate.Domain.Infra;
 using DncyTemplate.Domain.Infra.Repository;

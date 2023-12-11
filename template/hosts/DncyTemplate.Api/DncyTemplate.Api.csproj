@@ -14,7 +14,7 @@
 
 	<ItemGroup>
 		<!--#if (Tenant) -->
-		<PackageReference Include="Dncy.MultiTenancy.AspNetCore" />
+		<PackageReference Include="Dotnetydd.MultiTenancy.AspNetCore" />
 		<!--#endif -->
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
