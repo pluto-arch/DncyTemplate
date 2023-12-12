@@ -18,16 +18,22 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
          where TEntity : class, IEntity
     {
         private readonly ISpecificationEvaluator _specification = EfCoreSpecificationEvaluator.Default;
-        private readonly IUnitOfWorkAccessor<TContext> _unitOfWork;
+        private readonly IUnitOfWork<TContext> _unitOfWork;
 
-        public EfRepository(IUnitOfWorkAccessor<TContext> unitOfWorkAccessor)
+        public EfRepository(IUnitOfWork<TContext> uow)
         {
-            _unitOfWork = unitOfWorkAccessor;
+            _unitOfWork = uow;
         }
 
-        private TContext _dbContext => _unitOfWork.UnitOfWork.Context as TContext;
+        private TContext _dbContext => _unitOfWork.Context as TContext;
 
         protected DbSet<TEntity> _entitySet => _dbContext.Set<TEntity>();
+
+        /// <inheritdoc />
+        public IDataContext DataContext => _dbContext;
+
+        /// <inheritdoc />
+        public IUnitOfWork UnitOfWork => _unitOfWork;
 
         public virtual IQueryable<TEntity> QuerySet => _dbContext.Set<TEntity>();
 
@@ -42,7 +48,6 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
 
         public IQueryProvider Provider => QuerySet.Provider;
 
-        public TContext Uow => _dbContext;
 
         public virtual IAsyncQueryableProvider AsyncExecuter => new AsyncQueryableProvider();
 
@@ -131,7 +136,7 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
             bool includeDetails = false, CancellationToken cancellationToken = default)
         {
             return includeDetails
-                ? await ( await IncludeRelatedAsync() ).Where(predicate).SingleOrDefaultAsync(cancellationToken)
+                ? await (await IncludeRelatedAsync()).Where(predicate).SingleOrDefaultAsync(cancellationToken)
                 : await QuerySet.Where(predicate).SingleOrDefaultAsync(cancellationToken);
         }
 
@@ -192,13 +197,13 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
         public virtual async Task<TEntity> GetAsync(ISpecification<TEntity> specification,
             CancellationToken cancellationToken = default)
         {
-            return ( await GetListAsync(specification, cancellationToken) ).FirstOrDefault()!;
+            return (await GetListAsync(specification, cancellationToken)).FirstOrDefault()!;
         }
 
         public virtual async Task<TResult> GetAsync<TResult>(ISpecification<TEntity, TResult> specification,
             CancellationToken cancellationToken = default)
         {
-            return ( await GetListAsync(specification, cancellationToken) ).FirstOrDefault()!;
+            return (await GetListAsync(specification, cancellationToken)).FirstOrDefault()!;
         }
 
         /// <inheritdoc />
@@ -266,7 +271,7 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
             where TContext : DbContext, IDataContext
             where TEntity : class, IEntity
     {
-        public EfRepository(IUnitOfWorkAccessor<TContext> unitOfWork) : base(unitOfWork) { }
+        public EfRepository(IUnitOfWork<TContext> unitOfWork) : base(unitOfWork) { }
 
         public async Task DeleteAsync(TKey id, bool autoSave = false, CancellationToken cancellationToken = default)
         {

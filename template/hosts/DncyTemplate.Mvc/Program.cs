@@ -150,7 +150,6 @@ else
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseUnitOfWorkAccessor();
 app.UseHttpRequestLogging();
 
 app.UseAuthentication();

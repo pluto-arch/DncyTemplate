@@ -9,13 +9,11 @@ namespace DncyTemplate.Uow.EntityFrameworkCore
         private bool _disposedValue;
         private IServiceProvider _serviceProvider;
         private TContext _context;
-        private readonly IUnitOfWorkAccessor<TContext> _unitOfWorkAccessor;
 
-        public EfUnitOfWork(IServiceProvider serviceProvider,IUnitOfWorkAccessor<TContext> unitOfWorkAccessor)
+        public EfUnitOfWork(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
             _context = serviceProvider.GetRequiredService<TContext>();
-            _unitOfWorkAccessor = unitOfWorkAccessor;
         }
 
         public IServiceProvider ServiceProvider => _serviceProvider;
@@ -25,17 +23,14 @@ namespace DncyTemplate.Uow.EntityFrameworkCore
 
         public IUnitOfWork BeginNew()
         {
-            var pre = _unitOfWorkAccessor.UnitOfWork;
             var scope = _serviceProvider.CreateScope();
             var newUow = scope.ServiceProvider.GetRequiredService<IUnitOfWork<TContext>>();
             newUow.OnDisposed += () =>
             {
-                _unitOfWorkAccessor.SetUnitOfWork(pre);
                 scope.Dispose();
                 scope = null;
                 newUow = null;
             };
-            _unitOfWorkAccessor.SetUnitOfWork(newUow);
             return newUow;
         }
 

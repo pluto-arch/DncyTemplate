@@ -134,7 +134,6 @@ else
 
 
 app.UseHttpsRedirection();
-app.UseUnitOfWorkAccessor();
 app.UseAuthentication();
 #if Tenant
 app.UseMultiTenancy();

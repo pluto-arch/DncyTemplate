@@ -70,12 +70,6 @@ public static class EntityFrameworkServiceExtension
             var defType = typeof(IUnitOfWork<>).MakeGenericType(item);
             var defType2 = typeof(EfUnitOfWork<>).MakeGenericType(item);
             services.RegisterScopedType(defType, defType2);
-            
-            var ua = typeof(IUnitOfWorkAccessor<>).MakeGenericType(item);
-            var uaImpl = typeof(UnitOfWorkAccessor<>).MakeGenericType(item);
-            services.AddSingleton(ua,uaImpl);
-
-            UnitWorkAccessorManager.Add(ua, defType);
         }
     }
 

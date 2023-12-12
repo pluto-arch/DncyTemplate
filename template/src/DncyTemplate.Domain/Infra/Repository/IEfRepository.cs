@@ -1,6 +1,7 @@
 ﻿using Dotnetydd.Specifications;
 using DncyTemplate.Domain.Collections;
 using System.Diagnostics.CodeAnalysis;
+using DncyTemplate.Uow;
 
 namespace DncyTemplate.Domain.Infra.Repository
 {
@@ -8,6 +9,10 @@ namespace DncyTemplate.Domain.Infra.Repository
     public interface IEfRepository<TEntity> : IQueryable<TEntity>
         where TEntity : class, IEntity
     {
+        IDataContext DataContext { get; }
+
+        IUnitOfWork UnitOfWork { get; }
+
         IQueryable<TEntity> QuerySet { get; }
 
         IAsyncQueryableProvider AsyncExecuter { get; }
