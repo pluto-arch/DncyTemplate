@@ -26,8 +26,10 @@ public class PagedList<T> : IPagedList<T>
         {
             Items = source.Skip(( PageIndex - 1 ) * PageSize).Take(PageSize).ToList();
         }
-
-        Items = source.ToList();
+        else
+        {
+            Items = source.ToList();
+        }
     }
 
     /// <summary>
@@ -55,8 +57,10 @@ public class PagedList<T> : IPagedList<T>
         {
             Items = source.Skip(( PageIndex - 1 ) * PageSize).Take(PageSize).ToList();
         }
-
-        Items = source.ToList();
+        else
+        {
+            Items = source.ToList();
+        }
     }
 
 
