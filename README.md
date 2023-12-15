@@ -9,18 +9,18 @@
 请确保电脑中有nuget.exe
 ```
 # 打包成nuget
-nuget pack DncyTemplate.nuspec 
+nuget pack DotNetBoltTemplate.nuspec 
 ```
-会生成：DncyTemplate.{version}.nupkg  版本号可在nuspec中自定义
+会生成：DotNetBoltTemplate.{version}.nupkg  版本号可在nuspec中自定义
 2. 安装
 在刚刚生成的文件同目录执行下边命令
 ```
-dotnet new -i DncyTemplate.{version}.nupkg  
+dotnet new install DotNetBoltTemplate.{version}.nupkg  
 ```
 
 3. 查看模板是否安装成功
 ```
-dotnet new dncy -h
+dotnet new boltapp -h
 ```
 
 
