@@ -3,7 +3,9 @@
 @using DncyTemplate.Application.Models.Application.Navigation
 @using DncyTemplate.Infra.Extensions
 @using DncyTemplate.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Mvc.Localization
 @model DncyTemplate.Mvc.Views.Shared.Components.SideBarMenu.SideBarMenuViewModel
+@inject IHtmlLocalizer<MenuResource> L
 
 @{
     var calculateMenuId = new Func<string, string>((Name) =>
@@ -17,9 +19,9 @@
     });
 
 
-    var selSubPermiss = new Func<List<MenuPermission>, MenuPermission>(subMenus=>
+    var selSubPermiss = new Func<List<MenuPermission>, MenuPermission>(subMenus =>
     {
-        if (subMenus.All(x=>x.SkipCheck))
+        if (subMenus.All(x => x.SkipCheck))
         {
             return MenuPermission.SkipCheckPermission();
         }
@@ -43,56 +45,56 @@
                 <li class="layui-nav-item">
                     @if (menuItem.Items.IsNullOrEmpty())
                     {
-                        <li class="layui-nav-item" asp-permission="@menuItem.Permission">
-                            <a menu-url="@menuItem.Url" class="site-demo-active" menu-type="1" menu-id="@calculateMenuId(menuItem.Name)"
-                               menu-title="@menuItem.DisplayName">
-                                <i class="layui-icon @Html.Raw(menuItem.Icon)"></i>
-                                <span>@menuItem.DisplayName</span>
-                            </a>
-                        </li>
+                    <li class="layui-nav-item" asp-permission="@menuItem.Permission">
+                        <a menu-url="@menuItem.Url" class="site-demo-active" menu-type="1" menu-id="@calculateMenuId(menuItem.Name)"
+                           menu-title="@L[menuItem.Name,menuItem.DisplayName]">
+                            <i class="layui-icon @Html.Raw(menuItem.Icon)"></i>
+                            <span>@L[menuItem.Name, menuItem.DisplayName]</span>
+                        </a>
+                    </li>
                     }
                     else
                     {
-                        <li class="layui-nav-item" asp-authorize asp-permission="@selSubPermiss(menuItem.Items.Select(x=>x.Permission).ToList())">
-                            <a href="javascript:;" menu-type="0" menu-id="@calculateMenuId(menuItem.Name)">
-                                <i class="layui-icon @Html.Raw(menuItem.Icon)"></i>
-                                <span>@menuItem.DisplayName</span>
-                            </a>
-                            <dl class="layui-nav-child">
+                    <li class="layui-nav-item" asp-authorize asp-permission="@selSubPermiss(menuItem.Items.Select(x=>x.Permission).ToList())">
+                        <a href="javascript:;" menu-type="0" menu-id="@calculateMenuId(menuItem.Name)">
+                            <i class="layui-icon @Html.Raw(menuItem.Icon)"></i>
+                            <span>@L[menuItem.Name, menuItem.DisplayName]</span>
+                        </a>
+                        <dl class="layui-nav-child">
                                 @foreach (var subMenuItem in menuItem.Items)
                                 {
-                                    <dd asp-authorize asp-permission="@subMenuItem.Permission">
+                                <dd asp-authorize asp-permission="@subMenuItem.Permission">
                                         @if (subMenuItem.Items.IsNullOrEmpty())
                                         {
-                                            <a menu-url="@subMenuItem.Url" class="site-demo-active" menu-type="1"
-                                               menu-id="@calculateMenuId(subMenuItem.Name)" menu-title="@subMenuItem.DisplayName">
-                                                <i class="layui-icon @Html.Raw(subMenuItem.Icon)"></i>
-                                                <span>@subMenuItem.DisplayName</span>
-                                            </a>
+                                        <a menu-url="@subMenuItem.Url" class="site-demo-active" menu-type="1"
+                                           menu-id="@calculateMenuId(subMenuItem.Name)" menu-title="@L[menuItem.Name,menuItem.DisplayName]">
+                                            <i class="layui-icon @Html.Raw(subMenuItem.Icon)"></i>
+                                            <span>@L[menuItem.Name, menuItem.DisplayName]</span>
+                                        </a>
                                         }
                                         else
                                         {
-                                            <a href="javascript:;" menu-type="0" menu-id="@calculateMenuId(subMenuItem.Name)" asp-authorize asp-permission="@subMenuItem.Permission">
-                                                <i class="layui-icon @Html.Raw(subMenuItem.Icon)"></i>
-                                                <span>@subMenuItem.DisplayName</span>
-                                            </a>
-                                            <dl class="layui-nav-child" asp-authorize asp-permission="@subMenuItem.Permission">
+                                        <a href="javascript:;" menu-type="0" menu-id="@calculateMenuId(subMenuItem.Name)" asp-authorize asp-permission="@subMenuItem.Permission">
+                                            <i class="layui-icon @Html.Raw(subMenuItem.Icon)"></i>
+                                            <span>@L[menuItem.Name, menuItem.DisplayName]</span>
+                                        </a>
+                                        <dl class="layui-nav-child" asp-authorize asp-permission="@subMenuItem.Permission">
                                                 @foreach (var subSubMenuItem in subMenuItem.Items)
                                                 {
-                                                    <dd asp-authorize asp-permission="@subSubMenuItem.Permission">
-                                                        <a menu-url="@subSubMenuItem.Url" class="site-demo-active" menu-type="1"
-                                                           menu-id="@calculateMenuId(subSubMenuItem.Name)" menu-title="@subSubMenuItem.DisplayName">
-                                                            <i class="layui-icon @Html.Raw(subSubMenuItem.Icon)"></i>
-                                                            <span>@subSubMenuItem.DisplayName</span>
-                                                        </a>
-                                                    </dd>
+                                                <dd asp-authorize asp-permission="@subSubMenuItem.Permission">
+                                                    <a menu-url="@subSubMenuItem.Url" class="site-demo-active" menu-type="1"
+                                                       menu-id="@calculateMenuId(subSubMenuItem.Name)" menu-title="@L[menuItem.Name,menuItem.DisplayName]">
+                                                        <i class="layui-icon @Html.Raw(subSubMenuItem.Icon)"></i>
+                                                        <span>@L[menuItem.Name, menuItem.DisplayName]</span>
+                                                    </a>
+                                                </dd>
                                                 }
-                                            </dl>
+                                        </dl>
                                         }
-                                    </dd>
+                                </dd>
                                 }
-                            </dl>
-                        </li>
+                        </dl>
+                    </li>
                     }
                 </li>
             }

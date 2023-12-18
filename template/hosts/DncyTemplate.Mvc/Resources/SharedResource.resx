@@ -117,13 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="app.menu.dashboard.hostconsole" xml:space="preserve">
-    <value>Dashboard</value>
+  <data name="ErrorHandleRequest" xml:space="preserve">
+    <value>error processing request</value>
   </data>
-  <data name="app.menu.device" xml:space="preserve">
-    <value>Devices</value>
+  <data name="InvalidRequest" xml:space="preserve">
+    <value>invalid request</value>
   </data>
-  <data name="app.menu.device.products" xml:space="preserve">
-    <value>Product List</value>
+  <data name="ServiceUnavailable" xml:space="preserve">
+    <value>service unavailable</value>
+  </data>
+  <data name="Successed" xml:space="preserve">
+    <value>Successed</value>
+  </data>
+  <data name="TooManyRequest" xml:space="preserve">
+    <value>too many request</value>
+  </data>
+  <data name="ValueIsRequired" xml:space="preserve">
+    <value>parameter '{0}' is required</value>
   </data>
 </root>

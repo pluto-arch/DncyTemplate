@@ -117,13 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="app.menu.dashboard.hostconsole" xml:space="preserve">
-    <value>Dashboard</value>
+  <data name="DemoModel.Address" xml:space="preserve">
+    <value>地址</value>
   </data>
-  <data name="app.menu.device" xml:space="preserve">
-    <value>Devices</value>
+  <data name="DemoModel.Name" xml:space="preserve">
+    <value>名称</value>
   </data>
-  <data name="app.menu.device.products" xml:space="preserve">
-    <value>Product List</value>
+  <data name="PageIndexIsInvalid" xml:space="preserve">
+    <value>页大小必须在{1}~{2}之间</value>
+  </data>
+  <data name="StringLengthInvalid" xml:space="preserve">
+    <value>字段 {0} 必须是字符串类型，最大长度为“{1}”，最小长度为“{2}”。</value>
+  </data>
+  <data name="StringLengthIsInvalid" xml:space="preserve">
+    <value>字段 '{0}' 必须是最小长度为 '{2}'、最大长度为 '{1}' 的字符串。</value>
+  </data>
+  <data name="ValueIsRequired" xml:space="preserve">
+    <value>{0} 是必须的</value>
   </data>
 </root>

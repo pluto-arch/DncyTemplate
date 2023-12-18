@@ -1,9 +1,8 @@
-﻿using DncyTemplate.Application.Models.Product;
-using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
-using FluentValidation;
-using Microsoft.Extensions.Localization;
+﻿# this resource can use for fluentvalidate message localization
 
+see : 
+
+```csharp
 namespace DncyTemplate.Application.Command.Product
 {
     public class CreateProductCommand : ICommand<ProductDto>
@@ -25,3 +24,4 @@ namespace DncyTemplate.Application.Command.Product
         }
     }
 }
+```

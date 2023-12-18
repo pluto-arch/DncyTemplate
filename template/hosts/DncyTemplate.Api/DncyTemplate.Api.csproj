@@ -41,7 +41,6 @@
 		<Folder Include="BackgroundServices\" />
 		<!--#if (Tenant) -->
 		<Folder Include="Infra\Tenancy\" />
-		<Folder Include="Resources\" />
 		<!--#endif -->
 	</ItemGroup>
 
@@ -66,6 +65,46 @@
 	<ItemGroup>
 	  <None Remove="Infra\ApiDoc\index.html" />
 	  <EmbeddedResource Include="Infra\ApiDoc\index.html" />
+	  <EmbeddedResource Update="Resources\DataAnnotation.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>DataAnnotation.Designer.cs</LastGenOutput>
+	    <CustomToolNamespace>DncyTemplate.Api</CustomToolNamespace>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\DefaultDataAnnotation.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>DefaultDataAnnotation.Designer.cs</LastGenOutput>
+	    <CustomToolNamespace>DncyTemplate.Api</CustomToolNamespace>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\SharedResources.en-us.resx">
+	    <Generator></Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\SharedResources.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>SharedResources.Designer.cs</LastGenOutput>
+	    <CustomToolNamespace>DncyTemplate.Api</CustomToolNamespace>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\SharedResources.zh-hans.resx">
+	    <Generator></Generator>
+	  </EmbeddedResource>
+	</ItemGroup>
+
+
+	<ItemGroup>
+	  <Compile Update="Resources\DataAnnotation.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>DataAnnotation.resx</DependentUpon>
+	  </Compile>
+	  <Compile Update="Resources\DefaultDataAnnotation.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>DefaultDataAnnotation.resx</DependentUpon>
+	  </Compile>
+	  <Compile Update="Resources\SharedResources.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>SharedResources.resx</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<DocumentationFile>DncyTemplate.Api.xml</DocumentationFile>

@@ -2,15 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Localization;
-using System.ComponentModel.DataAnnotations;
-using Bogus;
-using DncyTemplate.Application.Models.Product;
-using DncyTemplate.Domain.Aggregates.Product;
-using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
-using DncyTemplate.Infra.Utils;
-using DncyTemplate.Uow;
-using MapsterMapper;
-using Microsoft.CodeAnalysis.Elfie.Serialization;
 
 namespace DncyTemplate.Api.Controllers
 {
@@ -21,22 +12,13 @@ namespace DncyTemplate.Api.Controllers
     public partial class HomeController : ControllerBase, IResponseWraps
     {
         [AutoInject]
-        private readonly IStringLocalizer<HomeController> _stringLocalizer;
-
-        [AutoInject]
-        private readonly IHttpClientFactory _httpClientFactory;
-
-        [AutoInject]
-        private readonly ILogger<HomeController> _logger;
-
-        [AutoInject]
-        private readonly IMapper _mapper;
+        private readonly IStringLocalizer<SharedResources> _sharedres;
 
 
         [HttpGet]
-        public IActionResult TestLocalize(int name)
+        public IActionResult TestLocalize(string key)
         {
-            var text = _stringLocalizer["Welcome"];
+            var text = _sharedres[key];
             return Ok(text);
         }
 
@@ -52,41 +34,10 @@ namespace DncyTemplate.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("/rate_limit")]
-        [EnableRateLimiting("home.RateLimit_action")]
+        [EnableRateLimiting("home.RateLimit_Test")]
         public ResultDto RateLimit()
         {
-            var text = _stringLocalizer["Welcome"];
-            return this.Success<string>(text);
-        }
-
-        [AutoInject]
-        private readonly IUnitOfWork<DncyTemplateDbContext> _uow;
-        
-        
-        [HttpGet]
-        public async Task<IActionResult> UowThreadSelf()
-        {
-            var rep = _uow.GetEfRepository<Product>();
-
-            await rep.InsertAsync(new Product
-            {
-                Id = SnowFlakeId.Generator.GetUniqueId(),
-                Name = "AAAAA",
-            });
-
-
-            using (var cop=_uow.BeginNew())
-            {
-                await rep.InsertAsync(new Product
-                {
-                    Id = SnowFlakeId.Generator.GetUniqueId(),
-                    Name = "BBBBB",
-                });
-                await cop.CompleteAsync();
-            }
-
-            await _uow.CompleteAsync();
-            return Ok("success");
+            return this.Success<string>("ok");
         }
     }
 

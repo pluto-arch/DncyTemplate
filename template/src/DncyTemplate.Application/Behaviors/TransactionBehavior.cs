@@ -24,7 +24,7 @@ namespace DncyTemplate.Application.Behaviors
                 bool isTran = false;
                 if (request is ICommand cmd)
                 {
-                    isTran = cmd.Transactional;
+                    isTran = cmd.Transactional();
                 }
 
                 if (isTran)

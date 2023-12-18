@@ -77,7 +77,7 @@ namespace DncyTemplate.Mvc.Controllers
         [AllowAnonymous]
         public IActionResult TestLocalization()
         {
-            var text = _stringLocalizer[HomeControllerResource.HelloWorld];
+            var text = _stringLocalizer["HelloWorld"];
             return Ok(text);
         }
 

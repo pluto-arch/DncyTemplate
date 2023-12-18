@@ -117,13 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="app.menu.dashboard.hostconsole" xml:space="preserve">
-    <value>Dashboard</value>
+  <data name="FluentLengthLimit" xml:space="preserve">
+    <value>The field {0} must be a string with a minimum length of {2} and a maximum length of {1}.</value>
   </data>
-  <data name="app.menu.device" xml:space="preserve">
-    <value>Devices</value>
-  </data>
-  <data name="app.menu.device.products" xml:space="preserve">
-    <value>Product List</value>
+  <data name="LengthLimit" xml:space="preserve">
+    <value>223</value>
   </data>
 </root>

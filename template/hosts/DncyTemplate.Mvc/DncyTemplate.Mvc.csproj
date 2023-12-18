@@ -42,14 +42,6 @@
 	  <ProjectReference Include="..\..\src\DncyTemplate.Infra\DncyTemplate.Infra.csproj" />
 	</ItemGroup>
 
-
-	<ItemGroup>
-		<None Update="Resources\ResourceNameGenerator.tt">
-			<LastGenOutput>ResourceNameGenerator.cs</LastGenOutput>
-			<Generator>TextTemplatingFileGenerator</Generator>
-		</None>
-	</ItemGroup>
-
 	<ItemGroup>
 		<Content Update="wwwroot\*\**">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -96,46 +88,57 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Resources\ResourceNameGenerator.cs">
+	  <Compile Update="Resources\DataAnnotation.Designer.cs">
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
-	    <DependentUpon>ResourceNameGenerator.tt</DependentUpon>
+	    <DependentUpon>DataAnnotation.resx</DependentUpon>
 	  </Compile>
-	  <Compile Update="Resources\Controllers\HomeController.en-US.Designer.cs">
+	  <Compile Update="Resources\DefaultDataAnnotation.Designer.cs">
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
-	    <DependentUpon>HomeController.en-US.resx</DependentUpon>
+	    <DependentUpon>DefaultDataAnnotation.resx</DependentUpon>
 	  </Compile>
-	  <Compile Update="Resources\Controllers\HomeController.en-US.Designer.cs">
+	  <Compile Update="Resources\MenuResource.Designer.cs">
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
-	    <DependentUpon>HomeController.en-US.resx</DependentUpon>
+	    <DependentUpon>MenuResource.resx</DependentUpon>
 	  </Compile>
-	  <Compile Update="Resources\Controllers\HomeController.zh-CN.Designer.cs">
+	  <Compile Update="Resources\SharedResource.Designer.cs">
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
-	    <DependentUpon>HomeController.zh-CN.resx</DependentUpon>
+	    <DependentUpon>SharedResource.resx</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Update="Resources\DataAnnotation.en-US.resx">
+	  <EmbeddedResource Update="Resources\DataAnnotation.en-us.resx">
 	    <Generator></Generator>
 	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\DataAnnotation.zh-Hans.resx">
+	  <EmbeddedResource Update="Resources\DataAnnotation.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>DataAnnotation.Designer.cs</LastGenOutput>
+	    <CustomToolNamespace>DncyTemplate.Mvc</CustomToolNamespace>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\DataAnnotation.zh-hans.resx">
 	    <Generator></Generator>
 	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\Controllers\HomeController.en-US.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
-	    <LastGenOutput>HomeController.en-US.Designer.cs</LastGenOutput>
+	  <EmbeddedResource Update="Resources\DefaultDataAnnotation.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>DefaultDataAnnotation.Designer.cs</LastGenOutput>
+	    <CustomToolNamespace>DncyTemplate.Mvc</CustomToolNamespace>
 	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\Controllers\HomeController.en-US.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
-	    <LastGenOutput>HomeController.en-US.Designer.cs</LastGenOutput>
+	  <EmbeddedResource Update="Resources\MenuResource.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>MenuResource.Designer.cs</LastGenOutput>
+	    <CustomToolNamespace>DncyTemplate.Mvc</CustomToolNamespace>
 	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\Controllers\HomeController.zh-CN.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
-	    <LastGenOutput>HomeController.zh-CN.Designer.cs</LastGenOutput>
+	  <EmbeddedResource Update="Resources\SharedResource.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>SharedResource.Designer.cs</LastGenOutput>
+	    <CustomToolNamespace>DncyTemplate.Mvc</CustomToolNamespace>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\SharedResource.zh-hans.resx">
+	    <CustomToolNamespace></CustomToolNamespace>
 	  </EmbeddedResource>
 	</ItemGroup>
 

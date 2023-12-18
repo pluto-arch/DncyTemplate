@@ -117,13 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="app.menu.dashboard.hostconsole" xml:space="preserve">
-    <value>Dashboard</value>
+  <data name="AttemptedValueIsInvalidAccessor" xml:space="preserve">
+    <value>值“{0}”对 {1} 无效</value>
   </data>
-  <data name="app.menu.device" xml:space="preserve">
-    <value>Devices</value>
+  <data name="MissingBindRequiredValueAccessor" xml:space="preserve">
+    <value>未提供“{0}”属性的值</value>
   </data>
-  <data name="app.menu.device.products" xml:space="preserve">
-    <value>Product List</value>
+  <data name="MissingKeyOrValueAccessor" xml:space="preserve">
+    <value>缺少对应的值</value>
+  </data>
+  <data name="MissingRequestBodyRequiredValueAccessor" xml:space="preserve">
+    <value>缺少请求正文</value>
+  </data>
+  <data name="NonPropertyAttemptedValueIsInvalidAccessor" xml:space="preserve">
+    <value>值“{0}”无效</value>
+  </data>
+  <data name="NonPropertyUnknownValueIsInvalidAccessor" xml:space="preserve">
+    <value>提供的值无效</value>
+  </data>
+  <data name="NonPropertyValueMustBeANumberAccessor" xml:space="preserve">
+    <value>该字段必须是数字</value>
+  </data>
+  <data name="UnknownValueIsInvalidAccessor" xml:space="preserve">
+    <value>提供的值对于“{0}”无效</value>
+  </data>
+  <data name="ValueIsInvalidAccessor" xml:space="preserve">
+    <value>值“{0}”无效</value>
+  </data>
+  <data name="ValueMustBeANumberAccessor" xml:space="preserve">
+    <value>字段“{0}”必须是数字</value>
+  </data>
+  <data name="ValueMustNotBeNullAccessor" xml:space="preserve">
+    <value>值“{0}”无效</value>
   </data>
 </root>

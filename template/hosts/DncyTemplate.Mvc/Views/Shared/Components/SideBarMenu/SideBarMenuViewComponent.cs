@@ -8,14 +8,7 @@ namespace DncyTemplate.Mvc.Views.Shared.Components.SideBarMenu;
 public class SideBarMenuViewComponent : ViewComponent
 {
     public static List<MenuItemModel> Menus = new();
-    private readonly IStringLocalizer<SharedResource> _localizer;
     private static object _instance = new object();
-
-    public SideBarMenuViewComponent(IStringLocalizer<SharedResource> localizer)
-    {
-        _localizer = localizer;
-    }
-
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
@@ -49,7 +42,7 @@ public class SideBarMenuViewComponent : ViewComponent
         {
             Name = "app.menu.dashboard.hostconsole",
             Icon = "layui-icon-console",
-            DisplayName = "控制台",
+            DisplayName = "Dashboard",
             Url = "/dashboard/hostconsole",
             IsEnabled = true,
             IsVisible = true,
@@ -61,7 +54,7 @@ public class SideBarMenuViewComponent : ViewComponent
         {
             Name = "app.menu.device",
             Icon = "layui-icon-read",
-            DisplayName = "设备管理",
+            DisplayName = "Devices",
             IsEnabled = true,
             IsVisible = true,
             Items = new List<MenuItemModel>
@@ -70,7 +63,7 @@ public class SideBarMenuViewComponent : ViewComponent
                 {
                     Name = "app.menu.device.products",
                     Icon = "layui-icon-console",
-                    DisplayName = "产品管理",
+                    DisplayName = "Product List",
                     Url = "/product",
                     IsEnabled = true,
                     IsVisible = true,
