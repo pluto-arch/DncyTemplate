@@ -3,6 +3,7 @@ using DncyTemplate.Api;
 using DncyTemplate.Api.BackgroundServices;
 using DncyTemplate.Api.Infra.ApiDoc;
 using DncyTemplate.Api.Infra.Authorization;
+using DncyTemplate.Api.Infra.HealthChecks;
 using DncyTemplate.Api.Infra.LocalizerSetup;
 using DncyTemplate.Api.Infra.LogSetup;
 #if Tenant
@@ -68,12 +69,12 @@ builder.Services.AddRateLimiter(options =>
 {
     options.OnRejected = async (context, cancelToken) =>
     {
-        var l = context.HttpContext.RequestServices.GetService<IStringLocalizer<SharedResource>>();
+        //var l = context.HttpContext.RequestServices.GetService<IStringLocalizer<SharedResource>>();
         context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
         context.HttpContext.Response.Headers.Append("Retry-After", new StringValues("1")); // TODO 根据具体情况返回
         context.HttpContext.Response.ContentType = AppConstant.DEFAULT_CONTENT_TYPE;
         var res = ResultDto.TooManyRequest();
-        res.Message = l[res.Message];
+        //res.Message = l[res.Message];
         await context.HttpContext.Response.WriteAsJsonAsync(res, cancellationToken: cancelToken);
     };
     options.AddPolicy("home.RateLimit_action", httpContext =>

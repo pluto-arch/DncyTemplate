@@ -41,6 +41,7 @@
 		<Folder Include="BackgroundServices\" />
 		<!--#if (Tenant) -->
 		<Folder Include="Infra\Tenancy\" />
+		<Folder Include="Resources\" />
 		<!--#endif -->
 	</ItemGroup>
 
@@ -58,33 +59,6 @@
 
 
 	<ItemGroup>
-	  <Compile Update="Resources\ResourceNameGenerator.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>ResourceNameGenerator.tt</DependentUpon>
-	  </Compile>
-	  <Compile Update="Resources\Controllers\HomeController.en-US.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>HomeController.en-US.resx</DependentUpon>
-	  </Compile>
-	  <Compile Update="Resources\Controllers\HomeController.zh-CN.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>HomeController.zh-CN.resx</DependentUpon>
-	  </Compile>
-	</ItemGroup>
-
-
-	<ItemGroup>
-	  <None Update="Resources\ResourceNameGenerator.tt">
-	    <Generator>TextTemplatingFileGenerator</Generator>
-	    <LastGenOutput>ResourceNameGenerator.cs</LastGenOutput>
-	  </None>
-	</ItemGroup>
-
-
-	<ItemGroup>
 	  <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
 	</ItemGroup>
 
@@ -92,14 +66,6 @@
 	<ItemGroup>
 	  <None Remove="Infra\ApiDoc\index.html" />
 	  <EmbeddedResource Include="Infra\ApiDoc\index.html" />
-	  <EmbeddedResource Update="Resources\Controllers\HomeController.en-US.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
-	    <LastGenOutput>HomeController.en-US.Designer.cs</LastGenOutput>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\Controllers\HomeController.zh-CN.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
-	    <LastGenOutput>HomeController.zh-CN.Designer.cs</LastGenOutput>
-	  </EmbeddedResource>
 	</ItemGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<DocumentationFile>DncyTemplate.Api.xml</DocumentationFile>
