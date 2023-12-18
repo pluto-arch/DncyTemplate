@@ -3,7 +3,6 @@ using DncyTemplate.Api;
 using DncyTemplate.Api.BackgroundServices;
 using DncyTemplate.Api.Infra.ApiDoc;
 using DncyTemplate.Api.Infra.Authorization;
-using DncyTemplate.Api.Infra.HealthChecks;
 using DncyTemplate.Api.Infra.LocalizerSetup;
 using DncyTemplate.Api.Infra.LogSetup;
 #if Tenant
