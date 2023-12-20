@@ -1,9 +1,9 @@
-using Dotnetydd.Permission.Models;
 using DncyTemplate.Application.Constants;
-using System.Security.Claims;
 using Dotnetydd.Permission.Checker;
-using Dotnetydd.Permission.ValueProvider;
 using Dotnetydd.Permission.Definition;
+using Dotnetydd.Permission.Models;
+using Dotnetydd.Permission.ValueProvider;
+using System.Security.Claims;
 
 namespace DncyTemplate.Application.Permission;
 
@@ -56,7 +56,7 @@ public class PermissionChecker : IPermissionChecker
     {
         MultiplePermissionGrantResult result = new MultiplePermissionGrantResult();
 
-        names ??= Array.Empty<string>();
+        names ??= [];
 
         var userPermissions = claimsPrincipal.FindFirst(UserClaimConstants.CLAIM_PERMISSION);
         var userPermissionsArr = userPermissions?.Value.Split('|');

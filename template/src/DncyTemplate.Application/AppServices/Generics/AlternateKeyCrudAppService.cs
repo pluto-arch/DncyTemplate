@@ -71,13 +71,8 @@ namespace DncyTemplate.Application.AppServices.Generics
 
                 foreach (SortingDescriptor sortingDescriptor in pagedRequestModel.Sorter)
                 {
-                    string propertyName = properties.SingleOrDefault(p => string.Equals(p.Name, sortingDescriptor.PropertyName, StringComparison.OrdinalIgnoreCase))?.Name;
-
-                    if (propertyName is null)
-                    {
-                        throw new KeyNotFoundException(sortingDescriptor.PropertyName);
-                    }
-
+                    string propertyName = (properties.SingleOrDefault(p => string.Equals(p.Name, sortingDescriptor.PropertyName, StringComparison.OrdinalIgnoreCase))?.Name)
+                                          ?? throw new KeyNotFoundException(sortingDescriptor.PropertyName);
                     if (sortingDescriptor.SortDirection == SortingOrder.Ascending)
                     {
                         orderedQueryable = orderedQueryable is null ? query.OrderBy(propertyName) : orderedQueryable.ThenBy(propertyName);
@@ -97,7 +92,7 @@ namespace DncyTemplate.Application.AppServices.Generics
         {
             if (requestModel is PageRequest model)
             {
-                return query.Skip(( model.PageNo - 1 ) * model.PageSize).Take(model.PageSize);
+                return query.Skip((model.PageNo - 1) * model.PageSize).Take(model.PageSize);
             }
             return query;
         }

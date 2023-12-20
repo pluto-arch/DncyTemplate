@@ -14,10 +14,10 @@ namespace DncyTemplate.Mvc.Models.Account
                 Tenant="T20210602000003",
 #endif
                 Account="sa",
-                Roles = new RoleEnum[]
-                {
+                Roles =
+                [
                     RoleEnum.SA
-                }
+                ]
             },
             new User
             {
@@ -27,10 +27,10 @@ namespace DncyTemplate.Mvc.Models.Account
                 Tenant="T20210602000001",
 #endif
                 Account="admin",
-                Roles = new RoleEnum[]
-                {
+                Roles =
+                [
                     RoleEnum.Admin
-                }
+                ]
             },
             new User
             {
@@ -40,10 +40,10 @@ namespace DncyTemplate.Mvc.Models.Account
                 Tenant="T20210602000002",
 #endif
                 Account="user",
-                Roles = new RoleEnum[]
-                {
+                Roles =
+                [
                     RoleEnum.Member
-                }
+                ]
             }
         };
     }

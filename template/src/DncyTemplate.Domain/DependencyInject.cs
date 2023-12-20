@@ -1,6 +1,4 @@
-﻿using DncyTemplate.Uow;
-
-namespace DncyTemplate.Domain
+﻿namespace DncyTemplate.Domain
 {
     public static class DependencyInject
     {

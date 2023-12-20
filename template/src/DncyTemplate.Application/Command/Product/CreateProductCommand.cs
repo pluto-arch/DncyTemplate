@@ -1,6 +1,4 @@
 ﻿using DncyTemplate.Application.Models.Product;
-using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 using FluentValidation;
 using Microsoft.Extensions.Localization;
 

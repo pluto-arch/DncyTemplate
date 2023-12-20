@@ -10,10 +10,10 @@ namespace DncyTemplate.Api.Infra.ExceptionHandlers
     public class ActionExecptionFilter : IAsyncExceptionFilter
     {
 
-        private static readonly MediaTypeCollection mediaType = new()
-        {
+        private static readonly MediaTypeCollection mediaType =
+        [
             AppConstant.DEFAULT_CONTENT_TYPE
-        };
+        ];
 
         /// <inheritdoc />
         public Task OnExceptionAsync(ExceptionContext context)

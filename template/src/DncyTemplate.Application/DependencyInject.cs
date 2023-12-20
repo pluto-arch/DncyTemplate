@@ -1,5 +1,4 @@
-﻿using Dotnetydd.Permission;
-using DncyTemplate.Application.Behaviors;
+﻿using DncyTemplate.Application.Behaviors;
 using DncyTemplate.Application.Permission;
 using DncyTemplate.Infra.EntityFrameworkCore.Repository;
 using Dotnetydd.Permission.Checker;
@@ -9,13 +8,12 @@ using Dotnetydd.Permission.PermissionManager;
 using Dotnetydd.Permission.ValueProvider;
 using FastExpressionCompiler;
 using Mapster;
-using MapsterMapper;
 
 namespace DncyTemplate.Application
 {
     public static class DependencyInject
     {
-        public static IServiceCollection AddApplicationModule(this IServiceCollection services,IConfiguration configuration, IEnumerable<Assembly> assemblies=null)
+        public static IServiceCollection AddApplicationModule(this IServiceCollection services, IConfiguration configuration, IEnumerable<Assembly> assemblies = null)
         {
             assemblies ??= AppDomain.CurrentDomain.GetAssemblies()
                 .Where(x => !string.IsNullOrEmpty(x.FullName) && x.FullName.Contains("DncyTemplate", StringComparison.OrdinalIgnoreCase));
@@ -45,9 +43,9 @@ namespace DncyTemplate.Application
         }
 
 
-        public static void AddMapster(this IServiceCollection services,params Assembly[] assemblies)
+        public static void AddMapster(this IServiceCollection services, params Assembly[] assemblies)
         {
-            var config=TypeAdapterConfig.GlobalSettings;
+            var config = TypeAdapterConfig.GlobalSettings;
             TypeAdapterConfig.GlobalSettings.Compiler = exp => exp.CompileFast();
             config.Scan(assemblies);
             services.AddSingleton(config);

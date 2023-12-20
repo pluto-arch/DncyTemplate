@@ -1,7 +1,6 @@
 ﻿using DncyTemplate.Api.Infra.ExceptionHandlers;
 using DncyTemplate.Domain.Infra;
 using DncyTemplate.Infra.Global;
-using DncyTemplate.Uow;
 using Microsoft.EntityFrameworkCore;
 
 namespace DncyTemplate.Api.Infra
@@ -82,7 +81,7 @@ namespace DncyTemplate.Api.Infra
                     await ctx.Database.MigrateAsync(); // 应用迁移
                 }
             }
-            
+
             var seeders = serviceScope.ServiceProvider.GetServices<IDataSeedProvider>();
             if (!seeders.Any())
             {

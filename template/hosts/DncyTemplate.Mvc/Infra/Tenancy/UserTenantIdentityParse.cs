@@ -1,6 +1,6 @@
 ﻿#if Tenant
-using Dotnetydd.MultiTenancy.AspNetCore;
 using DncyTemplate.Mvc.Constants;
+using Dotnetydd.MultiTenancy.AspNetCore;
 using Dotnetydd.MultiTenancy.AspNetCore.TenantIdentityParse;
 
 namespace DncyTemplate.Mvc.Infra.Tenancy;

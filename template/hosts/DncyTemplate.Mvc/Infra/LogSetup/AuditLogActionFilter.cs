@@ -21,10 +21,10 @@ public class AuditLogActionFilter : IAsyncActionFilter
             return;
         }
 
-        var type = ( context.ActionDescriptor as ControllerActionDescriptor ).ControllerTypeInfo.AsType();
+        var type = (context.ActionDescriptor as ControllerActionDescriptor)?.ControllerTypeInfo.AsType();
 
         //方法信息
-        var method = ( context.ActionDescriptor as ControllerActionDescriptor ).MethodInfo;
+        var method = (context.ActionDescriptor as ControllerActionDescriptor)?.MethodInfo;
         //方法参数
         var arguments = context.ActionArguments;
         // var ip=context.HttpContext.Connection.RemoteIpAddress.ToString();
@@ -37,8 +37,8 @@ public class AuditLogActionFilter : IAsyncActionFilter
             ////请求参数转Json
             Parameters = JsonConvert.SerializeObject(arguments),
             ExecutionTime = DateTime.Now,
-            BrowserInfo = context.HttpContext.Request.Headers["User-Agent"].ToString(),
-            ClientIpAddress = context.HttpContext.Connection.RemoteIpAddress.ToString(),
+            BrowserInfo = context.HttpContext.Request.Headers.UserAgent.ToString(),
+            ClientIpAddress = context.HttpContext.Connection.RemoteIpAddress?.ToString(),
         };
 
         //开始计时
@@ -89,9 +89,9 @@ public class AuditLogActionFilter : IAsyncActionFilter
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    private bool ShouldSaveAudit(ActionExecutingContext context)
+    private static bool ShouldSaveAudit(ActionExecutingContext context)
     {
-        if (!( context.ActionDescriptor is ControllerActionDescriptor descriptor ))
+        if (context.ActionDescriptor is not ControllerActionDescriptor descriptor)
             return false;
         var methodInfo = descriptor.MethodInfo;
 
@@ -124,31 +124,5 @@ public class AuditLogActionFilter : IAsyncActionFilter
         //    }
         //}
         return true;
-    }
-
-    public class MyJsonConverter : JsonConverter
-    {
-        /// <inheritdoc />
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            var t = value.GetType().GetProperties();
-            foreach (var prop in t)
-            {
-                // filter secret value
-            }
-
-        }
-
-        /// <inheritdoc />
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-        {
-            return null;
-        }
-
-        /// <inheritdoc />
-        public override bool CanConvert(Type objectType)
-        {
-            return true;
-        }
     }
 }

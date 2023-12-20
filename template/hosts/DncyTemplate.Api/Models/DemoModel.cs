@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DncyTemplate.Api.Models
 {
@@ -11,7 +10,7 @@ namespace DncyTemplate.Api.Models
         public string Name { get; set; }
 
         // StringLengthInvalid is dataannotation key in DataAnnotation.resx
-        [StringLength(maximumLength:10,MinimumLength = 3,ErrorMessage = "StringLengthInvalid")]
+        [StringLength(maximumLength: 10, MinimumLength = 3, ErrorMessage = "StringLengthInvalid")]
         [Display(Name = "DemoModel.Address")]
         public string Address { get; set; }
     }

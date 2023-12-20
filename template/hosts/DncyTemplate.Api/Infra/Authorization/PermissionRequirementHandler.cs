@@ -1,5 +1,4 @@
-﻿using Dotnetydd.Permission;
-using Dotnetydd.Permission.Checker;
+﻿using Dotnetydd.Permission.Checker;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 

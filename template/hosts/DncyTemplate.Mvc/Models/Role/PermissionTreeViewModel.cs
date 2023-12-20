@@ -4,7 +4,7 @@ public class PermissionTreeViewModel
 {
     public PermissionTreeViewModel()
     {
-        Children = new List<PermissionTreeViewModel>();
+        Children = [];
     }
 
     public string Id { get; set; }

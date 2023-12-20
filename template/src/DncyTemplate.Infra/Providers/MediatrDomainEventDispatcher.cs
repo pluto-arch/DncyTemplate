@@ -4,13 +4,11 @@ namespace DncyTemplate.Infra.Providers;
 
 public class MediatrDomainEventDispatcher : IDomainEventDispatcher
 {
-    private readonly ILogger<MediatrDomainEventDispatcher> _log;
     private readonly IMediator _mediator;
 
-    public MediatrDomainEventDispatcher(IMediator mediator, ILogger<MediatrDomainEventDispatcher> log)
+    public MediatrDomainEventDispatcher(IMediator mediator)
     {
         _mediator = mediator;
-        _log = log;
     }
 
     public async Task Dispatch(INotification domainEvent, CancellationToken cancellationToken = default)

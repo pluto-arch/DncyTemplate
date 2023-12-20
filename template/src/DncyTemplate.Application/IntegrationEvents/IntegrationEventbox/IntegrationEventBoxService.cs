@@ -10,7 +10,7 @@ namespace DncyTemplate.Application.IntegrationEvents.IntegrationEventbox;
 [Injectable(InjectLifeTime.Transient)]
 public partial class IntegrationEventBoxService
 {
-    public static readonly ConcurrentBag<string> InMemoryProductBox = new ConcurrentBag<string>();
+    public static readonly ConcurrentBag<string> InMemoryProductBox = [];
 
     public void AddAndSaveEvent(string @event)
     {

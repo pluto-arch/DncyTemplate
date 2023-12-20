@@ -24,6 +24,6 @@ public abstract class BaseEntity<TKey> : BaseEntity, IEntity<TKey>
 
     public override object[] GetKeys()
     {
-        return new object[] { Id };
+        return [Id];
     }
 }

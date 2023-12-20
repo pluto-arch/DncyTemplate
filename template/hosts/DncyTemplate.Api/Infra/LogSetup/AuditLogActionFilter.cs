@@ -24,10 +24,10 @@ namespace DncyTemplate.Api.Infra.LogSetup
                 return;
             }
 
-            var type = ( context.ActionDescriptor as ControllerActionDescriptor ).ControllerTypeInfo.AsType();
+            var type = (context.ActionDescriptor as ControllerActionDescriptor)?.ControllerTypeInfo.AsType();
 
             //方法信息
-            var method = ( context.ActionDescriptor as ControllerActionDescriptor ).MethodInfo;
+            var method = (context.ActionDescriptor as ControllerActionDescriptor)?.MethodInfo;
             //方法参数
             var arguments = context.ActionArguments;
             // var ip=context.HttpContext.Connection.RemoteIpAddress.ToString();
@@ -40,8 +40,8 @@ namespace DncyTemplate.Api.Infra.LogSetup
                 ////请求参数转Json
                 Parameters = JsonConvert.SerializeObject(arguments),
                 ExecutionTime = DateTime.Now,
-                BrowserInfo = context.HttpContext.Request.Headers["User-Agent"].ToString(),
-                ClientIpAddress = context.HttpContext.Connection.RemoteIpAddress.ToString(),
+                BrowserInfo = context.HttpContext.Request.Headers.UserAgent.ToString(),
+                ClientIpAddress = context.HttpContext.Connection.RemoteIpAddress?.ToString(),
             };
 
             //开始计时
@@ -101,7 +101,7 @@ namespace DncyTemplate.Api.Infra.LogSetup
         /// <returns></returns>
         private bool ShouldSaveAudit(ActionExecutingContext context)
         {
-            if (!( context.ActionDescriptor is ControllerActionDescriptor descriptor ))
+            if (context.ActionDescriptor is not ControllerActionDescriptor descriptor)
                 return false;
             var methodInfo = descriptor.MethodInfo;
 

@@ -1,7 +1,7 @@
-﻿using Dotnetydd.Specifications;
-using DncyTemplate.Domain.Collections;
-using System.Diagnostics.CodeAnalysis;
+﻿using DncyTemplate.Domain.Collections;
 using DncyTemplate.Uow;
+using Dotnetydd.Specifications;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DncyTemplate.Domain.Infra.Repository
 {

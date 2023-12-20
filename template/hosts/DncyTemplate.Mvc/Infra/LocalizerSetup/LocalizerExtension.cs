@@ -51,7 +51,7 @@ public static class LocalizerExtension
         options.DataAnnotationLocalizerProvider = (_, factory) => factory.Create(typeof(DataAnnotation));
         return options;
     }
-    
+
     public static IApplicationBuilder UseAppLocalization(this IApplicationBuilder app)
     {
         var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();

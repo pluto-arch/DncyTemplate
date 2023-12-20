@@ -3,7 +3,7 @@ namespace DncyTemplate.Domain.Infra;
 
 public abstract class AggregateRoot : BaseEntity, IAggregateRoot, IDomainEvents
 {
-    private readonly List<INotification> _domainEvents = new();
+    private readonly List<INotification> _domainEvents = [];
 
     public IReadOnlyCollection<INotification> DomainEvents => _domainEvents.AsReadOnly();
 
@@ -25,9 +25,9 @@ public abstract class AggregateRoot : BaseEntity, IAggregateRoot, IDomainEvents
 
 
 
-public abstract class BaseAggregateRoot<Tkey> : BaseEntity<Tkey>, IAggregateRoot, IDomainEvents
+public abstract class BaseAggregateRoot<TKey> : BaseEntity<TKey>, IAggregateRoot, IDomainEvents
 {
-    private readonly List<INotification> _domainEvents = new();
+    private readonly List<INotification> _domainEvents = [];
 
     public IReadOnlyCollection<INotification> DomainEvents => _domainEvents.AsReadOnly();
 

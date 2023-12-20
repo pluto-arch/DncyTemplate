@@ -24,7 +24,7 @@ public partial class PermissionController : Controller
     [HttpPost]
     public async Task<IActionResult> GrantAsync([FromQuery] string providerName, [FromQuery] string providerValue, [FromBody] PermissionSelectedViewModel permissions)
     {
-        await _permissionAppService.GrantAsync(permissions.Permissions.ToArray(), providerName, providerValue);
+        await _permissionAppService.GrantAsync([.. permissions.Permissions], providerName, providerValue);
         return Json(new { success = true, msg = "操作成功" });
     }
 }

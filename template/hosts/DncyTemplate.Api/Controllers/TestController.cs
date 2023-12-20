@@ -23,7 +23,7 @@ namespace DncyTemplate.Api.Controllers
         }
 
 
-        
+
         [HttpPost]
         public IActionResult Post(DemoModel request)
         {

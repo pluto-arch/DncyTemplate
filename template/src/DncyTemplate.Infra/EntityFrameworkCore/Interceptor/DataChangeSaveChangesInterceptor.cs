@@ -53,7 +53,7 @@ public class DataChangeSaveChangesInterceptor : SaveChangesInterceptor
         {
             entityEntry.Reload();
             entityEntry.State = EntityState.Modified;
-            ( (ISoftDelete)entityEntry.Entity ).Deleted = true;
+            ((ISoftDelete)entityEntry.Entity).Deleted = true;
         });
     }
 

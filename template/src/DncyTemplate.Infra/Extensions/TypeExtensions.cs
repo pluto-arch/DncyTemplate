@@ -42,9 +42,7 @@ public static class TypeExtensions
                 return true;
             }
 
-            var memberAttribute = enumType.GetField(name)?.GetCustomAttribute(typeof(EnumMemberAttribute)) as EnumMemberAttribute;
-
-            if (memberAttribute is null)
+            if (enumType.GetField(name)?.GetCustomAttribute(typeof(EnumMemberAttribute)) is not EnumMemberAttribute memberAttribute)
                 continue;
 
             if (memberAttribute.Value?.Equals(value, StringComparison.OrdinalIgnoreCase) ?? false)

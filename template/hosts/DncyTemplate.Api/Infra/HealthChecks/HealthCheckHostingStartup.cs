@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Polly;
 
 namespace DncyTemplate.Api.Infra.HealthChecks
 {
