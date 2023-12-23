@@ -11,6 +11,7 @@ using DncyTemplate.Mvc.Infra.LogSetup;
 using Dotnetydd.Tools.Core.Extension;
 #if Tenant
 using Dotnetydd.MultiTenancy.AspNetCore;
+using DncyTemplate.Mvc.Infra.Tenancy;
 #endif
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -19,7 +20,7 @@ using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Primitives;
 using DncyTemplate.Mvc.Infra.HealthChecks;
 using DncyTemplate.Mvc.Infra.Authorization;
-using DncyTemplate.Mvc.Infra.Tenancy;
+
 
 string AppName = "DncyTemplate.Mvc";
 

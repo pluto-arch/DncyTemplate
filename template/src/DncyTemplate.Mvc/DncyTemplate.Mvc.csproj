@@ -35,13 +35,6 @@
 		<PackageReference Include="FluentValidation.AspNetCore" />
 	</ItemGroup>
 
-
-	<ItemGroup>
-	  <ProjectReference Include="..\..\AppHost\DncyTemplate.ServiceDefaults\DncyTemplate.ServiceDefaults.csproj" />
-	  <ProjectReference Include="..\..\src\DncyTemplate.Application\DncyTemplate.Application.csproj" />
-	  <ProjectReference Include="..\..\src\DncyTemplate.Infra\DncyTemplate.Infra.csproj" />
-	</ItemGroup>
-
 	<ItemGroup>
 		<Content Update="wwwroot\*\**">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -82,9 +75,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Reference Include="Dotnetydd.Permission">
-	    <HintPath>..\..\..\..\DncyComponent\Dotnetydd.Permission\bin\Debug\net6.0\Dotnetydd.Permission.dll</HintPath>
-	  </Reference>
+	  <ProjectReference Include="..\..\aspire\DncyTemplate.ServiceDefaults\DncyTemplate.ServiceDefaults.csproj" />
+	  <ProjectReference Include="..\DncyTemplate.Application\DncyTemplate.Application.csproj" />
+	  <ProjectReference Include="..\DncyTemplate.Infra\DncyTemplate.Infra.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -19,26 +19,24 @@
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" />
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(ProjectType)' == 'API'">
-		<ProjectReference Include="..\..\hosts\DncyTemplate.Api\DncyTemplate.Api.csproj" />
-	</ItemGroup>
-
-	<ItemGroup Condition="'$(ProjectType)' == 'MVC'">
-		<ProjectReference Include="..\..\hosts\DncyTemplate.Mvc\DncyTemplate.Mvc.csproj" />
-	</ItemGroup>
-
-
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\DncyTemplate.Application\DncyTemplate.Application.csproj" />
 		<ProjectReference Include="..\..\src\DncyTemplate.Domain\DncyTemplate.Domain.csproj" />
 		<ProjectReference Include="..\..\src\DncyTemplate.Infra\DncyTemplate.Infra.csproj" />
 	</ItemGroup>
 
+	<ItemGroup Condition="'$(ProjectType)' == 'API'">
+		<ProjectReference Include="..\..\src\DncyTemplate.Api\DncyTemplate.Api.csproj" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(ProjectType)' == 'MVC'">
+		<ProjectReference Include="..\..\src\DncyTemplate.Mvc\DncyTemplate.Mvc.csproj" />
+	</ItemGroup>
 
 	<ItemGroup>
-	  <None Update="appsettings.json">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
+		<None Update="appsettings.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 	</ItemGroup>
 
 </Project>

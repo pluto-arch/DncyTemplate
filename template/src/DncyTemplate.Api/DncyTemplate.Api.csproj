@@ -51,21 +51,19 @@
 
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\AppHost\DncyTemplate.ServiceDefaults\DncyTemplate.ServiceDefaults.csproj" />
-	  <ProjectReference Include="..\..\src\DncyTemplate.Application\DncyTemplate.Application.csproj" />
-	  <ProjectReference Include="..\..\src\DncyTemplate.Infra\DncyTemplate.Infra.csproj" />
-	</ItemGroup>
-
-
-	<ItemGroup>
 	  <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<ProjectReference Include="..\..\aspire\DncyTemplate.ServiceDefaults\DncyTemplate.ServiceDefaults.csproj" />
+		<ProjectReference Include="..\DncyTemplate.Application\DncyTemplate.Application.csproj" />
+		<ProjectReference Include="..\DncyTemplate.Infra\DncyTemplate.Infra.csproj" />
+	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Infra\ApiDoc\index.html" />
-	  <EmbeddedResource Include="Infra\ApiDoc\index.html" />
-	  <EmbeddedResource Update="Resources\DataAnnotation.resx">
+		<None Remove="Infra\ApiDoc\index.html" />
+		<EmbeddedResource Include="Infra\ApiDoc\index.html" />
+		<EmbeddedResource Update="Resources\DataAnnotation.resx">
 	    <Generator>PublicResXFileCodeGenerator</Generator>
 	    <LastGenOutput>DataAnnotation.Designer.cs</LastGenOutput>
 	    <CustomToolNamespace>DncyTemplate.Api</CustomToolNamespace>

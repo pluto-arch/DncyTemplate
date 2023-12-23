@@ -13,19 +13,21 @@ namespace DncyTemplate.Application.Queries.Product
     public class ProductQueries : IProductQueries
     {
         private readonly IDbConnectionFactory _factory;
+        private readonly IConfiguration _configuration;
 
 #if Tenant
 
         private readonly IConnectionStringResolver _connectionStringResolver;
 #endif
 
-        public ProductQueries(IDbConnectionFactory factory
+        public ProductQueries(IDbConnectionFactory factory,IConfiguration configuration
 #if Tenant
             , IConnectionStringResolver connectionStringResolver
 #endif
             )
         {
             _factory = factory;
+            _configuration = configuration;
 #if Tenant
             _connectionStringResolver = connectionStringResolver;
 #endif

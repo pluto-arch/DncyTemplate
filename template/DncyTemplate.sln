@@ -9,8 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5A2AD551-D74
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{C7EF86BE-FE86-4F28-9901-4B47B25EE032}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hosts", "hosts", "{FC6D2445-EAD4-4831-8267-8E113AB85AD2}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DncyTemplate.Application", "src\DncyTemplate.Application\DncyTemplate.Application.csproj", "{A449BC68-7BF3-4306-B73F-9045D0D20777}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DncyTemplate.Domain", "src\DncyTemplate.Domain\DncyTemplate.Domain.csproj", "{0139B8F5-7C59-49A2-BA1A-E11CAC4A7571}"
