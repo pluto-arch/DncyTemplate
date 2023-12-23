@@ -7,7 +7,7 @@ using System.Web;
 
 namespace DncyTemplate.Mvc.Infra;
 
-public class FirewallAttribute : ActionFilterAttribute
+public partial class FirewallAttribute : ActionFilterAttribute
 {
     public int Limit { get; set; }
 
@@ -32,7 +32,7 @@ public class FirewallAttribute : ActionFilterAttribute
 
         #region 敏感词
         var path = HttpUtility.UrlDecode(request.Path + request.QueryString, Encoding.UTF8);
-        if (Regex.Match(path ?? "", "彩票|办证|AV女优", RegexOptions.IgnoreCase).Length > 0) // 写死的敏感词，实际项目请从敏感词库中动态读取
+        if (SensitiveWordRegex().Match(path ?? "").Length > 0) // 写死的敏感词，实际项目请从敏感词库中动态读取
         {
             // TODO:记录拦截日志
             context.Result = new BadRequestObjectResult("参数不合法！");
@@ -41,4 +41,7 @@ public class FirewallAttribute : ActionFilterAttribute
         #endregion
 
     }
+
+    [GeneratedRegex("彩票|办证|AV女优", RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex SensitiveWordRegex();
 }

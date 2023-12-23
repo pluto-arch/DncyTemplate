@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Diagnostics;
-using DncyTemplate.Application.Command.Product;
-using DncyTemplate.Mvc.Constants;
+﻿using DncyTemplate.Mvc.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.RateLimiting;
@@ -22,7 +20,7 @@ namespace DncyTemplate.Mvc.Controllers
         }
 
 
-        [EnableRateLimiting(policyName:"home.RateLimit_action")]
+        [EnableRateLimiting(policyName: "home.RateLimit_action")]
         public IActionResult Index()
         {
             return View();
@@ -77,7 +75,7 @@ namespace DncyTemplate.Mvc.Controllers
         [AllowAnonymous]
         public IActionResult TestLocalization()
         {
-            var text = _stringLocalizer[HomeControllerResource.HelloWorld];
+            var text = _stringLocalizer["HelloWorld"];
             return Ok(text);
         }
 

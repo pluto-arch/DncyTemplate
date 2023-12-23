@@ -1,8 +1,7 @@
-﻿using Dotnetydd.Permission;
-using Dotnetydd.Permission.Models;
-using DncyTemplate.Application.Models;
+﻿using DncyTemplate.Application.Models;
 using DncyTemplate.Application.Permission.Models;
 using Dotnetydd.Permission.Definition;
+using Dotnetydd.Permission.Models;
 using Dotnetydd.Permission.PermissionGrant;
 
 namespace DncyTemplate.Api.Controllers
@@ -12,10 +11,10 @@ namespace DncyTemplate.Api.Controllers
     [ApiController]
     public partial class PermissionController : ControllerBase, IResponseWraps
     {
-        [AutoInject] 
+        [AutoInject]
         private readonly IPermissionGrantStore _permissionGrantStore;
 
-        [AutoInject] 
+        [AutoInject]
         private readonly IPermissionDefinitionManager _permissionDefinitionManager;
 
 
@@ -39,7 +38,7 @@ namespace DncyTemplate.Api.Controllers
                 {
                     Name = item.Name,
                     DisplayName = item.DisplayName,
-                    Permissions = new List<PermissionDto>()
+                    Permissions = []
                 };
 
                 foreach (var permission in item.Permissions)
@@ -95,8 +94,8 @@ namespace DncyTemplate.Api.Controllers
                 DisplayName = permission.DisplayName,
                 ParentName = permission.Parent,
                 IsGrant = permissionGrant != null,
-                AllowProviders = permission.AllowedProviders.ToArray(),
-                Children = new List<PermissionDto>()
+                AllowProviders = [.. permission.AllowedProviders],
+                Children = []
             };
 
             if (permission.Children.Any())

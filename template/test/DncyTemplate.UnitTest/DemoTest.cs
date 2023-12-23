@@ -1,14 +1,9 @@
-﻿using Bogus;
-#if Tenant
+﻿#if Tenant
 using Dotnetydd.MultiTenancy.Model;
 using Dotnetydd.MultiTenancy;
 #endif
 using DncyTemplate.Application.AppServices.Product;
 using DncyTemplate.Application.Models.Product;
-using DncyTemplate.Domain.Aggregates.Product;
-using DncyTemplate.Domain.Infra.Repository;
-using DncyTemplate.Infra.EntityFrameworkCore.Repository;
-using DncyTemplate.Domain.Infra;
 
 namespace DncyTemplate.UnitTest
 {

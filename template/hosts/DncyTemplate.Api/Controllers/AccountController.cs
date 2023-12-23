@@ -11,8 +11,8 @@ namespace DncyTemplate.Api.Controllers
     [ApiController]
     public class AccountController : ControllerBase, IResponseWraps
     {
-        private static readonly List<dynamic> Users = new()
-        {
+        private static readonly List<dynamic> users =
+        [
             new
             {
                 Id = 1,
@@ -46,7 +46,7 @@ namespace DncyTemplate.Api.Controllers
                 TenantId = "T20210602000001"
 #endif
             }
-        };
+        ];
 
         /// <summary>
         /// 获取jwt token
@@ -56,7 +56,7 @@ namespace DncyTemplate.Api.Controllers
         [AllowAnonymous]
         public ResultDto Token([Required, FromForm(Name = "userName")] string user, [Required, FromForm(Name = "password")] string pwd)
         {
-            var u = Users.FirstOrDefault(x => x.UserName == user && x.Password == pwd);
+            var u = users.FirstOrDefault(x => x.UserName == user && x.Password == pwd);
             if (u == null)
             {
                 return this.ErrorRequest("用户不存在");

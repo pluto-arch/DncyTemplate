@@ -1,5 +1,4 @@
-﻿using Dotnetydd.Specifications.EntityFrameworkCore;
-using DncyTemplate.Domain.Aggregates.Product;
+﻿using DncyTemplate.Domain.Aggregates.Product;
 using DncyTemplate.Domain.Infra;
 using DncyTemplate.Domain.Infra.Repository;
 using DncyTemplate.Infra.Constants;
@@ -8,6 +7,7 @@ using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 using DncyTemplate.Infra.EntityFrameworkCore.Interceptor;
 using DncyTemplate.Uow;
 using DncyTemplate.Uow.EntityFrameworkCore;
+using Dotnetydd.Specifications.EntityFrameworkCore;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore;
 

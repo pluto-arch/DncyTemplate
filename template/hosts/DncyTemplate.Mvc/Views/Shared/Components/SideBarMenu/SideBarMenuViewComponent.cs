@@ -1,55 +1,47 @@
 using DncyTemplate.Application.Models.Application.Navigation;
 using DncyTemplate.Application.Permission;
-using Microsoft.Extensions.Localization;
 using System.Collections.Immutable;
 
 namespace DncyTemplate.Mvc.Views.Shared.Components.SideBarMenu;
 
 public class SideBarMenuViewComponent : ViewComponent
 {
-    public static List<MenuItemModel> Menus = new();
-    private readonly IStringLocalizer<SharedResource> _localizer;
-    private static object _instance = new object();
-
-    public SideBarMenuViewComponent(IStringLocalizer<SharedResource> localizer)
-    {
-        _localizer = localizer;
-    }
-
+    private static readonly List<MenuItemModel> menus = [];
+    private static readonly object instance = new object();
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
         await Task.Yield();
-        if (Menus.Any())
+        if (menus.Any())
         {
             return View(new SideBarMenuViewModel
             {
-                Items = Menus.ToImmutableList()
+                Items = menus.ToImmutableList()
             });
         }
 
-        lock (_instance)
+        lock (instance)
         {
-            if (!Menus.Any())
+            if (!menus.Any())
             {
-                initMenu();
+                InitMenu();
             }
         }
         return View(new SideBarMenuViewModel
         {
-            Items = Menus.ToImmutableList()
+            Items = menus.ToImmutableList()
         });
     }
 
 
-    void initMenu()
+    static void InitMenu()
     {
         // dashboard
-        Menus.Add(new MenuItemModel
+        menus.Add(new MenuItemModel
         {
             Name = "app.menu.dashboard.hostconsole",
             Icon = "layui-icon-console",
-            DisplayName = "控制台",
+            DisplayName = "Dashboard",
             Url = "/dashboard/hostconsole",
             IsEnabled = true,
             IsVisible = true,
@@ -57,11 +49,11 @@ public class SideBarMenuViewComponent : ViewComponent
         });
 
 
-        Menus.Add(new MenuItemModel
+        menus.Add(new MenuItemModel
         {
             Name = "app.menu.device",
             Icon = "layui-icon-read",
-            DisplayName = "设备管理",
+            DisplayName = "Devices",
             IsEnabled = true,
             IsVisible = true,
             Items = new List<MenuItemModel>
@@ -70,11 +62,11 @@ public class SideBarMenuViewComponent : ViewComponent
                 {
                     Name = "app.menu.device.products",
                     Icon = "layui-icon-console",
-                    DisplayName = "产品管理",
+                    DisplayName = "Product List",
                     Url = "/product",
                     IsEnabled = true,
                     IsVisible = true,
-                    Permission = new MenuPermission(new[] { ProductPermission.Product.Default }),
+                    Permission = new MenuPermission([ProductPermission.Product.Default]),
                 },
                 new MenuItemModel
                 {
@@ -84,13 +76,13 @@ public class SideBarMenuViewComponent : ViewComponent
                     Url = "/device",
                     IsEnabled = true,
                     IsVisible = true,
-                    Permission = new MenuPermission(new[] { DevicesPermission.Devices.Default }),
+                    Permission = new MenuPermission([DevicesPermission.Devices.Default]),
                 }
             }
         });
 
 
-        Menus.Add(new MenuItemModel
+        menus.Add(new MenuItemModel
         {
             Name = "app.menu.accescontrol",
             Icon = "layui-icon-read",

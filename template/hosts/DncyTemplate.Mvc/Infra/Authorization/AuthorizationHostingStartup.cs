@@ -6,8 +6,7 @@ namespace DncyTemplate.Mvc.Infra.Authorization;
 
 public static class AuthorizationHostingStartup
 {
-    /// <inheritdoc />
-    public static void Configureuthorization(this IServiceCollection services)
+    public static void ConfigureAuthorization(this IServiceCollection services)
     {
         services.AddSingleton<IAuthorizationPolicyProvider, DynamicAuthorizationPolicyProvider>();
         services.AddScoped<IAuthorizationHandler, PermissionRequirementHandler>();

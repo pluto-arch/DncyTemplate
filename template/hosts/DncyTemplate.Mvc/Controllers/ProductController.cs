@@ -10,8 +10,6 @@ namespace DncyTemplate.Mvc.Controllers
     public partial class ProductController : Controller
     {
         [AutoInject]
-        private readonly ILogger<HomeController> _logger;
-        [AutoInject]
         private readonly IProductAppService _productAppService;
 
         public IActionResult Index()

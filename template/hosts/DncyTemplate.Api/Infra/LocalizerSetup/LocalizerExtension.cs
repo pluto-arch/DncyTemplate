@@ -10,7 +10,10 @@ namespace DncyTemplate.Api.Infra.LocalizerSetup
 
         public static IServiceCollection AddAppLocalization(this IServiceCollection services)
         {
-            services.AddLocalization(options => { options.ResourcesPath = "Resources"; });
+            services.AddLocalization(o =>
+            {
+                o.ResourcesPath = "Resources";
+            });
             services.AddRequestLocalization(options =>
             {
                 var supportedCultures = new[] { new CultureInfo(AppConstant.Culture.EN_US.key), new CultureInfo(AppConstant.Culture.ZN_CH.key) };
@@ -33,31 +36,42 @@ namespace DncyTemplate.Api.Infra.LocalizerSetup
         }
 
 
-
+        /// <summary>
+        /// 默认的数据注解本地化
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="localizerFactory"></param>
+        /// <returns></returns>
         public static MvcOptions SetUpDefaultDataAnnotation(this MvcOptions options, IStringLocalizerFactory localizerFactory)
         {
-            var l = localizerFactory?.Create("DefaultDataAnnotation", AppConstant.SERVICE_NAME);
+            var l = localizerFactory?.Create(typeof(DefaultDataAnnotation));
             if (l != null)
             {
-                options.ModelBindingMessageProvider.SetValueIsInvalidAccessor(x => l[DefaultDataAnnotationResource.ValueIsInvalidAccessor, x]);
-                options.ModelBindingMessageProvider.SetValueMustBeANumberAccessor(x => l[DefaultDataAnnotationResource.ValueMustBeANumberAccessor, x]);
-                options.ModelBindingMessageProvider.SetMissingBindRequiredValueAccessor(x => l[DefaultDataAnnotationResource.MissingBindRequiredValueAccessor, x]);
-                options.ModelBindingMessageProvider.SetAttemptedValueIsInvalidAccessor((x, y) => l.GetString(DefaultDataAnnotationResource.AttemptedValueIsInvalidAccessor, x, y));
-                options.ModelBindingMessageProvider.SetMissingKeyOrValueAccessor(() => l[DefaultDataAnnotationResource.MissingKeyOrValueAccessor]);
-                options.ModelBindingMessageProvider.SetUnknownValueIsInvalidAccessor(x => l[DefaultDataAnnotationResource.UnknownValueIsInvalidAccessor, x]);
-                options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(x => l[DefaultDataAnnotationResource.ValueMustNotBeNullAccessor, x]);
-                options.ModelBindingMessageProvider.SetNonPropertyAttemptedValueIsInvalidAccessor(x => l[DefaultDataAnnotationResource.NonPropertyAttemptedValueIsInvalidAccessor, x]);
-                options.ModelBindingMessageProvider.SetNonPropertyUnknownValueIsInvalidAccessor(() => l[DefaultDataAnnotationResource.UnknownValueIsInvalidAccessor]);
-                options.ModelBindingMessageProvider.SetNonPropertyValueMustBeANumberAccessor(() => l[DefaultDataAnnotationResource.NonPropertyValueMustBeANumberAccessor]);
-                options.ModelBindingMessageProvider.SetMissingRequestBodyRequiredValueAccessor(() => l[DefaultDataAnnotationResource.MissingRequestBodyRequiredValueAccessor]);
+                options.ModelBindingMessageProvider.SetValueIsInvalidAccessor(x => l[DefaultDataAnnotation.ValueIsInvalidAccessor, x]);
+                options.ModelBindingMessageProvider.SetValueMustBeANumberAccessor(x => l[DefaultDataAnnotation.ValueMustBeANumberAccessor, x]);
+                options.ModelBindingMessageProvider.SetMissingBindRequiredValueAccessor(x => l[DefaultDataAnnotation.MissingBindRequiredValueAccessor, x]);
+                options.ModelBindingMessageProvider.SetAttemptedValueIsInvalidAccessor((x, y) => l.GetString(DefaultDataAnnotation.AttemptedValueIsInvalidAccessor, x, y));
+                options.ModelBindingMessageProvider.SetMissingKeyOrValueAccessor(() => l[DefaultDataAnnotation.MissingKeyOrValueAccessor]);
+                options.ModelBindingMessageProvider.SetUnknownValueIsInvalidAccessor(x => l[DefaultDataAnnotation.UnknownValueIsInvalidAccessor, x]);
+                options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(x => l[DefaultDataAnnotation.ValueMustNotBeNullAccessor, x]);
+                options.ModelBindingMessageProvider.SetNonPropertyAttemptedValueIsInvalidAccessor(x => l[DefaultDataAnnotation.NonPropertyAttemptedValueIsInvalidAccessor, x]);
+                options.ModelBindingMessageProvider.SetNonPropertyUnknownValueIsInvalidAccessor(() => l[DefaultDataAnnotation.UnknownValueIsInvalidAccessor]);
+                options.ModelBindingMessageProvider.SetNonPropertyValueMustBeANumberAccessor(() => l[DefaultDataAnnotation.NonPropertyValueMustBeANumberAccessor]);
+                options.ModelBindingMessageProvider.SetMissingRequestBodyRequiredValueAccessor(() => l[DefaultDataAnnotation.MissingRequestBodyRequiredValueAccessor]);
             }
             return options;
         }
 
 
+        /// <summary>
+        /// 自定义的数据注解本地化
+        /// </summary>
+        /// <param name="options"></param>
+        /// <returns></returns>
         public static MvcDataAnnotationsLocalizationOptions SetUpDataAnnotationLocalizerProvider(this MvcDataAnnotationsLocalizationOptions options)
         {
-            options.DataAnnotationLocalizerProvider = (_, factory) => factory.Create("DataAnnotation", AppConstant.SERVICE_NAME);
+            // 将所有模型的本地化都放在一个资源文件中，如果使用默认的多个资源文件的，这里去掉即可
+            options.DataAnnotationLocalizerProvider = (_, factory) => factory.Create(typeof(DataAnnotation));
             return options;
         }
     }

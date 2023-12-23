@@ -21,4 +21,19 @@
     <data name="Welcome" xml:space="preserve">
         <value>welcome</value>
     </data>
+    <data name="ErrorHandleRequest" xml:space="preserve">
+        <value>An error occurred while processing the request</value>
+    </data>
+    <data name="InvalidRequest" xml:space="preserve">
+        <value>Invalid request</value>
+    </data>
+    <data name="ServiceUnavailable" xml:space="preserve">
+        <value>Service temporarily unavailable.</value>
+    </data>
+    <data name="Successed" xml:space="preserve">
+        <value>Successed</value>
+    </data>
+    <data name="TooManyRequest" xml:space="preserve">
+        <value>Service busy</value>
+    </data>
 </root>

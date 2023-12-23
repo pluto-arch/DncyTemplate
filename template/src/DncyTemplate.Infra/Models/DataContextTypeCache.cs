@@ -7,7 +7,7 @@ public static class DataContextTypeCache
 {
 
 
-    private static readonly List<Type> dataContexts = new List<Type>();
+    private static readonly List<Type> dataContexts = [];
 
     public static ImmutableArray<Type> GetApplicationDataContextList() => dataContexts.ToImmutableArray();
 

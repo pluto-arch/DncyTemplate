@@ -1,8 +1,8 @@
-﻿using Dotnetydd.Permission.Models;
-using DncyTemplate.Application.Constants;
-using Dotnetydd.Permission.PermissionManager;
+﻿using DncyTemplate.Application.Constants;
 using Dotnetydd.Permission.Definition;
+using Dotnetydd.Permission.Models;
 using Dotnetydd.Permission.PermissionGrant;
+using Dotnetydd.Permission.PermissionManager;
 
 
 namespace DncyTemplate.Application.Permission;
@@ -32,7 +32,7 @@ public partial class CachedPermissionManager : IPermissionManager
     /// <inheritdoc />
     public async Task<bool> IsGrantedAsync(string name, string providerName, string providerKey)
     {
-        return ( await GetCacheItemAsync(name, providerName, providerKey) ).IsGranted;
+        return (await GetCacheItemAsync(name, providerName, providerKey)).IsGranted;
     }
 
 
@@ -93,7 +93,7 @@ public partial class CachedPermissionManager : IPermissionManager
     {
         var permissions = _permissionDefinitionManager.GetPermissions();
         _logger.LogDebug($"Getting all granted permissions from the repository for this provider name,key: {providerName},{providerKey}");
-        var grantedPermissionsHashSet = new HashSet<string>(( await _permissionGrantStore.GetListAsync(providerName, providerKey) ).Select(p => p.Name));
+        var grantedPermissionsHashSet = new HashSet<string>((await _permissionGrantStore.GetListAsync(providerName, providerKey)).Select(p => p.Name));
         _logger.LogDebug($"Setting the cache items. Count: {permissions.Count}");
         bool currentResult = false;
         foreach (var permission in permissions)
@@ -119,7 +119,7 @@ public partial class CachedPermissionManager : IPermissionManager
 
         _logger.LogDebug($"PermissionStore.GetCacheItemAsync: {string.Join(",", cacheKeys)}");
 
-        List<(string key, string value)> getCacheItemTasks = new List<(string key, string value)>();
+        List<(string key, string value)> getCacheItemTasks = [];
 
         foreach (string cacheKey in cacheKeys)
         {
@@ -154,11 +154,11 @@ public partial class CachedPermissionManager : IPermissionManager
 
         _logger.LogDebug($"Getting not cache granted permissions from the repository for this provider name,key: {providerName},{providerKey}");
 
-        var grantedPermissionsHashSet = new HashSet<string>(( await _permissionGrantStore.GetListAsync(notCacheKeys.Select(k => GetPermissionInfoFormCacheKey(k).Name).ToArray(), providerName, providerKey) ).Select(p => p.Name));
+        var grantedPermissionsHashSet = new HashSet<string>((await _permissionGrantStore.GetListAsync(notCacheKeys.Select(k => GetPermissionInfoFormCacheKey(k).Name).ToArray(), providerName, providerKey)).Select(p => p.Name));
 
         _logger.LogDebug($"Setting the cache items. Count: {permissions.Count}");
 
-        List<(string Key, bool IsGranted)> cacheItems = new List<(string Key, bool IsGranted)>();
+        List<(string Key, bool IsGranted)> cacheItems = [];
 
         foreach (PermissionDefinition permission in permissions)
         {

@@ -13,8 +13,6 @@ namespace DncyTemplate.Application.Command.Product
     {
         [AutoInject]
         private readonly IMapper _mapper;
-        [AutoInject]
-        private readonly ILogger<CreateProductCommandHandler> _logger;
 
         [AutoInject]
         private readonly IUnitOfWork<DncyTemplateDbContext> efUow;

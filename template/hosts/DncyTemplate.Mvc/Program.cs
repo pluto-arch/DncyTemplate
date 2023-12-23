@@ -1,6 +1,4 @@
 using System.Threading.RateLimiting;
-using Dotnetydd.MultiTenancy.AspNetCore;
-using Dotnetydd.Tools;
 using DncyTemplate.Application;
 using DncyTemplate.Application.Models;
 using DncyTemplate.Domain;
@@ -9,20 +7,21 @@ using DncyTemplate.Mvc;
 using DncyTemplate.Mvc.BackgroundServices;
 using DncyTemplate.Mvc.Constants;
 using DncyTemplate.Mvc.Infra;
-using DncyTemplate.Mvc.Infra.Authorization;
-using DncyTemplate.Mvc.Infra.HealthChecks;
 using DncyTemplate.Mvc.Infra.LogSetup;
 using Dotnetydd.Tools.Core.Extension;
 #if Tenant
-using DncyTemplate.Mvc.Infra.Tenancy;
+using Dotnetydd.MultiTenancy.AspNetCore;
 #endif
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Primitives;
+using DncyTemplate.Mvc.Infra.HealthChecks;
+using DncyTemplate.Mvc.Infra.Authorization;
+using DncyTemplate.Mvc.Infra.Tenancy;
 
-string AppName = typeof(Program).Namespace;
+string AppName = "DncyTemplate.Mvc";
 
 var logConfig = new ConfigurationBuilder()
             .AddJsonFile("serilogsetting.json", false, true)
@@ -104,7 +103,7 @@ builder.Services.AddRateLimiter(options =>
         });
 
 
-builder.Services.Configureuthorization();
+builder.Services.ConfigureAuthorization();
 builder.Services.ConfigureHealthCheck(builder.Configuration);
 builder.Services.ConfigureWebInfra();
 #if Tenant

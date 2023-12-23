@@ -1,7 +1,7 @@
 ﻿#if Tenant
 
-using Dotnetydd.MultiTenancy.ConnectionStrings;
 using DncyTemplate.Mvc.Models;
+using Dotnetydd.MultiTenancy.ConnectionStrings;
 using Microsoft.AspNetCore.Authorization;
 
 namespace DncyTemplate.Mvc.Controllers;

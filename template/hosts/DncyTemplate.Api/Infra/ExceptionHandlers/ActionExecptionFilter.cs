@@ -10,10 +10,10 @@ namespace DncyTemplate.Api.Infra.ExceptionHandlers
     public class ActionExecptionFilter : IAsyncExceptionFilter
     {
 
-        private static readonly MediaTypeCollection mediaType = new()
-        {
+        private static readonly MediaTypeCollection mediaType =
+        [
             AppConstant.DEFAULT_CONTENT_TYPE
-        };
+        ];
 
         /// <inheritdoc />
         public Task OnExceptionAsync(ExceptionContext context)
@@ -23,7 +23,7 @@ namespace DncyTemplate.Api.Infra.ExceptionHandlers
                 var log = context.HttpContext.RequestServices.GetService<ILogger<ActionExecptionFilter>>() ?? NullLogger<ActionExecptionFilter>.Instance;
                 var msg = context.Exception.Message;
                 log.LogError(context.Exception, "处理{method} {path}. 出现错误: {msg}", context.HttpContext.Request.Method, context.HttpContext.Request.GetEncodedPathAndQuery(), msg);
-                var l = context.HttpContext.RequestServices.GetService<IStringLocalizer<SharedResource>>();
+                var l = context.HttpContext.RequestServices.GetService<IStringLocalizer<SharedResources>>();
                 var error = ResultDto<string>.Error();
                 error.Message = $"{l[error.Message]}: {msg}";
                 context.Result = new ObjectResult(error)

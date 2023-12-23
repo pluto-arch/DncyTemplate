@@ -21,7 +21,7 @@ using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Primitives;
 
 
-string AppName = typeof(Program).Namespace;
+string AppName = "DncyTemplate.Api";
 
 var logConfig = new ConfigurationBuilder()
             .AddJsonFile("serilogsetting.json", false, true)
@@ -69,7 +69,7 @@ builder.Services.AddRateLimiter(options =>
 {
     options.OnRejected = async (context, cancelToken) =>
     {
-        var l = context.HttpContext.RequestServices.GetService<IStringLocalizer<SharedResource>>();
+        var l = context.HttpContext.RequestServices.GetService<IStringLocalizer<SharedResources>>();
         context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
         context.HttpContext.Response.Headers.Append("Retry-After", new StringValues("1")); // TODO 根据具体情况返回
         context.HttpContext.Response.ContentType = AppConstant.DEFAULT_CONTENT_TYPE;
@@ -77,7 +77,7 @@ builder.Services.AddRateLimiter(options =>
         res.Message = l[res.Message];
         await context.HttpContext.Response.WriteAsJsonAsync(res, cancellationToken: cancelToken);
     };
-    options.AddPolicy("home.RateLimit_action", httpContext =>
+    options.AddPolicy("home.RateLimit_Test", httpContext =>
         RateLimitPartition.GetFixedWindowLimiter(httpContext.Connection.RemoteIpAddress?.ToNumber().ToString(),
             partition => new FixedWindowRateLimiterOptions
             {

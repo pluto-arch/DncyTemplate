@@ -35,27 +35,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Update="Resources\Command\Product.CreateProductCommand.zh-CN.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
-	    <LastGenOutput>Product.CreateProductCommand.zh-CN.Designer.cs</LastGenOutput>
+	  <EmbeddedResource Update="Resources\Command\Product.CreateProductCommand.resx">
+	    <Generator></Generator>
 	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\Command\Product.CreateProductCommand.en-US.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
-	    <LastGenOutput>Product.CreateProductCommand.en-US.Designer.cs</LastGenOutput>
-	  </EmbeddedResource>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Compile Update="Resources\Command\Product.CreateProductCommand.zh-CN.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>Product.CreateProductCommand.zh-CN.resx</DependentUpon>
-	  </Compile>
-	  <Compile Update="Resources\Command\Product.CreateProductCommand.en-US.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>Product.CreateProductCommand.en-US.resx</DependentUpon>
-	  </Compile>
 	</ItemGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<DocumentationFile>DncyTemplate.Application.xml</DocumentationFile>

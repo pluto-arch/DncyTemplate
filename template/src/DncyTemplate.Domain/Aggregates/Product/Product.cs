@@ -10,7 +10,7 @@ public class Product : BaseAggregateRoot<string>, ISoftDelete
 {
     public Product()
     {
-        Devices = new List<Device>();
+        Devices = [];
     }
 
     /// <summary>

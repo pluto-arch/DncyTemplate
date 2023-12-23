@@ -16,7 +16,7 @@ public abstract class Enumeration : IComparable
 
     public int CompareTo(object obj)
     {
-        return Id.CompareTo(( (Enumeration)obj ).Id);
+        return Id.CompareTo(((Enumeration)obj).Id);
     }
 
     public override string ToString()
@@ -74,12 +74,7 @@ public abstract class Enumeration : IComparable
 
     private static T Parse<T, K>(K value, string description, Func<T, bool> predicate) where T : Enumeration
     {
-        T matchingItem = GetAll<T>().FirstOrDefault(predicate);
-        if (matchingItem == null)
-        {
-            throw new InvalidOperationException($"'{value}' is not a valid {description} in {typeof(T)}");
-        }
-
+        T matchingItem = GetAll<T>().FirstOrDefault(predicate) ?? throw new InvalidOperationException($"'{value}' is not a valid {description} in {typeof(T)}");
         return matchingItem;
     }
 }

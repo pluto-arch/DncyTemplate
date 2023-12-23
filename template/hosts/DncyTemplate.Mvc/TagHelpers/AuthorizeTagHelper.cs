@@ -1,8 +1,7 @@
-﻿using Dotnetydd.Permission;
-using Dotnetydd.Permission.Models;
-using DncyTemplate.Application.Models.Application.Navigation;
+﻿using DncyTemplate.Application.Models.Application.Navigation;
 using DncyTemplate.Mvc.Models.Account;
 using Dotnetydd.Permission.Checker;
+using Dotnetydd.Permission.Models;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace DncyTemplate.Mvc.TagHelpers

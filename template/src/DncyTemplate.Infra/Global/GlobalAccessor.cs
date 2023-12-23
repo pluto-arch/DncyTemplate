@@ -10,7 +10,7 @@ public class GlobalAccessor
     /// </summary>
     public class CurrentUserAccessor
     {
-        private readonly AsyncLocal<ClaimsPrincipal> _tokenLocal = new AsyncLocal<ClaimsPrincipal>();
+        private readonly AsyncLocal<ClaimsPrincipal> _tokenLocal = new();
 
         /// <summary>
         /// 当前用户身份
@@ -27,12 +27,10 @@ public class GlobalAccessor
     public class CurrentUser
     {
         private readonly CurrentUserAccessor _currentAccessor;
-        private readonly ILogger<CurrentUser> _logger;
 
-        public CurrentUser(CurrentUserAccessor currentTenantAccessor, ILogger<CurrentUser> logger)
+        public CurrentUser(CurrentUserAccessor currentTenantAccessor)
         {
             _currentAccessor = currentTenantAccessor;
-            _logger = logger;
         }
 
 

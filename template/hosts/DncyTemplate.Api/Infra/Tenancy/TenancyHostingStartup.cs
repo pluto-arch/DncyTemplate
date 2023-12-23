@@ -8,9 +8,9 @@ using Dotnetydd.MultiTenancy.Store;
 
 namespace DncyTemplate.Api.Infra.Tenancy;
 
-public static class TenancyHostingStartup 
+public static class TenancyHostingStartup
 {
-    public static void ConfigureTenancy(this IServiceCollection services,IConfiguration configuration)
+    public static void ConfigureTenancy(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<TenantConfigurationOptions>(configuration);
         services.AddSingleton<ICurrentTenantAccessor, CurrentTenantAccessor>();

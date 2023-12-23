@@ -42,7 +42,7 @@
             /// </summary>
             public const string RELEASE = "release";
         }
-        
+
         public class Culture
         {
             public static (string key, string name) ZN_CH = ("zh-CN", "中文");

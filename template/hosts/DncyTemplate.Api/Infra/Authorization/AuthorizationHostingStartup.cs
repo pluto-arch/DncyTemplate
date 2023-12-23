@@ -6,7 +6,6 @@ namespace DncyTemplate.Api.Infra.Authorization
 {
     public static class AuthorizationHostingStartup
     {
-        /// <inheritdoc />
         public static void ConfigureAuthorization(this IServiceCollection services)
         {
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

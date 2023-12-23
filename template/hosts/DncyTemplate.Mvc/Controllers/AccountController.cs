@@ -89,7 +89,7 @@ namespace DncyTemplate.Mvc.Controllers
             // init permission already granted
             using (_currentTenant.Change(new TenantInfo(user.Tenant)))
             {
-                List<IPermissionGrant> grantList = new List<IPermissionGrant>();
+                List<IPermissionGrant> grantList = [];
                 foreach (var ur in user.Roles)
                 {
                     var permiss = await _permissionGrantStore.GetListAsync("role", ur.ToString().ToLower());

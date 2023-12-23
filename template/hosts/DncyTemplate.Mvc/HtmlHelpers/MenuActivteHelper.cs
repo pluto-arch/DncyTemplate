@@ -10,7 +10,7 @@ namespace DncyTemplate.Mvc.HtmlHelpers
             // var areaName = routeData.Values["area"]?.ToString();
             var routeAction = routeData.Values["action"]?.ToString();
             var routeController = routeData.Values["controller"]?.ToString();
-            var returnActive = ( controller == routeController && action == routeAction );
+            var returnActive = (controller == routeController && action == routeAction);
             return returnActive ? "active" : "";
         }
     }

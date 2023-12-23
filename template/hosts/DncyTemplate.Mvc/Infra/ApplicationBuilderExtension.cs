@@ -1,7 +1,6 @@
 ﻿using DncyTemplate.Domain.Infra;
 using DncyTemplate.Infra.Global;
 using DncyTemplate.Mvc.Infra.ExceptionHandlers;
-using DncyTemplate.Uow;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 
@@ -73,7 +72,7 @@ public static class ApplicationBuilderExtension
     public static async Task<IApplicationBuilder> DataSeederAsync(this IApplicationBuilder app)
     {
         using IServiceScope serviceScope = app.ApplicationServices.CreateScope();
-        
+
         foreach (var dbcontext in DataContextTypeCache.GetApplicationDataContextList())
         {
             var db = serviceScope.ServiceProvider.GetService(dbcontext);
@@ -83,7 +82,7 @@ public static class ApplicationBuilderExtension
             }
         }
 
-        
+
         var seeders = serviceScope.ServiceProvider.GetServices<IDataSeedProvider>();
         if (!seeders.Any())
         {
