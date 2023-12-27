@@ -21,13 +21,13 @@ public static class EntityFrameworkServiceExtension
     internal static IServiceCollection AddEfCoreInfraComponent(this IServiceCollection service, IConfiguration configuration, List<Type> contextTypes)
     {
         service.AddSingleton<IConnectionStringResolve, DefaultConnectionStringResolve>();
+        var migrationAssembly = Assembly.GetCallingAssembly().GetName().Name;
         service.AddDbContextPool<DncyTemplateDbContext>((serviceProvider, optionsBuilder) =>
         {
             optionsBuilder.UseSqlServer(configuration.GetConnectionString(DbConstants.DEFAULT_CONNECTIONSTRING_NAME),
                 sqlOptions =>
                 {
-                    sqlOptions.MigrationsAssembly(Assembly.GetExecutingAssembly().GetName().Name);
-                    //sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromMilliseconds(400), null);
+                    sqlOptions.MigrationsAssembly(migrationAssembly);
                 });
 
             var mediator = serviceProvider.GetService<IDomainEventDispatcher>() ?? NullDomainEventDispatcher.Instance;
