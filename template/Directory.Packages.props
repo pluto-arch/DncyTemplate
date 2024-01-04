@@ -15,7 +15,7 @@
     <PackageVersion Include="Dapper" Version="2.0.143" />
 	  
     <PackageVersion Include="Dotnetydd.Specifications.EntityFrameworkCore" Version="$(DncyVersion)" />
-    <PackageVersion Include="Dotnetydd.DependencyInjection.Generator" Version="4.0.0" />
+    <PackageVersion Include="Dotnetydd.DependencyInjection.Generator" Version="$(DncyVersion)" />
     <!--#if (Tenant) -->
     <PackageVersion Include="Dotnetydd.MultiTenancy" Version="$(DncyVersion)" />
     <PackageVersion Include="Dotnetydd.MultiTenancy.AspNetCore" Version="$(DncyVersion)" />
