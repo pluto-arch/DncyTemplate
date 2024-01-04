@@ -12,8 +12,7 @@
         <!--#endif -->
         <PackageReference Include="Dotnetydd.Permission"/>
         <PackageReference Include="Dotnetydd.Specifications" />
-        <PackageReference Include="Dotnetydd.Tools.Core"/>
-        <PackageReference Include="Dotnetydd.Tools.SnowFlake"/>
+        <PackageReference Include="Dotnetydd.Tools"/>
         <PackageReference Include="MediatR"/>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
 		<PackageReference Include="CommunityToolkit.Diagnostics"/>

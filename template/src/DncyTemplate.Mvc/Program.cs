@@ -8,7 +8,6 @@ using DncyTemplate.Mvc.BackgroundServices;
 using DncyTemplate.Mvc.Constants;
 using DncyTemplate.Mvc.Infra;
 using DncyTemplate.Mvc.Infra.LogSetup;
-using Dotnetydd.Tools.Core.Extension;
 #if Tenant
 using Dotnetydd.MultiTenancy.AspNetCore;
 using DncyTemplate.Mvc.Infra.Tenancy;
@@ -20,6 +19,7 @@ using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Primitives;
 using DncyTemplate.Mvc.Infra.HealthChecks;
 using DncyTemplate.Mvc.Infra.Authorization;
+using Dotnetydd.Tools.Extension;
 
 
 string AppName = "DncyTemplate.Mvc";
@@ -122,9 +122,11 @@ Log.Information("[{AppName}]构建WebApplication成功...", AppName);
 
 
 #region 中间件注册
-var serverAddressesFeature = app.Services.GetService<IServerAddressesFeature>();
-var address = serverAddressesFeature?.Addresses;
-Log.Logger.Information("运行地址: {@Address}", address);
+var endPointUrl = Environment.GetEnvironmentVariable("ASPNETCORE_URLS");
+if (!string.IsNullOrEmpty(endPointUrl))
+{
+    Log.Logger.Information("ASPNETCORE_URLS: {endPointUrl}",endPointUrl);
+}
 Log.Logger.Information("NET框架版本: {@version}", System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription);
 
 app.UseResponseCompression();

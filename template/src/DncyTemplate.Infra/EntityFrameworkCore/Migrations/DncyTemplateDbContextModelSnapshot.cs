@@ -4,25 +4,23 @@ using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DncyTemplate.Infra.Migrations.DncyTemplateDb
+namespace DncyTemplate.Infra.EntityFrameworkCore.Migrations
 {
-    [DbContext(typeof(DncyTemplateMigrationDbContext))]
-    [Migration("20230106072705_InitialCreate")]
-    partial class InitialCreate
+    [DbContext(typeof(DncyTemplateDbContext))]
+    partial class DncyTemplateDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.6")
+                .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("DncyTemplate.Domain.Aggregates.Product.Device", b =>
                 {
@@ -30,7 +28,7 @@ namespace DncyTemplate.Infra.Migrations.DncyTemplateDb
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Coordinate")
                         .HasColumnType("nvarchar(max)");
@@ -67,7 +65,7 @@ namespace DncyTemplate.Infra.Migrations.DncyTemplateDb
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -118,7 +116,7 @@ namespace DncyTemplate.Infra.Migrations.DncyTemplateDb
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTimeOffset>("CreateTime")
                         .HasColumnType("datetimeoffset");

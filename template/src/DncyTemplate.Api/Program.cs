@@ -13,7 +13,7 @@ using DncyTemplate.Application;
 using DncyTemplate.Application.Models;
 using DncyTemplate.Domain;
 using DncyTemplate.Infra;
-using Dotnetydd.Tools.Core.Extension;
+using Dotnetydd.Tools.Extension;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Hosting.Server.Features;
@@ -105,9 +105,11 @@ var app = builder.Build();
 Log.Information("[{AppName}]构建WebApplication成功...", AppName);
 
 #region 中间件注册
-var serverAddressesFeature = app.Services.GetService<IServerAddressesFeature>();
-var address = serverAddressesFeature?.Addresses;
-Log.Logger.Information("运行地址: {@Address}", address);
+var endPointUrl = Environment.GetEnvironmentVariable("ASPNETCORE_URLS");
+if (!string.IsNullOrEmpty(endPointUrl))
+{
+    Log.Logger.Information("ASPNETCORE_URLS: {endPointUrl}",endPointUrl);
+}
 Log.Logger.Information("NET框架版本: {@version}", System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription);
 
 

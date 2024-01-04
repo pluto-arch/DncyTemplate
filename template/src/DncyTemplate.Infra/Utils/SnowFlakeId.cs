@@ -1,5 +1,4 @@
-﻿
-using Dotnetydd.Tools.SnowFlake;
+﻿using Dotnetydd.Tools;
 
 namespace DncyTemplate.Infra.Utils;
 

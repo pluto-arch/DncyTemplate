@@ -1,7 +1,5 @@
 ﻿﻿## 迁移命令
 
-> 由于使用多租户或者领域事件方式，dbcontext初始化需要加载 依赖，所以迁移需要定义 对应的MigrationDbContext。
-> 具体参考 DncyTemplateDbContext  -->  DncyTemplateMigrationDbContext 以下命令中的 -Context 需要换成 MigrationDbContext的。
 ### 使用vs 包管理控制台 切换项目至 DncyTemplate.Infra
 ```shell
 # 添加迁移

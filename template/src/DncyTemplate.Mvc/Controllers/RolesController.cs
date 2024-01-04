@@ -2,7 +2,7 @@
 using DncyTemplate.Infra.Utils;
 using DncyTemplate.Mvc.Models.Account;
 using DncyTemplate.Mvc.Models.Role;
-using Dotnetydd.Tools.Core.Extension;
+using Dotnetydd.Tools.Extension;
 using System.Net;
 
 namespace DncyTemplate.Mvc.Controllers;
