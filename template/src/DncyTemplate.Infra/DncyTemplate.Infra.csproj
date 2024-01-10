@@ -17,7 +17,10 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 		<PackageReference Include="Serilog.Extensions.Logging" />
 		<PackageReference Include="Polly" />
 		<PackageReference Include="CommunityToolkit.Diagnostics" />
@@ -26,6 +29,13 @@
 	<ItemGroup>
 	  <Folder Include="Constants\" />
 	  <Folder Include="Global\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers">
+	    <PrivateAssets>all</PrivateAssets>
+	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
 	</ItemGroup>
 
 </Project>

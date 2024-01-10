@@ -135,4 +135,11 @@
 	  </EmbeddedResource>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers">
+	    <PrivateAssets>all</PrivateAssets>
+	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
+	</ItemGroup>
+
 </Project>
