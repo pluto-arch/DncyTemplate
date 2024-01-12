@@ -8,6 +8,7 @@ using DncyTemplate.Infra.EntityFrameworkCore.Interceptor;
 using DncyTemplate.Uow;
 using DncyTemplate.Uow.EntityFrameworkCore;
 using Dotnetydd.Specifications.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore;
 

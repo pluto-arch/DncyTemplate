@@ -14,7 +14,6 @@ using DncyTemplate.Mvc.Infra.Tenancy;
 #endif
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Primitives;
 using DncyTemplate.Mvc.Infra.HealthChecks;
@@ -37,8 +36,12 @@ Log.Information("[{AppName}]»’÷æ≈‰÷√ÕÍ±œ...", AppName);
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog(dispose: true);
+
+#if Aspire
 // Add service defaults & Aspire components.
 builder.AddServiceDefaults();
+#endif
+
 // Add services to the container.
 builder.Services.AddProblemDetails();
 

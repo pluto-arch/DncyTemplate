@@ -16,23 +16,6 @@
     "type": "project"
   },
   "symbols": {
-    "ProjectType": {
-      "type": "parameter",
-      "dataType": "choice",
-      "description": "项目类型(API/MVC)",
-      "isRequired": false,
-      "defaultValue": "API",
-      "choices": [
-        {
-          "choice": "API",
-          "description": "WEB API"
-        },
-        {
-          "choice": "MVC",
-          "description": "MVC"
-        }
-      ]
-    },
     "Tenant": {
       "type": "parameter",
       "dataType": "bool",
@@ -40,33 +23,27 @@
       "isRequired": false,
       "defaultValue": "true"
     },
-    "IsAPI": {
-      "type": "computed",
-      "value": "(ProjectType == \"API\")"
-    },
-    "IsMVC": {
-      "type": "computed",
-      "value": "(ProjectType == \"MVC\")"
+    "Aspire": {
+      "type": "parameter",
+      "dataType": "bool",
+      "description": "是否包含Aspire",
+      "isRequired": false,
+      "defaultValue": "true"
     }
   },
   "sources": [
     {
       "modifiers": [
         {
-          "condition": "(ProjectType==\"MVC\")",
           "exclude": [
-            "src/DncyTemplate.Api/**/*"
+            "template.sln",
+            "cli/**/*"
           ]
         },
         {
-          "condition": "(ProjectType==\"API\")",
+          "condition": "(!Aspire)",
           "exclude": [
-            "src/DncyTemplate.Mvc/**/*"
-          ]
-        },
-        {
-          "exclude": [
-            "template.sln"
+            "aspire/**/*"
           ]
         },
         {
@@ -82,34 +59,6 @@
           ]
         }
       ]
-    }
-  ],
-  "primaryOutputs": [
-    {
-      "path": "src/DncyTemplate.Api/DncyTemplate.Api.csproj",
-      "condition": "(ProjectType==\"API\")"
-    },
-    {
-      "path": "src/DncyTemplate.Mvc/DncyTemplate.Mvc.csproj",
-      "condition": "(ProjectType==\"MVC\")"
-    },
-    {
-      "path": "aspire/DncyTemplate.AppHost/DncyTemplate.AppHost.csproj"
-    },
-    {
-      "path": "aspire/DncyTemplate.ServiceDefaults/DncyTemplate.ServiceDefaults.csproj"
-    }
-  ],
-  "postActions": [
-    {
-      "description": "添加选定的项目至解决方案",
-      "manualInstructions": [
-        {
-          "text": "请手动添加需要的项目到解决方案"
-        }
-      ],
-      "actionId": "D396686C-DE0E-4DE6-906D-291CD29FC5DE",
-      "continueOnError": true
     }
   ]
 }

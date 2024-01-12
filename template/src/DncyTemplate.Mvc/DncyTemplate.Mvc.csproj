@@ -13,7 +13,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Content Remove="bundleconfig.json" />
+		<Content Remove="bundleconfig.json" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -45,94 +45,97 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <UpToDateCheckInput Remove="Views\Shared\_MainLayout.cshtml" />
+		<UpToDateCheckInput Remove="Views\Shared\_MainLayout.cshtml" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <_ContentIncludedByDefault Remove="Views\LayoutComponents\_TopHeaderLeft.cshtml" />
-	  <_ContentIncludedByDefault Remove="Views\Shared\_MainLayout.cshtml" />
-	  <_ContentIncludedByDefault Remove="Views\Shared\Templates\ProductListTemplate.cshtml" />
-	  <_ContentIncludedByDefault Remove="Views\Product\Create.cshtml" />
-	  <_ContentIncludedByDefault Remove="Views\Product\Index.cshtml" />
+		<_ContentIncludedByDefault Remove="Views\LayoutComponents\_TopHeaderLeft.cshtml" />
+		<_ContentIncludedByDefault Remove="Views\Shared\_MainLayout.cshtml" />
+		<_ContentIncludedByDefault Remove="Views\Shared\Templates\ProductListTemplate.cshtml" />
+		<_ContentIncludedByDefault Remove="Views\Product\Create.cshtml" />
+		<_ContentIncludedByDefault Remove="Views\Product\Index.cshtml" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <UpToDateCheckInput Remove="Views\LayoutComponents\_TopHeaderLeft.cshtml" />
+		<UpToDateCheckInput Remove="Views\LayoutComponents\_TopHeaderLeft.cshtml" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+		<Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="HtmlHelpers\" />
-	  <Folder Include="Models\Account\" />
-	  <Folder Include="Models\Permission\" />
-	  <Folder Include="BackgroundServices\" />
-	  <!--#if (Tenant) -->
-	  <Folder Include="Infra\Tenancy\" />
-	  <!--#endif -->
+		<Folder Include="HtmlHelpers\" />
+		<Folder Include="Models\Account\" />
+		<Folder Include="Models\Permission\" />
+		<Folder Include="BackgroundServices\" />
+		<!--#if (Tenant) -->
+		<Folder Include="Infra\Tenancy\" />
+		<!--#endif -->
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\aspire\DncyTemplate.ServiceDefaults\DncyTemplate.ServiceDefaults.csproj" />
-	  <ProjectReference Include="..\DncyTemplate.Application\DncyTemplate.Application.csproj" />
-	  <ProjectReference Include="..\DncyTemplate.Infra\DncyTemplate.Infra.csproj" />
+		<!--#if (Aspire) -->
+		<ProjectReference Include="..\..\aspire\DncyTemplate.ServiceDefaults\DncyTemplate.ServiceDefaults.csproj" />
+		<!--#endif -->
+
+		<ProjectReference Include="..\DncyTemplate.Application\DncyTemplate.Application.csproj" />
+		<ProjectReference Include="..\DncyTemplate.Infra\DncyTemplate.Infra.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Resources\DataAnnotation.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>DataAnnotation.resx</DependentUpon>
-	  </Compile>
-	  <Compile Update="Resources\DefaultDataAnnotation.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>DefaultDataAnnotation.resx</DependentUpon>
-	  </Compile>
-	  <Compile Update="Resources\MenuResource.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>MenuResource.resx</DependentUpon>
-	  </Compile>
-	  <Compile Update="Resources\SharedResource.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>SharedResource.resx</DependentUpon>
-	  </Compile>
+		<Compile Update="Resources\DataAnnotation.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>DataAnnotation.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\DefaultDataAnnotation.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>DefaultDataAnnotation.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\MenuResource.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>MenuResource.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\SharedResource.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>SharedResource.resx</DependentUpon>
+		</Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Update="Resources\DataAnnotation.en-us.resx">
-	    <Generator></Generator>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\DataAnnotation.resx">
-	    <Generator>PublicResXFileCodeGenerator</Generator>
-	    <LastGenOutput>DataAnnotation.Designer.cs</LastGenOutput>
-	    <CustomToolNamespace>DncyTemplate.Mvc</CustomToolNamespace>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\DataAnnotation.zh-hans.resx">
-	    <Generator></Generator>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\DefaultDataAnnotation.resx">
-	    <Generator>PublicResXFileCodeGenerator</Generator>
-	    <LastGenOutput>DefaultDataAnnotation.Designer.cs</LastGenOutput>
-	    <CustomToolNamespace>DncyTemplate.Mvc</CustomToolNamespace>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\MenuResource.resx">
-	    <Generator>PublicResXFileCodeGenerator</Generator>
-	    <LastGenOutput>MenuResource.Designer.cs</LastGenOutput>
-	    <CustomToolNamespace>DncyTemplate.Mvc</CustomToolNamespace>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\SharedResource.resx">
-	    <Generator>PublicResXFileCodeGenerator</Generator>
-	    <LastGenOutput>SharedResource.Designer.cs</LastGenOutput>
-	    <CustomToolNamespace>DncyTemplate.Mvc</CustomToolNamespace>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\SharedResource.zh-hans.resx">
-	    <CustomToolNamespace></CustomToolNamespace>
-	  </EmbeddedResource>
+		<EmbeddedResource Update="Resources\DataAnnotation.en-us.resx">
+			<Generator></Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\DataAnnotation.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>DataAnnotation.Designer.cs</LastGenOutput>
+			<CustomToolNamespace>DncyTemplate.Mvc</CustomToolNamespace>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\DataAnnotation.zh-hans.resx">
+			<Generator></Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\DefaultDataAnnotation.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>DefaultDataAnnotation.Designer.cs</LastGenOutput>
+			<CustomToolNamespace>DncyTemplate.Mvc</CustomToolNamespace>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\MenuResource.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>MenuResource.Designer.cs</LastGenOutput>
+			<CustomToolNamespace>DncyTemplate.Mvc</CustomToolNamespace>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\SharedResource.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>SharedResource.Designer.cs</LastGenOutput>
+			<CustomToolNamespace>DncyTemplate.Mvc</CustomToolNamespace>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\SharedResource.zh-hans.resx">
+			<CustomToolNamespace></CustomToolNamespace>
+		</EmbeddedResource>
 	</ItemGroup>
 
 </Project>

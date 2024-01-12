@@ -34,8 +34,12 @@ Log.Information("[{AppName}]日志配置完毕...", AppName);
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog(dispose: true);
+
+#if Aspire
 // Add service defaults & Aspire components.
 builder.AddServiceDefaults();
+#endif
+
 // Add services to the container.
 builder.Services.AddProblemDetails();
 

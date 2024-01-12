@@ -12,3 +12,4 @@ global using Newtonsoft.Json.Serialization;
 global using Serilog;
 global using System.Net.Mime;
 global using System.Text;
+global using Microsoft.Extensions.DependencyInjection;

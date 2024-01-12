@@ -23,9 +23,6 @@
 		<Using Include="System.Diagnostics" />
 		<Using Include="System.Linq.Expressions" />
 		<Using Include="System.Reflection" />
-		<Using Include="Microsoft.Extensions.DependencyInjection" />
-		<Using Include="Microsoft.Extensions.DependencyInjection.Extensions" />
-		<Using Include="Microsoft.Extensions.Logging" />
 	</ItemGroup>
 
 	<ItemGroup Condition=" '$(MSBuildProjectExtension)' != '.dcproj'">

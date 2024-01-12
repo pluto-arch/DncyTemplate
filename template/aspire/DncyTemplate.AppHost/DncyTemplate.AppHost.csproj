@@ -13,14 +13,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<!--#if (ProjectType=="MVC")-->
 		<ProjectReference Include="..\..\src\DncyTemplate.Mvc\DncyTemplate.Mvc.csproj" />
-		<!--#endif-->
-
-		<!--#if (ProjectType=="API")-->
 		<ProjectReference Include="..\..\src\DncyTemplate.Api\DncyTemplate.Api.csproj" />
-		<!--#endif-->
-
+		<ProjectReference Include="..\..\src\DncyTemplate.BlazorServer\DncyTemplate.BlazorServer.csproj" />
 	</ItemGroup>
 
 

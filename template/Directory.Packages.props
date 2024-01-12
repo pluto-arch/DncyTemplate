@@ -66,5 +66,7 @@
     <PackageVersion Include="NUnit.Analyzers" Version="3.6.1" />
     <PackageVersion Include="coverlet.collector" Version="6.0.0" />
     <!--end test package-->
+
+	<PackageVersion  Include="Sharprompt" Version="2.4.5"/>
   </ItemGroup>
 </Project>
