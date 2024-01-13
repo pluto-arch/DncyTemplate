@@ -12,16 +12,16 @@ Console.WriteLine($"dotnetydd tool v{versionString}");
 Console.WriteLine("================================");
 ShowBot();
 Console.WriteLine("================================");
-//if (args.Length<=0)
-//{
-//    Console.WriteLine("请使用 `dotnetydd --init` 进行初始化项目");
-//    return;
-//}
-//if (args[0] != "--init")
-//{
-//    Console.WriteLine("请使用 `dotnetydd --init` 进行初始化项目");
-//    return;
-//}
+if (args.Length <= 0)
+{
+    Console.WriteLine("请使用 `dotnetydd --init` 进行初始化项目");
+    return;
+}
+if (args[0] != "--init")
+{
+    Console.WriteLine("请使用 `dotnetydd --init` 进行初始化项目");
+    return;
+}
 
 var name = Prompt.Input<string>("项目名称");
 
@@ -83,8 +83,7 @@ if (lines.All(x=>!x.Contains(searchString)))
 process.StartInfo.FileName = "dotnet";
 process.StartInfo.Arguments = $"new boltapp -n {name} -T {hasTenant}  -A {hasAspire} -o {dir}";
 process.Start();
-output = process.StandardOutput.ReadToEnd();
-Console.WriteLine(output);
+_ = process.StandardOutput.ReadToEnd();
 
 process.StartInfo.Arguments = "";
 
@@ -170,8 +169,7 @@ process.StartInfo.StandardOutputEncoding = Encoding.UTF8;
 process.StartInfo.StandardErrorEncoding = Encoding.UTF8;
 process.StartInfo.Arguments = $"sln {slnPath} add {uiargs}";
 process.Start();
-output = process.StandardOutput.ReadToEnd();
-Console.WriteLine(output);
+_ = process.StandardOutput.ReadToEnd();
 
 if (!uiselect.Contains("api"))
 {
