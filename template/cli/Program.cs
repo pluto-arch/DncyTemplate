@@ -2,7 +2,7 @@
 using System.Text;
 using Sharprompt;
 
-
+System.Console.InputEncoding = System.Text.Encoding.UTF8;
 var versionString = Assembly.GetEntryAssembly()?
     .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
     .InformationalVersion
@@ -12,16 +12,16 @@ Console.WriteLine($"dotnetydd tool v{versionString}");
 Console.WriteLine("================================");
 ShowBot();
 Console.WriteLine("================================");
-if (args.Length<=0)
-{
-    Console.WriteLine("请使用 `dotnetydd --init` 进行初始化项目");
-    return;
-}
-if (args[0] != "--init")
-{
-    Console.WriteLine("请使用 `dotnetydd --init` 进行初始化项目");
-    return;
-}
+//if (args.Length<=0)
+//{
+//    Console.WriteLine("请使用 `dotnetydd --init` 进行初始化项目");
+//    return;
+//}
+//if (args[0] != "--init")
+//{
+//    Console.WriteLine("请使用 `dotnetydd --init` 进行初始化项目");
+//    return;
+//}
 
 var name = Prompt.Input<string>("项目名称");
 
@@ -45,15 +45,11 @@ var dir = Directory.GetCurrentDirectory();
 
 
 #if DEBUG
-Console.WriteLine($"名称 {name}!");
+Console.WriteLine($"名称 {name}");
 Console.WriteLine($"租户： {hasTenant}");
 Console.WriteLine($"用户界面： {string.Join(",",ui)}");
 Console.WriteLine($"目录： {dir}");
 Console.WriteLine($"Aspire： {hasAspire}");
-#endif
-
-#if DEBUG
-dir+="\\TestCliCom";
 #endif
 
 
@@ -63,10 +59,15 @@ if (!Directory.Exists(dir))
 }
 
 Process process = new Process();
+
 process.StartInfo.FileName = "dotnet";
 process.StartInfo.Arguments = "new list --columns author";
 process.StartInfo.UseShellExecute = false;
 process.StartInfo.RedirectStandardOutput = true;
+process.StartInfo.RedirectStandardError = true;
+process.StartInfo.StandardOutputEncoding = Encoding.UTF8;
+process.StartInfo.StandardErrorEncoding = Encoding.UTF8;
+
 process.Start();
 string output = process.StandardOutput.ReadToEnd();
 
@@ -81,21 +82,16 @@ if (lines.All(x=>!x.Contains(searchString)))
 
 process.StartInfo.FileName = "dotnet";
 process.StartInfo.Arguments = $"new boltapp -n {name} -T {hasTenant}  -A {hasAspire} -o {dir}";
-process.StartInfo.UseShellExecute = false;
-process.StartInfo.RedirectStandardOutput = true;
 process.Start();
 output = process.StandardOutput.ReadToEnd();
-
+Console.WriteLine(output);
 
 process.StartInfo.Arguments = "";
 
 var slnPath = Path.Combine(dir, $"{name}.sln");
-
 var apiPath = Path.Combine(dir, "src",$"{name}.Api",$"{name}.Api.csproj");
 var mvcPath = Path.Combine(dir, "src",$"{name}.Mvc",$"{name}.Mvc.csproj");
 var blazorServerPath = Path.Combine(dir, "src",$"{name}.BlazorServer",$"{name}.BlazorServer.csproj");
-
-
 var aspirePath1=Path.Combine(dir, "aspire",$"{name}.AppHost",$"{name}.AppHost.csproj");
 var aspirePath2=Path.Combine(dir, "aspire",$"{name}.ServiceDefaults",$"{name}.ServiceDefaults.csproj");
 
@@ -170,10 +166,12 @@ if (hasAspire)
 var uiargs = sb.ToString();
 
 // sln project reference
+process.StartInfo.StandardOutputEncoding = Encoding.UTF8;
+process.StartInfo.StandardErrorEncoding = Encoding.UTF8;
 process.StartInfo.Arguments = $"sln {slnPath} add {uiargs}";
 process.Start();
 output = process.StandardOutput.ReadToEnd();
-
+Console.WriteLine(output);
 
 if (!uiselect.Contains("api"))
 {
