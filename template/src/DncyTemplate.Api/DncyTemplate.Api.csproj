@@ -106,6 +106,14 @@
 	    <DependentUpon>SharedResources.resx</DependentUpon>
 	  </Compile>
 	</ItemGroup>
+
+
+	<ItemGroup>
+	  <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers">
+	    <PrivateAssets>all</PrivateAssets>
+	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
+	</ItemGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<DocumentationFile>DncyTemplate.Api.xml</DocumentationFile>
 		<WarningsAsErrors>NU1605</WarningsAsErrors>

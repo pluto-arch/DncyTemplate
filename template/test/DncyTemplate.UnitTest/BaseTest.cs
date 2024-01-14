@@ -8,6 +8,8 @@ using DncyTemplate.Domain;
 using DncyTemplate.Infra;
 using Microsoft.Extensions.Configuration;
 
+#pragma warning disable NUnit1032
+
 namespace DncyTemplate.UnitTest
 {
     public class BaseTest
@@ -47,6 +49,5 @@ namespace DncyTemplate.UnitTest
 
             ServiceProvider = services.BuildServiceProvider();
         }
-
     }
 }

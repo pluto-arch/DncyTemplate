@@ -3,17 +3,16 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <EFCoreVersion>8.0.0</EFCoreVersion>
     <MicrosoftExtensionsVersion>8.0.0</MicrosoftExtensionsVersion>
-	 <DncyVersion>5.0.0</DncyVersion>
+    <DncyVersion>1.0.0</DncyVersion>
   </PropertyGroup>
   <!--package info-->
   <ItemGroup>
-    <PackageVersion Include="Bogus" Version="34.0.2" />
-    <PackageVersion Include="CommunityToolkit.Diagnostics" Version="8.2.1" />
-    <PackageVersion Include="FastExpressionCompiler" Version="3.3.4" />
-    <PackageVersion Include="FluentValidation" Version="11.7.1" />
+    <PackageVersion Include="Bogus" Version="35.3.0" />
+    <PackageVersion Include="CommunityToolkit.Diagnostics" Version="8.2.2" />
+    <PackageVersion Include="FastExpressionCompiler" Version="4.0.1" />
+    <PackageVersion Include="FluentValidation" Version="11.9.0" />
     <PackageVersion Include="FluentValidation.AspNetCore" Version="11.3.0" />
-    <PackageVersion Include="Dapper" Version="2.0.143" />
-	  
+    <PackageVersion Include="Dapper" Version="2.1.28" />
     <PackageVersion Include="Dotnetydd.Specifications.EntityFrameworkCore" Version="$(DncyVersion)" />
     <PackageVersion Include="Dotnetydd.DependencyInjection.Generator" Version="$(DncyVersion)" />
     <!--#if (Tenant) -->
@@ -23,47 +22,50 @@
     <PackageVersion Include="Dotnetydd.Permission" Version="$(DncyVersion)" />
     <PackageVersion Include="Dotnetydd.Specifications" Version="$(DncyVersion)" />
     <PackageVersion Include="Dotnetydd.Tools" Version="$(DncyVersion)" />
-	  
-    <PackageVersion Include="Mapster" Version="7.3.0" />
-    <PackageVersion Include="Mapster.DependencyInjection" Version="1.0.0" />
-    <PackageVersion Include="MediatR" Version="12.1.1" />
+    <PackageVersion Include="Mapster" Version="7.4.0" />
+    <PackageVersion Include="Mapster.DependencyInjection" Version="1.0.1" />
+    <PackageVersion Include="MediatR" Version="12.2.0" />
     <PackageVersion Include="Dapper.SimpleCRUD" Version="2.3.0" />
-    <PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.3" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="$(MicrosoftExtensionsVersion)" />
-    <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="$(MicrosoftExtensionsVersion)" />
-    <PackageVersion Include="Microsoft.Extensions.Localization" Version="$(MicrosoftExtensionsVersion)"  />
-    <PackageVersion Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="$(MicrosoftExtensionsVersion)"  />
-    <PackageVersion Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="$(MicrosoftExtensionsVersion)"  />
-    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="$(MicrosoftExtensionsVersion)" />
+    <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.1" />
+    <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="8.1.0" />
+    <PackageVersion Include="Microsoft.Extensions.Localization" Version="8.0.1" />
+    <PackageVersion Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.1" />
+    <PackageVersion Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.1" />
+    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.1" />
     <PackageVersion Include="Microsoft.Extensions.Logging" Version="$(MicrosoftExtensionsVersion)" />
     <PackageVersion Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="$(MicrosoftExtensionsVersion)" ExcludeAssets="All" />
-
-    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="$(EFCoreVersion)" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="$(EFCoreVersion)" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="$(EFCoreVersion)" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="$(EFCoreVersion)">
+    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="8.0.1" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.1" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.1" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageVersion>
-	  
     <PackageVersion Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.1.0" />
-   
-   
-    <PackageVersion Include="Polly" Version="7.2.4" />
-    <PackageVersion Include="Serilog.Extensions.Logging" Version="7.0.0" />
-    <PackageVersion Include="Serilog.AspNetCore" Version="7.0.0" />
-    <PackageVersion Include="Serilog.Enrichers.Environment" Version="2.2.0" />
+	  
+    <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.7.0" />
+    <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.7.0" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.7.0" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="1.7.0" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.Runtime" Version="1.7.0" />
+	  
+    <PackageVersion Include="Polly" Version="8.2.1" />
+    <PackageVersion Include="Serilog.Extensions.Logging" Version="8.0.0" />
+    <PackageVersion Include="Serilog.AspNetCore" Version="8.0.0" />
+    <PackageVersion Include="Serilog.Enrichers.Environment" Version="2.3.0" />
     <PackageVersion Include="Serilog.Enrichers.Process" Version="2.0.2" />
     <PackageVersion Include="Serilog.Enrichers.Sensitive" Version="1.7.3" />
     <PackageVersion Include="Serilog.Enrichers.Thread" Version="3.1.0" />
     <PackageVersion Include="Serilog.Sinks.Async" Version="1.5.0" />
     <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <!--test package-->
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.7.1" />
-    <PackageVersion Include="NUnit" Version="3.13.3" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageVersion Include="NUnit" Version="4.0.1" />
     <PackageVersion Include="NUnit3TestAdapter" Version="4.5.0" />
-    <PackageVersion Include="NUnit.Analyzers" Version="3.6.1" />
+    <PackageVersion Include="NUnit.Analyzers" Version="3.10.0" />
     <PackageVersion Include="coverlet.collector" Version="6.0.0" />
     <!--end test package-->
 

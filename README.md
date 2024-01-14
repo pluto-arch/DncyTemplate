@@ -24,3 +24,7 @@ dotnet new boltapp -h
 ```
 
 
+>模板项目中用到的组件：多租户、规约模式、权限检查器实现代码在以下仓库中：
+- [租户、规约、权限组件](https://github.com/pluto-arch/DncyComponent)
+- [工具代码](https://github.com/pluto-arch/dncytools)
+- [IOC源生成器](https://github.com/pluto-arch/Dncy.Microsoft.DependencyInjection.Generator)
