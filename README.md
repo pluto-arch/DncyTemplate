@@ -32,7 +32,7 @@ dotnet tool install -g DotnetyddTemplateCli --add-source ./
 cli 工具安装完毕后既可以使用cli初始化项目：
 ```
 dotnetydd --init
-``
+```
 
 
 >模板项目中用到的组件：多租户、规约模式、权限检查器实现代码在以下仓库中：
