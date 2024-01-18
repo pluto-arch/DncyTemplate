@@ -3,13 +3,12 @@
 using Dotnetydd.MultiTenancy;
 using Dotnetydd.MultiTenancy.Model;
 #endif
-using DncyTemplate.Application.Constants;
-using DncyTemplate.Mvc.Constants;
 using DncyTemplate.Mvc.Models.Account;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using DncyTemplate.Constants;
 using Dotnetydd.Permission.PermissionGrant;
 
 namespace DncyTemplate.Mvc.Controllers
@@ -92,11 +91,11 @@ namespace DncyTemplate.Mvc.Controllers
                 List<IPermissionGrant> grantList = [];
                 foreach (var ur in user.Roles)
                 {
-                    var permiss = await _permissionGrantStore.GetListAsync("role", ur.ToString().ToLower());
+                    var permiss = await _permissionGrantStore.GetListAsync("Role", ur.ToString());
                     grantList.AddRange(permiss);
                 }
-                grantList.AddRange(await _permissionGrantStore.GetListAsync("user", user.Id));
-                claims.Add(new Claim(UserClaimConstants.CLAIM_PERMISSION, string.Join("|", grantList.Select(x => x.Name).Distinct())));
+                grantList.AddRange(await _permissionGrantStore.GetListAsync("User", user.Id));
+                claims.Add(new Claim(UserClaimConstantValue.CLAIM_PERMISSION, string.Join("|", grantList.Select(x => x.Name).Distinct())));
             }
 #endif
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

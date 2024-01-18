@@ -21,13 +21,13 @@
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
+		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
 		<PackageReference Include="Serilog.Extensions.Logging" />
 		<PackageReference Include="Polly" />
 		<PackageReference Include="CommunityToolkit.Diagnostics" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Constants\" />
 	  <Folder Include="Global\" />
 	</ItemGroup>
 

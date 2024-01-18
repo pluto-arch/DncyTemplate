@@ -72,7 +72,7 @@ public class SideBarMenuViewComponent : ViewComponent
                 {
                     Name = "app.menu.device.devices",
                     Icon = "layui-icon-console",
-                    DisplayName = "设备管理",
+                    DisplayName = "Device List",
                     Url = "/device",
                     IsEnabled = true,
                     IsVisible = true,

@@ -64,40 +64,6 @@ public static class ApplicationBuilderExtension
     }
 
 
-    /// <summary>
-    /// 种子数据初始化
-    /// </summary>
-    /// <param name="app"></param>
-    /// <returns></returns>
-    public static async Task<IApplicationBuilder> DataSeederAsync(this IApplicationBuilder app)
-    {
-        using IServiceScope serviceScope = app.ApplicationServices.CreateScope();
-
-        foreach (var dbcontext in DataContextTypeCache.GetApplicationDataContextList())
-        {
-            var db = serviceScope.ServiceProvider.GetService(dbcontext);
-            if (db is DbContext ctx)
-            {
-                await ctx.Database.MigrateAsync(); // 应用迁移
-            }
-        }
-
-
-        var seeders = serviceScope.ServiceProvider.GetServices<IDataSeedProvider>();
-        if (!seeders.Any())
-        {
-            return app;
-        }
-
-        foreach (var seeder in seeders.OrderByDescending(x => x.Sorts).ToList())
-        {
-            await seeder.SeedAsync(serviceScope.ServiceProvider);
-        }
-
-        return app;
-    }
-
-
     public static IEndpointRouteBuilder MapSystemHealthChecks(this IEndpointRouteBuilder builer)
     {
         builer.MapHealthChecks("/health", new HealthCheckOptions

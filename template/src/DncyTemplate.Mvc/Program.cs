@@ -1,11 +1,11 @@
 using System.Threading.RateLimiting;
 using DncyTemplate.Application;
 using DncyTemplate.Application.Models;
+using DncyTemplate.Constants;
 using DncyTemplate.Domain;
 using DncyTemplate.Infra;
 using DncyTemplate.Mvc;
 using DncyTemplate.Mvc.BackgroundServices;
-using DncyTemplate.Mvc.Constants;
 using DncyTemplate.Mvc.Infra;
 using DncyTemplate.Mvc.Infra.LogSetup;
 #if Tenant
@@ -19,6 +19,7 @@ using Microsoft.Extensions.Primitives;
 using DncyTemplate.Mvc.Infra.HealthChecks;
 using DncyTemplate.Mvc.Infra.Authorization;
 using Dotnetydd.Tools.Extension;
+using DncyTemplate.Infra.EntityFrameworkCore.Migrations;
 
 
 string AppName = "DncyTemplate.Mvc";
@@ -63,6 +64,7 @@ builder.Services.AddDomainModule();
 
 // 后台服务
 builder.Services.AddHostedService<PrductBackgroundService>();
+builder.Services.AddHostedService<EfCoreMigrationHostService>();
 
 // FluentValidation
 builder.Services.AddFluentValidationAutoValidation(configs =>
@@ -141,8 +143,6 @@ app.UseResponseCompression()
 
 if (!app.Environment.IsEnvironment(AppConstant.EnvironmentName.DEV))
 {
-    // 初始化种子数据
-    app.DataSeederAsync().Wait();
     app.UseDeveloperExceptionPage();
 }
 else

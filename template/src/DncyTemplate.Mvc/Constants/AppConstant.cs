@@ -1,4 +1,4 @@
-﻿namespace DncyTemplate.Mvc.Constants;
+﻿namespace DncyTemplate.Constants;
 
 public class AppConstant
 {

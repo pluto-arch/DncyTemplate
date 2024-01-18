@@ -1,7 +1,7 @@
-﻿using DncyTemplate.Domain.Aggregates.Product;
+﻿using DncyTemplate.Constants;
+using DncyTemplate.Domain.Aggregates.Product;
 using DncyTemplate.Domain.Infra;
 using DncyTemplate.Domain.Infra.Repository;
-using DncyTemplate.Infra.Constants;
 using DncyTemplate.Infra.EntityFrameworkCore.ConnectionStringResolve;
 using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 using DncyTemplate.Infra.EntityFrameworkCore.Interceptor;
@@ -25,7 +25,7 @@ public static class EntityFrameworkServiceExtension
         var migrationAssembly = Assembly.GetCallingAssembly().GetName().Name;
         service.AddDbContextPool<DncyTemplateDbContext>((serviceProvider, optionsBuilder) =>
         {
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString(DbConstants.DEFAULT_CONNECTIONSTRING_NAME),
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString(InfraConstantValue.DEFAULT_CONNECTIONSTRING_NAME),
                 sqlOptions =>
                 {
                     sqlOptions.MigrationsAssembly(migrationAssembly);
@@ -37,7 +37,7 @@ public static class EntityFrameworkServiceExtension
 #if Tenant
             //多租户模式下解析租户连接字符串使用
             var connectionStringResolve = serviceProvider.GetRequiredService<IConnectionStringResolve>();
-            optionsBuilder.AddInterceptors(new TenantDbConnectionInterceptor(connectionStringResolve, DbConstants.DEFAULT_CONNECTIONSTRING_NAME));
+            optionsBuilder.AddInterceptors(new TenantDbConnectionInterceptor(connectionStringResolve, InfraConstantValue.DEFAULT_CONNECTIONSTRING_NAME));
 #endif
 
 

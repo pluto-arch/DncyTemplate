@@ -1,5 +1,4 @@
 #if Tenant
-using Dotnetydd.MultiTenancy.ConnectionStrings;
 using Dotnetydd.MultiTenancy.Store;
 using Dotnetydd.MultiTenancy;
 #endif

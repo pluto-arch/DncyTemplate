@@ -30,7 +30,6 @@
 	  <Folder Include="IntegrationEvents\Events\" />
 	  <Folder Include="Models\Generics\" />
 	  <Folder Include="Permission\" />
-	  <Folder Include="Constants\" />
 	  <Folder Include="MapperProfiles\" />
 	</ItemGroup>
 

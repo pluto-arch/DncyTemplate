@@ -1,9 +1,9 @@
 ﻿
 #if Tenant
 using Dotnetydd.MultiTenancy;
-using Dotnetydd.MultiTenancy.ConnectionStrings;
 #endif
-using DncyTemplate.Infra.Constants;
+using DncyTemplate.Constants;
+
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.ConnectionStringResolve;
 
@@ -34,7 +34,7 @@ public class DefaultConnectionStringResolve : IConnectionStringResolve
 
     public virtual Task<string> GetAsync(string connectionStringName = null)
     {
-        connectionStringName ??= DbConstants.DEFAULT_CONNECTIONSTRING_NAME;
+        connectionStringName ??= InfraConstantValue.DEFAULT_CONNECTIONSTRING_NAME;
         var defaultConnectionString = _configuration.GetConnectionString(connectionStringName);
 #if Tenant
         var tenan = _currentTenant;

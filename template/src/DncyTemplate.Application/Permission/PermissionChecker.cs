@@ -1,9 +1,9 @@
-using DncyTemplate.Application.Constants;
 using Dotnetydd.Permission.Checker;
 using Dotnetydd.Permission.Definition;
 using Dotnetydd.Permission.Models;
 using Dotnetydd.Permission.ValueProvider;
 using System.Security.Claims;
+using DncyTemplate.Constants;
 
 namespace DncyTemplate.Application.Permission;
 
@@ -36,7 +36,7 @@ public class PermissionChecker : IPermissionChecker
             return await Task.FromResult(false);
         }
 
-        var userPermissions = claimsPrincipal.FindFirst(UserClaimConstants.CLAIM_PERMISSION);
+        var userPermissions = claimsPrincipal.FindFirst(UserClaimConstantValue.CLAIM_PERMISSION);
         if (userPermissions == null)
         {
             return await Task.FromResult(false);
@@ -58,7 +58,7 @@ public class PermissionChecker : IPermissionChecker
 
         names ??= [];
 
-        var userPermissions = claimsPrincipal.FindFirst(UserClaimConstants.CLAIM_PERMISSION);
+        var userPermissions = claimsPrincipal.FindFirst(UserClaimConstantValue.CLAIM_PERMISSION);
         var userPermissionsArr = userPermissions?.Value.Split('|');
         foreach (string name in names)
         {

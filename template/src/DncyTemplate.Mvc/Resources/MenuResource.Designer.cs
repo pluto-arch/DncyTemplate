@@ -61,6 +61,33 @@ namespace DncyTemplate.Mvc {
         }
         
         /// <summary>
+        ///   查找类似 Access Control 的本地化字符串。
+        /// </summary>
+        public static string app_menu_accescontrol {
+            get {
+                return ResourceManager.GetString("app.menu.accescontrol", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Roles 的本地化字符串。
+        /// </summary>
+        public static string app_menu_accescontrol_roles {
+            get {
+                return ResourceManager.GetString("app.menu.accescontrol.roles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Tenants 的本地化字符串。
+        /// </summary>
+        public static string app_menu_accescontrol_tenants {
+            get {
+                return ResourceManager.GetString("app.menu.accescontrol.tenants", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Dashboard 的本地化字符串。
         /// </summary>
         public static string app_menu_dashboard_hostconsole {
@@ -75,6 +102,15 @@ namespace DncyTemplate.Mvc {
         public static string app_menu_device {
             get {
                 return ResourceManager.GetString("app.menu.device", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Device List 的本地化字符串。
+        /// </summary>
+        public static string app_menu_device_devices {
+            get {
+                return ResourceManager.GetString("app.menu.device.devices", resourceCulture);
             }
         }
         

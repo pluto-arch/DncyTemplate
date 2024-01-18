@@ -1,4 +1,4 @@
-﻿using DncyTemplate.Mvc.Constants;
+﻿using DncyTemplate.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.RateLimiting;

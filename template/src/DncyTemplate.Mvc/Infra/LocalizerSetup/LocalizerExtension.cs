@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.DataAnnotations;
 using Microsoft.Extensions.Localization;
 using System.Globalization;
-using static DncyTemplate.Mvc.Constants.AppConstant;
+using DncyTemplate.Constants;
 
 namespace DncyTemplate.Mvc.Infra.LocalizerSetup;
 
@@ -13,8 +13,8 @@ public static class LocalizerExtension
         services.AddLocalization(options => { options.ResourcesPath = "Resources"; });
         services.AddRequestLocalization(options =>
         {
-            var supportedCultures = new[] { new CultureInfo(Culture.EN_US.key), new CultureInfo(Culture.ZN_CH.key) };
-            options.DefaultRequestCulture = new RequestCulture(Culture.ZN_CH.key, Culture.ZN_CH.key);
+            var supportedCultures = new[] { new CultureInfo(AppConstant.Culture.EN_US.key), new CultureInfo(AppConstant.Culture.ZN_CH.key) };
+            options.DefaultRequestCulture = new RequestCulture(AppConstant.Culture.ZN_CH.key, AppConstant.Culture.ZN_CH.key);
             options.SupportedCultures = supportedCultures;
             options.SupportedUICultures = supportedCultures;
             options.ApplyCurrentCultureToResponseHeaders = true;

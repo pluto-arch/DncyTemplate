@@ -13,6 +13,7 @@ using DncyTemplate.Application;
 using DncyTemplate.Application.Models;
 using DncyTemplate.Domain;
 using DncyTemplate.Infra;
+using DncyTemplate.Infra.EntityFrameworkCore.Migrations;
 using Dotnetydd.Tools.Extension;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -62,6 +63,7 @@ builder.Services.AddDomainModule();
 
 // 后台服务
 builder.Services.AddHostedService<PrductBackgroundService>();
+builder.Services.AddHostedService<EfCoreMigrationHostService>();
 
 // FluentValidation
 builder.Services.AddFluentValidationAutoValidation(configs =>
@@ -125,9 +127,6 @@ app.UseHttpRequestLogging();
 app.UseCors(AppConstant.DEFAULT_CORS_NAME);
 if (app.Environment.IsEnvironment(AppConstant.EnvironmentName.DEV))
 {
-    //app.UseDeveloperExceptionPage();
-    // 初始化种子数据
-    app.DataSeederAsync().Wait();
     app.UseExceptionHandle();
     app.UseCustomSwagger();
 }

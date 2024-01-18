@@ -1,7 +1,8 @@
 ﻿#if Tenant
 
+using DncyTemplate.Constants;
 using DncyTemplate.Mvc.Models;
-using Dotnetydd.MultiTenancy.ConnectionStrings;
+using Dotnetydd.MultiTenancy;
 using Microsoft.AspNetCore.Authorization;
 
 namespace DncyTemplate.Mvc.Controllers;
@@ -10,7 +11,7 @@ namespace DncyTemplate.Mvc.Controllers;
 /// 租户控制器
 /// </summary>
 [AutoResolveDependency]
-[Authorize(Roles = "SA")]
+[Authorize(Roles = DomainConstantValue.SA_ROLE)]
 public partial class TenantController : Controller
 {
     [AutoInject]

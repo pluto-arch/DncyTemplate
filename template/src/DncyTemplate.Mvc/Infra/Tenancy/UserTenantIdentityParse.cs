@@ -1,5 +1,5 @@
 ﻿#if Tenant
-using DncyTemplate.Mvc.Constants;
+using DncyTemplate.Constants;
 using Dotnetydd.MultiTenancy.AspNetCore;
 using Dotnetydd.MultiTenancy.AspNetCore.TenantIdentityParse;
 

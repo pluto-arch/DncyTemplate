@@ -1,9 +1,9 @@
 ﻿#if Tenant
-using Dotnetydd.MultiTenancy.ConnectionStrings;
+using DncyTemplate.Constants;
+using Dotnetydd.MultiTenancy;
 #endif
 using DncyTemplate.Application.AppServices.Queries.ConnectionFactory;
 using DncyTemplate.Application.Models.Product;
-using DncyTemplate.Infra.Constants;
 using System.Data;
 
 namespace DncyTemplate.Application.Queries.Product
@@ -37,7 +37,7 @@ namespace DncyTemplate.Application.Queries.Product
         {
             using IDbConnection connection = _factory.CreateConnection();
 #if Tenant
-            connection.ConnectionString = await _connectionStringResolver.GetAsync(DbConstants.DEFAULT_CONNECTIONSTRING_NAME);
+            connection.ConnectionString = await _connectionStringResolver.GetAsync(InfraConstantValue.DEFAULT_CONNECTIONSTRING_NAME);
 #else
             connection.ConnectionString = _configuration.GetConnectionString(DbConstants.DEFAULT_CONNECTIONSTRING_NAME);
 #endif

@@ -1,9 +1,9 @@
-using DncyTemplate.Application.Constants;
 using DncyTemplate.Application.Permission.Models;
 using Dotnetydd.Permission.Definition;
 using Dotnetydd.Permission.PermissionGrant;
 using Dotnetydd.Permission.PermissionManager;
 using System.Transactions;
+using DncyTemplate.Constants;
 
 namespace DncyTemplate.Application.Permission;
 
@@ -71,7 +71,7 @@ public partial class PermissionAppService : IPermissionAppService
             await _permissionGrantStore.RemoveGrantAsync(names, providerName, providerValue);
             names.AsParallel().ForAll(x =>
             {
-                PermissionGrantCache.Cache.AddOrUpdate(string.Format(CacheKeyFormatConstants.Permission_Grant_CacheKey_Format, providerName, providerValue, x), false.ToString(), (k, _) => false.ToString());
+                PermissionGrantCache.Cache.AddOrUpdate(string.Format(CacheKeyFormatConstantValue.PERMISSION_GRANT_CACHEKEY_FORMAT, providerName, providerValue, x), false.ToString(), (k, _) => false.ToString());
             });
             return;
         }
@@ -82,7 +82,7 @@ public partial class PermissionAppService : IPermissionAppService
             await _permissionGrantStore.RemoveGrantAsync(exp.ToArray(), providerName, providerValue);
             exp.AsParallel().ForAll(x =>
             {
-                PermissionGrantCache.Cache.AddOrUpdate(string.Format(CacheKeyFormatConstants.Permission_Grant_CacheKey_Format, providerName, providerValue, x), false.ToString(), (k, _) => false.ToString());
+                PermissionGrantCache.Cache.AddOrUpdate(string.Format(CacheKeyFormatConstantValue.PERMISSION_GRANT_CACHEKEY_FORMAT, providerName, providerValue, x), false.ToString(), (k, _) => false.ToString());
             });
         }
 
@@ -105,7 +105,7 @@ public partial class PermissionAppService : IPermissionAppService
             }
 
             await _permissionGrantStore.SaveAsync(grantInfo, providerName, providerValue);
-            string cacheKey = string.Format(CacheKeyFormatConstants.Permission_Grant_CacheKey_Format, providerName, providerValue, grantInfo);
+            string cacheKey = string.Format(CacheKeyFormatConstantValue.PERMISSION_GRANT_CACHEKEY_FORMAT, providerName, providerValue, grantInfo);
             PermissionGrantCache.Cache.AddOrUpdate(cacheKey, true.ToString(), (k, oldv) => true.ToString());
         }
 
