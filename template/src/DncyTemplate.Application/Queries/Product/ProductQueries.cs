@@ -39,7 +39,7 @@ namespace DncyTemplate.Application.Queries.Product
 #if Tenant
             connection.ConnectionString = await _connectionStringResolver.GetAsync(InfraConstantValue.DEFAULT_CONNECTIONSTRING_NAME);
 #else
-            connection.ConnectionString = _configuration.GetConnectionString(DbConstants.DEFAULT_CONNECTIONSTRING_NAME);
+            connection.ConnectionString = _configuration.GetConnectionString(InfraConstantValue.DEFAULT_CONNECTIONSTRING_NAME);
 #endif
             connection.Open();
             await Task.Delay(1000);
