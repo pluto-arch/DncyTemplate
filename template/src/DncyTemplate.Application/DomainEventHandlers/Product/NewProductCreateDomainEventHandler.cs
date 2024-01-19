@@ -1,4 +1,5 @@
-﻿using DncyTemplate.Application.IntegrationEvents.IntegrationEventbox;
+﻿using DncyTemplate.Application.IntegrationEvents.Events;
+using DncyTemplate.Application.IntegrationEvents.IntegrationEventbox;
 using DncyTemplate.Domain.DomainEvents.Product;
 
 namespace DncyTemplate.Application.DomainEventHandlers.Product;
@@ -21,7 +22,9 @@ public partial class NewProductCreateDomainEventHandler : INotificationHandler<N
 
         notification.Prod.Remark = $"{notification.Prod.Remark}:领域事件处理器";
 
-        // 添加集成事件到信箱
-        _integrationEventBox.AddAndSaveEvent($"新产品创建了，{notification.Prod.Id}");
+        // 同时保存集成事件和业务数据
+        var intEv = new ProductCreatedIntegrationEvent(notification.Prod.Id);
+        await _integrationEventBox.SaveEventAndChangesAsync(intEv);
+        await _integrationEventBox.PublishThroughEventBusAsync(intEv);
     }
 }

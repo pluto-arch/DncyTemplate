@@ -38,7 +38,6 @@
 		<Folder Include="Infra\ApiDoc\" />
 		<Folder Include="Infra\Authorization\" />
 		<Folder Include="Infra\LocalizerSetup\" />
-		<Folder Include="BackgroundServices\" />
 		<!--#if (Tenant) -->
 		<Folder Include="Infra\Tenancy\" />
 		<!--#endif -->

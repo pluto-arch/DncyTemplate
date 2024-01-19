@@ -68,7 +68,6 @@
 		<Folder Include="HtmlHelpers\" />
 		<Folder Include="Models\Account\" />
 		<Folder Include="Models\Permission\" />
-		<Folder Include="BackgroundServices\" />
 		<!--#if (Tenant) -->
 		<Folder Include="Infra\Tenancy\" />
 		<!--#endif -->

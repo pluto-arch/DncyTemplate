@@ -4,6 +4,7 @@ using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DncyTemplate.Infra.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(DncyTemplateDbContext))]
-    partial class DncyTemplateDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240119040824_AddIntegrationEvent")]
+    partial class AddIntegrationEvent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

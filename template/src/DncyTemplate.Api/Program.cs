@@ -1,6 +1,5 @@
 ﻿using System.Threading.RateLimiting;
 using DncyTemplate.Api;
-using DncyTemplate.Api.BackgroundServices;
 using DncyTemplate.Api.Infra.ApiDoc;
 using DncyTemplate.Api.Infra.Authorization;
 using DncyTemplate.Api.Infra.HealthChecks;
@@ -17,7 +16,6 @@ using DncyTemplate.Infra.EntityFrameworkCore.Migrations;
 using Dotnetydd.Tools.Extension;
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Primitives;
 
@@ -62,7 +60,6 @@ builder.Services.AddInfraModule(builder.Configuration);
 builder.Services.AddDomainModule();
 
 // 后台服务
-builder.Services.AddHostedService<PrductBackgroundService>();
 builder.Services.AddHostedService<EfCoreMigrationHostService>();
 
 // FluentValidation

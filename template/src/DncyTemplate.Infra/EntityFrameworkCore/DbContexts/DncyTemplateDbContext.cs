@@ -1,4 +1,5 @@
-﻿using DncyTemplate.Domain.Aggregates.Product;
+﻿using DncyTemplate.Domain.Aggregates.EventLogs;
+using DncyTemplate.Domain.Aggregates.Product;
 using DncyTemplate.Domain.Aggregates.System;
 using DncyTemplate.Infra.EntityFrameworkCore.EntityTypeConfig;
 using DncyTemplate.Uow;
@@ -13,18 +14,15 @@ public class DncyTemplateDbContext : BaseDbContext<DncyTemplateDbContext>, IData
     {
     }
 
-    public DbSet<Product> Products { get; set; }
+    public virtual DbSet<Product> Products { get; set; }
 
-    public DbSet<Device> Device { get; set; }
+    public virtual DbSet<Device> Device { get; set; }
 
-    public DbSet<DeviceTag> DeviceTag { get; set; }
+    public virtual DbSet<DeviceTag> DeviceTag { get; set; }
 
-    public DbSet<PermissionGrant> PermissionGrants { get; set; }
+    public virtual DbSet<PermissionGrant> PermissionGrants { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        base.OnConfiguring(optionsBuilder);
-    }
+    public virtual DbSet<IntegrationEventLogEntry> IntegrationEventLogEntry { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -33,5 +31,7 @@ public class DncyTemplateDbContext : BaseDbContext<DncyTemplateDbContext>, IData
             .ApplyConfiguration(new DeviceTagEntityTypeConfiguration())
             .ApplyConfiguration(new ProductEntityTypeConfiguration())
             .ApplyConfiguration(new PermissionEntityTypeConfiguration());
+
+        modelBuilder.Entity<IntegrationEventLogEntry>().ToTable("IntegrationEventLog");
     }
 }

@@ -5,7 +5,6 @@ using DncyTemplate.Constants;
 using DncyTemplate.Domain;
 using DncyTemplate.Infra;
 using DncyTemplate.Mvc;
-using DncyTemplate.Mvc.BackgroundServices;
 using DncyTemplate.Mvc.Infra;
 using DncyTemplate.Mvc.Infra.LogSetup;
 #if Tenant
@@ -63,7 +62,6 @@ builder.Services.AddInfraModule(builder.Configuration);
 builder.Services.AddDomainModule();
 
 // 后台服务
-builder.Services.AddHostedService<PrductBackgroundService>();
 builder.Services.AddHostedService<EfCoreMigrationHostService>();
 
 // FluentValidation
