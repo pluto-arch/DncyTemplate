@@ -5,6 +5,7 @@ using DncyTemplate.Constants;
 using DncyTemplate.Application.AppServices.Queries.ConnectionFactory;
 using DncyTemplate.Application.Models.Product;
 using System.Data;
+using DncyTemplate.Domain.Infra;
 
 namespace DncyTemplate.Application.Queries.Product
 {

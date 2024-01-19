@@ -1,14 +1,11 @@
 ﻿
 using System.Text;
+using DotnetyddTemplateCli;
 using Sharprompt;
 
 System.Console.InputEncoding = System.Text.Encoding.UTF8;
-var versionString = Assembly.GetEntryAssembly()?
-    .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
-    .InformationalVersion
-    .ToString();
 
-Console.WriteLine($"dotnetydd tool v{versionString}");
+Console.WriteLine($"dotnetydd tool v1.0");
 Console.WriteLine("================================");
 ShowBot();
 Console.WriteLine("================================");
@@ -56,160 +53,39 @@ Console.WriteLine($"Aspire： {hasAspire}");
 dir= Path.Combine(dir,"TempDemo");
 #endif
 
-if (!Directory.Exists(dir))
+var options = new CliOption
 {
-    Directory.CreateDirectory(dir);
+    ProjectName = name,
+    OutputDir = dir,
+    SelectUi = ui.ToArray(),
+    EnableAspire = hasAspire,
+    EnableTenant = hasTenant
+};
+var cliservice = new CliService(options);
+
+try
+{
+    cliservice.Check()
+        .CreateProject()
+        .AddToSln()
+        .SetAspire()
+        .ClearDir()
+        .Run();
 }
-
-Process process = new Process();
-
-process.StartInfo.FileName = "dotnet";
-process.StartInfo.Arguments = "new list --columns author";
-process.StartInfo.UseShellExecute = false;
-process.StartInfo.RedirectStandardOutput = true;
-process.StartInfo.RedirectStandardError = true;
-process.StartInfo.StandardOutputEncoding = Encoding.UTF8;
-process.StartInfo.StandardErrorEncoding = Encoding.UTF8;
-
-
-process.Start();
-string output = process.StandardOutput.ReadToEnd();
-
-string[] lines = output.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-
-string searchString = "boltapp";
-if (lines.All(x=>!x.Contains(searchString)))
+catch (Exception e)
 {
-    Console.WriteLine("no template install, do `dotnet new install DotNetBoltTemplate.{version}.nupkg ` first!");
-    return;
+    Console.WriteLine(e);
+    throw;
 }
-
-process.StartInfo.FileName = "dotnet";
-process.StartInfo.Arguments = $"new boltapp -n {name} -T {hasTenant}  -A {hasAspire} -o {dir}";
-process.Start();
-_ = process.StandardOutput.ReadToEnd();
-
-process.StartInfo.Arguments = "";
-
-var slnPath = Path.Combine(dir, $"{name}.sln");
-var apiPath = Path.Combine(dir, "src",$"{name}.Api",$"{name}.Api.csproj");
-var mvcPath = Path.Combine(dir, "src",$"{name}.Mvc",$"{name}.Mvc.csproj");
-var blazorServerPath = Path.Combine(dir, "src",$"{name}.BlazorServer",$"{name}.BlazorServer.csproj");
-var aspirePath1=Path.Combine(dir, "aspire",$"{name}.AppHost",$"{name}.AppHost.csproj");
-var aspirePath2=Path.Combine(dir, "aspire",$"{name}.ServiceDefaults",$"{name}.ServiceDefaults.csproj");
-
-
-
-
-var aspireProjectBuilder = new StringBuilder();
-
-StringBuilder sb = new StringBuilder();
-var uiselect = ui.Select(x => x.ToLower());
-if (uiselect.Contains("api"))
+finally
 {
-    sb.Append($" {apiPath} ");
-    aspireProjectBuilder.AppendLine($"builder.AddProject<Projects.{name}_Api>(\"{name}.api\");");
-}
-else
-{
-    if (hasAspire)
-    {
-        Console.WriteLine($" remove {aspirePath1} reference {apiPath}");
-        process.StartInfo.Arguments = $" remove {aspirePath1} reference {apiPath}";
-        process.Start();
-    }
-}
-
-process.StartInfo.Arguments = "";
-if (uiselect.Contains("mvc"))
-{
-    sb.Append($" {mvcPath} ");
-    aspireProjectBuilder.AppendLine($"builder.AddProject<Projects.{name}_Mvc>(\"{name}.mvc\");");
-}
-else
-{
-    if (hasAspire)
-    {
-        Console.WriteLine($" remove {aspirePath1} reference {mvcPath}");
-        process.StartInfo.Arguments = $" remove {aspirePath1} reference {mvcPath}";
-        process.Start();
-        _ = process.StandardOutput.ReadToEnd();
-    }
-}
-
-process.StartInfo.Arguments = "";
-if (uiselect.Contains("blazorserver"))
-{
-    sb.Append($" {blazorServerPath} ");
-    aspireProjectBuilder.AppendLine($"builder.AddProject<Projects.{name}_BlazorServer>(\"{name}.blazorserver\");");
-}
-else
-{
-    if (hasAspire)
-    {
-        Console.WriteLine($" remove {aspirePath1} reference {blazorServerPath}");
-        process.StartInfo.Arguments = $" remove {aspirePath1} reference {blazorServerPath}";
-        process.Start();
-        _ = process.StandardOutput.ReadToEnd();
-    }
-}
-if (hasAspire)
-{
-    sb.Append($" {aspirePath1} {aspirePath2} ");
-
-
-    var fileContent = $"""
-                       var builder = DistributedApplication.CreateBuilder(args);
-                       
-                       {aspireProjectBuilder.ToString()}
-                       builder.Build().Run();
-                       """;
-
-    var aspireProgramFile = Path.Combine(dir, "aspire",$"{name}.AppHost", "Program.cs");
-
-    if (File.Exists(aspireProgramFile))
-    {
-        await File.WriteAllTextAsync(aspireProgramFile, fileContent,Encoding.Default);
-    }
+    cliservice?.Dispose();
 }
 
 
-var uiargs = sb.ToString();
-process.StartInfo.Arguments = "";
-// sln project reference
-process.StartInfo.StandardOutputEncoding = Encoding.UTF8;
-process.StartInfo.StandardErrorEncoding = Encoding.UTF8;
-process.StartInfo.Arguments = $"sln {slnPath} add {uiargs}";
-process.Start();
-_ = process.StandardOutput.ReadToEnd();
 
-if (!uiselect.Contains("api"))
-{
-    if (Directory.Exists(Path.Combine(dir, "src",$"{name}.Api")))
-    {
-        Directory.Delete(Path.Combine(dir, "src",$"{name}.Api"), true);
-    }
-}
 
-if (!uiselect.Contains("mvc"))
-{
-    if (Directory.Exists(Path.Combine(dir, "src",$"{name}.Mvc")))
-    {
-        Directory.Delete(Path.Combine(dir, "src",$"{name}.Mvc"), true);
-    }
-}
-
-if (!uiselect.Contains("blazorserver"))
-{
-    if (Directory.Exists(Path.Combine(dir, "src",$"{name}.BlazorServer")))
-    {
-        Directory.Delete(Path.Combine(dir, "src",$"{name}.BlazorServer"), true);
-    }
-}
-
-process.WaitForExit();
-
-Console.WriteLine($"Successfully generated project on {dir}!");
+return;
 
 static void ShowBot()
 {
@@ -222,3 +98,5 @@ static void ShowBot()
               """;
     Console.WriteLine(bot);
 }
+
+
