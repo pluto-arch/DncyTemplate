@@ -24,7 +24,6 @@ namespace DotnetyddTemplateCli
             _process.StartInfo.StandardErrorEncoding = Encoding.UTF8;
         }
 
-        private List<string> commands = new();
         private string slnPath = "";
         private string apiPath = "";
         private string mvcPath = "";
@@ -145,7 +144,7 @@ namespace DotnetyddTemplateCli
                 File.WriteAllText(aspireProgramFile, fileContent,Encoding.Default);
             }
 
-            Console.WriteLine($"success set aspire : {slnPath}");
+            Console.WriteLine($"success set aspire : {aspireHostPath}");
             return this;
         }
 
@@ -200,7 +199,7 @@ namespace DotnetyddTemplateCli
         public void Run()
         {
             _process.WaitForExit();
-            Console.WriteLine($"Successfully generated project on {_options.OutputDir}!");
+            Console.WriteLine($"Successfully generated project on {_options.OutputDir} ");
         }
 
 
