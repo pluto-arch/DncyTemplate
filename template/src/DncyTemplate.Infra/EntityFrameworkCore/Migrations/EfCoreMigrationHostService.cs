@@ -1,7 +1,11 @@
 ﻿using DncyTemplate.Constants;
 using DncyTemplate.Domain.Infra;
+
+#if Tenant
 using Dotnetydd.MultiTenancy;
 using Dotnetydd.MultiTenancy.Model;
+#endif
+
 using Dotnetydd.Permission.Definition;
 using Dotnetydd.Permission.PermissionGrant;
 using Microsoft.Extensions.Hosting;
@@ -13,13 +17,26 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Migrations
     {
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly IHostEnvironment _env;
-        private readonly ICurrentTenant _currentTenant;
 
-        public EfCoreMigrationHostService(IServiceScopeFactory scopeFactory,IHostEnvironment env,ICurrentTenant currentTenant)
+#if Tenant
+        private readonly ICurrentTenant _currentTenant;
+#endif
+        
+
+        public EfCoreMigrationHostService(
+            IServiceScopeFactory scopeFactory,
+            IHostEnvironment env
+#if Tenant
+            ,ICurrentTenant currentTenant
+#endif
+            )
         {
             _scopeFactory = scopeFactory;
             _env = env;
+            
+#if Tenant
             _currentTenant = currentTenant;
+#endif
         }
 
 
