@@ -52,6 +52,9 @@ Console.WriteLine($"目录： {dir}");
 Console.WriteLine($"Aspire： {hasAspire}");
 #endif
 
+#if DEBUG
+dir= Path.Combine(dir,"TempDemo");
+#endif
 
 if (!Directory.Exists(dir))
 {
@@ -68,6 +71,7 @@ process.StartInfo.RedirectStandardError = true;
 process.StartInfo.StandardOutputEncoding = Encoding.UTF8;
 process.StartInfo.StandardErrorEncoding = Encoding.UTF8;
 
+
 process.Start();
 string output = process.StandardOutput.ReadToEnd();
 
@@ -76,7 +80,7 @@ string[] lines = output.Split(new[] { Environment.NewLine }, StringSplitOptions.
 string searchString = "boltapp";
 if (lines.All(x=>!x.Contains(searchString)))
 {
-    Console.WriteLine("未安装项目模板");
+    Console.WriteLine("no template install, do `dotnet new install DotNetBoltTemplate.{version}.nupkg ` first!");
     return;
 }
 
@@ -110,11 +114,13 @@ else
 {
     if (hasAspire)
     {
+        Console.WriteLine($" remove {aspirePath1} reference {apiPath}");
         process.StartInfo.Arguments = $" remove {aspirePath1} reference {apiPath}";
         process.Start();
     }
 }
 
+process.StartInfo.Arguments = "";
 if (uiselect.Contains("mvc"))
 {
     sb.Append($" {mvcPath} ");
@@ -124,10 +130,14 @@ else
 {
     if (hasAspire)
     {
+        Console.WriteLine($" remove {aspirePath1} reference {mvcPath}");
         process.StartInfo.Arguments = $" remove {aspirePath1} reference {mvcPath}";
         process.Start();
+        _ = process.StandardOutput.ReadToEnd();
     }
 }
+
+process.StartInfo.Arguments = "";
 if (uiselect.Contains("blazorserver"))
 {
     sb.Append($" {blazorServerPath} ");
@@ -137,8 +147,10 @@ else
 {
     if (hasAspire)
     {
+        Console.WriteLine($" remove {aspirePath1} reference {blazorServerPath}");
         process.StartInfo.Arguments = $" remove {aspirePath1} reference {blazorServerPath}";
         process.Start();
+        _ = process.StandardOutput.ReadToEnd();
     }
 }
 if (hasAspire)
@@ -163,7 +175,7 @@ if (hasAspire)
 
 
 var uiargs = sb.ToString();
-
+process.StartInfo.Arguments = "";
 // sln project reference
 process.StartInfo.StandardOutputEncoding = Encoding.UTF8;
 process.StartInfo.StandardErrorEncoding = Encoding.UTF8;
@@ -197,7 +209,7 @@ if (!uiselect.Contains("blazorserver"))
 
 process.WaitForExit();
 
-
+Console.WriteLine($"Successfully generated project on {dir}!");
 
 static void ShowBot()
 {

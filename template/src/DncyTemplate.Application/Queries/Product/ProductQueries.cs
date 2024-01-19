@@ -1,7 +1,7 @@
 ﻿#if Tenant
-using DncyTemplate.Constants;
 using Dotnetydd.MultiTenancy;
 #endif
+using DncyTemplate.Constants;
 using DncyTemplate.Application.AppServices.Queries.ConnectionFactory;
 using DncyTemplate.Application.Models.Product;
 using System.Data;

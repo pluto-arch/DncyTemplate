@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DotnetyddTemplateCli": {
+      "commandName": "Project",
+      "commandLineArgs": " --init"
+    }
+  }
+}
