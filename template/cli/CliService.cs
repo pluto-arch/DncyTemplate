@@ -30,6 +30,7 @@ namespace DotnetyddTemplateCli
         private string blazorServerPath = "";
         private string aspireHostPath = "";
         private string aspireServerDefaultPath = "";
+        private string testProjectPath = "";
 
 
         public CliService CreateProject()
@@ -46,6 +47,9 @@ namespace DotnetyddTemplateCli
             blazorServerPath = Path.Combine(dir, "src",$"{name}.BlazorServer",$"{name}.BlazorServer.csproj");
             aspireHostPath=Path.Combine(dir, "aspire",$"{name}.AppHost",$"{name}.AppHost.csproj");
             aspireServerDefaultPath=Path.Combine(dir, "aspire",$"{name}.ServiceDefaults",$"{name}.ServiceDefaults.csproj");
+
+
+            testProjectPath=Path.Combine(dir, "test",$"{name}.UnitTest",$"{name}.UnitTest.csproj");
 
             Console.WriteLine($"generate project : {_options.ProjectName}");
             return this;
@@ -80,10 +84,21 @@ namespace DotnetyddTemplateCli
             _process.StartInfo.Arguments =$"sln {slnPath} add {commandBuilder.ToString()}";
             _process.Start();
             _ = _process.StandardOutput.ReadToEnd();
+
+            SetTestProject(commandBuilder.ToString());
+
             Console.WriteLine($"success add csproj to sln : {slnPath}");
             return this;
         }
 
+
+        private void SetTestProject(string testUiProject)
+        {
+            _process.StartInfo.Arguments = "";
+            _process.StartInfo.Arguments =$" add {testProjectPath} reference {testUiProject}";
+            _process.Start();
+            _ = _process.StandardOutput.ReadToEnd();
+        }
 
 
         public CliService SetAspire()

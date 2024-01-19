@@ -28,13 +28,6 @@
 		<ProjectReference Include="..\..\src\DncyTemplate.Infra\DncyTemplate.Infra.csproj" />
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(ProjectType)' == 'API'">
-		<ProjectReference Include="..\..\src\DncyTemplate.Api\DncyTemplate.Api.csproj" />
-	</ItemGroup>
-
-	<ItemGroup Condition="'$(ProjectType)' == 'MVC'">
-		<ProjectReference Include="..\..\src\DncyTemplate.Mvc\DncyTemplate.Mvc.csproj" />
-	</ItemGroup>
 
 	<ItemGroup>
 		<None Update="appsettings.json">
