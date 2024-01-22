@@ -35,7 +35,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DncyTemplate.AppHost", "asp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DncyTemplate.ServiceDefaults", "aspire\DncyTemplate.ServiceDefaults\DncyTemplate.ServiceDefaults.csproj", "{06729825-22FD-4457-8771-7BBBA1A460A7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UserImterface", "UserImterface", "{57F1425B-F7F5-4F66-BD77-525DB2AA716C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UserInterface", "UserInterface", "{57F1425B-F7F5-4F66-BD77-525DB2AA716C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DncyTemplate.BlazorServer", "src\DncyTemplate.BlazorServer\DncyTemplate.BlazorServer.csproj", "{85219365-7A1A-4D57-B63E-6EAE3FBE244F}"
 EndProject
