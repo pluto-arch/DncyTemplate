@@ -6,6 +6,7 @@ using DncyTemplate.Application.AppServices.Queries.ConnectionFactory;
 using DncyTemplate.Application.Models.Product;
 using System.Data;
 using DncyTemplate.Domain.Infra;
+using Dotnetydd.MultiTenancy.ConnectionStrings;
 
 namespace DncyTemplate.Application.Queries.Product
 {

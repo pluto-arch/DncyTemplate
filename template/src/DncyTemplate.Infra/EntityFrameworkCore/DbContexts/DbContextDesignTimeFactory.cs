@@ -9,7 +9,7 @@ public class DbContextDesignTimeFactory : IDesignTimeDbContextFactory<DncyTempla
     public DncyTemplateDbContext CreateDbContext(string[] args)
     {
         var optionsBuilder = new DbContextOptionsBuilder<DncyTemplateDbContext>();
-        optionsBuilder.UseSqlServer(@"Server=192.168.0.126,1433;Database=DncyTemplateDb;User Id=sa;Password=970307lBx;Trusted_Connection = False;TrustServerCertificate=true");
+        optionsBuilder.UseSqlServer(@"Server=localhost,1433;Database=DncyTemplateDb;User Id=sa;Password=970307lBx;Trusted_Connection = False;TrustServerCertificate=true");
         return new DncyTemplateDbContext(optionsBuilder.Options);
     }
 }
