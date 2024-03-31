@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
@@ -9,8 +9,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Aspire.Hosting" VersionOverride="8.0.0-preview.1.23557.2" />
+	  <PackageReference Include="Aspire.Hosting" />
 	</ItemGroup>
+
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\DncyTemplate.Mvc\DncyTemplate.Mvc.csproj" />

@@ -222,6 +222,7 @@ namespace DotnetyddTemplateCli
         public void Dispose()
         {
             _process?.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 

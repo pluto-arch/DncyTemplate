@@ -43,30 +43,33 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Migrations
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            using IServiceScope serviceScope = _scopeFactory.CreateScope();
-
-            foreach (var dbcontext in DataContextTypeCache.GetApplicationDataContextList())
+            using(IServiceScope serviceScope = _scopeFactory.CreateAsyncScope())
             {
-                var db = serviceScope.ServiceProvider.GetService(dbcontext);
-                if (db is DbContext ctx)
+                foreach (var dbcontext in DataContextTypeCache.GetApplicationDataContextList())
                 {
-                    await ctx.Database.MigrateAsync(cancellationToken);
+                    var db = serviceScope.ServiceProvider.GetService(dbcontext);
+                    if (db is DbContext ctx)
+                    {
+                        await ctx.Database.MigrateAsync(cancellationToken);
+                    }
                 }
             }
 
+
+            using IServiceScope seedServiceScope = _scopeFactory.CreateAsyncScope();
 #if Tenant
             var demotenant = new string[] { "T20210602000001", "T20210602000002", "T20210602000003" };
             foreach (var tenantId in demotenant)
             {
                 using (_currentTenant.Change(new TenantInfo(tenantId)))
                 {
-                    await SeedSaPermissions(serviceScope.ServiceProvider);
-                    await SeedData(serviceScope.ServiceProvider);
+                    await SeedSaPermissions(seedServiceScope.ServiceProvider);
+                    await SeedData(seedServiceScope.ServiceProvider);
                 }
             }
 #else
-            await SeedSaPermissions(serviceScope.ServiceProvider);
-            await SeedData(serviceScope.ServiceProvider);
+            await SeedSaPermissions(seedServiceScope.ServiceProvider);
+            await SeedData(seedServiceScope.ServiceProvider);
 #endif
 
         }

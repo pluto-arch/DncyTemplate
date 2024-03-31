@@ -7,6 +7,7 @@
   </PropertyGroup>
   <!--package info-->
   <ItemGroup>
+    <PackageVersion Include="Aspire.Hosting" Version="8.0.0-preview.4.24156.9" />
     <PackageVersion Include="Bogus" Version="35.3.0" />
     <PackageVersion Include="CommunityToolkit.Diagnostics" Version="8.2.2" />
     <PackageVersion Include="FastExpressionCompiler" Version="4.0.1" />
