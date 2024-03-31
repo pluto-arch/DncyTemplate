@@ -23,7 +23,7 @@ public static class EntityFrameworkServiceExtension
     {
         service.AddSingleton<IConnectionStringResolve, DefaultConnectionStringResolve>();
         var migrationAssembly = Assembly.GetCallingAssembly().GetName().Name;
-        service.AddDbContextPool<DncyTemplateDbContext>((serviceProvider, optionsBuilder) =>
+        service.AddDbContext<DncyTemplateDbContext>((serviceProvider, optionsBuilder) =>
         {
             optionsBuilder.UseSqlServer(configuration.GetConnectionString(InfraConstantValue.DEFAULT_CONNECTIONSTRING_NAME),
                 sqlOptions =>

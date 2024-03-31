@@ -1,10 +1,12 @@
 #if Tenant
 using Dotnetydd.MultiTenancy.Store;
 using Dotnetydd.MultiTenancy;
+using Dotnetydd.MultiTenancy.ConnectionStrings;
 #endif
 using DncyTemplate.Application;
 using DncyTemplate.Domain;
 using DncyTemplate.Infra;
+
 using Microsoft.Extensions.Configuration;
 
 #pragma warning disable NUnit1032

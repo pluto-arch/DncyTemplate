@@ -19,7 +19,6 @@ namespace DncyTemplate.Api.Infra.ApiDoc
             {
                 options.IndexStream = () => typeof(Program).Assembly.GetManifestResourceStream("DncyTemplate.Api.Infra.ApiDoc.index.html");
 
-                // options.UseRequestInterceptor(requestAuthorization);
 
                 foreach (var description in versionProvider.ApiVersionDescriptions)
                 {
