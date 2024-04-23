@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
+﻿using System.Web;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.Extensions.Logging.Abstractions;
-using System.Web;
 
 namespace DncyTemplate.Mvc.Infra.ExceptionHandlers;
 

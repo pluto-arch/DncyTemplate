@@ -1,7 +1,7 @@
-﻿using Dapper;
-using DncyTemplate.Infra;
-using System.Data;
+﻿using System.Data;
 using System.Diagnostics.CodeAnalysis;
+using Dapper;
+using DncyTemplate.Infra;
 
 namespace DncyTemplate.Uow;
 

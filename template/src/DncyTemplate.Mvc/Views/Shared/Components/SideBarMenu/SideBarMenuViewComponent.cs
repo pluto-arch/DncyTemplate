@@ -1,6 +1,6 @@
+using System.Collections.Immutable;
 using DncyTemplate.Application.Models.Application.Navigation;
 using DncyTemplate.Application.Permission;
-using System.Collections.Immutable;
 
 namespace DncyTemplate.Mvc.Views.Shared.Components.SideBarMenu;
 

@@ -1,5 +1,5 @@
-﻿using DncyTemplate.Application.Models.Generics;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using DncyTemplate.Application.Models.Generics;
 
 namespace DncyTemplate.Application.Models.Product;
 

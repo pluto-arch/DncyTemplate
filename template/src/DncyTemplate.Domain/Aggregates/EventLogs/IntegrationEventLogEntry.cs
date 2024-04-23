@@ -1,11 +1,11 @@
-﻿using DncyTemplate.Domain.Infra;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
+using DncyTemplate.Domain.Infra;
 
 namespace DncyTemplate.Domain.Aggregates.EventLogs
 {
-     public class IntegrationEventLogEntry: BaseEntity
+    public class IntegrationEventLogEntry : BaseEntity
 #if Tenant
         , IMultiTenant
 #endif

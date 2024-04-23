@@ -4,7 +4,7 @@ namespace DncyTemplate.Application.IntegrationEvents.Events
 {
     public class ProductCreatedIntegrationEvent : IntegrationEvent
     {
-        public ProductCreatedIntegrationEvent(string productId):base()
+        public ProductCreatedIntegrationEvent(string productId) : base()
         {
             ProductId = productId;
         }

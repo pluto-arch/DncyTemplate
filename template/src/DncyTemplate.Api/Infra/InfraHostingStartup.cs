@@ -1,10 +1,10 @@
-﻿using DncyTemplate.Api.Infra.ExceptionHandlers;
+﻿using System.IO.Compression;
+using DncyTemplate.Api.Infra.ExceptionHandlers;
 using DncyTemplate.Api.Infra.LocalizerSetup;
 using DncyTemplate.Api.Models.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Localization;
-using System.IO.Compression;
 
 namespace DncyTemplate.Api.Infra
 {

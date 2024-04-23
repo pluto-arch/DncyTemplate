@@ -1,5 +1,5 @@
-﻿using DncyTemplate.Domain.Infra;
-using System.Security.Claims;
+﻿using System.Security.Claims;
+using DncyTemplate.Domain.Infra;
 
 namespace DncyTemplate.Infra.Global;
 

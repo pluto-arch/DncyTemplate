@@ -1,5 +1,4 @@
-﻿using DncyTemplate.Infra.EntityFrameworkCore.EntityTypeConfig;
-using Microsoft.EntityFrameworkCore.Design;
+﻿using Microsoft.EntityFrameworkCore.Design;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 

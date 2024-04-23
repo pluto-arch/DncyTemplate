@@ -56,18 +56,19 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Migrations
             }
 
 
-            using IServiceScope seedServiceScope = _scopeFactory.CreateAsyncScope();
 #if Tenant
             var demotenant = new string[] { "T20210602000001", "T20210602000002", "T20210602000003" };
             foreach (var tenantId in demotenant)
             {
                 using (_currentTenant.Change(new TenantInfo(tenantId)))
                 {
+                    using IServiceScope seedServiceScope = _scopeFactory.CreateAsyncScope();
                     await SeedSaPermissions(seedServiceScope.ServiceProvider);
                     await SeedData(seedServiceScope.ServiceProvider);
                 }
             }
 #else
+            using IServiceScope seedServiceScope = _scopeFactory.CreateAsyncScope();
             await SeedSaPermissions(seedServiceScope.ServiceProvider);
             await SeedData(seedServiceScope.ServiceProvider);
 #endif

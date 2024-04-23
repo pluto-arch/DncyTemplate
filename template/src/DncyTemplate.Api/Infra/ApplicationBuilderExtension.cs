@@ -1,7 +1,5 @@
 ﻿using DncyTemplate.Api.Infra.ExceptionHandlers;
-using DncyTemplate.Domain.Infra;
 using DncyTemplate.Infra.Global;
-using Microsoft.EntityFrameworkCore;
 
 namespace DncyTemplate.Api.Infra
 {

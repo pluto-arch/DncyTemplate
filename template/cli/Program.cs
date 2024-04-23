@@ -1,6 +1,4 @@
-﻿
-using System.Text;
-using DotnetyddTemplateCli;
+﻿using DotnetyddTemplateCli;
 using Sharprompt;
 
 System.Console.InputEncoding = System.Text.Encoding.UTF8;
@@ -44,13 +42,13 @@ var dir = Directory.GetCurrentDirectory();
 #if DEBUG
 Console.WriteLine($"名称 {name}");
 Console.WriteLine($"租户： {hasTenant}");
-Console.WriteLine($"用户界面： {string.Join(",",ui)}");
+Console.WriteLine($"用户界面： {string.Join(",", ui)}");
 Console.WriteLine($"目录： {dir}");
 Console.WriteLine($"Aspire： {hasAspire}");
 #endif
 
 #if DEBUG
-dir= Path.Combine(dir,"TempDemo");
+dir = Path.Combine(dir, "TempDemo");
 #endif
 
 var options = new CliOption

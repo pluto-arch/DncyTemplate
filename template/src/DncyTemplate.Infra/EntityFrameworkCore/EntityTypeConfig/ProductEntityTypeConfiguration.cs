@@ -39,9 +39,9 @@ public class ProductEntityTypeConfiguration : IEntityTypeConfiguration<Product>
     {
         builder.ToTable($"Products");
         builder.HasKey(e => e.Id);
-        builder.Property(x => x.Id)
-            .ValueGeneratedOnAdd()
-            .HasValueGenerator<StringIdGenerator>();
+        //builder.Property(x => x.Id)
+        //    .ValueGeneratedOnAdd()
+        //    .HasValueGenerator<StringIdGenerator>();
         builder.Ignore(e => e.DomainEvents);
         builder.Property(e => e.Name).HasMaxLength(20);
         builder.Property(e => e.Remark).HasMaxLength(100);

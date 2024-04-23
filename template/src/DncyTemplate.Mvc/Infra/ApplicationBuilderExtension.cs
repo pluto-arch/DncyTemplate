@@ -1,8 +1,6 @@
-﻿using DncyTemplate.Domain.Infra;
-using DncyTemplate.Infra.Global;
+﻿using DncyTemplate.Infra.Global;
 using DncyTemplate.Mvc.Infra.ExceptionHandlers;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.EntityFrameworkCore;
 
 namespace DncyTemplate.Mvc.Infra;
 

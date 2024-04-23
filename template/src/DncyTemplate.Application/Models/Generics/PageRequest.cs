@@ -1,5 +1,5 @@
-﻿using DncyTemplate.Constants;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using DncyTemplate.Constants;
 
 namespace DncyTemplate.Application.Models.Generics;
 

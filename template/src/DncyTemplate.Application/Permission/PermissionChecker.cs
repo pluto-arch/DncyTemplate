@@ -1,9 +1,9 @@
+using System.Security.Claims;
+using DncyTemplate.Constants;
 using Dotnetydd.Permission.Checker;
 using Dotnetydd.Permission.Definition;
 using Dotnetydd.Permission.Models;
 using Dotnetydd.Permission.ValueProvider;
-using System.Security.Claims;
-using DncyTemplate.Constants;
 
 namespace DncyTemplate.Application.Permission;
 

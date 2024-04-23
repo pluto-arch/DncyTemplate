@@ -1,4 +1,5 @@
-﻿using DncyTemplate.Domain.Collections;
+﻿using System.Collections;
+using DncyTemplate.Domain.Collections;
 using DncyTemplate.Domain.Infra;
 using DncyTemplate.Domain.Infra.Repository;
 using DncyTemplate.Infra.EntityFrameworkCore.Extension;
@@ -8,7 +9,6 @@ using Dotnetydd.Specifications.EntityFrameworkCore;
 using Dotnetydd.Specifications.EntityFrameworkCore.Evaluatiors;
 using Dotnetydd.Specifications.Evaluators;
 using Dotnetydd.Specifications.Exceptions;
-using System.Collections;
 
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.Repository

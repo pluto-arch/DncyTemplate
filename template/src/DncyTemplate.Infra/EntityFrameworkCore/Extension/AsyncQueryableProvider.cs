@@ -1,6 +1,6 @@
-﻿using DncyTemplate.Domain.Infra;
+﻿using System.Diagnostics.CodeAnalysis;
+using DncyTemplate.Domain.Infra;
 using Microsoft.EntityFrameworkCore.Query.Internal;
-using System.Diagnostics.CodeAnalysis;
 
 namespace DncyTemplate.Infra.EntityFrameworkCore.Extension;
 

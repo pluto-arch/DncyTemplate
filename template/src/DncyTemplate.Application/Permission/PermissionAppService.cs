@@ -1,9 +1,9 @@
+using System.Transactions;
 using DncyTemplate.Application.Permission.Models;
+using DncyTemplate.Constants;
 using Dotnetydd.Permission.Definition;
 using Dotnetydd.Permission.PermissionGrant;
 using Dotnetydd.Permission.PermissionManager;
-using System.Transactions;
-using DncyTemplate.Constants;
 
 namespace DncyTemplate.Application.Permission;
 

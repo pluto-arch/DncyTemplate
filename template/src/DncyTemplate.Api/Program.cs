@@ -111,7 +111,7 @@ Log.Information("[{AppName}]构建WebApplication成功...", AppName);
 var endPointUrl = Environment.GetEnvironmentVariable("ASPNETCORE_URLS");
 if (!string.IsNullOrEmpty(endPointUrl))
 {
-    Log.Logger.Information("ASPNETCORE_URLS: {endPointUrl}",endPointUrl);
+    Log.Logger.Information("ASPNETCORE_URLS: {endPointUrl}", endPointUrl);
 }
 Log.Logger.Information("NET框架版本: {@version}", System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription);
 
