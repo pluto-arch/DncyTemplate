@@ -20,7 +20,7 @@ namespace DncyTemplate.Mvc.Controllers
         }
 
 
-        [EnableRateLimiting(policyName: "home.RateLimit_action")]
+        //[EnableRateLimiting(policyName: "home.RateLimit_action")]
         public IActionResult Index()
         {
             return View();

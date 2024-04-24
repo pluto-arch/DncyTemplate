@@ -1,4 +1,4 @@
-﻿
+﻿@model ErrorViewModel
 
 
 @section styles{
@@ -10,6 +10,7 @@
     <div class="content-r">
         <h1>@ViewData["ErrorCode"]</h1>
         <p>@ViewData["ErrorMessage"]</p>
+        <p>@Model.TraceIdentifier</p>
         <button class="pear-btn pear-btn-primary" onclick="goBack()">返回首页</button>
     </div>
 </div>

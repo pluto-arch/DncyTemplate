@@ -1,5 +1,5 @@
 
- <script type="text/javascript">
+<script type="text/javascript">
         function logout() {
             parent.layui.admin.closeAllTab()
             location.href = "/account/logout";
@@ -7,7 +7,7 @@
     </script>
 
 <li class="layui-nav-item" lay-unselect="">
-    <a href="javascript:;"><img src="/images/avatar.jpg" class="layui-nav-img">用户名称</a>
+    <a href="javascript:;"><img src="/images/avatar.jpg" class="layui-nav-img">@(User.Identity?.Name ?? "" )</a>
     <dl class="layui-nav-child">
         <dd>
             <a user-menu-url="/user/profile" user-menu-id="user.profile" user-menu-title="个人信息">个人信息</a>

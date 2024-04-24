@@ -91,18 +91,6 @@ public class SideBarMenuViewComponent : ViewComponent
             IsVisible = true,
             Items = new List<MenuItemModel>
             {
-#if Tenant
-                new MenuItemModel
-                {
-                    Name = "app.menu.accescontrol.tenants",
-                    Icon = "layui-icon-console",
-                    DisplayName = "租户列表",
-                    Url = "/tenant",
-                    IsEnabled = true,
-                    IsVisible = true,
-                    Permission=new MenuPermission(true)
-                },
-#endif
                 new MenuItemModel
                 {
                     Name = "app.menu.accescontrol.roles",
@@ -111,7 +99,7 @@ public class SideBarMenuViewComponent : ViewComponent
                     Url = "/roles",
                     IsEnabled = true,
                     IsVisible = true,
-                    Permission=new MenuPermission(true)
+                    Permission=new MenuPermission([RolePermission.Roles.Default])
                 }
             }
         });

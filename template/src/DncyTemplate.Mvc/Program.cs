@@ -161,11 +161,17 @@ app.UseAuthentication();
 #if Tenant
 app.UseMiddleware<MultiTenancyMiddleware>();
 #endif
+
 app.UseCurrentUserAccessor();
 app.UseRouting();
 app.UseRateLimiter();
 app.UseAuthorization();
-app.MapDefaultControllerRoute();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapDefaultControllerRoute();
+});
+
 app.MapSystemHealthChecks();
 
 #endregion

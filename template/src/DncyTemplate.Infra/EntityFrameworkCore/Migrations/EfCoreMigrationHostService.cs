@@ -1,5 +1,7 @@
 ﻿using DncyTemplate.Constants;
+using DncyTemplate.Domain.Aggregates.System;
 using DncyTemplate.Domain.Infra;
+using DncyTemplate.Domain.Infra.Repository;
 
 #if Tenant
 using Dotnetydd.MultiTenancy;
@@ -55,7 +57,6 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Migrations
                 }
             }
 
-
 #if Tenant
             var demotenant = new string[] { "T20210602000001", "T20210602000002", "T20210602000003" };
             foreach (var tenantId in demotenant)
@@ -101,15 +102,6 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Migrations
             {
                 await permissionStore.SaveAsync(permission.ToArray(), DomainConstantValue.PERMISSION_PROVIDER_NAME_ROLE, DomainConstantValue.SA_ROLE);
             }
-            else
-            {
-                var ex = permission.Except(saPermission.Select(x => x.Name));
-                if (ex.Any())
-                {
-                    await permissionStore.SaveAsync(ex.ToArray(), DomainConstantValue.PERMISSION_PROVIDER_NAME_ROLE, DomainConstantValue.SA_ROLE);
-                }
-            }
-
         }
 
 

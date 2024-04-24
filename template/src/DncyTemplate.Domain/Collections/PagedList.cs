@@ -22,14 +22,7 @@ public class PagedList<T> : IPagedList<T>
         PageIndex = pageIndex;
         PageSize = pageSize;
         TotalCount = source.Count();
-        if (TotalCount > pageSize)
-        {
-            Items = source.Skip((PageIndex - 1) * PageSize).Take(PageSize).ToList();
-        }
-        else
-        {
-            Items = source.ToList();
-        }
+        Items = source.ToList();
     }
 
     /// <summary>
@@ -53,16 +46,8 @@ public class PagedList<T> : IPagedList<T>
         PageIndex = pageIndex;
         PageSize = pageSize;
         TotalCount = total;
-        if (total > pageSize)
-        {
-            Items = source.Skip((PageIndex - 1) * PageSize).Take(PageSize).ToList();
-        }
-        else
-        {
-            Items = source.ToList();
-        }
+        Items = source.ToList();
     }
-
 
     public PagedList()
     {
@@ -112,15 +97,7 @@ public class PagedList<TSource, TResult> : IPagedList<TResult>
         PageIndex = pageIndex;
         PageSize = pageSize;
         TotalCount = source.Count();
-        if (TotalCount > pageSize)
-        {
-            TSource[] items = source.Skip((PageIndex - 1) * PageSize).Take(PageSize).ToArray();
-            Items = new List<TResult>(converter(items));
-        }
-        else
-        {
-            Items = new List<TResult>(converter(source));
-        }
+        Items = new List<TResult>(converter(source));
     }
 
 

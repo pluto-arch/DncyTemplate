@@ -49,8 +49,6 @@ namespace DncyTemplate.Mvc.Controllers
             return RedirectToAction("Login"); ;
         }
 
-
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -61,7 +59,7 @@ namespace DncyTemplate.Mvc.Controllers
                 return View(model);
             }
 
-            var user = InMemoryAccount.Users.FirstOrDefault(x => x.Account == model.UsernameOrEmailAddress);
+            var user = InMemoryAccount.GetUsers().FirstOrDefault(x => x.Account == model.UsernameOrEmailAddress);
             if (user == null)
             {
                 ModelState.AddModelError(nameof(model.UsernameOrEmailAddress), "用户不存在");
@@ -73,7 +71,7 @@ namespace DncyTemplate.Mvc.Controllers
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
                 new Claim(ClaimTypes.Name, user.Name),
 #if Tenant
-                new Claim(AppConstant.TENANT_KEY, user.Tenant)
+                new Claim(AppConstant.TENANT_KEY, user?.Tenant??"default")
 #endif
             };
             if (user.Roles.Any())

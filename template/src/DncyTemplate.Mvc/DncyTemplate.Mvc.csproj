@@ -69,7 +69,6 @@
 		<Folder Include="Models\Account\" />
 		<Folder Include="Models\Permission\" />
 		<!--#if (Tenant) -->
-		<Folder Include="Infra\Tenancy\" />
 		<!--#endif -->
 	</ItemGroup>
 

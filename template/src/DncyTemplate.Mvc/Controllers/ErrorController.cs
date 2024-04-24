@@ -18,7 +18,6 @@ namespace DncyTemplate.Mvc.Controllers
             _localizedizer = localizedizer;
         }
 
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         [Route("/error/{code:int}/{error?}")]
         public IActionResult Error(int code, string error = null)

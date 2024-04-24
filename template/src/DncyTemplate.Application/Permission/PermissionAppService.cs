@@ -60,10 +60,10 @@ public partial class PermissionAppService : IPermissionAppService
         TransactionOptions transactionOption = new()
         {
             IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted,
-            Timeout = new TimeSpan(0, 0, 120)
+            Timeout = new TimeSpan(0, 0, 120),
         };
 
-        using var scoped = new TransactionScope(TransactionScopeOption.Required, transactionOption);
+        using var scoped = new TransactionScope(TransactionScopeOption.Required, transactionOption,TransactionScopeAsyncFlowOption.Enabled);
         var old = await _permissionGrantStore.GetListAsync(providerName, providerValue);
         var names = old.Select(x => x.Name).ToArray();
         if (permissions is { Length: <= 0 })
