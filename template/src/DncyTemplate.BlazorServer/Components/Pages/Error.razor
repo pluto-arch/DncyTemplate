@@ -1,7 +1,9 @@
-﻿@page "/Error"
+﻿@page "/error/{code}"
 @using System.Diagnostics
+@using DncyTemplate.BlazorServer.Components.Layout
+@layout NullLayout
 
-<PageTitle>Error</PageTitle>
+<PageTitle>Error {@Code}</PageTitle>
 
 <h1 class="text-danger">Error.</h1>
 <h2 class="text-danger">An error occurred while processing your request.</h2>
@@ -25,10 +27,16 @@
 </p>
 
 @code{
-    [CascadingParameter]
-    private HttpContext? HttpContext { get; set; }
 
-    private string? RequestId { get; set; }
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string Code { get; set; }
+
+
+    [CascadingParameter]
+    private HttpContext HttpContext { get; set; }
+
+    private string RequestId { get; set; }
     private bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
 
     protected override void OnInitialized() =>

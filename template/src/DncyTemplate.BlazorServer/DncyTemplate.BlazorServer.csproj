@@ -1,15 +1,34 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
 	  <!--#if (Aspire) -->
 	  <ProjectReference Include="..\..\aspire\DncyTemplate.ServiceDefaults\DncyTemplate.ServiceDefaults.csproj" />
+	  <ProjectReference Include="..\DncyTemplate.Application\DncyTemplate.Application.csproj" />
+	  <ProjectReference Include="..\DncyTemplate.Infra\DncyTemplate.Infra.csproj" />
 	  <!--#endif -->
+  </ItemGroup>
+
+  <ItemGroup>
+	  <!--#if (Tenant) -->
+	  <PackageReference Include="Dotnetydd.MultiTenancy.AspNetCore" />
+	  <!--#endif -->
+	  <PackageReference Include="Serilog.AspNetCore" />
+	  <PackageReference Include="Serilog.Enrichers.Environment" />
+	  <PackageReference Include="Serilog.Enrichers.Process" />
+	  <PackageReference Include="Serilog.Enrichers.Sensitive" />
+	  <PackageReference Include="Serilog.Enrichers.Thread" />
+	  <PackageReference Include="Serilog.Sinks.Async" />
+	  <PackageReference Include="CommunityToolkit.Diagnostics" />
+	  <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Infra\ExceptionHandlers\" />
   </ItemGroup>
 
 </Project>

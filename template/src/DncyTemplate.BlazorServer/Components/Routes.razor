@@ -1,6 +1,41 @@
-﻿<Router AppAssembly="@typeof(Program).Assembly">
-    <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(Layout.MainLayout)" />
-        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
-    </Found>
-</Router>
+﻿
+@using Microsoft.AspNetCore.Components.Authorization
+@using System.Web
+@inject NavigationManager NavManager
+
+
+<ErrorBoundary>
+    <ChildContent>
+        <Router AppAssembly="@typeof(App).Assembly">
+            <Found Context="routeData">
+                <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(Layout.MainLayout)">
+                    <Authorizing>
+                        <text>Please wait, we are authorizing you...</text>
+                    </Authorizing>
+                    <NotAuthorized>
+                        @if (context.User.Identity?.IsAuthenticated == false)
+                        {
+                            { NavManager.NavigateTo("/login?returnUrl=" + HttpUtility.UrlEncode(NavManager.ToBaseRelativePath(NavManager.Uri)), forceLoad: true); }
+                        }
+                        else
+                        {
+                            <p>You are not authorized to access this resource.</p>
+                        }
+                    </NotAuthorized>
+                </AuthorizeRouteView>
+            </Found>
+            <NotFound>
+                <PageTitle>Dashboard</PageTitle>
+                <LayoutView Layout="@typeof(Layout.MainLayout)">
+                    <p role="alert">NOT FOUND</p>
+                </LayoutView>
+            </NotFound>
+        </Router>
+    </ChildContent>
+    
+    <ErrorContent>
+        @{
+            NavManager.NavigateTo("/error/500/", forceLoad: true);
+        }
+    </ErrorContent>
+</ErrorBoundary>

@@ -21,7 +21,7 @@ using Dotnetydd.Tools.Extension;
 using DncyTemplate.Infra.EntityFrameworkCore.Migrations;
 
 
-string AppName = "DncyTemplate.Mvc";
+string appName = "DncyTemplate.Mvc";
 
 var logConfig = new ConfigurationBuilder()
             .AddJsonFile("serilogsetting.json", false, true)
@@ -30,7 +30,7 @@ Log.Logger = new LoggerConfiguration()
             .ReadFrom.Configuration(logConfig)
             .Enrich.With<ActivityEnricher>()
             .CreateLogger();
-Log.Information("[{AppName}]日志配置完毕...", AppName);
+Log.Information("[{appName}]日志配置完毕...", appName);
 
 
 
@@ -116,11 +116,11 @@ builder.Services.ConfigureTenancy(builder.Configuration);
 
 #endregion
 
-Log.Information("[{AppName}]服务注册完毕...", AppName);
+Log.Information("[{appName}]服务注册完毕...", appName);
 
 var app = builder.Build();
 
-Log.Information("[{AppName}]构建WebApplication成功...", AppName);
+Log.Information("[{appName}]构建WebApplication成功...", appName);
 
 
 
@@ -134,10 +134,9 @@ Log.Logger.Information("NET框架版本: {@version}", System.Runtime.InteropServices
 
 app.UseResponseCompression();
 app.UseForwardedHeaders()
-    .UseCertificateForwarding();
-
-app.UseResponseCompression()
+    .UseCertificateForwarding()
     .UseResponseCaching();
+
 
 if (!app.Environment.IsEnvironment(AppConstant.EnvironmentName.DEV))
 {
@@ -179,4 +178,4 @@ app.MapSystemHealthChecks();
 
 
 app.Run();
-Log.Information("[{AppName}]应用已启动...", AppName);
+Log.Information("[{appName}]应用已启动...", appName);

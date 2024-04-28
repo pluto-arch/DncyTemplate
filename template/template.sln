@@ -37,7 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DncyTemplate.ServiceDefault
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UserInterface", "UserInterface", "{57F1425B-F7F5-4F66-BD77-525DB2AA716C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DncyTemplate.BlazorServer", "src\DncyTemplate.BlazorServer\DncyTemplate.BlazorServer.csproj", "{85219365-7A1A-4D57-B63E-6EAE3FBE244F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DncyTemplate.BlazorServer", "src\DncyTemplate.BlazorServer\DncyTemplate.BlazorServer.csproj", "{85219365-7A1A-4D57-B63E-6EAE3FBE244F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cli", "cli", "{DD4D5FCE-B108-45AF-AFFB-DCFCF660D6B7}"
 EndProject
