@@ -11,6 +11,7 @@ using DncyTemplate.Domain;
 using DncyTemplate.Infra;
 using DncyTemplate.Infra.EntityFrameworkCore.Migrations;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.FluentUI.AspNetCore.Components;
 using Serilog;
 
 
@@ -31,6 +32,8 @@ builder.Host.UseSerilog(dispose: true);
 
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddFluentUIComponents();
 
 #if Aspire
 // Add service defaults & Aspire components.

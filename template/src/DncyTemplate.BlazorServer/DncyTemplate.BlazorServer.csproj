@@ -16,6 +16,8 @@
   <ItemGroup>
 	  <!--#if (Tenant) -->
 	  <PackageReference Include="Dotnetydd.MultiTenancy.AspNetCore" />
+	  <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" />
+	  <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Icons" />
 	  <!--#endif -->
 	  <PackageReference Include="Serilog.AspNetCore" />
 	  <PackageReference Include="Serilog.Enrichers.Environment" />

@@ -1,24 +1,40 @@
 ﻿@using Microsoft.AspNetCore.Authorization
+@using DncyTemplate.BlazorServer.Components.Pages.Account
 @inherits LayoutComponentBase
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+<style>
+    body {
+        --neutral-foreground-rest: green;
+        -neutral-fill-rest: orange;
+    }
+</style>
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
+<FluentMainLayout>
+    <Header>
+        <FluentStack Orientation="Orientation.Horizontal"
+                     HorizontalAlignment="HorizontalAlignment.Left"
+                     VerticalAlignment="VerticalAlignment.Center">
 
-<div id="blazor-error-ui">
-    An unhandled error has occurred.
-    <a href="" class="reload">Reload</a>
-    <a class="dismiss">🗙</a>
-</div>
+            <h3>Blazor Server App</h3>
+
+            <FluentSpacer />
+
+            <UserProfile ImagePath="images/profile.png" />
+
+        </FluentStack>
+    </Header>
+
+    <Body>
+        @Body
+    </Body>
+
+    <NavMenuContent>
+        <FluentNavLink Icon="@(new Icons.Filled.Size16.BuildingHome())" IconColor="Color.Custom">Dashboard</FluentNavLink>
+        <FluentNavLink Icon="@(new Icons.Filled.Size16.DocumentOnePageAdd())" IconColor="Color.Error">Hello</FluentNavLink>
+        <FluentNavLink Icon="@(new Icons.Filled.Size16.DocumentOnePage())" IconColor="Color.Accent">About</FluentNavLink>
+        <FluentNavLink Icon="@(new Icons.Filled.Size12.Balloon())" IconColor="Color.Fill">Best</FluentNavLink>
+    </NavMenuContent>
+
+</FluentMainLayout>
+
