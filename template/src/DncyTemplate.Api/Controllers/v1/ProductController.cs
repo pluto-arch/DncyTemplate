@@ -6,6 +6,7 @@ using DncyTemplate.Application.AppServices.Product;
 using DncyTemplate.Application.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.ComponentModel.DataAnnotations;
+using Asp.Versioning;
 using AppModelAlias = DncyTemplate.Application.Models;
 
 namespace DncyTemplate.Api.Controllers.v1

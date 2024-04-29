@@ -15,7 +15,7 @@ using Microsoft.FluentUI.AspNetCore.Components;
 using Serilog;
 
 
-string appName = "DncyTemplate.Mvc";
+string appName = "DncyTemplate.Blazor";
 
 var logConfig = new ConfigurationBuilder()
     .AddJsonFile("serilogsetting.json", false, true)

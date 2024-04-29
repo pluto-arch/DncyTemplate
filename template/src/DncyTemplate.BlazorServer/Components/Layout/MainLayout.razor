@@ -4,14 +4,42 @@
 
 <style>
     body {
-        --neutral-foreground-rest: green;
-        -neutral-fill-rest: orange;
+        --neutral-fill-rest: orange;
+        background-color: var(--neutral-layer-1);
+        overflow:hidden;
+    }
+
+    nav.sitenav {
+        background-color: var(--neutral-layer-1);
+        height: calc(100dvh - 90px);
+        overflow-y: auto;
+    }
+
+    .body-content {
+        height: calc(100dvh - 90px);
+        margin: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        align-items: flex-start;
+        height: 100%;
+        width: 100%;
+        font-family: var(--body-font);
+        font-weight: normal;
+        font-size: var(--type-ramp-base-font-size);
+        line-height: var(--type-ramp-base-line-height);
+    }
+
+    .mainCon{
+        justify-content: start;
+        align-items: start;
+        column-gap: 0px;
+        row-gap: 10px;
+        width: 100%;
     }
 </style>
 
-
-<FluentMainLayout>
-    <Header>
+<FluentLayout>
+    <FluentHeader>
         <FluentStack Orientation="Orientation.Horizontal"
                      HorizontalAlignment="HorizontalAlignment.Left"
                      VerticalAlignment="VerticalAlignment.Center">
@@ -23,18 +51,73 @@
             <UserProfile ImagePath="images/profile.png" />
 
         </FluentStack>
-    </Header>
+    </FluentHeader>
+    
 
-    <Body>
-        @Body
-    </Body>
+    <FluentStack Orientation="Orientation.Horizontal" Class="mainCon">
+        <div class="navmenu">
+            <nav class="sitenav">
+                <FluentNavMenu @bind-Expanded="@Expanded" CollapsedChildNavigation="false" Collapsible="true" Title="Collapsible demo">
+                    <FluentNavLink Icon="@(new Icons.Regular.Size24.Home())" Tooltip="Item 1 tooltip">Item 1</FluentNavLink>
+                    <FluentNavLink Icon="@(new Icons.Regular.Size24.Cloud())" Disabled="true" Tooltip="Item 2 tooltip">Item 2</FluentNavLink>
+                    <FluentNavGroup Title="Item 3" Tooltip="Item 3 tooltip" Icon="@(new Icons.Regular.Size24.EarthLeaf())">
+                        <FluentNavLink Icon="@(new Icons.Regular.Size24.LeafOne())" Tooltip="Item 3.1 tooltip">Item 3.1</FluentNavLink>
+                        <FluentNavLink Icon="@(new Icons.Regular.Size24.LeafTwo())" Disabled="true" Tooltip="Item 3.2 tooltip">Item 3.2</FluentNavLink>
+                        <FluentNavGroup Title="Item 3.3" Tooltip="Item 3.3 tooltip" Icon="@(new Icons.Regular.Size24.LeafThree())">
+                            <FluentNavLink Icon="@(new Icons.Regular.Size24.Earth())" Href="https://microsoft.com" Tooltip="Item 3.3.1 tooltip">https://microsoft.com</FluentNavLink>
+                        </FluentNavGroup>
+                        <FluentNavGroup Title="Item 3.4" Tooltip="Item 3.4 tooltip" Icon="@(new Icons.Regular.Size24.TreeDeciduous())" Disabled="true">
+                            <FluentNavLink Icon="@(new Icons.Regular.Size24.Earth())" Href="https://microsoft.com" Tooltip="Item 3.4.1 tooltip">https://microsoft.com</FluentNavLink>
+                        </FluentNavGroup>
+                    </FluentNavGroup>
+                    <FluentNavLink Tooltip="Item 4 tooltip">Item 4</FluentNavLink>
+                    <FluentNavGroup Title="Item 5" Tooltip="Item 5 tooltip">
+                        <FluentNavLink Icon="@(new Icons.Regular.Size24.LeafOne())" Tooltip="Item 5.1 tooltip">Item 5.1</FluentNavLink>
+                    </FluentNavGroup>
+                    <FluentNavLink Icon="@(new Icons.Regular.Size24.CalendarAgenda())" Disabled="true" Href="https://microsoft.com" Tooltip="Item 6 tooltip">Item 6</FluentNavLink>
+                    <FluentNavLink Icon="@(new Icons.Regular.Size24.CalendarAgenda())" Disabled="true" Href="https://microsoft.com" Tooltip="Item 6 tooltip">Item 6</FluentNavLink>
+                    <FluentNavLink Icon="@(new Icons.Regular.Size24.CalendarAgenda())" Disabled="true" Href="https://microsoft.com" Tooltip="Item 6 tooltip">Item 6</FluentNavLink>
+                    <FluentNavLink Icon="@(new Icons.Regular.Size24.CalendarAgenda())" Disabled="true" Href="https://microsoft.com" Tooltip="Item 6 tooltip">Item 6</FluentNavLink>
+                    <FluentNavLink Icon="@(new Icons.Regular.Size24.CalendarAgenda())" Disabled="true" Href="https://microsoft.com" Tooltip="Item 6 tooltip">Item 6</FluentNavLink>
+                    <FluentNavLink Icon="@(new Icons.Regular.Size24.CalendarAgenda())" Disabled="true" Href="https://microsoft.com" Tooltip="Item 6 tooltip">Item 6</FluentNavLink>
+                    <FluentNavLink Icon="@(new Icons.Regular.Size24.CalendarAgenda())" Disabled="true" Href="https://microsoft.com" Tooltip="Item 6 tooltip">Item 6</FluentNavLink>
+                    <FluentNavLink Icon="@(new Icons.Regular.Size24.CalendarAgenda())" Disabled="true" Href="https://microsoft.com" Tooltip="Item 6 tooltip">Item 6</FluentNavLink>
+                    <FluentNavLink Icon="@(new Icons.Regular.Size24.CalendarAgenda())" Disabled="true" Href="https://microsoft.com" Tooltip="Item 6 tooltip">Item 6</FluentNavLink>
+                    <FluentNavLink Icon="@(new Icons.Regular.Size24.CalendarAgenda())" Disabled="true" Href="https://microsoft.com" Tooltip="Item 6 tooltip">Item 6</FluentNavLink>
+                    <FluentNavLink Icon="@(new Icons.Regular.Size24.CalendarAgenda())" Disabled="true" Href="https://microsoft.com" Tooltip="Item 6 tooltip">Item 6</FluentNavLink>
+                    <FluentNavLink Icon="@(new Icons.Regular.Size24.CalendarAgenda())" Disabled="true" Href="https://microsoft.com" Tooltip="Item 6 tooltip">Item 6</FluentNavLink>
+                    <FluentNavLink Icon="@(new Icons.Regular.Size24.CalendarAgenda())" Disabled="true" Href="https://microsoft.com" Tooltip="Item 6 tooltip">Item 6</FluentNavLink>
+                    <FluentNavLink Icon="@(new Icons.Regular.Size24.CalendarAgenda())" Disabled="true" Href="https://microsoft.com" Tooltip="Item 6 tooltip">Item 6</FluentNavLink>
+                    <FluentNavLink Icon="@(new Icons.Regular.Size24.CalendarAgenda())" Disabled="true" Href="https://microsoft.com" Tooltip="Item 6 tooltip">Item 6</FluentNavLink>
+                    <FluentNavLink Icon="@(new Icons.Regular.Size24.CalendarAgenda())" Disabled="true" Href="https://microsoft.com" Tooltip="Item 6 tooltip">Item 6</FluentNavLink>
+                    <FluentNavLink Icon="@(new Icons.Regular.Size24.CalendarAgenda())" Disabled="true" Href="https://microsoft.com" Tooltip="Item 6 tooltip">Item 6</FluentNavLink>
+                    <FluentNavLink Icon="@(new Icons.Regular.Size24.CalendarAgenda())" Disabled="true" Href="https://microsoft.com" Tooltip="Item 6 tooltip">Item 6</FluentNavLink>
+                    <FluentNavLink Icon="@(new Icons.Regular.Size24.CalendarAgenda())" Disabled="true" Href="https://microsoft.com" Tooltip="Item 6 tooltip">Item 6</FluentNavLink> <FluentNavLink Icon="@(new Icons.Regular.Size24.CalendarAgenda())" Disabled="true" Href="https://microsoft.com" Tooltip="Item 6 tooltip">Item 6</FluentNavLink>
+                    <FluentNavLink Icon="@(new Icons.Regular.Size24.CalendarAgenda())" Disabled="true" Href="https://microsoft.com" Tooltip="Item 6 tooltip">Item 6</FluentNavLink>
+                    <FluentNavLink Icon="@(new Icons.Regular.Size24.CalendarAgenda())" Disabled="true" Href="https://microsoft.com" Tooltip="Item 6 tooltip">Item 6</FluentNavLink>
+                    <FluentNavLink Icon="@(new Icons.Regular.Size24.CalendarAgenda())" Disabled="true" Href="https://microsoft.com" Tooltip="Item 6 tooltip">Item 6</FluentNavLink>
+                    <FluentNavLink Icon="@(new Icons.Regular.Size24.CalendarAgenda())" Disabled="true" Href="https://microsoft.com" Tooltip="Item 6 tooltip">Item 6</FluentNavLink>
+                    <FluentNavLink Icon="@(new Icons.Regular.Size24.CalendarAgenda())" Disabled="true" Href="https://microsoft.com" Tooltip="Item 6 tooltip">Item 6</FluentNavLink>
+                    <FluentNavLink Icon="@(new Icons.Regular.Size24.CalendarAgenda())" Disabled="true" Href="https://microsoft.com" Tooltip="Item 6 tooltip">Item 6</FluentNavLink>
+                </FluentNavMenu>
 
-    <NavMenuContent>
-        <FluentNavLink Icon="@(new Icons.Filled.Size16.BuildingHome())" IconColor="Color.Custom">Dashboard</FluentNavLink>
-        <FluentNavLink Icon="@(new Icons.Filled.Size16.DocumentOnePageAdd())" IconColor="Color.Error">Hello</FluentNavLink>
-        <FluentNavLink Icon="@(new Icons.Filled.Size16.DocumentOnePage())" IconColor="Color.Accent">About</FluentNavLink>
-        <FluentNavLink Icon="@(new Icons.Filled.Size12.Balloon())" IconColor="Color.Fill">Best</FluentNavLink>
-    </NavMenuContent>
+            </nav>
+        </div>
 
-</FluentMainLayout>
+        <div class="body-content">
+            <FluentBodyContent Style="@("padding: 10px;")">
+                @Body
+            </FluentBodyContent>
+        </div>
+    </FluentStack>
 
+    <FluentFooter Style="@("height: 40px; color: white; text-align: center;")">
+        Footer Text
+    </FluentFooter>
+</FluentLayout>
+
+
+@code
+{
+    bool Expanded = true;
+}

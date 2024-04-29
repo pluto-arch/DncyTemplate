@@ -3,7 +3,7 @@ using Serilog.Events;
 
 namespace DncyTemplate.BlazorServer.Infra.LogSetup
 {
-    public class ActivityEnricher: ILogEventEnricher
+    public class ActivityEnricher : ILogEventEnricher
     {
         public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
         {

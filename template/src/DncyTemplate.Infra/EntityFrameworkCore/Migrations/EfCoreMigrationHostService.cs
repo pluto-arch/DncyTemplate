@@ -1,7 +1,5 @@
 ﻿using DncyTemplate.Constants;
-using DncyTemplate.Domain.Aggregates.System;
 using DncyTemplate.Domain.Infra;
-using DncyTemplate.Domain.Infra.Repository;
 
 #if Tenant
 using Dotnetydd.MultiTenancy;
@@ -15,7 +13,7 @@ using Microsoft.Extensions.Hosting;
 namespace DncyTemplate.Infra.EntityFrameworkCore.Migrations
 {
 
-    public class EfCoreMigrationHostService: IHostedService
+    public class EfCoreMigrationHostService : IHostedService
     {
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly IHostEnvironment _env;
@@ -23,19 +21,19 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Migrations
 #if Tenant
         private readonly ICurrentTenant _currentTenant;
 #endif
-        
+
 
         public EfCoreMigrationHostService(
             IServiceScopeFactory scopeFactory,
             IHostEnvironment env
 #if Tenant
-            ,ICurrentTenant currentTenant
+            , ICurrentTenant currentTenant
 #endif
             )
         {
             _scopeFactory = scopeFactory;
             _env = env;
-            
+
 #if Tenant
             _currentTenant = currentTenant;
 #endif
@@ -45,7 +43,7 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Migrations
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            using(IServiceScope serviceScope = _scopeFactory.CreateAsyncScope())
+            using (IServiceScope serviceScope = _scopeFactory.CreateAsyncScope())
             {
                 foreach (var dbcontext in DataContextTypeCache.GetApplicationDataContextList())
                 {

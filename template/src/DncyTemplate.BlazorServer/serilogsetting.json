@@ -47,7 +47,7 @@
       }
     ],
     "Properties": {
-      "AppName": "DncyTemplate.Api"
+      "AppName": "DncyTemplate.Blazor"
     }
   }
 }

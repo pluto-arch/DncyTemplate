@@ -1,9 +1,9 @@
-﻿using DncyTemplate.Application.AppServices.Product;
+﻿using System.ComponentModel.DataAnnotations;
+using DncyTemplate.Application.AppServices.Product;
 using DncyTemplate.Application.Command.Product;
 using DncyTemplate.Application.Models;
 using DncyTemplate.Application.Models.Product;
 using Microsoft.AspNetCore.Authorization;
-using System.ComponentModel.DataAnnotations;
 
 namespace DncyTemplate.Api.Controllers.v2
 {

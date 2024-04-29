@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.ApiExplorer;
+﻿using Asp.Versioning.ApiExplorer;
 
 namespace DncyTemplate.Api.Infra.ApiDoc
 {

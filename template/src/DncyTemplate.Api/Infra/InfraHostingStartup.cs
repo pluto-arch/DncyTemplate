@@ -2,7 +2,6 @@
 using DncyTemplate.Api.Infra.ExceptionHandlers;
 using DncyTemplate.Api.Infra.LocalizerSetup;
 using DncyTemplate.Api.Models.ModelBinding;
-using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Localization;
 
@@ -90,11 +89,10 @@ namespace DncyTemplate.Api.Infra
             services.AddApiVersioning(options =>
             {
                 options.AssumeDefaultVersionWhenUnspecified = true;
-                options.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+                options.DefaultApiVersion = new ApiVersion(1, 0);
                 options.ReportApiVersions = true;
                 options.ApiVersionReader = ApiVersionReader.Combine(new UrlSegmentApiVersionReader());
-            });
-            services.AddVersionedApiExplorer(setup =>
+            }).AddApiExplorer(setup =>
             {
                 setup.GroupNameFormat = "'v'VVV";
                 setup.SubstituteApiVersionInUrl = true;

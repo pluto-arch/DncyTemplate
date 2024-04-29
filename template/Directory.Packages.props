@@ -7,13 +7,14 @@
   </PropertyGroup>
   <!--package info-->
   <ItemGroup>
+    <PackageVersion Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0" />
     <PackageVersion Include="Aspire.Hosting" Version="8.0.0-preview.4.24156.9" />
-    <PackageVersion Include="Bogus" Version="35.3.0" />
+    <PackageVersion Include="Bogus" Version="35.5.1" />
     <PackageVersion Include="CommunityToolkit.Diagnostics" Version="8.2.2" />
-    <PackageVersion Include="FastExpressionCompiler" Version="4.0.1" />
-    <PackageVersion Include="FluentValidation" Version="11.9.0" />
+    <PackageVersion Include="FastExpressionCompiler" Version="4.1.0" />
+    <PackageVersion Include="FluentValidation" Version="11.9.1" />
     <PackageVersion Include="FluentValidation.AspNetCore" Version="11.3.0" />
-    <PackageVersion Include="Dapper" Version="2.1.28" />
+    <PackageVersion Include="Dapper" Version="2.1.35" />
     <PackageVersion Include="Dotnetydd.Specifications.EntityFrameworkCore" Version="$(DncyVersion)" />
     <PackageVersion Include="Dotnetydd.DependencyInjection.Generator" Version="$(DncyVersion)" />
     <!--#if (Tenant) -->
@@ -30,34 +31,34 @@
     <PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="$(MicrosoftExtensionsVersion)" />
-    <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.1" />
+    <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.4" />
     <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="8.1.0" />
-    <PackageVersion Include="Microsoft.Extensions.Localization" Version="8.0.1" />
-    <PackageVersion Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.1" />
-    <PackageVersion Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.1" />
-    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.1" />
+    <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="8.4.0" />
+    <PackageVersion Include="Microsoft.Extensions.Localization" Version="8.0.4" />
+    <PackageVersion Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.4" />
+    <PackageVersion Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.4" />
+    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.4" />
     <PackageVersion Include="Microsoft.Extensions.Logging" Version="$(MicrosoftExtensionsVersion)" />
     <PackageVersion Include="Microsoft.FluentUI.AspNetCore.Components" Version="4.7.1" />
     <PackageVersion Include="Microsoft.FluentUI.AspNetCore.Components.Icons" Version="4.7.0" />
-    <PackageVersion Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="$(MicrosoftExtensionsVersion)" ExcludeAssets="All" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="8.0.1" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.1" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.1" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.1">
+    <PackageVersion Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" ExcludeAssets="All" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="8.0.4" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.4" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.4" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageVersion>
     <PackageVersion Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.1.0" />
-    <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.7.0" />
-    <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.7.0" />
-    <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.7.0" />
-    <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="1.7.0" />
-    <PackageVersion Include="OpenTelemetry.Instrumentation.Runtime" Version="1.7.0" />
-    <PackageVersion Include="Polly" Version="8.2.1" />
+    <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.8.1" />
+    <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.8.1" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.8.1" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="1.8.1" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.Runtime" Version="1.8.0" />
+    <PackageVersion Include="Polly" Version="8.3.1" />
     <PackageVersion Include="Serilog" Version="3.1.1" />
     <PackageVersion Include="Serilog.Extensions.Logging" Version="8.0.0" />
-    <PackageVersion Include="Serilog.AspNetCore" Version="8.0.0" />
+    <PackageVersion Include="Serilog.AspNetCore" Version="8.0.1" />
     <PackageVersion Include="Serilog.Enrichers.Environment" Version="2.3.0" />
     <PackageVersion Include="Serilog.Enrichers.Process" Version="2.0.2" />
     <PackageVersion Include="Serilog.Enrichers.Sensitive" Version="1.7.3" />
@@ -65,11 +66,11 @@
     <PackageVersion Include="Serilog.Sinks.Async" Version="1.5.0" />
     <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <!--test package-->
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
-    <PackageVersion Include="NUnit" Version="4.0.1" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
+    <PackageVersion Include="NUnit" Version="4.1.0" />
     <PackageVersion Include="NUnit3TestAdapter" Version="4.5.0" />
-    <PackageVersion Include="NUnit.Analyzers" Version="3.10.0" />
-    <PackageVersion Include="coverlet.collector" Version="6.0.0" />
+    <PackageVersion Include="NUnit.Analyzers" Version="4.2.0" />
+    <PackageVersion Include="coverlet.collector" Version="6.0.2" />
     <!--end test package-->
     <PackageVersion Include="Sharprompt" Version="2.4.5" />
   </ItemGroup>

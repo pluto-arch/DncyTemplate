@@ -3,7 +3,6 @@ using DncyTemplate.Application.Models.Generics;
 using DncyTemplate.Domain.Collections;
 using DncyTemplate.Domain.Infra;
 using DncyTemplate.Domain.Infra.Repository;
-using DncyTemplate.Infra.EntityFrameworkCore.Extension;
 using DncyTemplate.Uow;
 
 namespace DncyTemplate.Application.AppServices.Generics

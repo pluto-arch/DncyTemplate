@@ -13,3 +13,4 @@ global using Microsoft.Extensions.Options;
 global using Newtonsoft.Json;
 global using Newtonsoft.Json.Serialization;
 global using Serilog;
+global using Asp.Versioning;

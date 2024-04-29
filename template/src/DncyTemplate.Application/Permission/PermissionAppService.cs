@@ -63,7 +63,7 @@ public partial class PermissionAppService : IPermissionAppService
             Timeout = new TimeSpan(0, 0, 120),
         };
 
-        using var scoped = new TransactionScope(TransactionScopeOption.Required, transactionOption,TransactionScopeAsyncFlowOption.Enabled);
+        using var scoped = new TransactionScope(TransactionScopeOption.Required, transactionOption, TransactionScopeAsyncFlowOption.Enabled);
         var old = await _permissionGrantStore.GetListAsync(providerName, providerValue);
         var names = old.Select(x => x.Name).ToArray();
         if (permissions is { Length: <= 0 })
