@@ -28,7 +28,7 @@
         "Microsoft.Hosting.Lifetime": "Warning",
         "Microsoft.AspNetCore": "Error",
         "Microsoft.EntityFrameworkCore": "Warning",
-        "Microsoft.EntityFrameworkCore.Database.Command": "Warning",
+        "Microsoft.EntityFrameworkCore.Database.Command": "Information",
         "Dapper.CommandDefinition": "Error"
       }
     },

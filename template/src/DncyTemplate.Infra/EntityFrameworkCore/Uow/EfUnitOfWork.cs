@@ -10,10 +10,10 @@ namespace DncyTemplate.Uow.EntityFrameworkCore
         private IServiceProvider _serviceProvider;
         private TContext _context;
 
-        public EfUnitOfWork(IServiceProvider serviceProvider)
+        public EfUnitOfWork(IServiceProvider serviceProvider,IDbContextFactory<TContext> factory)
         {
             _serviceProvider = serviceProvider;
-            _context = serviceProvider.GetRequiredService<TContext>();
+            _context = factory.CreateDbContext();
         }
 
         public IServiceProvider ServiceProvider => _serviceProvider;
@@ -85,8 +85,7 @@ namespace DncyTemplate.Uow.EntityFrameworkCore
 
         public ValueTask DisposeAsync()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            Dispose();
             return ValueTask.CompletedTask;
         }
     }

@@ -23,7 +23,7 @@ public static class EntityFrameworkServiceExtension
     {
         service.AddSingleton<IConnectionStringResolve, DefaultConnectionStringResolve>();
         var migrationAssembly = Assembly.GetCallingAssembly().GetName().Name;
-        service.AddDbContext<DncyTemplateDbContext>((serviceProvider, optionsBuilder) =>
+        service.AddDbContextFactory<DncyTemplateDbContext>((serviceProvider, optionsBuilder) =>
         {
             optionsBuilder.UseSqlServer(configuration.GetConnectionString(InfraConstantValue.DEFAULT_CONNECTIONSTRING_NAME),
                 sqlOptions =>
@@ -44,7 +44,7 @@ public static class EntityFrameworkServiceExtension
 #if DEBUG
             optionsBuilder.EnableSensitiveDataLogging();
 #endif
-        });
+        },ServiceLifetime.Scoped);
 
         service.AddDefaultRepository(contextTypes);
         service.ApplyEntityDefaultNavicationProperty();
