@@ -86,6 +86,12 @@ builder.Services.ConfigureTenancy(builder.Configuration);
 Log.Information("[{appName}]服务注册完毕...", appName);
 var app = builder.Build();
 Log.Information("[{appName}]构建WebApplication成功...", appName);
+
+var endPointUrl = Environment.GetEnvironmentVariable("ASPNETCORE_URLS");
+if (!string.IsNullOrEmpty(endPointUrl))
+{
+    Log.Logger.Information("ASPNETCORE_URLS: {endPointUrl}", endPointUrl);
+}
 Log.Logger.Information("NET框架版本: {@version}", System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription);
 
 app.UseResponseCompression();

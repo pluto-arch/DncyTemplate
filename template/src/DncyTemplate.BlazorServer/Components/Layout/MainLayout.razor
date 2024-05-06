@@ -36,15 +36,23 @@
         row-gap: 10px;
         width: 100%;
     }
+    .logo{
+        display: inline-block;
+        height: 60px;
+        line-height: 60px;
+        font-size: larger;
+    }
 </style>
 
 <FluentLayout>
-    <FluentHeader>
+    <FluentHeader Style="height:60px">
         <FluentStack Orientation="Orientation.Horizontal"
                      HorizontalAlignment="HorizontalAlignment.Left"
                      VerticalAlignment="VerticalAlignment.Center">
 
-            <h3>Blazor Server App</h3>
+            <div class="logo">
+                <a>Blazor Server App</a>
+            </div>
 
             <FluentSpacer />
 
