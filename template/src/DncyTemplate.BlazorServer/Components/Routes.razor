@@ -1,7 +1,8 @@
-﻿
-@using Microsoft.AspNetCore.Components.Authorization
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using DncyTemplate.BlazorServer.Components.Shared;
 @using System.Web
 @inject NavigationManager NavManager
+
 
 
 <ErrorBoundary>
@@ -15,7 +16,9 @@
                     <NotAuthorized>
                         @if (context.User.Identity?.IsAuthenticated == false)
                         {
-                            { NavManager.NavigateTo("/login?returnUrl=" + HttpUtility.UrlEncode(NavManager.ToBaseRelativePath(NavManager.Uri)), forceLoad: true); }
+                            {
+                                NavManager.NavigateTo("/login?returnUrl=" + HttpUtility.UrlEncode(NavManager.ToBaseRelativePath(NavManager.Uri)), forceLoad: true);
+                            }
                         }
                         else
                         {
@@ -32,7 +35,7 @@
             </NotFound>
         </Router>
     </ChildContent>
-    
+
     <ErrorContent>
         @{
             NavManager.NavigateTo("/error/500/", forceLoad: true);
