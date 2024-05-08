@@ -1,5 +1,7 @@
 ﻿@page "/counter"
 @rendermode InteractiveServer
+@using Microsoft.JSInterop
+@inject IJSRuntime JS
 
 <PageTitle>Counter</PageTitle>
 
@@ -9,11 +11,18 @@
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
+<button class="btn btn-primary" @onclick="consolelog">call js console log</button>
+
 @code {
     private int currentCount = 0;
 
     private void IncrementCount()
     {
         currentCount++;
+    }
+
+    public async Task consolelog()
+    {
+        await JS.InvokeVoidAsync("removeLoading");
     }
 }
