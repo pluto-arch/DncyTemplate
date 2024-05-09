@@ -60,42 +60,20 @@ footer {
 
 
 /* HTML: <div class="loader"></div> */
+/* HTML: <div class="loader"></div> */
 .loader {
-    width: 100px;
-    aspect-ratio: 1;
-    border: 15px solid #ddd;
-    border-radius: 50%;
-    position: relative;
-    transform: rotate(45deg);
+    font-weight: bold;
+    font-family: sans-serif;
+    font-size: 30px;
+    animation: l1 1s linear infinite alternate;
 }
 
-    .loader::before {
-        content: "";
-        position: absolute;
-        inset: -15px;
-        border-radius: 50%;
-        border: 15px solid #514b82;
-        animation: l18 .5s infinite linear;
+    .loader:before {
+        content: "Loading..."
     }
 
-@keyframes l18 {
-    0% {
-        clip-path: polygon(50% 50%,0 0,0 0,0 0,0 0,0 0 )
-    }
-
-    25% {
-        clip-path: polygon(50% 50%,0 0,100% 0,100% 0,100% 0,100% 0 )
-    }
-
-    50% {
-        clip-path: polygon(50% 50%,0 0,100% 0,100% 100%,100% 100%,100% 100%)
-    }
-
-    75% {
-        clip-path: polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 100%)
-    }
-
-    100% {
-        clip-path: polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 0 )
+@keyframes l1 {
+    to {
+        opacity: 0
     }
 }
