@@ -30,6 +30,7 @@ Log.Information("[{appName}]»’÷æ≈‰÷√ÕÍ±œ...", appName);
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog(dispose: true);
 
+
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 

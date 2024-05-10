@@ -2,7 +2,7 @@
 
     <nav class="sitenav" aria-labelledby="main-menu">
 
-        <FluentNavMenu @bind-Expanded="@expanded" Width="250" CollapsedChildNavigation="true" Collapsible="true" Title="Collapsible demo">
+        <FluentNavMenu @bind-Expanded="@expanded" Width="250" CollapsedChildNavigation="true" Collapsible="false">
             <FluentNavLink Icon="@(new Icons.Regular.Size24.Home())" Tooltip="Item 1 tooltip" Href="/counter">counter</FluentNavLink>
             <FluentNavLink Icon="@(new Icons.Regular.Size24.Cloud())" Disabled="true" Tooltip="Item 2 tooltip">Item 2</FluentNavLink>
 
@@ -70,5 +70,8 @@
 </div>
 
 @code {
-    private bool expanded = true;
+
+    [Parameter] 
+    public bool expanded { get; set; } = true;
+
 }
