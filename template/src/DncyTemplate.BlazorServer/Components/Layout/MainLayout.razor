@@ -5,22 +5,7 @@
 
 <FluentLayout>
     <FluentHeader>
-        <FluentStack Orientation="Orientation.Horizontal"
-                     HorizontalAlignment="HorizontalAlignment.Left"
-                     VerticalAlignment="VerticalAlignment.Center">
-
-            <div class="logo">
-                <a>Dotnetydd Blazor Web</a>
-            </div>
-            <FluentSpacer Width="10"/>
-            <div class="btnSideCollapse">
-                <FluentIcon Value="@(new Icons.Regular.Size24.AppsList())" Color="@Color.Fill" OnClick="OnSideCollapsed" />
-            </div>
-            <FluentSpacer />
-
-            <UserProfile ImagePath="images/profile.png" />
-
-        </FluentStack>
+        <AppHeaderBar OnSideCollapsed="OnSideCollapsedHandler" />
     </FluentHeader>
     <FluentStack Class="main" Orientation="Orientation.Horizontal" Width="100%">
         <NavMenu expanded="_sideCollapse" />
@@ -39,18 +24,9 @@
 
 @code
 {
-    /// <inheritdoc />
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            await JS.InvokeVoidAsync("removeLoading");
-        }
-    }
-
     private bool _sideCollapse = true;
 
-    void OnSideCollapsed()
+    void OnSideCollapsedHandler()
     {
         _sideCollapse = !_sideCollapse;
     }

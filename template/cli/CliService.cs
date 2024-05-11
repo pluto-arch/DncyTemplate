@@ -6,7 +6,7 @@ namespace DotnetyddTemplateCli
     {
         private readonly CliOption _options;
         private readonly Process _process;
-        const string searchString = "boltapp";
+        const string SearchString = "boltapp";
         public CliService(CliOption options)
         {
             _options = options;
@@ -23,13 +23,13 @@ namespace DotnetyddTemplateCli
             _process.StartInfo.StandardErrorEncoding = Encoding.UTF8;
         }
 
-        private string slnPath = "";
-        private string apiPath = "";
-        private string mvcPath = "";
-        private string blazorServerPath = "";
-        private string aspireHostPath = "";
-        private string aspireServerDefaultPath = "";
-        private string testProjectPath = "";
+        private string _slnPath = "";
+        private string _apiPath = "";
+        private string _mvcPath = "";
+        private string _blazorServerPath = "";
+        private string _aspireHostPath = "";
+        private string _aspireServerDefaultPath = "";
+        private string _testProjectPath = "";
 
 
         public CliService CreateProject()
@@ -40,15 +40,15 @@ namespace DotnetyddTemplateCli
 
             var dir = _options.OutputDir;
             var name = _options.ProjectName;
-            slnPath = Path.Combine(dir, $"{name}.sln");
-            apiPath = Path.Combine(dir, "src", $"{name}.Api", $"{name}.Api.csproj");
-            mvcPath = Path.Combine(dir, "src", $"{name}.Mvc", $"{name}.Mvc.csproj");
-            blazorServerPath = Path.Combine(dir, "src", $"{name}.BlazorServer", $"{name}.BlazorServer.csproj");
-            aspireHostPath = Path.Combine(dir, "aspire", $"{name}.AppHost", $"{name}.AppHost.csproj");
-            aspireServerDefaultPath = Path.Combine(dir, "aspire", $"{name}.ServiceDefaults", $"{name}.ServiceDefaults.csproj");
+            _slnPath = Path.Combine(dir, $"{name}.sln");
+            _apiPath = Path.Combine(dir, "src", $"{name}.Api", $"{name}.Api.csproj");
+            _mvcPath = Path.Combine(dir, "src", $"{name}.Mvc", $"{name}.Mvc.csproj");
+            _blazorServerPath = Path.Combine(dir, "src", $"{name}.BlazorServer", $"{name}.BlazorServer.csproj");
+            _aspireHostPath = Path.Combine(dir, "aspire", $"{name}.AppHost", $"{name}.AppHost.csproj");
+            _aspireServerDefaultPath = Path.Combine(dir, "aspire", $"{name}.ServiceDefaults", $"{name}.ServiceDefaults.csproj");
 
 
-            testProjectPath = Path.Combine(dir, "test", $"{name}.UnitTest", $"{name}.UnitTest.csproj");
+            _testProjectPath = Path.Combine(dir, "test", $"{name}.UnitTest", $"{name}.UnitTest.csproj");
 
             Console.WriteLine($"generate project : {_options.ProjectName}");
             return this;
@@ -62,31 +62,31 @@ namespace DotnetyddTemplateCli
             var uiselect = _options.SelectUi.Select(x => x.ToLower());
             if (uiselect.Contains("api"))
             {
-                commandBuilder.Append($" {apiPath} ");
+                commandBuilder.Append($" {_apiPath} ");
             }
 
             if (uiselect.Contains("mvc"))
             {
-                commandBuilder.Append($" {mvcPath} ");
+                commandBuilder.Append($" {_mvcPath} ");
             }
 
             if (uiselect.Contains("blazorserver"))
             {
-                commandBuilder.Append($" {blazorServerPath} ");
+                commandBuilder.Append($" {_blazorServerPath} ");
             }
 
             if (_options.EnableAspire)
             {
-                commandBuilder.Append($" {aspireHostPath} {aspireServerDefaultPath} ");
+                commandBuilder.Append($" {_aspireHostPath} {_aspireServerDefaultPath} ");
             }
 
-            _process.StartInfo.Arguments = $"sln {slnPath} add {commandBuilder.ToString()}";
+            _process.StartInfo.Arguments = $"sln {_slnPath} add {commandBuilder.ToString()}";
             _process.Start();
             _ = _process.StandardOutput.ReadToEnd();
 
             SetTestProject(commandBuilder.ToString());
 
-            Console.WriteLine($"success add csproj to sln : {slnPath}");
+            Console.WriteLine($"success add csproj to sln : {_slnPath}");
             return this;
         }
 
@@ -94,7 +94,7 @@ namespace DotnetyddTemplateCli
         private void SetTestProject(string testUiProject)
         {
             _process.StartInfo.Arguments = "";
-            _process.StartInfo.Arguments = $" add {testProjectPath} reference {testUiProject}";
+            _process.StartInfo.Arguments = $" add {_testProjectPath} reference {testUiProject}";
             _process.Start();
             _ = _process.StandardOutput.ReadToEnd();
         }
@@ -113,7 +113,7 @@ namespace DotnetyddTemplateCli
             var uiselect = _options.SelectUi.Select(x => x.ToLower());
             if (!uiselect.Contains("api"))
             {
-                commandBuilder.Append($" {apiPath} ");
+                commandBuilder.Append($" {_apiPath} ");
             }
             else
             {
@@ -122,7 +122,7 @@ namespace DotnetyddTemplateCli
 
             if (!uiselect.Contains("mvc"))
             {
-                commandBuilder.Append($" {mvcPath} ");
+                commandBuilder.Append($" {_mvcPath} ");
             }
             else
             {
@@ -131,14 +131,14 @@ namespace DotnetyddTemplateCli
 
             if (!uiselect.Contains("blazorserver"))
             {
-                commandBuilder.Append($" {blazorServerPath} ");
+                commandBuilder.Append($" {_blazorServerPath} ");
             }
             else
             {
                 aspireProjectBuilder.AppendLine($"builder.AddProject<Projects.{name}_BlazorServer>(\"{name}.blazorserver\");");
             }
 
-            _process.StartInfo.Arguments = $" remove {aspireHostPath} reference {commandBuilder.ToString()}";
+            _process.StartInfo.Arguments = $" remove {_aspireHostPath} reference {commandBuilder.ToString()}";
             _process.Start();
             _ = _process.StandardOutput.ReadToEnd();
 
@@ -158,7 +158,7 @@ namespace DotnetyddTemplateCli
                 File.WriteAllText(aspireProgramFile, fileContent, Encoding.Default);
             }
 
-            Console.WriteLine($"success set aspire : {aspireHostPath}");
+            Console.WriteLine($"success set aspire : {_aspireHostPath}");
             return this;
         }
 
@@ -203,7 +203,7 @@ namespace DotnetyddTemplateCli
             _process.Start();
             string output = _process.StandardOutput.ReadToEnd();
             string[] lines = output.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-            if (lines.All(x => !x.Contains(searchString)))
+            if (lines.All(x => !x.Contains(SearchString)))
             {
                 Console.WriteLine("no template install, do `dotnet new install DotNetBoltTemplate.{version}.nupkg ` first!");
             }

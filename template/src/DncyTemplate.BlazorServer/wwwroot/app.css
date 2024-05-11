@@ -1,4 +1,5 @@
 @import '/_content/Microsoft.FluentUI.AspNetCore.Components/css/reboot.css';
+@import url('https://fonts.googleapis.com/css?family=Audiowide&display=swap');
 
 body {
     --body-font: "Segoe UI Variable", "Segoe UI", sans-serif;
@@ -9,11 +10,6 @@ body {
     overflow:hidden;
 }
 
-.navmenu {
-    height: calc(100dvh - 86px);
-    overflow-y:auto;
-    overflow-x:hidden;
-}
 
 .main {
     height: calc(100dvh - 86px);

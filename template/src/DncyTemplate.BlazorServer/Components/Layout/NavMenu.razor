@@ -1,77 +1,33 @@
-﻿<div class="navmenu">
+﻿@using DncyTemplate.Infra.Extensions
+@rendermode InteractiveServer
+<FluentNavMenu Style="height: calc(100dvh - 86px);overflow-y: auto;overflow-x: hidden;box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" @bind-Expanded="@expanded" CollapsedChildNavigation="true" Width="250" Collapsible="false">
+    @foreach (var menu in menus)
+    {
+        @if (menu.Items.IsNullOrEmpty())
+        {
+            <FluentNavLink Icon="@(new Icons.Regular.Size24.Home())" Tooltip="@menu.DisplayName" Href="@menu.Url">@menu.DisplayName</FluentNavLink>
+        }
+        else
+        {
+            <FluentNavGroup Title="@menu.DisplayName" Tooltip="@menu.DisplayName" Icon="@(new Icons.Regular.Size24.EarthLeaf())">
+                @foreach (var subMenu in menu.Items)
+                {
+                    @if (subMenu.Items.IsNullOrEmpty())
+                    {
+                        <FluentNavLink Icon="@(new Icons.Regular.Size24.LeafOne())" Tooltip="@subMenu.DisplayName" Href="@subMenu.Url">@subMenu.DisplayName</FluentNavLink>
+                    }
+                    else
+                    {
+                        <FluentNavGroup Title="@subMenu.DisplayName" Tooltip="@subMenu.DisplayName" Icon="@(new Icons.Regular.Size24.LeafThree())">
+                            @foreach (var subSubMenu in subMenu.Items)
+                            {
+                                <FluentNavLink Icon="@(new Icons.Regular.Size24.Earth())" Href="@subSubMenu.Url" Tooltip="@subSubMenu.DisplayName">@subSubMenu.DisplayName</FluentNavLink>
+                            }
+                        </FluentNavGroup>
+                    }
+                }
+            </FluentNavGroup>
+        }
+    }
+</FluentNavMenu>
 
-    <nav class="sitenav" aria-labelledby="main-menu">
-
-        <FluentNavMenu @bind-Expanded="@expanded" Width="250" CollapsedChildNavigation="true" Collapsible="false">
-            <FluentNavLink Icon="@(new Icons.Regular.Size24.Home())" Tooltip="Item 1 tooltip" Href="/counter">counter</FluentNavLink>
-            <FluentNavLink Icon="@(new Icons.Regular.Size24.Cloud())" Disabled="true" Tooltip="Item 2 tooltip">Item 2</FluentNavLink>
-
-            <FluentNavGroup Title="Item 3" Tooltip="Item 3 tooltip" Icon="@(new Icons.Regular.Size24.EarthLeaf())">
-                <FluentNavLink Icon="@(new Icons.Regular.Size24.LeafOne())" Tooltip="Item 3.1 tooltip" Href="/weather">weather</FluentNavLink>
-                <FluentNavLink Icon="@(new Icons.Regular.Size24.LeafTwo())" Disabled="true" Tooltip="Item 3.2 tooltip">Item 3.2</FluentNavLink>
-                <FluentNavGroup Title="Item 3.3" Tooltip="Item 3.3 tooltip" Icon="@(new Icons.Regular.Size24.LeafThree())">
-                    <FluentNavLink Icon="@(new Icons.Regular.Size24.Earth())" Href="https://microsoft.com" Tooltip="Item 3.3.1 tooltip">https://microsoft.com</FluentNavLink>
-                </FluentNavGroup>
-                <FluentNavGroup Title="Item 3.4" Tooltip="Item 3.4 tooltip" Icon="@(new Icons.Regular.Size24.TreeDeciduous())" Disabled="true">
-                    <FluentNavLink Icon="@(new Icons.Regular.Size24.Earth())" Href="https://microsoft.com" Tooltip="Item 3.4.1 tooltip">https://microsoft.com</FluentNavLink>
-                </FluentNavGroup>
-            </FluentNavGroup>
-            <FluentNavLink Tooltip="Item 4 tooltip">Item 4</FluentNavLink>
-            <FluentNavGroup Title="Item 5" Tooltip="Item 5 tooltip">
-                <FluentNavLink Icon="@(new Icons.Regular.Size24.LeafOne())" Tooltip="Item 5.1 tooltip">Item 5.1</FluentNavLink>
-            </FluentNavGroup>
-            
-            <FluentNavGroup Title="Item 3" Tooltip="Item 3 tooltip" Icon="@(new Icons.Regular.Size24.EarthLeaf())">
-                <FluentNavLink Icon="@(new Icons.Regular.Size24.LeafOne())" Tooltip="Item 3.1 tooltip">Item 3.1</FluentNavLink>
-                <FluentNavLink Icon="@(new Icons.Regular.Size24.LeafTwo())" Disabled="true" Tooltip="Item 3.2 tooltip">Item 3.2</FluentNavLink>
-                <FluentNavGroup Title="Item 3.3" Tooltip="Item 3.3 tooltip" Icon="@(new Icons.Regular.Size24.LeafThree())">
-                    <FluentNavLink Icon="@(new Icons.Regular.Size24.Earth())" Href="https://microsoft.com" Tooltip="Item 3.3.1 tooltip">https://microsoft.com</FluentNavLink>
-                </FluentNavGroup>
-                <FluentNavGroup Title="Item 3.4" Tooltip="Item 3.4 tooltip" Icon="@(new Icons.Regular.Size24.TreeDeciduous())" Disabled="true">
-                    <FluentNavLink Icon="@(new Icons.Regular.Size24.Earth())" Href="https://microsoft.com" Tooltip="Item 3.4.1 tooltip">https://microsoft.com</FluentNavLink>
-                </FluentNavGroup>
-            </FluentNavGroup>
-            <FluentNavLink Tooltip="Item 4 tooltip">Item 4</FluentNavLink>
-            <FluentNavGroup Title="Item 5" Tooltip="Item 5 tooltip">
-                <FluentNavLink Icon="@(new Icons.Regular.Size24.LeafOne())" Tooltip="Item 5.1 tooltip">Item 5.1</FluentNavLink>
-            </FluentNavGroup>
-            
-            <FluentNavGroup Title="Item 3" Tooltip="Item 3 tooltip" Icon="@(new Icons.Regular.Size24.EarthLeaf())">
-                <FluentNavLink Icon="@(new Icons.Regular.Size24.LeafOne())" Tooltip="Item 3.1 tooltip">Item 3.1</FluentNavLink>
-                <FluentNavLink Icon="@(new Icons.Regular.Size24.LeafTwo())" Disabled="true" Tooltip="Item 3.2 tooltip">Item 3.2</FluentNavLink>
-                <FluentNavGroup Title="Item 3.3" Tooltip="Item 3.3 tooltip" Icon="@(new Icons.Regular.Size24.LeafThree())">
-                    <FluentNavLink Icon="@(new Icons.Regular.Size24.Earth())" Href="https://microsoft.com" Tooltip="Item 3.3.1 tooltip">https://microsoft.com</FluentNavLink>
-                </FluentNavGroup>
-                <FluentNavGroup Title="Item 3.4" Tooltip="Item 3.4 tooltip" Icon="@(new Icons.Regular.Size24.TreeDeciduous())" Disabled="true">
-                    <FluentNavLink Icon="@(new Icons.Regular.Size24.Earth())" Href="https://microsoft.com" Tooltip="Item 3.4.1 tooltip">https://microsoft.com</FluentNavLink>
-                </FluentNavGroup>
-            </FluentNavGroup>
-            <FluentNavLink Tooltip="Item 4 tooltip">Item 4</FluentNavLink>
-            <FluentNavGroup Title="Item 5" Tooltip="Item 5 tooltip">
-                <FluentNavLink Icon="@(new Icons.Regular.Size24.LeafOne())" Tooltip="Item 5.1 tooltip">Item 5.1</FluentNavLink>
-            </FluentNavGroup>
-            
-            <FluentNavGroup Title="Item 3" Tooltip="Item 3 tooltip" Icon="@(new Icons.Regular.Size24.EarthLeaf())">
-                <FluentNavLink Icon="@(new Icons.Regular.Size24.LeafOne())" Tooltip="Item 3.1 tooltip">Item 3.1</FluentNavLink>
-                <FluentNavLink Icon="@(new Icons.Regular.Size24.LeafTwo())" Disabled="true" Tooltip="Item 3.2 tooltip">Item 3.2</FluentNavLink>
-                <FluentNavGroup Title="Item 3.3" Tooltip="Item 3.3 tooltip" Icon="@(new Icons.Regular.Size24.LeafThree())">
-                    <FluentNavLink Icon="@(new Icons.Regular.Size24.Earth())" Href="https://microsoft.com" Tooltip="Item 3.3.1 tooltip">https://microsoft.com</FluentNavLink>
-                </FluentNavGroup>
-                <FluentNavGroup Title="Item 3.4" Tooltip="Item 3.4 tooltip" Icon="@(new Icons.Regular.Size24.TreeDeciduous())" Disabled="true">
-                    <FluentNavLink Icon="@(new Icons.Regular.Size24.Earth())" Href="https://microsoft.com" Tooltip="Item 3.4.1 tooltip">https://microsoft.com</FluentNavLink>
-                </FluentNavGroup>
-            </FluentNavGroup>
-            <FluentNavLink Tooltip="Item 4 tooltip">Item 4</FluentNavLink>
-            <FluentNavGroup Title="Item 5" Tooltip="Item 5 tooltip">
-                <FluentNavLink Icon="@(new Icons.Regular.Size24.LeafOne())" Tooltip="Item 5.1 tooltip">Item 5.1</FluentNavLink>
-            </FluentNavGroup>
-        </FluentNavMenu>
-    </nav>
-</div>
-
-@code {
-
-    [Parameter] 
-    public bool expanded { get; set; } = true;
-
-}

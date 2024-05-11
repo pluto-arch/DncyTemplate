@@ -1,0 +1,29 @@
+﻿@using DncyTemplate.BlazorServer.Components.Pages.Account
+
+<FluentStack Orientation="Orientation.Horizontal"
+             HorizontalAlignment="HorizontalAlignment.Left"
+             VerticalAlignment="VerticalAlignment.Center">
+
+    <div class="logo">
+        <a>Dotnetydd Blazor Web</a>
+    </div>
+    <FluentSpacer Width="10" />
+    <div class="btnSideCollapse">
+        <FluentIcon Value="@(new Icons.Regular.Size24.AppsList())" Color="@Color.Fill" OnClick="AddMinute" />
+    </div>
+    <FluentSpacer />
+
+    <UserProfile ImagePath="images/profile.png" />
+
+</FluentStack>
+
+
+@code{
+    [Parameter]
+    public EventCallback OnSideCollapsed { get; set; }
+
+    public async Task AddMinute()
+    {
+        await OnSideCollapsed.InvokeAsync();
+    }
+}
