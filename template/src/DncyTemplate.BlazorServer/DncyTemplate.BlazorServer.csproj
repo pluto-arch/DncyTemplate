@@ -8,17 +8,17 @@
   <ItemGroup>
 	  <!--#if (Aspire) -->
 	  <ProjectReference Include="..\..\aspire\DncyTemplate.ServiceDefaults\DncyTemplate.ServiceDefaults.csproj" />
+	  <!--#endif -->
 	  <ProjectReference Include="..\DncyTemplate.Application\DncyTemplate.Application.csproj" />
 	  <ProjectReference Include="..\DncyTemplate.Infra\DncyTemplate.Infra.csproj" />
-	  <!--#endif -->
   </ItemGroup>
 
   <ItemGroup>
 	  <!--#if (Tenant) -->
 	  <PackageReference Include="Dotnetydd.MultiTenancy.AspNetCore" />
+	  <!--#endif -->
 	  <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" />
 	  <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Icons" />
-	  <!--#endif -->
 	  <PackageReference Include="Serilog.AspNetCore" />
 	  <PackageReference Include="Serilog.Enrichers.Environment" />
 	  <PackageReference Include="Serilog.Enrichers.Process" />
