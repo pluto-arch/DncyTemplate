@@ -51,6 +51,7 @@
           "exclude": [
             "src/DncyTemplate.Mvc/Infra/Tenancy/**/*",
             "src/DncyTemplate.Api/Infra/Tenancy/**/*",
+            "src/DncyTemplate.BlazorServer/Infra/Tenancy/**/*",
             "src/DncyTemplate.Mvc/Controllers/TenantController.cs",
             "src/DncyTemplate.Mvc/Views/Tenant/**/*",
             "src/DncyTemplate.Domain/Aggregates/Tenancy/**/*",
