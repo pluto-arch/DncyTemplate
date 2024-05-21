@@ -32,8 +32,7 @@ public static class InfraHostingStartup
             {
                 options.SetUpDataAnnotationLocalizerProvider();
             })
-            .AddControllersAsServices()
-            .AddRazorRuntimeCompilation();
+            .AddControllersAsServices();
         #endregion
 
 
