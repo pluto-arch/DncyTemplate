@@ -30,7 +30,7 @@ Log.Logger = new LoggerConfiguration()
             .ReadFrom.Configuration(logConfig)
             .Enrich.With<ActivityEnricher>()
             .CreateLogger();
-Log.Information("[{appName}]ÈÕÖ¾ÅäÖÃÍê±Ï...", appName);
+Log.Information("[{appName}]ï¿½ï¿½Ö¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½...", appName);
 
 
 
@@ -45,14 +45,12 @@ builder.AddServiceDefaults();
 // Add services to the container.
 builder.Services.AddProblemDetails();
 
-#region ·şÎñ×¢²á
-// ÄÚ´æ»º´æ
+#region æœåŠ¡æ³¨å†Œ
 builder.Services.AddMemoryCache(options =>
 {
     options.SizeLimit = 10240;
 });
 
-// Ó¦ÓÃ¡¢»ù´¡ÉèÊ©¡¢ÁìÓò²ã×¢²á
 builder.Services.AddHttpClient();
 var assemblies = AppDomain.CurrentDomain.GetAssemblies()
                .Where(x => !string.IsNullOrEmpty(x.FullName) && x.FullName.Contains("DncyTemplate", StringComparison.OrdinalIgnoreCase));
@@ -61,7 +59,6 @@ builder.Services.AddApplicationModule(builder.Configuration, assemblies);
 builder.Services.AddInfraModule(builder.Configuration);
 builder.Services.AddDomainModule();
 
-// ºóÌ¨·şÎñ
 builder.Services.AddHostedService<EfCoreMigrationHostService>();
 
 // FluentValidation
@@ -69,14 +66,13 @@ builder.Services.AddFluentValidationAutoValidation(configs =>
 {
 }).AddValidatorsFromAssemblies(assemblies);
 
-// ËÙÂÊÏŞÖÆ
 builder.Services.AddRateLimiter(options =>
         {
             options.OnRejected = async (context, cancelToken) =>
             {
                 var l = context.HttpContext.RequestServices.GetService<IStringLocalizer<SharedResource>>();
                 context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
-                context.HttpContext.Response.Headers.Append("Retry-After", new StringValues("1")); // TODO ¸ù¾İ¾ßÌåÇé¿ö·µ»Ø
+                context.HttpContext.Response.Headers.Append("Retry-After", new StringValues("1")); // TODO ï¿½ï¿½ï¿½İ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 context.HttpContext.Response.ContentType = "text/html; charset=utf-8";
                 var res = ResultDto.TooManyRequest();
                 res.Message = l[res.Message];
@@ -116,21 +112,21 @@ builder.Services.ConfigureTenancy(builder.Configuration);
 
 #endregion
 
-Log.Information("[{appName}]·şÎñ×¢²áÍê±Ï...", appName);
+Log.Information("[{appName}]åº”ç”¨æœåŠ¡æ³¨å†Œå®Œæ¯•...", appName);
 
 var app = builder.Build();
 
-Log.Information("[{appName}]¹¹½¨WebApplication³É¹¦...", appName);
+Log.Information("[{appName}]åº”ç”¨æ„å»ºå®Œæ¯•...", appName);
 
 
 
-#region ÖĞ¼ä¼ş×¢²á
+#region ä¸­é—´ä»¶
 var endPointUrl = Environment.GetEnvironmentVariable("ASPNETCORE_URLS");
 if (!string.IsNullOrEmpty(endPointUrl))
 {
     Log.Logger.Information("ASPNETCORE_URLS: {endPointUrl}", endPointUrl);
 }
-Log.Logger.Information("NET¿ò¼Ü°æ±¾: {@version}", System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription);
+Log.Logger.Information("NETï¿½ï¿½Ü°æ±¾: {@version}", System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription);
 
 app.UseResponseCompression();
 app.UseForwardedHeaders()
@@ -165,11 +161,7 @@ app.UseCurrentUserAccessor();
 app.UseRouting();
 app.UseRateLimiter();
 app.UseAuthorization();
-
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapDefaultControllerRoute();
-});
+app.MapDefaultControllerRoute();
 
 app.MapSystemHealthChecks();
 
@@ -178,4 +170,4 @@ app.MapSystemHealthChecks();
 
 
 app.Run();
-Log.Information("[{appName}]Ó¦ÓÃÒÑÆô¶¯...", appName);
+Log.Information("[{appName}]åº”ç”¨å¯åŠ¨å®Œæ¯•...", appName);

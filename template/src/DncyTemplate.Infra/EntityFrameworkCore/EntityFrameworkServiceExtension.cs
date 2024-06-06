@@ -44,7 +44,7 @@ public static class EntityFrameworkServiceExtension
 #if DEBUG
             optionsBuilder.EnableSensitiveDataLogging();
 #endif
-        },ServiceLifetime.Scoped);
+        }, ServiceLifetime.Scoped);
 
         service.AddDefaultRepository(contextTypes);
         service.ApplyEntityDefaultNavicationProperty();

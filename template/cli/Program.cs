@@ -50,6 +50,21 @@ Console.WriteLine($"Aspire： {hasAspire}");
 #if DEBUG
 dir = Path.Combine(dir, "TempDemo");
 #endif
+if (string.IsNullOrEmpty(name))
+{
+    Console.WriteLine("项目名称不能为空");
+    return;
+}
+string[] unsupportChars= new string[] { " ", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "+", "=", "{", "}", "[", "]", "|", "\\", ":", ";", "\"", "'", "<", ">", ",", ".", "?", "/", " " };
+if (unsupportChars.Any(x=>name.Contains(x)))
+{
+    Console.WriteLine("项目名称含有特殊字符,将被替换为‘_’");
+    name = name.Replace(" ", "_");
+    foreach (var item in unsupportChars)
+    {
+        name = name.Replace(item, "_");
+    }
+}
 
 var options = new CliOption
 {
@@ -96,5 +111,7 @@ static void ShowBot()
               """;
     Console.WriteLine(bot);
 }
+
+
 
 
