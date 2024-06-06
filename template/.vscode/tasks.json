@@ -1,0 +1,35 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build MVC",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "${workspaceFolder}/src/DncyTemplate.Mvc/DncyTemplate.Mvc.csproj"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "build API",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "${workspaceFolder}/src/DncyTemplate.Api/DncyTemplate.Api.csproj"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "build BlazorServer",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "${workspaceFolder}/src/DncyTemplate.BlazorServer/DncyTemplate.BlazorServer.csproj"
+      ],
+      "problemMatcher": "$msCompile"
+    }
+  ]
+}

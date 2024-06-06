@@ -1,0 +1,59 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch MVC",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build MVC",
+      "program": "${workspaceFolder}/src/DncyTemplate.Mvc/bin/Debug/net8.0/DncyTemplate.Mvc.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/src/DncyTemplate.Mvc",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/src/DncyTemplate.Mvc/Views"
+      }
+    },
+    {
+      "name": "Launch API",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build API",
+      "program": "${workspaceFolder}/src/DncyTemplate.Api/bin/Debug/net8.0/DncyTemplate.Api.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/src/DncyTemplate.Api",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    {
+      "name": "Launch BlazorServer",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build BlazorServer",
+      "program": "${workspaceFolder}/src/DncyTemplate.BlazorServer/bin/Debug/net8.0/DncyTemplate.BlazorServer.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/src/DncyTemplate.BlazorServer",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  ]
+}
