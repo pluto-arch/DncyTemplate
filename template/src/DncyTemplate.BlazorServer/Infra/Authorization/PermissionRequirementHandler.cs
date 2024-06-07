@@ -2,25 +2,24 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 
-namespace DncyTemplate.BlazorServer.Infra.Authorization
+namespace DncyTemplate.BlazorServer;
+
+public class PermissionRequirementHandler : AuthorizationHandler<OperationAuthorizationRequirement>
 {
-    public class PermissionRequirementHandler : AuthorizationHandler<OperationAuthorizationRequirement>
+    private readonly IPermissionChecker _permissionChecker;
+
+    public PermissionRequirementHandler(IPermissionChecker permissionChecker)
     {
-        private readonly IPermissionChecker _permissionChecker;
+        _permissionChecker = permissionChecker;
+    }
 
-        public PermissionRequirementHandler(IPermissionChecker permissionChecker)
+
+    /// <inheritdoc />
+    protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, OperationAuthorizationRequirement requirement)
+    {
+        if (await _permissionChecker.IsGrantedAsync(context.User, requirement.Name))
         {
-            _permissionChecker = permissionChecker;
-        }
-
-
-        /// <inheritdoc />
-        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, OperationAuthorizationRequirement requirement)
-        {
-            if (await _permissionChecker.IsGrantedAsync(context.User, requirement.Name))
-            {
-                context.Succeed(requirement);
-            }
+            context.Succeed(requirement);
         }
     }
 }

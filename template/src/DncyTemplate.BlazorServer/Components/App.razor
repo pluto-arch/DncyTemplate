@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -13,17 +12,17 @@
 </head>
 
 <body>
-
-    <div id="loading" style="z-index:9999;height:100vh;width:100%;text-align:center;display:flex;justify-content:center;align-items:center">
+    <div id="loading"
+        style="z-index:9999;height:100vh;width:100%;text-align:center;display:flex;justify-content:center;align-items:center">
         <div class="loader"></div>
     </div>
-    <Routes @rendermode="InteractiveServer"/>
+    <Routes @rendermode="InteractiveServer" />
     <script src="_framework/blazor.web.js"></script>
     <script>
         window.onload = () => {
             setTimeout(() => {
                 document.getElementById('loading').style.display = 'none';
-            },500)
+            }, 500)
         };
     </script>
 </body>

@@ -1,6 +1,5 @@
 ﻿@page "/counter"
-@using Microsoft.JSInterop
-@inject IJSRuntime JS
+@rendermode InteractiveServer
 
 <PageTitle>Counter</PageTitle>
 
@@ -10,17 +9,11 @@
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
-
 @code {
     private int currentCount = 0;
 
     private void IncrementCount()
     {
         currentCount++;
-        if (currentCount > 5)
-        {
-            throw new InvalidOperationException("Current count is too big!");
-        }
     }
-
 }

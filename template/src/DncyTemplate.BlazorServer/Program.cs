@@ -1,19 +1,13 @@
 using System.IO.Compression;
-using DncyTemplate.Application;
+using DncyTemplate.BlazorServer;
 using DncyTemplate.BlazorServer.Components;
-using DncyTemplate.BlazorServer.Infra;
-using DncyTemplate.BlazorServer.Infra.Authorization;
-using DncyTemplate.BlazorServer.Infra.HealthChecks;
-using DncyTemplate.BlazorServer.Infra.LocalizerSetup;
-using DncyTemplate.BlazorServer.Infra.LogSetup;
-using DncyTemplate.BlazorServer.Infra.Tenancy;
-using DncyTemplate.Domain;
-using DncyTemplate.Infra;
-using DncyTemplate.Infra.EntityFrameworkCore.Migrations;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.FluentUI.AspNetCore.Components;
 using Serilog;
-
+using DncyTemplate.Domain;
+using DncyTemplate.Infra;
+using DncyTemplate.Application;
+using DncyTemplate.Infra.EntityFrameworkCore.Migrations;
 
 string appName = "DncyTemplate.Blazor";
 
@@ -24,13 +18,13 @@ Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(logConfig)
     .Enrich.With<ActivityEnricher>()
     .CreateLogger();
-Log.Information("[{appName}]日志配置完毕...", appName);
-
+Log.Information("[{appName}]鏃ュ織閰嶇疆瀹屾瘯...", appName);
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog(dispose: true);
+builder.Configuration.AddJsonFile("serilogsetting.json", false, true);
 
-
+// Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
@@ -63,7 +57,6 @@ builder.Services.Configure<BrotliCompressionProviderOptions>(options =>
 });
 #endregion
 
-
 builder.Services.AddProblemDetails();
 builder.Services.AddHttpClient();
 var assemblies = AppDomain.CurrentDomain.GetAssemblies()
@@ -73,61 +66,61 @@ builder.Services.AddApplicationModule(builder.Configuration, assemblies);
 builder.Services.AddInfraModule(builder.Configuration);
 builder.Services.AddDomainModule();
 
-// 后台服务
 builder.Services.AddHostedService<EfCoreMigrationHostService>();
 
 
 builder.Services.ConfigureAuthorization();
 builder.Services.ConfigureHealthCheck(builder.Configuration);
 builder.Services.AddAppLocalization();
+
+
 #if Tenant
 builder.Services.ConfigureTenancy(builder.Configuration);
 #endif
 
-Log.Information("[{appName}]服务注册完毕...", appName);
+Log.Information("[{appName}]鏈嶅姟娉ㄥ唽瀹屾瘯...", appName);
 var app = builder.Build();
-Log.Information("[{appName}]构建WebApplication成功...", appName);
+
+Log.Information("[{appName}]搴旂敤鏋勫缓瀹屾瘯...", appName);
+
 
 var endPointUrl = Environment.GetEnvironmentVariable("ASPNETCORE_URLS");
 if (!string.IsNullOrEmpty(endPointUrl))
 {
     Log.Logger.Information("ASPNETCORE_URLS: {endPointUrl}", endPointUrl);
 }
-Log.Logger.Information("NET框架版本: {@version}", System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription);
+Log.Logger.Information("NET鐜: {@version}", System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription);
+
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Error", createScopeForErrors: true);
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
+}
+else
+{
+    app.UseDeveloperExceptionPage();
+}
+app.UseStatusCodePagesWithReExecute("/StatusCode/{0}");
 
 app.UseResponseCompression();
 app.UseForwardedHeaders()
     .UseCertificateForwarding()
     .UseResponseCaching();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseDeveloperExceptionPage();
-}
-else
-{
-    app.UseExceptionHandler("/Error", createScopeForErrors: true);
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
-
-app.UseStatusCodePagesWithReExecute("/StatusCode/{0}");
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
-
 app.UseAntiforgery();
+
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
-
 app.MapSystemHealthChecks();
 
 app.Run();
-Log.Information("[{appName}]应用已启动...", appName);
+Log.Information("[{appName}]搴旂敤鍚姩瀹屾瘯...", appName);

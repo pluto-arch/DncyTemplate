@@ -1,8 +1,7 @@
-﻿@using DncyTemplate.BlazorServer.Components.Pages.Account
+﻿@using DncyTemplate.BlazorServer.Components.Pages.Account.Components
 
-<FluentStack Orientation="Orientation.Horizontal"
-             HorizontalAlignment="HorizontalAlignment.Left"
-             VerticalAlignment="VerticalAlignment.Center">
+<FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Left"
+    VerticalAlignment="VerticalAlignment.Center">
 
     <div class="logo">
         <a>Dotnetydd Blazor Web</a>
@@ -18,7 +17,7 @@
 </FluentStack>
 
 
-@code{
+@code {
     [Parameter]
     public EventCallback OnSideCollapsed { get; set; }
 

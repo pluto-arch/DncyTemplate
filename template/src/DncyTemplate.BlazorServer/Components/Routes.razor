@@ -17,7 +17,8 @@
                         @if (context.User.Identity?.IsAuthenticated == false)
                         {
                             {
-                                NavManager.NavigateTo("/login?returnUrl=" + HttpUtility.UrlEncode(NavManager.ToBaseRelativePath(NavManager.Uri)), forceLoad: true);
+                                NavManager.NavigateTo("/login?returnUrl=" +
+                                HttpUtility.UrlEncode(NavManager.ToBaseRelativePath(NavManager.Uri)), forceLoad: true);
                             }
                         }
                         else
@@ -30,7 +31,7 @@
             <NotFound>
                 <PageTitle>Not found</PageTitle>
                 <LayoutView Layout="@typeof(Layout.NullLayout)">
-                    <NotFound />
+                    <NotFoundError />
                 </LayoutView>
             </NotFound>
         </Router>
