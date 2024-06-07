@@ -22,8 +22,6 @@ namespace DncyTemplate.Api.Infra
                 {
                     options.ModelBinderProviders.Insert(0, new SortingBinderProvider());
 
-                    options.Filters.Add<ActionExecptionFilter>();
-
                     //options.Filters.Add<AuditLogActionFilter>();
 
                     // 本地化 默认的模型验证信息
@@ -38,6 +36,7 @@ namespace DncyTemplate.Api.Infra
                 })
                 .ConfigureApiBehaviorOptions(options =>
                 {
+                    // 模型绑定错误信息
                     options.InvalidModelStateResponseFactory = ModelBindExceptionHandler.Handler;
                 })
                 .AddControllersAsServices()

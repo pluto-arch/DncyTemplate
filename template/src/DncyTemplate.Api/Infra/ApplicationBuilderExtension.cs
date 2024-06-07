@@ -31,10 +31,15 @@ namespace DncyTemplate.Api.Infra
         /// </summary>
         /// <param name="app"></param>
         /// <returns></returns>
-        public static IApplicationBuilder UseExceptionHandle(this IApplicationBuilder app)
+        public static IApplicationBuilder UseCustomExceptionHandle(this IApplicationBuilder app)
         {
+            // 使用problemDetails
+            // app.UseExceptionHandler(exceptionHandlerApp => exceptionHandlerApp.Run(async context => await Results.Problem().ExecuteAsync(context)));
+
+
             app.UseExceptionHandler(exceptionHandlerApp =>
             {
+                // 使用自定义异常处理
                 exceptionHandlerApp.Run(HttpPipelineExceptionHandler.Handler);
             });
             return app;

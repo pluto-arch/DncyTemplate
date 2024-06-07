@@ -121,21 +121,23 @@ app.UseResponseCompression();
 app.UseForwardedHeaders()
     .UseCertificateForwarding();
 app.UseHttpRequestLogging();
+
+app.UseCustomExceptionHandle();
+
 app.UseCors(AppConstant.DEFAULT_CORS_NAME);
 if (app.Environment.IsEnvironment(AppConstant.EnvironmentName.DEV))
 {
-    app.UseExceptionHandle();
     app.UseCustomSwagger();
 }
 else
 {
-    app.UseExceptionHandle();
-    // TODO Notice: UseHsts, UseHttpsRedirection are not necessary if using reverse proxy with ssl, like nginx with ssl proxy
     app.UseHsts();
 }
 
-
 app.UseHttpsRedirection();
+
+
+
 app.UseAuthentication();
 #if Tenant
 app.UseMultiTenancy();
