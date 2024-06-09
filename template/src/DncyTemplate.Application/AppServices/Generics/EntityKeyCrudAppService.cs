@@ -15,8 +15,8 @@ namespace DncyTemplate.Application.AppServices.Generics
         {
         }
 
-        protected override async Task<TEntity> GetEntityByIdAsync(TKey id) => await _repository.GetAsync(id);
+        protected override async Task<TEntity> GetEntityByIdAsync(TKey id, CancellationToken cancellationToken = default) => await _repository.GetAsync(id, cancellationToken);
 
-        protected override async Task DeleteByIdAsync(TKey id) => await _repository.DeleteAsync(id, true);
+        protected override async Task DeleteByIdAsync(TKey id, CancellationToken cancellationToken = default) => await _repository.DeleteAsync(id, true, cancellationToken);
     }
 }

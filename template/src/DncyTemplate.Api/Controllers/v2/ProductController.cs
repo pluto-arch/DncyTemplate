@@ -95,7 +95,7 @@ namespace DncyTemplate.Api.Controllers.v2
         [Produces(typeof(ProductDto))]
         public async Task<ResultDto> GetByNameAsync([Required] string name)
         {
-            var res = await _productAppService.GetByName(name);
+            var res = await _productAppService.GetByNameAsync(name);
             return res.Match<ResultDto>(
                 this.Success,
                 this.Error
@@ -110,7 +110,7 @@ namespace DncyTemplate.Api.Controllers.v2
         [Produces(typeof(ProductDto))]
         public async Task<ResultDto> GetByNameWithDapperAsync([Required] string name)
         {
-            var res = await _productAppService.GetByNameWithDapper(name);
+            var res = await _productAppService.GetByNameWithDapperAsync(name);
             return res.Match<ResultDto>(
                 this.Success,
                 this.Error

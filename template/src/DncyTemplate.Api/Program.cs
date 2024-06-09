@@ -5,6 +5,8 @@ using DncyTemplate.Api.Infra.Authorization;
 using DncyTemplate.Api.Infra.HealthChecks;
 using DncyTemplate.Api.Infra.LocalizerSetup;
 using DncyTemplate.Api.Infra.LogSetup;
+using DncyTemplate.Api.Infra.RateLimits;
+
 #if Tenant
 using DncyTemplate.Api.Infra.Tenancy;
 #endif
@@ -13,14 +15,11 @@ using DncyTemplate.Application.Models;
 using DncyTemplate.Domain;
 using DncyTemplate.Infra;
 using DncyTemplate.Infra.EntityFrameworkCore.Migrations;
-using Dotnetydd.Tools.Extension;
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using Microsoft.Extensions.Localization;
-using Microsoft.Extensions.Primitives;
+using Microsoft.AspNetCore.Builder;
 
 
-string AppName = "DncyTemplate.Api";
 
 var logConfig = new ConfigurationBuilder()
             .AddJsonFile("serilogsetting.json", false, true)
@@ -29,7 +28,8 @@ Log.Logger = new LoggerConfiguration()
             .ReadFrom.Configuration(logConfig)
             .Enrich.With<ActivityEnricher>()
             .CreateLogger();
-Log.Information("[{AppName}]日志配置完毕...", AppName);
+
+Log.Information("日志配置完毕...");
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog(dispose: true);
@@ -39,75 +39,58 @@ builder.Host.UseSerilog(dispose: true);
 builder.AddServiceDefaults();
 #endif
 
-// Add services to the container.
-builder.Services.AddProblemDetails();
-
-
 #region 服务注册
-// 内存缓存
 builder.Services.AddMemoryCache(options =>
 {
     options.SizeLimit = 10240;
 });
 
-// 应用、基础设施、领域层注册
+#region 应用、基础设施、领域层注册
 builder.Services.AddHttpClient();
 var assemblies = AppDomain.CurrentDomain.GetAssemblies()
-               .Where(x => !string.IsNullOrEmpty(x.FullName) && x.FullName.Contains("DncyTemplate", StringComparison.OrdinalIgnoreCase));
+    .Where(x => !string.IsNullOrEmpty(x.FullName) && x.FullName.Contains("DncyTemplate", StringComparison.OrdinalIgnoreCase));
 
 builder.Services.AddApplicationModule(builder.Configuration, assemblies);
 builder.Services.AddInfraModule(builder.Configuration);
 builder.Services.AddDomainModule();
-
-// 后台服务
 builder.Services.AddHostedService<EfCoreMigrationHostService>();
+#endregion
 
-// FluentValidation
+
+#region FluentValidation
 builder.Services.AddFluentValidationAutoValidation(configs =>
 {
 }).AddValidatorsFromAssemblies(assemblies);
 
-// 速率限制
-builder.Services.AddRateLimiter(options =>
-{
-    options.OnRejected = async (context, cancelToken) =>
-    {
-        var l = context.HttpContext.RequestServices.GetService<IStringLocalizer<SharedResources>>();
-        context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
-        context.HttpContext.Response.Headers.Append("Retry-After", new StringValues("1")); // TODO 根据具体情况返回
-        context.HttpContext.Response.ContentType = AppConstant.DEFAULT_CONTENT_TYPE;
-        var res = ResultDto.TooManyRequest();
-        res.Message = l[res.Message];
-        await context.HttpContext.Response.WriteAsJsonAsync(res, cancellationToken: cancelToken);
-    };
-    options.AddPolicy("home.RateLimit_Test", httpContext =>
-        RateLimitPartition.GetFixedWindowLimiter(httpContext.Connection.RemoteIpAddress?.ToNumber().ToString(),
-            partition => new FixedWindowRateLimiterOptions
-            {
-                AutoReplenishment = true,
-                PermitLimit = 2,
-                Window = TimeSpan.FromSeconds(10)
-            }));
+#endregion
 
-});
 
+#region 速率限制
+
+builder.Services.ConfigAppRateLimit(builder.Configuration);
+
+#endregion
+
+
+#region web component
 builder.Services.ConfigureWebInfra();
 builder.Services.ConfigureSwagger(builder.Environment);
 builder.Services.ConfigureAuthorization();
 builder.Services.ConfigureHealthCheck(builder.Configuration);
+#endregion
+
 
 #if Tenant
 builder.Services.ConfigureTenancy(builder.Configuration);
 #endif
 
 #endregion
-Log.Information("[{AppName}]服务注册完毕...", AppName);
 
+
+Log.Information("服务注册完毕...");
 var app = builder.Build();
+Log.Information("构建WebApplication成功...");
 
-Log.Information("[{AppName}]构建WebApplication成功...", AppName);
-
-#region 中间件注册
 var endPointUrl = Environment.GetEnvironmentVariable("ASPNETCORE_URLS");
 if (!string.IsNullOrEmpty(endPointUrl))
 {
@@ -115,6 +98,7 @@ if (!string.IsNullOrEmpty(endPointUrl))
 }
 Log.Logger.Information("NET框架版本: {@version}", System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription);
 
+#region 中间件注册
 
 app.UseAppLocalization();
 app.UseResponseCompression();
@@ -125,6 +109,8 @@ app.UseHttpRequestLogging();
 app.UseCustomExceptionHandle();
 
 app.UseCors(AppConstant.DEFAULT_CORS_NAME);
+app.UserResponseHeaderAuthTraceId();
+
 if (app.Environment.IsEnvironment(AppConstant.EnvironmentName.DEV))
 {
     app.UseCustomSwagger();
@@ -147,13 +133,12 @@ app.UseMultiTenancy();
 app.UseCurrentUserAccessor();
 
 app.UseRouting();
-app.UseRateLimiter();
 app.UseAuthorization();
+app.UseRateLimiter();
 app.MapDefaultControllerRoute();
 app.MapSystemHealthChecks();
 
 #endregion
 
-
 app.Run();
-Log.Information("[{AppName}]应用已启动...", AppName);
+Log.Information("应用已启动...");

@@ -22,42 +22,42 @@ namespace DncyTemplate.Application.AppServices.Generics
             _mapper = mapper;
         }
 
-        public virtual async Task<TDto> CreateAsync(TCreateRequest requestModel)
+        public virtual async Task<TDto> CreateAsync(TCreateRequest requestModel, CancellationToken cancellationToken = default)
         {
             var entity = _mapper.Map<TEntity>(requestModel);
-            await _repository.InsertAsync(entity, true);
-            await _uow.CompleteAsync();
+            await _repository.InsertAsync(entity, true, cancellationToken);
+            await _uow.CompleteAsync(cancellationToken);
             return _mapper.Map<TDto>(entity);
         }
 
-        public async Task<TDto> UpdateAsync(TKey id, TUpdateRequest requestModel)
+        public async Task<TDto> UpdateAsync(TKey id, TUpdateRequest requestModel, CancellationToken cancellationToken = default)
         {
-            TEntity entity = await GetEntityByIdAsync(id);
+            TEntity entity = await GetEntityByIdAsync(id, cancellationToken);
             _mapper.Map(requestModel, entity);
-            await _repository.UpdateAsync(entity, true);
-            await _uow.CompleteAsync();
+            await _repository.UpdateAsync(entity, true, cancellationToken);
+            await _uow.CompleteAsync(cancellationToken);
             return _mapper.Map<TDto>(entity);
         }
 
-        public virtual async Task<TDto> GetAsync(TKey id) => _mapper.Map<TDto>(await GetEntityByIdAsync(id));
+        public virtual async Task<TDto> GetAsync(TKey id, CancellationToken cancellationToken = default) => _mapper.Map<TDto>(await GetEntityByIdAsync(id, cancellationToken));
 
 
-        public virtual async Task<IPagedList<TListItemDto>> GetListAsync(TGetListRequest model)
+        public virtual async Task<IPagedList<TListItemDto>> GetListAsync(TGetListRequest model, CancellationToken cancellationToken = default)
         {
             IQueryable<TEntity> query = CreateFilteredQuery(model);
-            int totalCount = await _repository.AsyncExecuter.CountAsync(query);
+            int totalCount = await _repository.AsyncExecuter.CountAsync(query, cancellationToken);
             query = ApplySorting(query, model);
             query = ApplyPaging(query, model);
-            var entities = await _repository.AsyncExecuter.ToListAsync(query);
+            var entities = await _repository.AsyncExecuter.ToListAsync(query, cancellationToken);
             return new PagedList<TListItemDto>(_mapper.Map<List<TListItemDto>>(entities), model.PageNo, model.PageSize, totalCount);
         }
 
 
-        public virtual async Task DeleteAsync(TKey id) => await DeleteByIdAsync(id);
+        public virtual async Task DeleteAsync(TKey id, CancellationToken cancellationToken = default) => await DeleteByIdAsync(id, cancellationToken);
 
 
 
-        protected abstract Task<TEntity> GetEntityByIdAsync(TKey id);
+        protected abstract Task<TEntity> GetEntityByIdAsync(TKey id, CancellationToken cancellationToken = default);
 
         protected virtual IQueryable<TEntity> CreateFilteredQuery(TGetListRequest requestModel) => _repository.QuerySet;
 
@@ -97,6 +97,6 @@ namespace DncyTemplate.Application.AppServices.Generics
             return query;
         }
 
-        protected abstract Task DeleteByIdAsync(TKey id);
+        protected abstract Task DeleteByIdAsync(TKey id, CancellationToken cancellationToken = default);
     }
 }

@@ -30,6 +30,7 @@ namespace DotnetyddTemplateCli
         private string _aspireHostPath = "";
         private string _aspireServerDefaultPath = "";
         private string _testProjectPath = "";
+        private string _apiEndpointProjectPath = "";
 
 
         public CliService CreateProject()
@@ -47,6 +48,7 @@ namespace DotnetyddTemplateCli
             _aspireHostPath = Path.Combine(dir, "aspire", $"{name}.AppHost", $"{name}.AppHost.csproj");
             _aspireServerDefaultPath = Path.Combine(dir, "aspire", $"{name}.ServiceDefaults", $"{name}.ServiceDefaults.csproj");
 
+            _apiEndpointProjectPath=Path.Combine(dir, "src", $"{name}.ApiEndpoint", $"{name}.ApiEndpoint.csproj");
 
             _testProjectPath = Path.Combine(dir, "test", $"{name}.UnitTest", $"{name}.UnitTest.csproj");
 
@@ -63,6 +65,11 @@ namespace DotnetyddTemplateCli
             if (uiselect.Contains("api"))
             {
                 commandBuilder.Append($" {_apiPath} ");
+            }
+
+            if (uiselect.Contains("FastEndpoint"))
+            {
+                commandBuilder.Append($" {_aspireServerDefaultPath} ");
             }
 
             if (uiselect.Contains("mvc"))

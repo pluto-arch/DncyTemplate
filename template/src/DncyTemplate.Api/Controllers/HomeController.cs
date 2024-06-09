@@ -1,4 +1,7 @@
-﻿using DncyTemplate.Application.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Runtime.InteropServices.ComTypes;
+using DncyTemplate.Application.Models;
+using DncyTemplate.Application.Permission;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Localization;
@@ -8,36 +11,48 @@ namespace DncyTemplate.Api.Controllers
     [Route("api/[controller]/[action]")]
     [AutoResolveDependency]
     [ApiController]
-    [AllowAnonymous]
     public partial class HomeController : ControllerBase, IResponseWraps
     {
-        [AutoInject]
-        private readonly IStringLocalizer<SharedResources> _sharedres;
-
-
         [HttpGet]
-        public IActionResult TestLocalize(string key)
+        [AllowAnonymous]
+        public ResultDto Index()
         {
-            var text = _sharedres[key];
-            return Ok(text);
+            ThrowHelper.ThrowInvalidOperationException("eww");
+            return this.Success("home index");
         }
 
+
+        /// <summary>
+        /// 401测试接口
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        public ResultDto TestActionException(string name)
+        [Authorize]
+        public ResultDto UnAuthDemo()
         {
-            ThrowHelper.ThrowArgumentException(nameof(name), "name 不能 为空");
-            return this.Success<string>(name);
+            return this.Success("home index");
         }
 
         /// <summary>
-        /// 限流测试
+        /// 403 测试接口
         /// </summary>
         /// <returns></returns>
-        [HttpGet("/rate_limit")]
-        [EnableRateLimiting("home.RateLimit_Test")]
-        public ResultDto RateLimit()
+        [HttpGet]
+        [Authorize(policy:ProductPermission.Product.Default)]
+        public ResultDto ForbidDemo()
         {
-            return this.Success<string>("ok");
+            return this.Success("home index");
+        }
+
+
+        /// <summary>
+        /// 模型绑定失败 测试接口
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ResultDto BadRequestDemo([MinLength(5,ErrorMessage = "minlength is 4")]string key)
+        {
+            return this.Success("home index");
         }
     }
 

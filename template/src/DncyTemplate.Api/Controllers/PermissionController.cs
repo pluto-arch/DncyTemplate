@@ -3,12 +3,14 @@ using DncyTemplate.Application.Permission.Models;
 using Dotnetydd.Permission.Definition;
 using Dotnetydd.Permission.Models;
 using Dotnetydd.Permission.PermissionGrant;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DncyTemplate.Api.Controllers
 {
     [Route("api/[controller]")]
     [AutoResolveDependency]
     [ApiController]
+    [Authorize]
     public partial class PermissionController : ControllerBase, IResponseWraps
     {
         [AutoInject]

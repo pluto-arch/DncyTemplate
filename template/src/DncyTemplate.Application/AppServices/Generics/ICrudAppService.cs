@@ -16,37 +16,31 @@ namespace DncyTemplate.Application.AppServices.Generics
         /// <summary>
         /// 根据id获取
         /// </summary>
-        /// <param name="id"></param>
         /// <returns></returns>
-        Task<TDto> GetAsync(TKey id);
+        Task<TDto> GetAsync(TKey id, CancellationToken cancellationToken=default);
 
         /// <summary>
         /// 获取列表
         /// </summary>
-        /// <param name="requestModel"></param>
         /// <returns></returns>
-        Task<IPagedList<TListItemDto>> GetListAsync(TGetListRequest requestModel);
+        Task<IPagedList<TListItemDto>> GetListAsync(TGetListRequest requestModel,CancellationToken cancellationToken=default);
 
         /// <summary>
         /// 根据id删除
         /// </summary>
-        /// <param name="id"></param>
         /// <returns></returns>
-        Task DeleteAsync(TKey id);
+        Task DeleteAsync(TKey id,CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 新增
         /// </summary>
-        /// <param name="requestModel"></param>
         /// <returns></returns>
-        Task<TDto> CreateAsync(TCreateRequest requestModel);
+        Task<TDto> CreateAsync(TCreateRequest requestModel, CancellationToken cancellationToken=default);
 
         /// <summary>
         /// 更新
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="requestModel"></param>
         /// <returns></returns>
-        Task<TDto> UpdateAsync(TKey id, TUpdateRequest requestModel);
+        Task<TDto> UpdateAsync(TKey id, TUpdateRequest requestModel,CancellationToken cancellationToken=default);
     }
 }

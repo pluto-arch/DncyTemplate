@@ -61,8 +61,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Remove="Infra\ApiDoc\index.html" />
-		<EmbeddedResource Include="Infra\ApiDoc\index.html" />
 		<EmbeddedResource Update="Resources\DataAnnotation.resx">
 	    <Generator>PublicResXFileCodeGenerator</Generator>
 	    <LastGenOutput>DataAnnotation.Designer.cs</LastGenOutput>

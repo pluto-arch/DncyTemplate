@@ -1,7 +1,7 @@
 ﻿#if Tenant
 using Dotnetydd.MultiTenancy.AspNetCore;
 
-namespace DncyTemplate.Api.Infra.Tenancy
+namespace DncyTemplate.ApiEndpoint.Infra.Tenancy
 {
     public static class TenancyApplicationBuilderExtension
     {

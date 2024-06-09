@@ -9,7 +9,6 @@ namespace DncyTemplate.Api.Infra
 {
     public static class InfraHostingStartup
     {
-        /// <inheritdoc />
         public static void ConfigureWebInfra(this IServiceCollection services)
         {
             #region 本地化
