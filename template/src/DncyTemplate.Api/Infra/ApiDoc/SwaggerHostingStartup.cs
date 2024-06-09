@@ -1,6 +1,4 @@
-﻿using Microsoft.OpenApi.Models;
-
-namespace DncyTemplate.Api.Infra.ApiDoc
+﻿namespace DncyTemplate.Api.Infra.ApiDoc
 {
     public static class SwaggerHostingStartup
     {

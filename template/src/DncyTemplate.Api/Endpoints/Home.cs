@@ -1,17 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Runtime.InteropServices.ComTypes;
 using DncyTemplate.Application.Models;
 using DncyTemplate.Application.Permission;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.RateLimiting;
-using Microsoft.Extensions.Localization;
 
 namespace DncyTemplate.Api.Controllers
 {
     [Route("api/[controller]/[action]")]
     [AutoResolveDependency]
     [ApiController]
-    public partial class HomeController : ControllerBase, IResponseWraps
+    public partial class Home : EndPointBase
     {
         [HttpGet]
         [AllowAnonymous]
@@ -38,7 +35,7 @@ namespace DncyTemplate.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Authorize(policy:ProductPermission.Product.Default)]
+        [Authorize(policy: ProductPermission.Product.Default)]
         public ResultDto ForbidDemo()
         {
             return this.Success("home index");
@@ -50,7 +47,7 @@ namespace DncyTemplate.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ResultDto BadRequestDemo([MinLength(5,ErrorMessage = "minlength is 4")]string key)
+        public ResultDto BadRequestDemo([MinLength(5, ErrorMessage = "minlength is 4")] string key)
         {
             return this.Success("home index");
         }

@@ -6,7 +6,6 @@ using DncyTemplate.Application.AppServices.Product;
 using DncyTemplate.Application.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.ComponentModel.DataAnnotations;
-using Asp.Versioning;
 using AppModelAlias = DncyTemplate.Application.Models;
 
 namespace DncyTemplate.Api.Controllers.v1
@@ -17,7 +16,7 @@ namespace DncyTemplate.Api.Controllers.v1
     [ApiVersion("1.0")]
     [AutoResolveDependency]
     [Authorize]
-    public partial class ProductController : ControllerBase, IResponseWraps
+    public partial class Product : EndPointBase
     {
         [AutoInject]
         private readonly IProductAppService _productsRepository;

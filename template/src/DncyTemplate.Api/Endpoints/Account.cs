@@ -9,7 +9,7 @@ namespace DncyTemplate.Api.Controllers
 {
     [Route("api/[Controller]")]
     [ApiController]
-    public class AccountController : ControllerBase, IResponseWraps
+    public class Account : EndPointBase
     {
         private static readonly List<dynamic> users =
         [

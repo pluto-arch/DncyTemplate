@@ -67,7 +67,7 @@ namespace DncyTemplate.ApiEndpoint.Infra
         /// </summary>
         /// <param name="app"></param>
         /// <returns></returns>
-        public static IApplicationBuilder UseCustomExceptionHandle(this IApplicationBuilder app)
+        public static IApplicationBuilder UseCustomizeExceptionHandle(this IApplicationBuilder app)
         {
             // 使用problemDetails
             app.UseExceptionHandler(options =>

@@ -39,7 +39,7 @@ namespace DncyTemplate.Api.Infra.ApiDoc
                     {
                         Reference = new OpenApiReference
                         {
-                            Id = "Bearer", 
+                            Id = "Bearer",
                             Type = ReferenceType.SecurityScheme
                         }
                     },

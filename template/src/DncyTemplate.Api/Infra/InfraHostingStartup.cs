@@ -21,12 +21,20 @@ namespace DncyTemplate.Api.Infra
                 {
                     options.ModelBinderProviders.Insert(0, new SortingBinderProvider());
 
+                    // 自定义controller 名称转换器(路由上)
+                    //options.Conventions.Add(new CustomControllerNameConvention());
+
                     //options.Filters.Add<AuditLogActionFilter>();
 
                     // 本地化 默认的模型验证信息
                     var l = services.BuildServiceProvider().GetService<IStringLocalizerFactory>();
                     // 默认的数据验证本地化
                     options.SetUpDefaultDataAnnotation(l);
+                })
+                .ConfigureApplicationPartManager(manager =>
+                {
+                    // 自定义controller类型名称
+                    manager.FeatureProviders.Add(new CustomControllerFeatureProvider());
                 })
                 .AddDataAnnotationsLocalization(options =>
                 {

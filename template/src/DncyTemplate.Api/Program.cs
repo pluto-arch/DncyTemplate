@@ -1,6 +1,4 @@
-﻿using System.Threading.RateLimiting;
-using DncyTemplate.Api;
-using DncyTemplate.Api.Infra.ApiDoc;
+﻿using DncyTemplate.Api.Infra.ApiDoc;
 using DncyTemplate.Api.Infra.Authorization;
 using DncyTemplate.Api.Infra.HealthChecks;
 using DncyTemplate.Api.Infra.LocalizerSetup;
@@ -11,13 +9,11 @@ using DncyTemplate.Api.Infra.RateLimits;
 using DncyTemplate.Api.Infra.Tenancy;
 #endif
 using DncyTemplate.Application;
-using DncyTemplate.Application.Models;
 using DncyTemplate.Domain;
 using DncyTemplate.Infra;
 using DncyTemplate.Infra.EntityFrameworkCore.Migrations;
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Builder;
 
 
 
@@ -106,14 +102,14 @@ app.UseForwardedHeaders()
     .UseCertificateForwarding();
 app.UseHttpRequestLogging();
 
-app.UseCustomExceptionHandle();
+app.UseCustomizeExceptionHandle();
 
 app.UseCors(AppConstant.DEFAULT_CORS_NAME);
 app.UserResponseHeaderAuthTraceId();
 
 if (app.Environment.IsEnvironment(AppConstant.EnvironmentName.DEV))
 {
-    app.UseCustomSwagger();
+    app.UseCustomizeSwagger();
 }
 else
 {

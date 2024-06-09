@@ -1,5 +1,6 @@
 ﻿global using System.Net.Mime;
 global using System.Text;
+global using Asp.Versioning;
 global using CommunityToolkit.Diagnostics;
 global using DncyTemplate.Api.Constants;
 global using DncyTemplate.Api.Infra;
@@ -13,4 +14,3 @@ global using Microsoft.Extensions.Options;
 global using Newtonsoft.Json;
 global using Newtonsoft.Json.Serialization;
 global using Serilog;
-global using Asp.Versioning;

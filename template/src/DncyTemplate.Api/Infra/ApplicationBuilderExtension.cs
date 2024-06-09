@@ -13,7 +13,7 @@ namespace DncyTemplate.Api.Infra
         /// </summary>
         /// <param name="app"></param>
         /// <returns></returns>
-        public static IApplicationBuilder UseCustomSwagger(this IApplicationBuilder app)
+        public static IApplicationBuilder UseCustomizeSwagger(this IApplicationBuilder app)
         {
             app.UseSwagger();
             var versionProvider = app.ApplicationServices.GetRequiredService<IApiVersionDescriptionProvider>();
@@ -58,7 +58,7 @@ namespace DncyTemplate.Api.Infra
         /// </summary>
         /// <param name="app"></param>
         /// <returns></returns>
-        public static IApplicationBuilder UseCustomExceptionHandle(this IApplicationBuilder app)
+        public static IApplicationBuilder UseCustomizeExceptionHandle(this IApplicationBuilder app)
         {
             // 使用problemDetails
             app.UseExceptionHandler(options =>

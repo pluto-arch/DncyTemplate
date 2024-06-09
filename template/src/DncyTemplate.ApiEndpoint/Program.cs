@@ -133,7 +133,7 @@ app.UseHttpRequestLogging();
 
 app.UseCors("allow_all");
 app.UserResponseHeaderAuthTraceId();
-app.UseCustomExceptionHandle();
+app.UseCustomizeExceptionHandle();
 
 
 app.UseAuthentication();

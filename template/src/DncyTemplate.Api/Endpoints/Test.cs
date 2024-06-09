@@ -9,7 +9,7 @@ namespace DncyTemplate.Api.Controllers
     [AutoResolveDependency]
     [ApiController]
     [AllowAnonymous]
-    public partial class TestController : ControllerBase
+    public partial class Test : EndPointBase
     {
         [AutoInject]
         private readonly IStringLocalizer<SharedResources> _sharedres;
@@ -19,7 +19,7 @@ namespace DncyTemplate.Api.Controllers
         public IActionResult TestLocalize(string key)
         {
             var text = _sharedres[key];
-            if (key.Length>3)
+            if (key.Length > 3)
             {
                 throw new InvalidOperationException("1111111");
             }

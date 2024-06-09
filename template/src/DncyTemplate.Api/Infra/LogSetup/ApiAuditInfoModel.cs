@@ -49,6 +49,6 @@
         /// <summary>
         /// 自定义数据
         /// </summary>
-        public string CustomData { get; set; }
+        public string CustomizeData { get; set; }
     }
 }
