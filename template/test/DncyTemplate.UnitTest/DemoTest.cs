@@ -18,8 +18,14 @@ namespace DncyTemplate.UnitTest
             using (tenant.Change(new TenantInfo("T20210602000003", "")))
             {
 #endif
-
                 var productService = ServiceProvider.GetService<IProductAppService>();
+
+                await productService.CreateAsync(new ProductCreateRequest
+                {
+                    Id = "xxx",
+                    Name = "Hello",
+                    Remark = "ddddd"
+                });
 
                 var res = await productService.GetListAsync(new ProductPagedRequest
                 {

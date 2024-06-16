@@ -26,7 +26,7 @@ var hasTenant = Prompt.Confirm(new ConfirmOptions
     DefaultValue = true
 });
 
-var ui = Prompt.MultiSelect("选择Web应用", new[] { "API","API(FastEndpoint)", "MVC", "BlazorServer" });
+var ui = Prompt.MultiSelect("选择Web应用", new[] { "API", "MVC", "BlazorServer" });
 
 
 var hasAspire = Prompt.Confirm(new ConfirmOptions

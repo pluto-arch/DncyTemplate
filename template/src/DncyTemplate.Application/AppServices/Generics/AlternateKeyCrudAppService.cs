@@ -4,6 +4,7 @@ using DncyTemplate.Domain.Collections;
 using DncyTemplate.Domain.Infra;
 using DncyTemplate.Domain.Infra.Repository;
 using DncyTemplate.Uow;
+using Microsoft.EntityFrameworkCore;
 
 namespace DncyTemplate.Application.AppServices.Generics
 {

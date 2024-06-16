@@ -37,8 +37,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DncyTemplate.BlazorServer", "src\DncyTemplate.BlazorServer\DncyTemplate.BlazorServer.csproj", "{45B4044E-999D-46A3-B82D-5450B046BD00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DncyTemplate.ApiEndpoint", "src\DncyTemplate.ApiEndpoint\DncyTemplate.ApiEndpoint.csproj", "{C1B62E86-89E9-4ADE-AB64-3AD463573BBC}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,10 +75,6 @@ Global
 		{45B4044E-999D-46A3-B82D-5450B046BD00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45B4044E-999D-46A3-B82D-5450B046BD00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45B4044E-999D-46A3-B82D-5450B046BD00}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C1B62E86-89E9-4ADE-AB64-3AD463573BBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C1B62E86-89E9-4ADE-AB64-3AD463573BBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C1B62E86-89E9-4ADE-AB64-3AD463573BBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C1B62E86-89E9-4ADE-AB64-3AD463573BBC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -94,7 +88,6 @@ Global
 		{F8187C5F-6210-45AE-89B7-41D2699F6396} = {28AEB72B-1904-4A7C-91B3-8687E78C9B4A}
 		{D94D7C53-6A2B-4E81-983A-A98CD9ED3984} = {81D3B9AD-D2A8-454A-85EB-0966543DCCD7}
 		{45B4044E-999D-46A3-B82D-5450B046BD00} = {F9F945D6-566B-438C-987E-0E2F2D7AF26B}
-		{C1B62E86-89E9-4ADE-AB64-3AD463573BBC} = {F9F945D6-566B-438C-987E-0E2F2D7AF26B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {13E703B7-B02A-46A0-AF31-772D5307D075}

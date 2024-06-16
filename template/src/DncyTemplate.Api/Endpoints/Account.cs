@@ -8,6 +8,8 @@ using Microsoft.IdentityModel.Tokens;
 namespace DncyTemplate.Api.Controllers
 {
     [Route("api/[Controller]")]
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
     [ApiController]
     public class Account : EndPointBase
     {
@@ -16,7 +18,7 @@ namespace DncyTemplate.Api.Controllers
             new
             {
                 Id = 1,
-                Mobile = "18530064433",
+                Mobile = "11111111111",
                 UserName = "admin3",
                 Password = "admin",
                 Role = "admin",
@@ -27,7 +29,7 @@ namespace DncyTemplate.Api.Controllers
             new
             {
                 Id = 2,
-                Mobile = "18530064432",
+                Mobile = "22222222222",
                 UserName = "admin2",
                 Password = "admin",
                 Role = "admin",
@@ -38,7 +40,7 @@ namespace DncyTemplate.Api.Controllers
             new
             {
                 Id = 3,
-                Mobile = "18530064431",
+                Mobile = "33333333333",
                 UserName = "sa",
                 Password = "admin",
                 Role = "SystemAdmin",

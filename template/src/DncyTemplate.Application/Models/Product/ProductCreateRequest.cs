@@ -4,6 +4,8 @@ namespace DncyTemplate.Application.Models.Product;
 
 public class ProductCreateRequest
 {
+    public string Id { get; set; }
+
     [Required(ErrorMessage = "ValueIsRequired")]
     [StringLength(maximumLength: 10, MinimumLength = 3, ErrorMessage = "LengthLimit")]
     [Display(Name = "ProductName")]

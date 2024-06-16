@@ -18,111 +18,66 @@ public static class EntityFrameworkServiceExtension
     /// <summary>
     /// 添加efcore 组件
     /// </summary>
+    /// <remarks>包括efcore dbcontext，默认仓储</remarks>
     /// <returns></returns>
-    internal static IServiceCollection AddEfCoreInfraComponent(this IServiceCollection service, IConfiguration configuration, List<Type> contextTypes)
+    public static IServiceCollection AddEfCoreInfraComponent<TDbContext>(this IServiceCollection service, 
+        Action<IServiceProvider,DbContextOptionsBuilder> optionsAction)
+        where TDbContext:DbContext
     {
-        service.AddSingleton<IConnectionStringResolve, DefaultConnectionStringResolve>();
-        var migrationAssembly = Assembly.GetCallingAssembly().GetName().Name;
-        service.AddDbContextFactory<DncyTemplateDbContext>((serviceProvider, optionsBuilder) =>
-        {
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString(InfraConstantValue.DEFAULT_CONNECTIONSTRING_NAME),
-                sqlOptions =>
-                {
-                    sqlOptions.MigrationsAssembly(migrationAssembly);
-                });
-
-            var mediator = serviceProvider.GetService<IDomainEventDispatcher>() ?? NullDomainEventDispatcher.Instance;
-            optionsBuilder.AddInterceptors(new DataChangeSaveChangesInterceptor(mediator));
-
-#if Tenant
-            //多租户模式下解析租户连接字符串使用
-            var connectionStringResolve = serviceProvider.GetRequiredService<IConnectionStringResolve>();
-            optionsBuilder.AddInterceptors(new TenantDbConnectionInterceptor(connectionStringResolve, InfraConstantValue.DEFAULT_CONNECTIONSTRING_NAME));
-#endif
-
-
-#if DEBUG
-            optionsBuilder.EnableSensitiveDataLogging();
-#endif
-        }, ServiceLifetime.Scoped);
-
-        service.AddDefaultRepository(contextTypes);
-        service.ApplyEntityDefaultNavicationProperty();
+        service.AddDbContextFactory<TDbContext>(optionsAction, ServiceLifetime.Scoped);
+        service.AddDefaultRepository<TDbContext>();
         return service;
     }
 
-
-    public static void AddEfUnitofWorkWithAccessor(this IServiceCollection services, List<Type> context = null)
+    /// <summary>
+    /// 添加默认仓储
+    /// </summary>
+    /// <typeparam name="TDbContext"></typeparam>
+    /// <param name="services"></param>
+    internal static void AddDefaultRepository<TDbContext>(this IServiceCollection services)
+        where TDbContext : DbContext
     {
-        if (context is null or { Count: <= 0 })
-        {
-            return;
-        }
+        var item = typeof(TDbContext);
 
-        if (context.Count == 1)
-        {
-            var defType = typeof(IUnitOfWork);
-            var defType2 = typeof(EfUnitOfWork<>).MakeGenericType(context[0]);
-            services.RegisterScopedType(defType, defType2);
-        }
+        var entitTypies =
+            from property in item.GetTypeInfo().GetProperties(BindingFlags.Instance | BindingFlags.Public)
+            where IsAssignableToGenericType(property.PropertyType, typeof(DbSet<>)) &&
+                  typeof(IEntity).IsAssignableFrom(property.PropertyType.GenericTypeArguments[0])
+            select property.PropertyType.GenericTypeArguments[0];
 
-        foreach (var item in context)
+
+        foreach (var entityType in entitTypies)
         {
-            var defType = typeof(IUnitOfWork<>).MakeGenericType(item);
-            var defType2 = typeof(EfUnitOfWork<>).MakeGenericType(item);
-            services.RegisterScopedType(defType, defType2);
+            var defType = typeof(IEfRepository<>).MakeGenericType(entityType);
+            var defType2 = typeof(IEfContextRepository<,>).MakeGenericType(item, entityType);
+            var implementingType = EfRepositoryHelper.GetRepositoryType(item, entityType);
+            services.RegisterScopedType(defType, implementingType);
+            services.RegisterScopedType(defType2, implementingType);
+
+            Type keyType = EntityHelper.FindPrimaryKeyType(entityType);
+            if (keyType != null)
+            {
+                var impl = EfRepositoryHelper.GetRepositoryType(item, entityType, keyType);
+                services.RegisterScopedType(typeof(IEfRepository<,>).MakeGenericType(entityType, keyType), impl);
+                services.RegisterScopedType(typeof(IEfContextRepository<,,>).MakeGenericType(item, entityType, keyType),
+                    impl);
+            }
         }
+    }
+
+
+
+    public static void AddEfUnitofWorkWithAccessor<TDbContext>(this IServiceCollection services)
+        where TDbContext:DbContext
+    {
+        var dbcontextType = typeof(TDbContext);
+        services.RegisterScopedType(typeof(IUnitOfWork), typeof(EfUnitOfWork<>).MakeGenericType(dbcontextType));
+        services.RegisterScopedType(typeof(IUnitOfWork<>).MakeGenericType(dbcontextType), typeof(EfUnitOfWork<>).MakeGenericType(dbcontextType));
     }
 
 
     #region private
 
-    private static void ApplyEntityDefaultNavicationProperty(this IServiceCollection service)
-    {
-        // 设置实体默认显示加载的导航属性
-        service.Configure<IncludeRelatedPropertiesOptions>(options =>
-        {
-            options.ConfigIncludes<Product>(e => e.Include(d => d.Devices).ThenInclude(f => f.Address));
-        });
-    }
-
-
-
-    private static void AddDefaultRepository(this IServiceCollection services, List<Type> context = null)
-    {
-        if (context is null or { Count: <= 0 })
-        {
-            return;
-        }
-
-        Parallel.ForEach(context, item =>
-        {
-            var entitTypies =
-                from property in item.GetTypeInfo().GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                where IsAssignableToGenericType(property.PropertyType, typeof(DbSet<>)) &&
-                      typeof(IEntity).IsAssignableFrom(property.PropertyType.GenericTypeArguments[0])
-                select property.PropertyType.GenericTypeArguments[0];
-
-
-            foreach (var entityType in entitTypies)
-            {
-                var defType = typeof(IEfRepository<>).MakeGenericType(entityType);
-                var defType2 = typeof(IEfContextRepository<,>).MakeGenericType(item, entityType);
-                var implementingType = EfRepositoryHelper.GetRepositoryType(item, entityType);
-                services.RegisterScopedType(defType, implementingType);
-                services.RegisterScopedType(defType2, implementingType);
-
-                Type keyType = EntityHelper.FindPrimaryKeyType(entityType);
-                if (keyType != null)
-                {
-                    var impl = EfRepositoryHelper.GetRepositoryType(item, entityType, keyType);
-                    services.RegisterScopedType(typeof(IEfRepository<,>).MakeGenericType(entityType, keyType), impl);
-                    services.RegisterScopedType(typeof(IEfContextRepository<,,>).MakeGenericType(item, entityType, keyType),
-                        impl);
-                }
-            }
-        });
-    }
 
     private static IServiceCollection RegisterType(this IServiceCollection services, Type type, Type implementationType)
     {
