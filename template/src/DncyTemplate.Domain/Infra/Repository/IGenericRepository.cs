@@ -3,14 +3,14 @@
 namespace DncyTemplate.Domain.Infra.Repository
 {
 
-    public interface IGenericRepository
+    public interface IGenericRepository<T>
     {
         /// <summary>
         /// 获取全部
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        Task<IEnumerable<T>> GetAllAsync<T>();
+        Task<IEnumerable<T>> GetAllAsync();
 
         /// <summary>
         /// 根绝主键获取
@@ -19,15 +19,7 @@ namespace DncyTemplate.Domain.Infra.Repository
         /// <typeparam name="TKey"></typeparam>
         /// <param name="key"></param>
         /// <returns></returns>
-        Task<T> GetAsync<T, TKey>(TKey key);
-
-        /// <summary>
-        /// 获取分页数据
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        Task<IPagedList<T>> GetPageAsync<T>();
-
+        Task<T> GetAsync<TKey>(TKey key);
 
         /// <summary>
         /// 新增实体
@@ -35,7 +27,7 @@ namespace DncyTemplate.Domain.Infra.Repository
         /// <typeparam name="T"></typeparam>
         /// <param name="entity"></param>
         /// <returns></returns>
-        Task<int> InsertAsync<T>(T entity);
+        Task<int> InsertAsync(T entity);
 
 
         /// <summary>
@@ -44,7 +36,7 @@ namespace DncyTemplate.Domain.Infra.Repository
         /// <typeparam name="T"></typeparam>
         /// <param name="entities"></param>
         /// <returns></returns>
-        Task<int> InsertAsync<T>(List<T> entities);
+        Task<int> InsertAsync(List<T> entities);
 
 
         /// <summary>
@@ -53,7 +45,7 @@ namespace DncyTemplate.Domain.Infra.Repository
         /// <typeparam name="T"></typeparam>
         /// <param name="entity"></param>
         /// <returns></returns>
-        Task<int> UpdateAsync<T>(T entity);
+        Task<int> UpdateAsync(T entity);
 
 
         /// <summary>
@@ -62,7 +54,7 @@ namespace DncyTemplate.Domain.Infra.Repository
         /// <typeparam name="T"></typeparam>
         /// <param name="entities"></param>
         /// <returns></returns>
-        Task<int> UpdateAsync<T>(List<T> entities);
+        Task<int> UpdateAsync(List<T> entities);
 
 
         /// <summary>
@@ -71,7 +63,7 @@ namespace DncyTemplate.Domain.Infra.Repository
         /// <typeparam name="T"></typeparam>
         /// <param name="entity"></param>
         /// <returns></returns>
-        Task<int> DeleteAsync<T>(T entity);
+        Task<int> DeleteAsync(T entity);
 
 
         /// <summary>
@@ -80,7 +72,7 @@ namespace DncyTemplate.Domain.Infra.Repository
         /// <typeparam name="T"></typeparam>
         /// <param name="entities"></param>
         /// <returns></returns>
-        Task<int> DeleteAsync<T>(List<T> entities);
+        Task<int> DeleteAsync(List<T> entities);
 
 
         /// <summary>

@@ -7,19 +7,15 @@ namespace DncyTemplate.Uow
 
     public interface IUnitOfWork : IDisposable, IAsyncDisposable
     {
-
         IServiceProvider ServiceProvider { get; }
 
-
         IDataContext Context { get; }
-
 
         /// <summary>
         /// 使用新的单元
         /// </summary>
         /// <returns></returns>
         IUnitOfWork BeginNew();
-
 
         /// <summary>
         /// 完成unitofwork
@@ -34,27 +30,25 @@ namespace DncyTemplate.Uow
         /// <returns></returns>
         Task<int> CompleteAsync(CancellationToken cancellationToken = default);
 
-
         /// <summary>
-        /// 获取Efcore仓储
+        /// 获取通用仓储
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        IEfRepository<T> GetEfRepository<T>() where T : class, IEntity;
+        IGenericRepository<T> GetRepository<T>() where T : class, IEntity;
 
         /// <summary>
-        /// 获取Efcore仓储
+        /// 从容器中解析服务
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <typeparam name="TKey">实体主键</typeparam>
         /// <returns></returns>
-        IEfRepository<T, TKey> GetEfRepository<T, TKey>() where T : class, IEntity;
+        T Resolve<T>();
 
         event Action OnDisposed;
     }
 
 
-    public interface IUnitOfWork<TContext> : IUnitOfWork
+    public interface IUnitOfWork<out TContext> : IUnitOfWork
         where TContext : IDataContext
     {
         TContext DbContext();

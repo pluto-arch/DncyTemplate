@@ -2,15 +2,15 @@
 
 public class EntityNotFoundException : Exception
 {
-    public EntityNotFoundException(Type entityType)
+    public EntityNotFoundException(string id)
     {
-        EntityType = entityType;
+        Id = id;
     }
 
-    public Type EntityType { get; set; }
+    public string Id { get; set; }
 
     public override string ToString()
     {
-        return $"There is no such an entity given given id. Entity type: {EntityType.FullName}";
+        return $"There is no such an entity given given id: `{Id}`";
     }
 }

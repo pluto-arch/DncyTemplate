@@ -55,6 +55,7 @@ namespace DncyTemplate.UnitTest
             #region DncyTemplate DbContext
 
             services.AddKeyedSingleton<IConnectionStringResolve, DefaultConnectionStringResolve>(nameof(DncyTemplateDbContext));
+
             services.AddEfCoreInfraComponent<DncyTemplateDbContext>((serviceProvider,optionsBuilder) =>
             {
                 optionsBuilder.UseInMemoryDatabase("DncyTemplateUnitTest");
@@ -68,7 +69,7 @@ namespace DncyTemplate.UnitTest
                 optionsBuilder.AddInterceptors(new TenantDbConnectionInterceptor(connectionStringResolve, InfraConstantValue.DEFAULT_CONNECTIONSTRING_NAME));
 #endif
             });
-            services.AddEfUnitofWorkWithAccessor<DncyTemplateDbContext>();
+            services.AddEfUnitofWork<DncyTemplateDbContext>();
 
             #endregion
 

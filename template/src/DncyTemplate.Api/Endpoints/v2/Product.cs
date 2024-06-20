@@ -41,10 +41,14 @@ namespace DncyTemplate.Api.Controllers.v2
         /// <returns></returns>
         [HttpGet("{id:required}")]
         [Produces(typeof(ProductDto))]
-        public async Task<ResultDto<ProductDto>> GetByIdAsync(string id)
+        public async Task<ResultDto> GetByIdAsync(string id)
         {
             var res = await _productAppService.GetAsync(id);
-            return res;
+            if (res.Successed)
+            {
+                return this.Success(res.Data);
+            }
+            return this.Error(res.Errors.Message);
         }
 
 

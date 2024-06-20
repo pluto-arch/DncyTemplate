@@ -38,17 +38,18 @@ namespace DncyTemplate.Uow.EntityFrameworkCore
         /// <inheritdoc />
         public TContext DbContext() => _context;
 
-        public event Action OnDisposed;
-
-
-        public IEfRepository<T> GetEfRepository<T>() where T : class, IEntity
+        /// <inheritdoc />
+        public T Resolve<T>()
         {
-            return _serviceProvider.GetRequiredService<IEfContextRepository<TContext, T>>();
+            return ServiceProvider.GetService<T>();
         }
 
-        public IEfRepository<T, TKey> GetEfRepository<T, TKey>() where T : class, IEntity
+        public event Action OnDisposed;
+
+        /// <inheritdoc />
+        public IGenericRepository<T> GetRepository<T>() where T : class, IEntity
         {
-            return _serviceProvider.GetRequiredService<IEfContextRepository<TContext, T, TKey>>();
+            return _serviceProvider.GetRequiredService<IGenericRepository<T>>();
         }
 
         public int Complete()

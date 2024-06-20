@@ -1,5 +1,6 @@
 ﻿using System.Transactions;
 using DncyTemplate.Domain.Aggregates.EventLogs;
+using DncyTemplate.Domain.Infra.Repository;
 using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 using DncyTemplate.Uow;
 
@@ -11,7 +12,7 @@ namespace DncyTemplate.Application.IntegrationEvents.IntegrationEventbox;
 /// 发件箱
 /// </summary>
 [Injectable(InjectLifeTime.Transient)]
-public partial class IntegrationEventBoxService
+public class IntegrationEventBoxService
 {
     private readonly IUnitOfWork<DncyTemplateDbContext> _uow;
     private readonly ILogger<IntegrationEventBoxService> _logger;
@@ -31,7 +32,7 @@ public partial class IntegrationEventBoxService
     /// <returns></returns>
     public async ValueTask Add(IntegrationEvent evt, string transactionId = null)
     {
-        var eventRep = _uow.GetEfRepository<IntegrationEventLogEntry>();
+        var eventRep = _uow.Resolve<IEfRepository<IntegrationEventLogEntry>>();
         await eventRep.InsertAsync(new IntegrationEventLogEntry(evt, transactionId ?? Transaction.Current?.TransactionInformation?.LocalIdentifier));
     }
 
@@ -88,7 +89,7 @@ public partial class IntegrationEventBoxService
 
     private Task UpdateEventStatus(string eventId, EventStateEnum status)
     {
-        var eventRep = _uow.GetEfRepository<IntegrationEventLogEntry>();
+        var eventRep = _uow.Resolve<IEfRepository<IntegrationEventLogEntry>>();
         var eventLogEntry = eventRep.FirstOrDefault(ie => ie.EventId == eventId);
         if (eventLogEntry != null)
         {

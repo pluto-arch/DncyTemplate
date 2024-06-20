@@ -1,4 +1,6 @@
 ﻿using DncyTemplate.Domain.Collections;
+using DncyTemplate.Domain.Infra;
+using Dotnetydd.Tools.Models;
 
 namespace DncyTemplate.Application.AppServices.Generics
 {
@@ -17,7 +19,7 @@ namespace DncyTemplate.Application.AppServices.Generics
         /// 根据id获取
         /// </summary>
         /// <returns></returns>
-        Task<TDto> GetAsync(TKey id, CancellationToken cancellationToken=default);
+        Task<Return<TDto,ErrorResult>> GetAsync(TKey id, CancellationToken cancellationToken=default);
 
         /// <summary>
         /// 获取列表

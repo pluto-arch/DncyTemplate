@@ -46,7 +46,7 @@ namespace DncyTemplate.Infra
                 optionsBuilder.EnableSensitiveDataLogging();
 #endif
             });
-            service.AddEfUnitofWorkWithAccessor<DncyTemplateDbContext>();
+            service.AddEfUnitofWork<DncyTemplateDbContext>();
 
             #endregion
 

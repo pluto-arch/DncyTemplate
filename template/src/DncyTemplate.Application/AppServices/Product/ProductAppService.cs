@@ -1,5 +1,6 @@
 ﻿using DncyTemplate.Application.AppServices.Generics;
 using DncyTemplate.Application.Models.Product;
+using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 using DncyTemplate.Infra.EntityFrameworkCore.Repository;
 using DncyTemplate.Uow;
 using Dotnetydd.Tools.Models;
@@ -12,7 +13,7 @@ public class ProductAppService
     : EntityKeyCrudAppService<Domain.Aggregates.Product.Product, string, ProductDto, ProductPagedRequest, ProductListItemDto, ProductUpdateRequest, ProductCreateRequest>, IProductAppService
 {
     /// <inheritdoc />
-    public ProductAppService(IUnitOfWork uow, IMapper mapper) : base(uow, mapper)
+    public ProductAppService(IUnitOfWork<DncyTemplateDbContext> uow, IMapper mapper) : base(uow, mapper)
     {
     }
 

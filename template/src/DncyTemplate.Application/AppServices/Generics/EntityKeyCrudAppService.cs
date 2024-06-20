@@ -1,5 +1,6 @@
 ﻿using DncyTemplate.Application.Models.Generics;
 using DncyTemplate.Domain.Infra;
+using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 using DncyTemplate.Uow;
 
 namespace DncyTemplate.Application.AppServices.Generics
@@ -11,7 +12,7 @@ namespace DncyTemplate.Application.AppServices.Generics
     {
 
         /// <inheritdoc />
-        public EntityKeyCrudAppService(IUnitOfWork uow, IMapper mapper) : base(uow, mapper)
+        public EntityKeyCrudAppService(IUnitOfWork<DncyTemplateDbContext> uow, IMapper mapper) : base(uow, mapper)
         {
         }
 

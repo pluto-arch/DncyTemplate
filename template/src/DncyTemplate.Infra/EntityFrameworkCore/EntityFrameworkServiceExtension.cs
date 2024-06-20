@@ -5,6 +5,7 @@ using DncyTemplate.Domain.Infra.Repository;
 using DncyTemplate.Infra.EntityFrameworkCore.ConnectionStringResolve;
 using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 using DncyTemplate.Infra.EntityFrameworkCore.Interceptor;
+using DncyTemplate.Infra.EntityFrameworkCore.Repository;
 using DncyTemplate.Uow;
 using DncyTemplate.Uow.EntityFrameworkCore;
 using Dotnetydd.Specifications.EntityFrameworkCore;
@@ -48,15 +49,23 @@ public static class EntityFrameworkServiceExtension
 
         foreach (var entityType in entitTypies)
         {
+            // efcore 仓储
             var defType = typeof(IEfRepository<>).MakeGenericType(entityType);
             var defType2 = typeof(IEfContextRepository<,>).MakeGenericType(item, entityType);
             var implementingType = EfRepositoryHelper.GetRepositoryType(item, entityType);
             services.RegisterScopedType(defType, implementingType);
             services.RegisterScopedType(defType2, implementingType);
 
+            // 通用仓储
+            var genericRepInterface = typeof(IGenericRepository<>).MakeGenericType(entityType);
+            var genericRepInterfaceImpl = typeof(EfGenericRepository<,>).MakeGenericType(item,entityType);
+            services.RegisterScopedType(genericRepInterface, genericRepInterfaceImpl);
+
+
             Type keyType = EntityHelper.FindPrimaryKeyType(entityType);
             if (keyType != null)
             {
+                // efcore 指定context 的仓储
                 var impl = EfRepositoryHelper.GetRepositoryType(item, entityType, keyType);
                 services.RegisterScopedType(typeof(IEfRepository<,>).MakeGenericType(entityType, keyType), impl);
                 services.RegisterScopedType(typeof(IEfContextRepository<,,>).MakeGenericType(item, entityType, keyType),
@@ -67,11 +76,10 @@ public static class EntityFrameworkServiceExtension
 
 
 
-    public static void AddEfUnitofWorkWithAccessor<TDbContext>(this IServiceCollection services)
+    public static void AddEfUnitofWork<TDbContext>(this IServiceCollection services)
         where TDbContext:DbContext
     {
         var dbcontextType = typeof(TDbContext);
-        services.RegisterScopedType(typeof(IUnitOfWork), typeof(EfUnitOfWork<>).MakeGenericType(dbcontextType));
         services.RegisterScopedType(typeof(IUnitOfWork<>).MakeGenericType(dbcontextType), typeof(EfUnitOfWork<>).MakeGenericType(dbcontextType));
     }
 

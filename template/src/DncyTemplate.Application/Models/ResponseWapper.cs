@@ -14,8 +14,19 @@ public interface IResponseWraps { }
 /// </summary>
 public record ResultDto
 {
+    /// <summary>
+    /// 接口是否处理成功
+    /// </summary>
+    public bool Successed { get; set; }
+
+    /// <summary>
+    /// 业务错误码
+    /// </summary>
     public int Code { get; set; }
 
+    /// <summary>
+    /// 错误信息
+    /// </summary>
     public string Message { get; set; }
 
 
@@ -25,7 +36,7 @@ public record ResultDto
     /// <returns></returns>
     public static ResultDto Success()
     {
-        return new() { Code = 200, Message = "Successed" };
+        return new() { Code = 200, Message = "Successed", Successed = true };
     }
 
     /// <summary>
@@ -83,7 +94,7 @@ public record ResultDto<T> : ResultDto
     /// <returns></returns>
     public static ResultDto<T> Success(T data)
     {
-        return new() { Code = 200, Message = "Successed", Data = data };
+        return new() { Code = 200, Message = "Successed", Data = data, Successed = true };
     }
 
 
@@ -93,7 +104,7 @@ public record ResultDto<T> : ResultDto
     /// <returns></returns>
     public static ResultDto<T> Success(T data, string message = "Successed")
     {
-        return new() { Code = 200, Message = message, Data = data };
+        return new() { Code = 200, Message = message, Data = data, Successed = true };
     }
 
     /// <summary>

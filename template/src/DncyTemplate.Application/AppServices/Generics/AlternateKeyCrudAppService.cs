@@ -1,10 +1,12 @@
 ﻿using DncyTemplate.Application.Models;
 using DncyTemplate.Application.Models.Generics;
 using DncyTemplate.Domain.Collections;
+using DncyTemplate.Domain.Exceptions;
 using DncyTemplate.Domain.Infra;
 using DncyTemplate.Domain.Infra.Repository;
+using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
 using DncyTemplate.Uow;
-using Microsoft.EntityFrameworkCore;
+using Dotnetydd.Tools.Models;
 
 namespace DncyTemplate.Application.AppServices.Generics
 {
@@ -16,9 +18,9 @@ namespace DncyTemplate.Application.AppServices.Generics
         protected readonly IUnitOfWork _uow;
         protected readonly IMapper _mapper;
 
-        protected AlternateKeyCrudAppService(IUnitOfWork uow, IMapper mapper)
+        protected AlternateKeyCrudAppService(IUnitOfWork<DncyTemplateDbContext> uow, IMapper mapper)
         {
-            _repository = uow.GetEfRepository<TEntity, TKey>();
+            _repository = uow.Resolve<IEfRepository<TEntity, TKey>>();
             _uow = uow;
             _mapper = mapper;
         }
@@ -40,7 +42,15 @@ namespace DncyTemplate.Application.AppServices.Generics
             return _mapper.Map<TDto>(entity);
         }
 
-        public virtual async Task<TDto> GetAsync(TKey id, CancellationToken cancellationToken = default) => _mapper.Map<TDto>(await GetEntityByIdAsync(id, cancellationToken));
+        public virtual async Task<Return<TDto,ErrorResult>> GetAsync(TKey id, CancellationToken cancellationToken = default)
+        {
+            var data = await GetEntityByIdAsync(id, cancellationToken);
+            if (data is null)
+            {
+                return new ErrorResult($"There is no such an entity given given key: `{id}`");
+            }
+            return _mapper.Map<TDto>(data);
+        }
 
 
         public virtual async Task<IPagedList<TListItemDto>> GetListAsync(TGetListRequest model, CancellationToken cancellationToken = default)

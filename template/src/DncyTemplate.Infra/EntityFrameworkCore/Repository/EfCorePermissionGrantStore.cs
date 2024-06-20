@@ -8,7 +8,7 @@ namespace DncyTemplate.Infra.EntityFrameworkCore.Repository
 {
     public class EfCorePermissionGrantStore(IUnitOfWork<DncyTemplateDbContext> uow) : IPermissionGrantStore
     {
-        private readonly IEfRepository<PermissionGrant> _permissionGrants = uow.GetEfRepository<PermissionGrant>();
+        private readonly IEfRepository<PermissionGrant> _permissionGrants = uow.Resolve<IEfRepository<PermissionGrant>>();
 
         public async Task<IPermissionGrant> GetAsync(string name, string providerName, string providerKey)
         {
