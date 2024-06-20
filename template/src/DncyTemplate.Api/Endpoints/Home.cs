@@ -51,6 +51,17 @@ namespace DncyTemplate.Api.Controllers
         {
             return this.Success("home index");
         }
+
+
+        [HttpGet]
+        public IActionResult SuccessData()
+        {
+            if (DateTime.Now.Ticks%2==0)
+            {
+                return BadRequest(this.ErrorRequest());
+            }
+            return Ok(this.Success("successed"));
+        }
     }
 
 }

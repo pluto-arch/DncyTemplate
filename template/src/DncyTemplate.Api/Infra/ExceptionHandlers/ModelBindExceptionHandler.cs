@@ -11,7 +11,6 @@ namespace DncyTemplate.Api.Infra.ExceptionHandlers
             var log = actionContext.HttpContext?.RequestServices?.GetService<ILogger<ModelBindExceptionHandler>>() ?? NullLogger<ModelBindExceptionHandler>.Instance;
             var l = actionContext.HttpContext?.RequestServices?.GetService<IStringLocalizer<SharedResources>>();
             var result = new BadRequestObjectResult(actionContext.ModelState);
-            result.ContentTypes.Add(AppConstant.DEFAULT_CONTENT_TYPE);
             log.LogWarning("{method} {@route} 模型绑定失败： {@msg}", actionContext.HttpContext.Request.Method, actionContext.RouteData.Values, result.Value);
             var res = ResultDto<dynamic>.ErrorRequest(data: result.Value);
             res.Message = l[res.Message];

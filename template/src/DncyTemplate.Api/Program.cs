@@ -102,6 +102,7 @@ app.UseForwardedHeaders()
     .UseCertificateForwarding();
 app.UseHttpRequestLogging();
 
+
 app.UseCustomizeExceptionHandle();
 
 app.UseCors(AppConstant.DEFAULT_CORS_NAME);
