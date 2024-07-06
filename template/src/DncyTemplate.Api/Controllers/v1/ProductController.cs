@@ -16,7 +16,7 @@ namespace DncyTemplate.Api.Controllers.v1
     [ApiVersion("1.0")]
     [AutoResolveDependency]
     [Authorize]
-    public partial class Product : EndPointBase
+    public partial class Product : BaseController
     {
         [AutoInject]
         private readonly IProductAppService _productsRepository;

@@ -190,4 +190,25 @@ public static class ResponseWapper
     {
         return ResultDto.Fatal(message);
     }
+
+    public static ResultDto Success<T>(T data)
+    {
+        return ResultDto<T>.Success(data);
+    }
+
+
+    public static ResultDto Fail<T>(string message = "ServiceUnavailable", T data = default)
+    {
+        return ResultDto<T>.Fatal(message,data);
+    }
+
+    public static ResultDto Error<T>(string message = "ErrorHandleRequest", T data = default)
+    {
+        return ResultDto<T>.Error(message,data);
+    }
+
+    public static ResultDto ErrorRequest<T>(string message = "InvalidRequest", T data = default)
+    {
+        return ResultDto<T>.ErrorRequest(message,data);
+    }
 }

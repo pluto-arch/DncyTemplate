@@ -5,6 +5,7 @@ using DncyTemplate.Infra.EntityFrameworkCore.Repository;
 using DncyTemplate.Uow;
 using Dotnetydd.Tools.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 
 namespace DncyTemplate.Application.AppServices.Product;
 

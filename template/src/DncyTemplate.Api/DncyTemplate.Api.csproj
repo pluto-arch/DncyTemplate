@@ -3,12 +3,6 @@
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-		<DockerfileContext>..\..</DockerfileContext>
-		<GenerateDocumentationFile>True</GenerateDocumentationFile>
-		<SatelliteResourceLanguages>zh-Hans;zh-CN</SatelliteResourceLanguages>
-		<DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
-		<RuntimeIdentifiers>linux-x64;win-x64</RuntimeIdentifiers>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -19,7 +13,7 @@
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" />
-		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" ExcludeAssets="All"/>
 		<PackageReference Include="Serilog.AspNetCore" />
 		<PackageReference Include="Serilog.Enrichers.Environment" />
 		<PackageReference Include="Serilog.Enrichers.Process" />
@@ -61,46 +55,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<EmbeddedResource Update="Resources\DataAnnotation.resx">
-	    <Generator>PublicResXFileCodeGenerator</Generator>
-	    <LastGenOutput>DataAnnotation.Designer.cs</LastGenOutput>
-	    <CustomToolNamespace>DncyTemplate.Api</CustomToolNamespace>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\DefaultDataAnnotation.resx">
-	    <Generator>PublicResXFileCodeGenerator</Generator>
-	    <LastGenOutput>DefaultDataAnnotation.Designer.cs</LastGenOutput>
-	    <CustomToolNamespace>DncyTemplate.Api</CustomToolNamespace>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\SharedResources.en-us.resx">
-	    <Generator></Generator>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\SharedResources.resx">
-	    <Generator>PublicResXFileCodeGenerator</Generator>
-	    <LastGenOutput>SharedResources.Designer.cs</LastGenOutput>
-	    <CustomToolNamespace>DncyTemplate.Api</CustomToolNamespace>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\SharedResources.zh-hans.resx">
-	    <Generator></Generator>
-	  </EmbeddedResource>
+	  <Compile Update="Resources\SharedResource.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>SharedResource.resx</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
-
 	<ItemGroup>
-	  <Compile Update="Resources\DataAnnotation.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>DataAnnotation.resx</DependentUpon>
-	  </Compile>
-	  <Compile Update="Resources\DefaultDataAnnotation.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>DefaultDataAnnotation.resx</DependentUpon>
-	  </Compile>
-	  <Compile Update="Resources\SharedResources.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>SharedResources.resx</DependentUpon>
-	  </Compile>
+	  <EmbeddedResource Update="Resources\SharedResource.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>SharedResource.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
 	</ItemGroup>
 
 

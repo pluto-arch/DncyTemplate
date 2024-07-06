@@ -14,24 +14,20 @@ namespace DncyTemplate.Api.Infra.LocalizerSetup
             {
                 o.ResourcesPath = "Resources";
             });
-            services.AddRequestLocalization(options =>
-            {
-                var supportedCultures = new[] { new CultureInfo(AppConstant.Culture.EN_US.key), new CultureInfo(AppConstant.Culture.ZN_CH.key) };
-                options.DefaultRequestCulture = new RequestCulture(AppConstant.Culture.ZN_CH.key, AppConstant.Culture.ZN_CH.key);
-                options.SupportedCultures = supportedCultures;
-                options.SupportedUICultures = supportedCultures;
-                options.ApplyCurrentCultureToResponseHeaders = true;
-                options.FallBackToParentCultures = true;
-                options.FallBackToParentUICultures = true;
-            });
             return services;
         }
 
 
         public static IApplicationBuilder UseAppLocalization(this IApplicationBuilder app)
         {
-            var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
-            app.UseRequestLocalization(options.Value);
+            app.UseRequestLocalization(options =>
+            {
+                var cultures = new[] { AppConstant.Culture.ZN_CH.key, AppConstant.Culture.EN_US.key };
+                options.AddSupportedCultures(cultures);
+                options.AddSupportedUICultures(cultures);
+                options.SetDefaultCulture(cultures[0]);
+                options.ApplyCurrentCultureToResponseHeaders = true;
+            });
             return app;
         }
 
@@ -44,21 +40,21 @@ namespace DncyTemplate.Api.Infra.LocalizerSetup
         /// <returns></returns>
         public static MvcOptions SetUpDefaultDataAnnotation(this MvcOptions options, IStringLocalizerFactory localizerFactory)
         {
-            var l = localizerFactory?.Create(typeof(DefaultDataAnnotation));
-            if (l != null)
-            {
-                options.ModelBindingMessageProvider.SetValueIsInvalidAccessor(x => l[DefaultDataAnnotation.ValueIsInvalidAccessor, x]);
-                options.ModelBindingMessageProvider.SetValueMustBeANumberAccessor(x => l[DefaultDataAnnotation.ValueMustBeANumberAccessor, x]);
-                options.ModelBindingMessageProvider.SetMissingBindRequiredValueAccessor(x => l[DefaultDataAnnotation.MissingBindRequiredValueAccessor, x]);
-                options.ModelBindingMessageProvider.SetAttemptedValueIsInvalidAccessor((x, y) => l.GetString(DefaultDataAnnotation.AttemptedValueIsInvalidAccessor, x, y));
-                options.ModelBindingMessageProvider.SetMissingKeyOrValueAccessor(() => l[DefaultDataAnnotation.MissingKeyOrValueAccessor]);
-                options.ModelBindingMessageProvider.SetUnknownValueIsInvalidAccessor(x => l[DefaultDataAnnotation.UnknownValueIsInvalidAccessor, x]);
-                options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(x => l[DefaultDataAnnotation.ValueMustNotBeNullAccessor, x]);
-                options.ModelBindingMessageProvider.SetNonPropertyAttemptedValueIsInvalidAccessor(x => l[DefaultDataAnnotation.NonPropertyAttemptedValueIsInvalidAccessor, x]);
-                options.ModelBindingMessageProvider.SetNonPropertyUnknownValueIsInvalidAccessor(() => l[DefaultDataAnnotation.UnknownValueIsInvalidAccessor]);
-                options.ModelBindingMessageProvider.SetNonPropertyValueMustBeANumberAccessor(() => l[DefaultDataAnnotation.NonPropertyValueMustBeANumberAccessor]);
-                options.ModelBindingMessageProvider.SetMissingRequestBodyRequiredValueAccessor(() => l[DefaultDataAnnotation.MissingRequestBodyRequiredValueAccessor]);
-            }
+            //var l = localizerFactory?.Create(typeof(DefaultDataAnnotation));
+            //if (l != null)
+            //{
+            //    options.ModelBindingMessageProvider.SetValueIsInvalidAccessor(x => l[DefaultDataAnnotation.ValueIsInvalidAccessor, x]);
+            //    options.ModelBindingMessageProvider.SetValueMustBeANumberAccessor(x => l[DefaultDataAnnotation.ValueMustBeANumberAccessor, x]);
+            //    options.ModelBindingMessageProvider.SetMissingBindRequiredValueAccessor(x => l[DefaultDataAnnotation.MissingBindRequiredValueAccessor, x]);
+            //    options.ModelBindingMessageProvider.SetAttemptedValueIsInvalidAccessor((x, y) => l.GetString(DefaultDataAnnotation.AttemptedValueIsInvalidAccessor, x, y));
+            //    options.ModelBindingMessageProvider.SetMissingKeyOrValueAccessor(() => l[DefaultDataAnnotation.MissingKeyOrValueAccessor]);
+            //    options.ModelBindingMessageProvider.SetUnknownValueIsInvalidAccessor(x => l[DefaultDataAnnotation.UnknownValueIsInvalidAccessor, x]);
+            //    options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(x => l[DefaultDataAnnotation.ValueMustNotBeNullAccessor, x]);
+            //    options.ModelBindingMessageProvider.SetNonPropertyAttemptedValueIsInvalidAccessor(x => l[DefaultDataAnnotation.NonPropertyAttemptedValueIsInvalidAccessor, x]);
+            //    options.ModelBindingMessageProvider.SetNonPropertyUnknownValueIsInvalidAccessor(() => l[DefaultDataAnnotation.UnknownValueIsInvalidAccessor]);
+            //    options.ModelBindingMessageProvider.SetNonPropertyValueMustBeANumberAccessor(() => l[DefaultDataAnnotation.NonPropertyValueMustBeANumberAccessor]);
+            //    options.ModelBindingMessageProvider.SetMissingRequestBodyRequiredValueAccessor(() => l[DefaultDataAnnotation.MissingRequestBodyRequiredValueAccessor]);
+            //}
             return options;
         }
 
@@ -71,7 +67,7 @@ namespace DncyTemplate.Api.Infra.LocalizerSetup
         public static MvcDataAnnotationsLocalizationOptions SetUpDataAnnotationLocalizerProvider(this MvcDataAnnotationsLocalizationOptions options)
         {
             // 将所有模型的本地化都放在一个资源文件中，如果使用默认的多个资源文件的，这里去掉即可
-            options.DataAnnotationLocalizerProvider = (_, factory) => factory.Create(typeof(DataAnnotation));
+            //options.DataAnnotationLocalizerProvider = (_, factory) => factory.Create(typeof(DataAnnotation));
             return options;
         }
     }

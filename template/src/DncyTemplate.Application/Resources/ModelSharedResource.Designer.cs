@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DncyTemplate.Mvc {
+namespace DncyTemplate.Application.Resources {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace DncyTemplate.Mvc {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class MenuResource {
+    public class ModelSharedResource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal MenuResource() {
+        internal ModelSharedResource() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace DncyTemplate.Mvc {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DncyTemplate.Mvc.Resources.MenuResource", typeof(MenuResource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DncyTemplate.Application.Resources.ModelSharedResource", typeof(ModelSharedResource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,65 +61,11 @@ namespace DncyTemplate.Mvc {
         }
         
         /// <summary>
-        ///   查找类似 Access Control 的本地化字符串。
+        ///   查找类似 Application 的本地化字符串。
         /// </summary>
-        public static string app_menu_accescontrol {
+        public static string Application {
             get {
-                return ResourceManager.GetString("app.menu.accescontrol", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Roles 的本地化字符串。
-        /// </summary>
-        public static string app_menu_accescontrol_roles {
-            get {
-                return ResourceManager.GetString("app.menu.accescontrol.roles", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Tenants 的本地化字符串。
-        /// </summary>
-        public static string app_menu_accescontrol_tenants {
-            get {
-                return ResourceManager.GetString("app.menu.accescontrol.tenants", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Dashboard 的本地化字符串。
-        /// </summary>
-        public static string app_menu_dashboard_hostconsole {
-            get {
-                return ResourceManager.GetString("app.menu.dashboard.hostconsole", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Devices 的本地化字符串。
-        /// </summary>
-        public static string app_menu_device {
-            get {
-                return ResourceManager.GetString("app.menu.device", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Device List 的本地化字符串。
-        /// </summary>
-        public static string app_menu_device_devices {
-            get {
-                return ResourceManager.GetString("app.menu.device.devices", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Product List 的本地化字符串。
-        /// </summary>
-        public static string app_menu_device_products {
-            get {
-                return ResourceManager.GetString("app.menu.device.products", resourceCulture);
+                return ResourceManager.GetString("Application", resourceCulture);
             }
         }
     }

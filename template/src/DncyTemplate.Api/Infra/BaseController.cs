@@ -1,11 +1,12 @@
 ﻿using DncyTemplate.Application.Models;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
 
 namespace DncyTemplate.Api
 {
     /// <summary>
     /// 所有controller 基类
     /// </summary>
-    public abstract class EndPointBase : ControllerBase, IResponseWraps
+    public abstract class BaseController : ControllerBase, IResponseWraps
     {
         protected T GetRequiredService<T>() where T : class
         {

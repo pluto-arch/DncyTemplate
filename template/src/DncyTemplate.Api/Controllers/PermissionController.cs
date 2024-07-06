@@ -11,7 +11,7 @@ namespace DncyTemplate.Api.Controllers
     [AutoResolveDependency]
     [ApiController]
     [Authorize]
-    public partial class Permission : EndPointBase
+    public partial class Permission : BaseController
     {
         [AutoInject]
         private readonly IPermissionGrantStore _permissionGrantStore;

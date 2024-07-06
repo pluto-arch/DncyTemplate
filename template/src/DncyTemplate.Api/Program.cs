@@ -76,6 +76,8 @@ builder.Services.ConfigureHealthCheck(builder.Configuration);
 #endregion
 
 
+builder.Services.AddAppEndpoints();
+
 #if Tenant
 builder.Services.ConfigureTenancy(builder.Configuration);
 #endif
@@ -132,6 +134,7 @@ app.UseCurrentUserAccessor();
 app.UseRouting();
 app.UseAuthorization();
 app.UseRateLimiter();
+app.MapApEndpoints();
 app.MapDefaultControllerRoute();
 app.MapSystemHealthChecks();
 

@@ -11,7 +11,7 @@ namespace DncyTemplate.Api.Controllers
     [ApiVersion("1.0")]
     [ApiVersion("2.0")]
     [ApiController]
-    public class Account : EndPointBase
+    public class AccountController : BaseController
     {
         private static readonly List<dynamic> users =
         [

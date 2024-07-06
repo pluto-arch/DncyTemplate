@@ -19,6 +19,7 @@ using DncyTemplate.Mvc.Infra.HealthChecks;
 using DncyTemplate.Mvc.Infra.Authorization;
 using Dotnetydd.Tools.Extension;
 using DncyTemplate.Infra.EntityFrameworkCore.Migrations;
+using DncyTemplate.Mvc.Infra.LocalizerSetup;
 
 
 string appName = "DncyTemplate.Mvc";
@@ -133,7 +134,7 @@ app.UseForwardedHeaders()
     .UseCertificateForwarding()
     .UseResponseCaching();
 
-
+app.UseAppLocalization();
 if (!app.Environment.IsEnvironment(AppConstant.EnvironmentName.DEV))
 {
     app.UseDeveloperExceptionPage();

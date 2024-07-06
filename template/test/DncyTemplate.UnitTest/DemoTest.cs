@@ -4,6 +4,10 @@ using Dotnetydd.MultiTenancy;
 #endif
 using DncyTemplate.Application.AppServices.Product;
 using DncyTemplate.Application.Models.Product;
+using DncyTemplate.Domain.Aggregates.Product;
+using DncyTemplate.Domain.Infra.Repository;
+using DncyTemplate.Infra.EntityFrameworkCore.DbContexts;
+using DncyTemplate.Uow;
 
 namespace DncyTemplate.UnitTest
 {
@@ -37,6 +41,26 @@ namespace DncyTemplate.UnitTest
 #if Tenant
             }
 #endif
+        }
+
+
+        [Test]
+        public async Task UnitOfWorkTest()
+        {
+            var uow = ServiceProvider.GetService<IUnitOfWork<DncyTemplateDbContext>>();
+
+            var code = uow.GetHashCode();
+
+            var repa = uow.Resolve<IEfRepository<Product>>();
+
+
+            await using var subUow = uow.BeginNew();
+            var code2=subUow.ServiceProvider.GetHashCode();
+            Assert.That(code!=code2,Is.True);
+            var rep2= subUow.Resolve<IEfRepository<Product>>();
+            Assert.That(repa != rep2, Is.True);
+            Assert.That(repa.DataContext.GetHashCode()!=rep2.DataContext.GetHashCode(),Is.True);
+
         }
 
     }

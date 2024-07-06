@@ -1,4 +1,5 @@
 ﻿using System.Threading.RateLimiting;
+using DncyTemplate.Api.Resources;
 using DncyTemplate.Application.Models;
 using Dotnetydd.Tools.Extension;
 using Microsoft.Extensions.Localization;
@@ -15,7 +16,7 @@ namespace DncyTemplate.Api.Infra.RateLimits
             {
                 options.OnRejected = async (context, cancelToken) =>
                 {
-                    var l = context.HttpContext.RequestServices.GetService<IStringLocalizer<SharedResources>>();
+                    var l = context.HttpContext.RequestServices.GetService<IStringLocalizer<SharedResource>>();
                     context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
                     context.HttpContext.Response.Headers.Append("Retry-After", new StringValues("1")); // TODO 根据具体情况返回
                     context.HttpContext.Response.ContentType = AppConstant.DEFAULT_CONTENT_TYPE;

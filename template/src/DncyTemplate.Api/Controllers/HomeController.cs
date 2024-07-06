@@ -1,15 +1,26 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using DncyTemplate.Api.Resources;
+using DncyTemplate.Application.AppServices.Demo;
 using DncyTemplate.Application.Models;
 using DncyTemplate.Application.Permission;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Localization;
 
 namespace DncyTemplate.Api.Controllers
 {
     [Route("api/[controller]/[action]")]
     [AutoResolveDependency]
     [ApiController]
-    public partial class Home : EndPointBase
+    public partial class HomeController : BaseController
     {
+
+        [AutoInject]
+        private readonly IStringLocalizer<SharedResource> _localizer;
+
+        [AutoInject]
+        private readonly IDemoAppServices _demoAppServices;
+
+
         [HttpGet]
         [AllowAnonymous]
         public ResultDto Index()
@@ -56,11 +67,22 @@ namespace DncyTemplate.Api.Controllers
         [HttpGet]
         public IActionResult SuccessData()
         {
-            if (DateTime.Now.Ticks%2==0)
+            if (DateTime.Now.Ticks % 2 == 0)
             {
                 return BadRequest(this.ErrorRequest());
             }
             return Ok(this.Success("successed"));
+        }
+
+
+        [HttpGet]
+        public IActionResult LocalTest()
+        {
+            var res = _localizer[SharedResource.CurrentTime, "not working"];
+
+            var str2 = _demoAppServices.GetLocalString();
+
+            return Ok(this.Success(new { res, res2 = str2 }));
         }
     }
 

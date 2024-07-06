@@ -33,8 +33,6 @@ namespace DncyTemplate.Api.Infra
                 })
                 .ConfigureApplicationPartManager(manager =>
                 {
-                    // 自定义controller类型名称
-                    manager.FeatureProviders.Add(new CustomControllerFeatureProvider());
                 })
                 .AddDataAnnotationsLocalization(options =>
                 {

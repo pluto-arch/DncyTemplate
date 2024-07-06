@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DncyTemplate.Mvc {
+namespace DncyTemplate.Api.Resources {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace DncyTemplate.Mvc {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class DataAnnotation {
+    public class SharedResource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal DataAnnotation() {
+        internal SharedResource() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace DncyTemplate.Mvc {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DncyTemplate.Mvc.Resources.DataAnnotation", typeof(DataAnnotation).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DncyTemplate.Api.Resources.SharedResource", typeof(SharedResource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,65 +61,11 @@ namespace DncyTemplate.Mvc {
         }
         
         /// <summary>
-        ///   查找类似 Password 的本地化字符串。
+        ///   查找类似 CurrentTime 的本地化字符串。
         /// </summary>
-        public static string LoginPassword {
+        public static string CurrentTime {
             get {
-                return ResourceManager.GetString("LoginPassword", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Account 的本地化字符串。
-        /// </summary>
-        public static string LoginUserName {
-            get {
-                return ResourceManager.GetString("LoginUserName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 {0} is not an valid email address 的本地化字符串。
-        /// </summary>
-        public static string MustEmailAddress {
-            get {
-                return ResourceManager.GetString("MustEmailAddress", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 {0} value bust between {1} and {2}. 的本地化字符串。
-        /// </summary>
-        public static string PageSizeMessage {
-            get {
-                return ResourceManager.GetString("PageSizeMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 password must 8 char 的本地化字符串。
-        /// </summary>
-        public static string PwdMust8length {
-            get {
-                return ResourceManager.GetString("PwdMust8length", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 user not exist 的本地化字符串。
-        /// </summary>
-        public static string UserNotExist {
-            get {
-                return ResourceManager.GetString("UserNotExist", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 {0} is required 的本地化字符串。
-        /// </summary>
-        public static string ValueIsRequired {
-            get {
-                return ResourceManager.GetString("ValueIsRequired", resourceCulture);
+                return ResourceManager.GetString("CurrentTime", resourceCulture);
             }
         }
     }
