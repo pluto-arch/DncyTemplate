@@ -4,6 +4,9 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /source
 COPY ["nuget.config", "."]
+COPY ["Directory.Packages.props", "."]
+COPY ["Directory.Build.props", "."]
+COPY ["dotnet-tools.json", "."]
 COPY ["hosts/DncyTemplate.Api/DncyTemplate.Api.csproj", "hosts/DncyTemplate.Api/"]
 COPY ["src/DncyTemplate.Infra/DncyTemplate.Infra.csproj", "src/DncyTemplate.Infra/"]
 COPY ["src/DncyTemplate.Domain/DncyTemplate.Domain.csproj", "src/DncyTemplate.Domain/"]
